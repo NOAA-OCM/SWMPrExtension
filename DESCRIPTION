@@ -12,5 +12,6 @@ LazyData: true
 Imports: SWMPr,
     dplyr,
     stringr,
-    magrittr
+    magrittr,
+    rlang
 RoxygenNote: 6.0.1

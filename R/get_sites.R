@@ -22,7 +22,7 @@ get_sites <- function(data.file, type = c('wq', 'nut', 'met'), active = TRUE){
     res_data <- res_data[res_data$nerr_site_id == get_site_code(data.file) & res_data$status == 'Active', ]
   }else{
     res_data <- SWMPr::site_codes()
-    res_data <- res_data[res_data$nerr_site_id == get_site_code(data.file) & res_data$status == 'Active', ]
+    res_data <- res_data[res_data$nerr_site_id == get_site_code(data.file), ]
   }
   
   sites <- unique(grep(paste(type, collapse = '|')
