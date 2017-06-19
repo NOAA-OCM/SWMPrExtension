@@ -8,7 +8,7 @@
 #' 
 #' @concept reporting
 #' 
-#' @import plyr dplyr stringr SWMPr
+#' @import dplyr stringr SWMPr
 #' 
 #' @export
 #' 

@@ -2,6 +2,7 @@
 
 export(get_reserve)
 export(get_site_code)
+export(get_sites)
 import(SWMPr)
 import(dplyr)
 import(stringr)
