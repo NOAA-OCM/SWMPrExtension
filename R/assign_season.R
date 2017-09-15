@@ -68,7 +68,7 @@ assign_season <- function(data, season = NULL, season_names = NULL, season_start
   if(!is.null(season_namess)) {
     if(is.null(season)) {stop('Season names assigned with no seasons')}
     if (length(season_namess) != length(unique(season_namess))) {stop('Season names are not unique. Assign unique season names.')}
-    if (length(season_namess) != length(season)) {stop('List of seasons not equal to season names. Assign an equal number of seasons and season names')}
+    if (length(season_names) != length(season)) {stop('List of seasons not equal to season names. Assign an equal number of seasons and season names')}
     if(abb) {warning('abb = TRUE irrelevant for user-defined seasons and season names.')}
   }
     
