@@ -85,7 +85,7 @@ assign_season <- function(data, season = NULL, season_name = NULL, season_start 
     x <- ordered(x, mo_nms)
     
     if(!is.null(season_start)){
-      start <- match(c(season_lvl), mo_nms)
+      start <- match(c(season_start), mo_nms)
       x <- ordered(x, c(mo_nms[c(start:12)], mo_nms[c(1:start-1)]))
     }
     
