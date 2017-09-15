@@ -4,19 +4,11 @@
 #' 
 #' @param data a vector of POSIXct dates
 #' @param season A list of seasons. Months (1-12) are assigned to different groups based on user preference. Defaults to 12 months, starting with January. Must assign a minimum of two seasons
-<<<<<<< HEAD
-#' @param season_names A string vector of season names. The number of season names must match the length of the \code{season} list. A minimum of two seasons must be assigned (e.g., 'Wet', 'Dry'). Defaults to 12 months, starting with January. The number of season names must match the number of seasons
-#' @param season_start defaults to 12 months, starting with January
-#' @param abb logical, should abbreviations for month names be used? Defaults to \code{FALSE}
-#' 
-#' @importFrom lubridate month is.POSIXt
-=======
 #' @param season_name A string vector of season names. The number of season names must match the length of the \code{season} list. A minimum of two seasons must be assigned (e.g., 'Wet', 'Dry'). Defaults to 12 months, starting with January. The number of season names must match the number of seasons
 #' @param season_start defaults to 12 months, starting with January
 #' @param abb logical, should abbreviations for month names be used? Defaults to \code{FALSE}
 #' 
 #' @importFrom lubridate month
->>>>>>> origin/development
 #' 
 #' @export
 #' 
@@ -40,16 +32,6 @@
 #' seas <- assign_season(dat$datetimestamp, season_start = 'March')
 #' levels(seas)
 #' 
-<<<<<<< HEAD
-#' seas <- assign_season(dat$datetimestamp, season = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12)), season_names = c('Winter', 'Spring', 'Summer', 'Fall'), season_start = 'Spring')
-#' levels(seas)
-#' 
-#' seas <- assign_season(dat$datetimestamp, season = list(c(10:12, 1:3), c(4:9)), season_names = c('Wet', 'Dry'))
-#' levels(seas)
-#' }
-#' 
-assign_season <- function(data, season = NULL, season_names = NULL, season_start = NULL, abb = FALSE) {
-=======
 #' seas <- assign_season(dat$datetimestamp, season = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12)), season_name = c('Winter', 'Spring', 'Summer', 'Fall'), season_start = 'Spring')
 #' levels(seas)
 #' 
@@ -58,7 +40,6 @@ assign_season <- function(data, season = NULL, season_names = NULL, season_start
 #' }
 #' 
 assign_season <- function(data, season = NULL, season_name = NULL, season_start = NULL, abb = FALSE) {
->>>>>>> origin/development
   
   dat <- data
   
@@ -71,11 +52,7 @@ assign_season <- function(data, season = NULL, season_name = NULL, season_start 
   # sanity checks
   
   #Check that the vector is POSIXct format
-<<<<<<< HEAD
-  if(!lubridate::is.POSIXt(dat))
-=======
   if(!is.POSIXt(dat))
->>>>>>> origin/development
     stop('Input data is not in POSIXt format. Reformat input data.')
   
   #if season != NULL, check that there are at least 2 seasons
@@ -97,19 +74,11 @@ assign_season <- function(data, season = NULL, season_name = NULL, season_start 
     
   #If season_start != NULL, check that the season_start is either a month name or a season name
   if(is.null(season_start)) {
-<<<<<<< HEAD
-    if(!is.null(season)) {season_start %in% mo_nms} else {season_start %in% season_names}
-  }
-
-  # Assigning the season
-  if(is.null(season) & is.null(season_names)){
-=======
     if(!is.null(season)) {season_start %in% mo_nms} else {season_start %in% season_name}
   }
 
   # Assigning the season
   if(is.null(season) & is.null(season_name)){
->>>>>>> origin/development
     x <- lubridate::month(dat)
     x <- mo_nms[x]
     x <- factor(x)
@@ -122,19 +91,6 @@ assign_season <- function(data, season = NULL, season_name = NULL, season_start 
     
   } else {
     x <- data.frame(month = lubridate::month(dat))
-<<<<<<< HEAD
-    names(season) <- season_names
-    
-    seas_nm <- unlist(lapply(1:length(season_names), function(x) rep(names(season[x]),length(season[[x]])))) #this doesn't work for weird season assignments
-    df <- data.frame(month = unname(unlist(season)), nm = seas_nm)
-    x <- left_join(x, df)
-    x <- factor(x[, 2])
-    x <- ordered(x, season_names)
-    
-    if(!is.null(season_start)){
-      start <- match(c(season_start), season_names)
-      x <- ordered(x, c(season_names[start:length(season_names)], season_names[c(1:start-1)]))
-=======
     names(season) <- season_name
     
     seas_nm <- unlist(lapply(1:length(season_name), function(x) rep(names(season[x]),length(season[[x]])))) #this doesn't work for weird season assignments
@@ -146,7 +102,6 @@ assign_season <- function(data, season = NULL, season_name = NULL, season_start 
     if(!is.null(season_start)){
       start <- match(c(season_start), season_name)
       x <- ordered(x, c(season_name[start:length(season_name)], season_name[c(1:start-1)]))
->>>>>>> origin/development
     }
   }
   
