@@ -8,7 +8,7 @@
 #' @param season_start defaults to 12 months, starting with January
 #' @param abb logical, should abbreviations for month names be used? Defaults to \code{FALSE}
 #' 
-#' @importFrom lubridate month is.POSIXt
+#' @import lubridate
 #' 
 #' @export
 #' 
