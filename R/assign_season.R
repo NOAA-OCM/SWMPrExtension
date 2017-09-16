@@ -60,14 +60,14 @@ assign_season <- function(data, season = NULL, season_names = NULL, season_start
     if (length(season) <= 1) {stop('Number of seasons is equal to 1. Assign 2 or more seasons.')}
   }
   
-  #if season_namess != NULL
+  #if season_names != NULL
   ##check that season != NULL
   ##check that season names are unique
   ##check that the number of season names matches the length of season
   ##warn user that no effect will happen if abb = TRUE for this instance
-  if(!is.null(season_namess)) {
+  if(!is.null(season_names)) {
     if(is.null(season)) {stop('Season names assigned with no seasons')}
-    if (length(season_namess) != length(unique(season_namess))) {stop('Season names are not unique. Assign unique season names.')}
+    if (length(season_names) != length(unique(season_names))) {stop('Season names are not unique. Assign unique season names.')}
     if (length(season_names) != length(season)) {stop('List of seasons not equal to season names. Assign an equal number of seasons and season names')}
     if(abb) {warning('abb = TRUE irrelevant for user-defined seasons and season names.')}
   }
