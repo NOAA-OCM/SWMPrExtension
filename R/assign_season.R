@@ -10,16 +10,8 @@
 #' 
 #' @importFrom lubridate month is.POSIXt
 #' 
-#' @export
-#' 
-#' @details A helper function used by several data analyses to assign seasons to sampling data and to order the seasons. This function also allows the user to designate which season should be first.
-#' 
-#' @return Returns a vector of ordered 
-#' season factors. 
-#' 
-#' @seealso 
-#' 
-#' @examples \dontrun {
+#' @examples
+#' \dontrun{
 #' data(apacpwq)
 #' dat <- apacpwq
 #' 
@@ -32,12 +24,24 @@
 #' seas <- assign_season(dat$datetimestamp, season_start = 'March')
 #' levels(seas)
 #' 
-#' seas <- assign_season(dat$datetimestamp, season = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12)), season_names = c('Winter', 'Spring', 'Summer', 'Fall'), season_start = 'Spring')
+#' seas <- assign_season(dat$datetimestamp, 
+#' season = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12)),
+#' season_names = c('Winter', 'Spring', 'Summer', 'Fall'), season_start = 'Spring')
 #' levels(seas)
 #' 
-#' seas <- assign_season(dat$datetimestamp, season = list(c(10:12, 1:3), c(4:9)), season_names = c('Wet', 'Dry'))
+#' seas <- assign_season(dat$datetimestamp, season = list(c(10:12, 1:3), c(4:9)), 
+#' season_names = c('Wet', 'Dry'))
 #' levels(seas)
 #' }
+#'
+#' @export
+#' 
+#' @details A helper function used by several data analyses to assign seasons to sampling data and to order the seasons. This function also allows the user to designate which season should be first.
+#' 
+#' @return Returns a vector of ordered 
+#' season factors. 
+#'  
+#' 
 #' 
 assign_season <- function(data, season = NULL, season_names = NULL, season_start = NULL, abb = FALSE) {
   
