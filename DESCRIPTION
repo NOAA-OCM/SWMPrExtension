@@ -11,7 +11,9 @@ Encoding: UTF-8
 LazyData: true
 Imports: SWMPr,
     dplyr,
+	ggplot2,
 	lubridate,
+	scales,
     stringr,
     magrittr,
     rlang
