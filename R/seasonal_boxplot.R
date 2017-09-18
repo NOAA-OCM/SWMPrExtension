@@ -27,7 +27,6 @@
 #' @seealso \code{\link[ggplot2]{ggplot}}
 #'
 #'
-if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
 
 seasonal_boxplot <- function(swmpr_in, ...) UseMethod('seasonal_boxplot')
 
