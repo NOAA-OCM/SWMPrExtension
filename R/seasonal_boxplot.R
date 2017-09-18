@@ -107,14 +107,14 @@ seasonal_boxplot.swmpr <- function(swmpr_in
   dat$date <- lubridate::floor_date(dat$datetimestamp, unit = 'days')
 
   # Filter for parameter of interest
-  dat <- dat %>% dplyr::select(datetimestamp, date, season, !!parm)
+  dat <- dat %>% dplyr::select(.data$datetimestamp, date, .data$season, !!parm)
 
   ##historic range
-  dat_hist <- dat %>% dplyr::filter(lubridate::year(datetimestamp) >= rng[[1]]
-                                    & lubridate::year(datetimestamp) <= rng[[2]])
+  dat_hist <- dat %>% dplyr::filter(lubridate::year(.data$datetimestamp) >= rng[[1]]
+                                    & lubridate::year(.data$datetimestamp) <= rng[[2]])
 
   dat_hist <- dat_hist %>%
-    dplyr::group_by(season, date) %>%
+    dplyr::group_by(.data$season, date) %>%
     # dplyr::summarise(result = mean(do_mgl, na.rm = T))
     dplyr::summarise(result = func(!!parm))
 
@@ -125,7 +125,7 @@ seasonal_boxplot.swmpr <- function(swmpr_in
   sn <- ifelse(length(levels(dat_hist$season)) == 12, 'Month', 'Season')
   bp_fill <- paste(hist_rng[[1]], '-', hist_rng[[2]], ' Daily Average by ', sn, sep = '')
 
-  x <- ggplot(data = dat_hist, aes(x = season, y = result, fill = factor(bp_fill))) +
+  x <- ggplot(data = dat_hist, aes(x = .data$season, y = .data$result, fill = factor(bp_fill))) +
     geom_boxplot(outlier.size = 0.5) +
     scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma) +
     scale_fill_manual(name = '', values = c('skyblue1')) +
@@ -136,18 +136,18 @@ seasonal_boxplot.swmpr <- function(swmpr_in
           , legend.direction = 'horizontal')
 
   if(!is.null(target_yr)) {
-    dat_yr <- dat %>% dplyr::filter(lubridate::year(datetimestamp) == target_yr)
+    dat_yr <- dat %>% dplyr::filter(lubridate::year(.data$datetimestamp) == target_yr)
 
     dat_yr <- dat_yr %>%
-      dplyr::group_by(season, date) %>%
+      dplyr::group_by(.data$season, date) %>%
       dplyr::summarise(result = func(!!parm)) %>%
-      dplyr::group_by(season) %>%
-      dplyr::summarise(mean = mean(result, na.rm = T))
+      dplyr::group_by(.data$season) %>%
+      dplyr::summarise(mean = mean(.data$result, na.rm = T))
 
     pt_fill <- paste(target_yr, ' Daily Average by ', sn, sep = '')
 
     x <- x +
-      geom_point(data = dat_yr, aes(x = season, y = mean, shape = factor(pt_fill)), fill = 'red', size = 2) +
+      geom_point(data = dat_yr, aes(x = .data$season, y = mean, shape = factor(pt_fill)), fill = 'red', size = 2) +
       scale_shape_manual(name = '', values = c(21))
   }
 
