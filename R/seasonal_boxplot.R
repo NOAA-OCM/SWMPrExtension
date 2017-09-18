@@ -27,7 +27,7 @@
 #'
 #'
 
-raw_boxplot <- function(swmpr_in, ...) UseMethod('raw_boxplot')
+seasonal_boxplot <- function(swmpr_in, ...) UseMethod('seasonal_boxplot')
 
 #' @rdname raw_boxplot
 #'
@@ -35,9 +35,9 @@ raw_boxplot <- function(swmpr_in, ...) UseMethod('raw_boxplot')
 #'
 #' @export
 #'
-#' @method raw_boxplot swmpr
+#' @method seasonal_boxplot swmpr
 #'
-raw_boxplot.swmpr <- function(swmpr_in
+seasonal_boxplot.swmpr <- function(swmpr_in
                                    , param = NULL
                                    , target_yr = NULL
                                    , criteria = NULL

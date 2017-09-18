@@ -2,14 +2,9 @@
 % Please edit documentation in R/seasonal_boxplot.R
 \name{seasonal_boxplot}
 \alias{seasonal_boxplot}
-\alias{seasonal_boxplot.swmpr}
 \title{Seasonal boxplots}
 \usage{
 seasonal_boxplot(swmpr_in, ...)
-
-\method{seasonal_boxplot}{swmpr}(swmpr_in, param = NULL, hist_rng = NULL,
-  target_yr = NULL, criteria = NULL, log_trans = FALSE,
-  FUN = function(x) mean(x, na.rm = TRUE), ...)
 }
 \arguments{
 \item{swmpr_in}{input swmpe object}
@@ -18,13 +13,11 @@ seasonal_boxplot(swmpr_in, ...)
 
 \item{param}{chr string of variable to plot}
 
-\item{hist_rng}{numeric vector, if historic range is not specified then range will default to the minimum/maximum year in \code{swmpr_in}}
-
 \item{target_yr}{numeric, if target year is not specified then dot will not be plotted}
 
-\item{criteria}{numeric, a numeric criteria that will be plotted as a horizontal line}
-
 \item{log_trans}{logical, should y-axis be log? Defaults to \code{FALSE}}
+
+\item{criteria}{numeric, a numeric criteria that will be plotted as a horizontal line}
 
 \item{FUN}{function used to aggregate daily SWMP data}
 }
@@ -41,7 +34,5 @@ Annual time series for year of interest on top of long-term percentiles
 \code{\link[ggplot2]{ggplot}}
 }
 \concept{
-analyze
-
 analyze
 }
