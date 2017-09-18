@@ -48,9 +48,6 @@ seasonal_boxplot.swmpr <- function(swmpr_in
                                    , FUN = function(x) mean(x, na.rm = TRUE)
                                    , ...) {
 
-  #https://github.com/jennybc/googlesheets/blob/master/R/googlesheets.R
-  #if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
-
   dat <- swmpr_in
   func <- FUN
   parm <- as.name(param)
@@ -73,7 +70,6 @@ seasonal_boxplot.swmpr <- function(swmpr_in
     warning('No historical range specified. Minimum and maximum year in data set will be used.')
     rng <- c(min(lubridate::year(dat$datetimestamp)), max(lubridate::year(dat$datetimestamp)))
   }
-
 
   #determine that variable name exists
   if(!any(!!parm %in% parameters) | !is.null(!!parm))
@@ -100,7 +96,6 @@ seasonal_boxplot.swmpr <- function(swmpr_in
 
   # Assign the seasons and order them
   dat$season <-
-    # assign_season(dat$datetimestamp, season = seas, season_name = seas_nm)
     assign_season(dat$datetimestamp, abb = T, ...)
 
   # Assign date for determining daily stat value
@@ -115,10 +110,9 @@ seasonal_boxplot.swmpr <- function(swmpr_in
 
   dat_hist <- dat_hist %>%
     dplyr::group_by(.data$season, date) %>%
-    # dplyr::summarise(result = mean(do_mgl, na.rm = T))
     dplyr::summarise(result = func(!!parm))
 
-  mx <- max(dat_hist$result, na.rm = T) #%>% round_any(., 1)
+  mx <- max(dat_hist$result, na.rm = T)
   mx <- ceiling(mx * 10) / 10
   mn <- ifelse(log_trans == TRUE, 0.1, 0)
 
