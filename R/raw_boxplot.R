@@ -25,7 +25,7 @@
 #'
 #'
 
-raw_boxplot <- function(swmpr_in, ...) UseMethod('seasonal_boxplot')
+raw_boxplot <- function(swmpr_in, ...) UseMethod('raw_boxplot')
 
 #' @rdname raw_boxplot
 #'
@@ -66,8 +66,13 @@ raw_boxplot.swmpr <- function(swmpr_in
   #determine type WQ, MET, NUT
   #IF WQ or MET then use "Instantaneous data" otherwise "Monthly data"
   #determine data type
-  if(substr(station, 6, nchar(station)) == 'nut')
+  if(substr(station, 6, nchar(station)) == 'nut') {
     warning('Nutrient data detected. Consider specifying seasons > 1 month.')
+    data_type = 'Data'
+  } else {
+    data_type = 'Instantaneous Data'
+  }
+
 
   #determine y axis transformation
   y_trans <- ifelse(log_trans, 'log10', 'identity')
@@ -84,8 +89,8 @@ raw_boxplot.swmpr <- function(swmpr_in
   mx <- ceiling(mx * 10) / 10
   mn <- ifelse(log_trans == TRUE, 0.1, 0)
 
-  sn <- ifelse(length(levels(dat_hist$season)) == 12, 'Month', 'Season')
-  bp_fill <- paste(hist_rng[[1]], '-', hist_rng[[2]], ' Daily Average by ', sn, sep = '')
+  sn <- ifelse(length(levels(dat$season)) == 12, 'Month', 'Season')
+  bp_fill <- paste(rng, ' ', data_type, sep = '')
 
   x <- ggplot(data = dat, aes(x = .data$season, y = !!parm, fill = factor(bp_fill))) +
     geom_boxplot(outlier.size = 0.5) +

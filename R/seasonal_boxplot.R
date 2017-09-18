@@ -4,9 +4,10 @@
 #'
 #' @param swmpr_in input swmpe object
 #' @param param chr string of variable to plot
-#' @param target_yr numeric, if target year is not specified then dot will not be plotted
-#' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
+#' @param hist_rng numeric vector, if historic range is not specified then the min/max values of the data set will be used.
+#' @param target_yr numeric, the target year that should be compared against the historic range. If target year is not specified then dot will not be plotted
 #' @param criteria numeric, a numeric criteria that will be plotted as a horizontal line
+#' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
 #' @param FUN function used to aggregate daily SWMP data
 #' @param ... additional arguments passed to other methods. See \code{\link{assign_season}}
 #'
@@ -26,11 +27,10 @@
 #' @seealso \code{\link[ggplot2]{ggplot}}
 #'
 #'
-if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
 
 seasonal_boxplot <- function(swmpr_in, ...) UseMethod('seasonal_boxplot')
 
-#' @rdname raw_boxplot
+#' @rdname seasonal_boxplot
 #'
 #' @concept analyze
 #'
@@ -40,9 +40,11 @@ seasonal_boxplot <- function(swmpr_in, ...) UseMethod('seasonal_boxplot')
 #'
 seasonal_boxplot.swmpr <- function(swmpr_in
                                    , param = NULL
+                                   , hist_rng = NULL
                                    , target_yr = NULL
                                    , criteria = NULL
                                    , log_trans = FALSE
+                                   , FUN = function(x) mean(x, na.rm = T)
                                    , ...) {
 
   dat <- swmpr_in
