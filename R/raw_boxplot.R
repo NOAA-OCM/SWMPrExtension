@@ -11,7 +11,7 @@
 #'
 #' @concept analyze
 #'
-#' @import ggplot2 dplyr scales
+#' @import ggplot2 dplyr scales rlang
 #'
 #' @importFrom magrittr "%>%"
 #'
@@ -43,8 +43,7 @@ raw_boxplot.swmpr <- function(swmpr_in
                                    , ...) {
 
   dat <- swmpr_in
-  parm <- as.name(param)
-  parm <- enquo(parm)
+  parm <- sym(param)
 
   rng <- target_yr
 
@@ -60,7 +59,7 @@ raw_boxplot.swmpr <- function(swmpr_in
   }
 
   #determine that variable name exists
-  if(!any(!!parm %in% parameters) | !is.null(!!parm))
+  if(!any(param %in% parameters))
     stop('Param argument must name input column')
 
   #determine type WQ, MET, NUT
@@ -73,30 +72,33 @@ raw_boxplot.swmpr <- function(swmpr_in
     data_type = 'Instantaneous Data'
   }
 
-
-  #determine y axis transformation
-  y_trans <- ifelse(log_trans, 'log10', 'identity')
-
   #determine if QAQC has been conducted
   if(attr(dat, 'qaqc_cols'))
     warning('QAQC columns present. QAQC not performed before analysis.')
 
-  # Assign the seasons and order them
-  dat$season <-
-    assign_season(dat$datetimestamp, abb = T, ...)
+  #determine parameter column index
+  parm_index <- grep(param, colnames(dat))
 
-  mx <- dat %>% max(!!parm, na.rm = T)
-  mx <- ceiling(mx * 10) / 10
+  #determine y axis transformation
+  y_trans <- ifelse(log_trans, 'log10', 'identity')
+
+  # Assign the seasons and order them
+  dat$season <- assign_season(dat$datetimestamp, abb = T, ...)
+
+  mx <- max(dat[, parm_index], na.rm = T)
+  mx <- ceiling(mx)
   mn <- ifelse(log_trans == TRUE, 0.1, 0)
 
-  sn <- ifelse(length(levels(dat$season)) == 12, 'Month', 'Season')
   bp_fill <- paste(rng, ' ', data_type, sep = '')
 
-  x <- ggplot(data = dat, aes(x = .data$season, y = !!parm, fill = factor(bp_fill))) +
+  seas <- sym('season')
+
+  x <- ggplot(data = dat, aes_(x = seas, y = parm, fill = factor(bp_fill))) +
     geom_boxplot(outlier.size = 0.5) +
+    scale_y_continuous(trans = y_trans, labels = scales::comma) +
     scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma) +
     scale_fill_manual(name = '', values = c('skyblue1')) +
-    labs(x = '', ...) +
+    labs(x = '', y = '') +
     theme_bw() +
     theme(legend.position = 'top'
           , legend.direction = 'horizontal')

@@ -13,7 +13,7 @@
 #'
 #' @concept analyze
 #'
-#' @import ggplot2 dplyr scales
+#' @import ggplot2 dplyr scales rlang
 #'
 #' @importFrom magrittr "%>%"
 #' @importFrom lubridate  year floor_date
@@ -48,12 +48,12 @@ seasonal_boxplot.swmpr <- function(swmpr_in
                                    , ...) {
 
   dat <- swmpr_in
-  func <- FUN
-  parm <- as.name(param)
-  parm <- enquo(parm)
+  parm <- sym(param)
 
-  # seas <- season # maybe remove?
-  # seas_nm <- season_name # maybe remove?
+  seas <- sym('season')
+  res <- sym('result')
+  dt <- sym('date')
+  avg <- sym('mean')
 
   rng <- hist_rng
 
@@ -63,6 +63,9 @@ seasonal_boxplot.swmpr <- function(swmpr_in
 
   #TESTS
   #determine type WQ, MET, NUT
+  #determine log scale transformation
+  if(substr(station, 6, nchar(station)) == 'nut')
+    warning('Nutrient data detected. Consider specifying seasons > 1 month.')
 
   #determine historical range exists, if not default to min/max of the range
   if(is.null(rng)) {
@@ -71,31 +74,22 @@ seasonal_boxplot.swmpr <- function(swmpr_in
   }
 
   #determine that variable name exists
-  if(!any(!!parm %in% parameters) | !is.null(!!parm))
+  if(!any(param %in% parameters))
     stop('Param argument must name input column')
 
   #determine target year (if there is one)
-
-  #determin log scale transformation
-  if(substr(station, 6, nchar(station)) == 'nut')
-    warning('Nutrient data detected. Consider specifying seasons > 1 month.')
+  if(!is.null(target_yr))
+    warning('No target year provided')
 
   #determine y axis transformation
   y_trans <- ifelse(log_trans, 'log10', 'identity')
-
-  #determine seasons (must be at least two)
-
-  #determine that season names equal seasons length
 
   #determine if QAQC has been conducted
   if(attr(dat, 'qaqc_cols'))
     warning('QAQC columns present. QAQC not performed before analysis.')
 
-  #logic to allow for mean/min/max analysis only?
-
   # Assign the seasons and order them
-  dat$season <-
-    assign_season(dat$datetimestamp, abb = T, ...)
+  dat$season <- assign_season(dat$datetimestamp, abb = T, ...)
 
   # Assign date for determining daily stat value
   dat$date <- lubridate::floor_date(dat$datetimestamp, unit = 'days')
@@ -108,42 +102,45 @@ seasonal_boxplot.swmpr <- function(swmpr_in
                                     & lubridate::year(.data$datetimestamp) <= rng[[2]])
 
   dat_hist <- dat_hist %>%
-    dplyr::group_by(.data$season, date) %>%
-    dplyr::summarise(result = func(!!parm))
+    group_by(!! seas, !! dt) %>%
+    summarise(result = FUN(!! parm))
 
   mx <- max(dat_hist$result, na.rm = T)
-  mx <- ceiling(mx * 10) / 10
+  mx <- ceiling(mx)
   mn <- ifelse(log_trans == TRUE, 0.1, 0)
 
-  sn <- ifelse(length(levels(dat_hist$season)) == 12, 'Month', 'Season')
-  bp_fill <- paste(hist_rng[[1]], '-', hist_rng[[2]], ' Daily Average by ', sn, sep = '')
+  # sn <- ifelse(length(levels(dat_hist$season)) == 12, 'Month', 'Season')
+  bp_fill <- paste(hist_rng[[1]], '-', hist_rng[[2]], ' Daily Average', sep = '')
 
-  x <- ggplot(data = dat_hist, aes(x = .data$season, y = .data$result, fill = factor(bp_fill))) +
+  # res = sym('result')
+
+  x <- ggplot(data = dat_hist, aes_(x = seas, y = res, fill = factor(bp_fill))) +
     geom_boxplot(outlier.size = 0.5) +
     scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma) +
     scale_fill_manual(name = '', values = c('skyblue1')) +
-    labs(x = '') +
-    # labs(x = '', ...) +
+    labs(x = '', y = '') +
     theme_bw() +
     theme(legend.position = 'top'
           , legend.direction = 'horizontal')
 
+  # Add target year dots if specified
   if(!is.null(target_yr)) {
     dat_yr <- dat %>% dplyr::filter(lubridate::year(.data$datetimestamp) == target_yr)
 
     dat_yr <- dat_yr %>%
-      dplyr::group_by(.data$season, date) %>%
-      dplyr::summarise(result = func(!!parm)) %>%
-      dplyr::group_by(.data$season) %>%
+      dplyr::group_by(!! seas, !! dt) %>%
+      dplyr::summarise(result = FUN(!! parm)) %>%
+      dplyr::group_by(!! seas) %>%
       dplyr::summarise(mean = mean(.data$result, na.rm = T))
 
-    pt_fill <- paste(target_yr, ' Daily Average by ', sn, sep = '')
+    pt_fill <- paste(target_yr, ' Average Daily Average', sep = '')
 
     x <- x +
-      geom_point(data = dat_yr, aes(x = .data$season, y = mean, shape = factor(pt_fill)), fill = 'red', size = 2) +
+      geom_point(data = dat_yr, aes_(x = seas, y = avg, shape = factor(pt_fill)), fill = 'red', size = 2) +
       scale_shape_manual(name = '', values = c(21))
   }
 
+  # Add criteria line if specified
   if(!is.null(criteria)) {
 
     x <- x +
