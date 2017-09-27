@@ -111,12 +111,9 @@ seasonal_boxplot.swmpr <- function(swmpr_in
   mx <- ceiling(mx)
   mn <- ifelse(log_trans == TRUE, 0.1, 0)
 
-  # sn <- ifelse(length(levels(dat_hist$season)) == 12, 'Month', 'Season')
-  bp_fill <- paste(hist_rng[[1]], '-', hist_rng[[2]], ' Daily Average', sep = '')
+  bp_fill <- paste(hist_rng[[1]], '-', hist_rng[[2]], ' Daily Averages', sep = '') # need to add in flex for 'min', 'max'
 
-  # res = sym('result')
-
-  x <- ggplot(data = dat_hist, aes_(x = seas, y = res, fill = factor(bp_fill))) +
+  plt <- ggplot(data = dat_hist, aes_(x = seas, y = res, fill = factor(bp_fill))) +
     geom_boxplot(outlier.size = 0.5) +
     scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma) +
     scale_fill_manual(name = '', values = c('skyblue1')) +
@@ -137,7 +134,7 @@ seasonal_boxplot.swmpr <- function(swmpr_in
 
     pt_fill <- paste(target_yr, ' Average Daily Average', sep = '')
 
-    x <- x +
+    plt <- plt +
       geom_point(data = dat_yr, aes_(x = seas, y = avg, shape = factor(pt_fill)), fill = 'red', size = 2) +
       scale_shape_manual(name = '', values = c(21))
   }
@@ -145,18 +142,18 @@ seasonal_boxplot.swmpr <- function(swmpr_in
   # Add criteria line if specified
   if(!is.null(criteria)) {
 
-    x <- x +
+    plt <- plt +
       geom_hline(aes(yintercept = criteria, color = factor('WQ Threshold'), linetype = factor('WQ Threshold'))
                   , show.legend = T) +
       scale_color_manual('', values = c('WQ Threshold' = 'red')) +
       scale_linetype_manual('', values = c('WQ Threshold' = 'longdash'))
 
-    x <- x + guides(fill = guide_legend(order = 1)
+    plt <- plt + guides(fill = guide_legend(order = 1)
                     , shape = guide_legend(order = 2, override.aes = list(linetype = 0))
                     , 'WQ Threshold' = guide_legend(order = 3))
 
 
   }
 
-  return(x)
+  return(plt)
 }

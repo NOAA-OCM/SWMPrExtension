@@ -26,7 +26,6 @@
 #' @seealso \code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}
 #'
 #'
-
 raw_boxplot <- function(swmpr_in, ...) UseMethod('raw_boxplot')
 
 #' @rdname raw_boxplot
@@ -95,7 +94,7 @@ raw_boxplot.swmpr <- function(swmpr_in
 
   seas <- sym('season')
 
-  x <- ggplot(data = dat, aes_(x = seas, y = parm, fill = factor(bp_fill))) +
+  plt <- ggplot(data = dat, aes_(x = seas, y = parm, fill = factor(bp_fill))) +
     geom_boxplot(outlier.size = 0.5) +
     scale_y_continuous(trans = y_trans, labels = scales::comma) +
     scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma) +
@@ -108,17 +107,17 @@ raw_boxplot.swmpr <- function(swmpr_in
 
   if(!is.null(criteria)) {
 
-    x <- x +
+    plt <- plt +
       geom_hline(aes(yintercept = criteria, color = factor('WQ Threshold'), linetype = factor('WQ Threshold'))
                   , show.legend = T) +
       scale_color_manual('', values = c('WQ Threshold' = 'red')) +
       scale_linetype_manual('', values = c('WQ Threshold' = 'longdash'))
 
-    x <- x + guides(fill = guide_legend(order = 1)
+    plt <- plt + guides(fill = guide_legend(order = 1)
                     , 'WQ Threshold' = guide_legend(order = 2))
 
 
   }
 
-  return(x)
+  return(plt)
 }

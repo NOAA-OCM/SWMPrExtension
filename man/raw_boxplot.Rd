@@ -35,6 +35,9 @@ Annual time series for year of interest
 \seealso{
 \code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}
 }
+\author{
+Julie Padilla
+}
 \concept{
 analyze
 
