@@ -22,6 +22,8 @@
 #'
 #' @details Annual time series for year of interest on top of long-term percentiles
 #'
+#' @author Julie Padilla
+#'
 #' @return A \code{\link[ggplot2]{ggplot}} object
 #'
 #' @seealso \code{\link[ggplot2]{ggplot}}

@@ -20,6 +20,10 @@
 #'
 #' @details Annual time series for year of interest on top of long-term percentiles
 #'
+#' @author Julie Padilla
+#'
+#' @concept analyze
+#'
 #' @return A \code{\link[ggplot2]{ggplot}} object
 #'
 #' @seealso \code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}

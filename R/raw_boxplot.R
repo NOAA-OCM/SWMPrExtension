@@ -19,6 +19,8 @@
 #'
 #' @details Annual time series for year of interest
 #'
+#' @author Julie Padilla
+#'
 #' @return A \code{\link[ggplot2]{ggplot}} object
 #'
 #' @seealso \code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}
