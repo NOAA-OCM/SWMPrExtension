@@ -38,8 +38,8 @@
 #' dat <- apacpwq
 #'
 #' dat <- qaqc(apacpwq, qaqc_keep = c('0', '3', '5'))
-#' do_plt <- annual_range(dat, param = 'do_mgl', target_yr = 2012)
-#' do_plt <- annual_range(dat, param = 'do_mgl', target_yr = 2012, criteria = 2)
+#' do_plt <- historical_range(dat, param = 'do_mgl', target_yr = 2012)
+#' do_plt <- historical_range(dat, param = 'do_mgl', target_yr = 2012, criteria = 2)
 #' }
 
 historical_range <- function(swmpr_in, ...) UseMethod('historical_range')
@@ -65,13 +65,13 @@ historical_range.swmpr <- function(swmpr_in
   parm <- sym(param)
 
   seas <- sym('season')
-  res <- sym('result')
+  # res <- sym('result')
   dt <- sym('date')
   avg <- sym('mean')
   mini <- sym('min')
   maxi <- sym('max')
-  mini_avg <- sym('min_avg')
-  maxi_avg <- sym('max_avg')
+  # mini_avg <- sym('min_avg')
+  # maxi_avg <- sym('max_avg')
 
   rng <- hist_rng
 
@@ -87,8 +87,8 @@ historical_range.swmpr <- function(swmpr_in
 
   #determine historical range exists, if not default to min/max of the range
   if(is.null(rng)) {
-    warning('No target year specified. Entire time series will be used.')
-    rng <- max(lubridate::year(dat$datetimestamp))
+    warning('No historical range specified. Entire time series will be used.')
+    rng <- c(min(lubridate::year(dat$datetimestamp)), max(lubridate::year(dat$datetimestamp)))
   }
 
   #determine that variable name exists
@@ -97,7 +97,7 @@ historical_range.swmpr <- function(swmpr_in
 
   #determine target year (if there is one)
   if(is.null(target_yr))
-    warning('No target year provided. Only historic range will be plotted')
+    warning('No target year provided. Only historic range will be plotted.')
 
   #determine y axis transformation
   y_trans <- ifelse(log_trans, 'log10', 'identity')
@@ -111,21 +111,23 @@ historical_range.swmpr <- function(swmpr_in
                                     & lubridate::year(.data$datetimestamp) <= rng[[2]])
 
   # Assign the seasons and order them
-  dat$season <- assign_season(dat$datetimestamp, abb = T, ...)
+  # dat$season <- assign_season(dat$datetimestamp, abb = T, ...)
 
   # Assign date for determining daily stat value
   dat$date <- lubridate::floor_date(dat$datetimestamp, unit = 'days')
 
   # Filter for parameter of interest and remove NA values
-  dat <- dat %>% dplyr::select(.data$datetimestamp, date, .data$season, !!parm)
+  dat <- dat %>% dplyr::select(.data$datetimestamp, date, !!parm)
   dat <- dat %>% dplyr::filter(!is.na(!! parm))
 
   #Determine min/max/mean for each day
-  dat_all <- dat
+  dat_all <- dat %>%
     dplyr::group_by(!! dt) %>%
     dplyr::summarise(mean = mean(!! parm, na.rm = TRUE)
                      , min = min(!! parm, na.rm = TRUE)
                      , max = max(!! parm, na.rm = TRUE))
+
+  dat_all$season <- assign_season(dat_all$date, abb = T, ...)
 
   #Determine average min/max/mean for each month (for all years together)
   dat_hist <- dat_all %>%
@@ -148,29 +150,29 @@ historical_range.swmpr <- function(swmpr_in
     mn <- ifelse(log_trans == TRUE, 0.1, 0)
 
     # Make some labels
-    lab_hist_rng <- paste(min(year(dat_hist$date)), '-', max(year(dat_hist$date)), ' Daily Average Range by Month', sep = '') #%>% factor
-    lab_hist_ln <- paste(min(year(dat_hist$date)), '-', max(year(dat_hist$date)), ' Daily Average by Month', sep = '') #%>% factor
-    lab_yr_rng <- paste(target_yr, ' Daily Average Range by Month', sep = '') #%>% factor
-    lab_yr_ln <- paste(target_yr, ' Daily Average by Month', sep = '') #%>% factor
+    lab_hist_rng <- paste(rng[[1]], '-', rng[[2]], ' Daily Average Range by Month', sep = '') %>% sym
+    lab_hist_ln <- paste(rng[[1]], '-', rng[[2]], ' Daily Average by Month', sep = '') %>% sym
+    lab_yr_rng <- paste(target_yr, ' Daily Average Range by Month', sep = '') %>% sym
+    lab_yr_ln <- paste(target_yr, ' Daily Average by Month', sep = '') %>% sym
 
     plt_yr <-
       ggplot() +
       geom_ribbon(data = dat_yr
-                  , aes_(x = seas, ymin = min, ymax = max, fill = lab_yr_rng, group = lab_yr_rng)) +
+                  , aes_(x = seas, ymin = mini, ymax = maxi, fill = lab_yr_rng, group = lab_yr_rng)) +
       geom_line(data = dat_hist
-                , aes_(x = seas, y = max, group = lab_hist_rng, linetype = lab_hist_rng, color = lab_hist_rng)
+                , aes_(x = seas, y = maxi, group = lab_hist_rng, linetype = lab_hist_rng, color = lab_hist_rng)
                 , show.legend = F) +
       geom_line(data = dat_hist
-                , aes_(x = seas, y = min, group = lab_hist_rng, linetype = lab_hist_rng, color = lab_hist_rng)
+                , aes_(x = seas, y = mini, group = lab_hist_rng, linetype = lab_hist_rng, color = lab_hist_rng)
       ) +
       geom_line(data = dat_hist
                 , aes_(x = seas, y = mean, color = lab_hist_ln, group = lab_hist_ln)
                 , linetype = 'solid', lwd = 1) +
       geom_line(data = dat_yr
-                , aes_(x = seas, y = mean,  group = lab_yr_ln, linetype = lab_yr_ln)
+                , aes_(x = seas, y = avg,  group = lab_yr_ln, linetype = lab_yr_ln)
                 , color = 'steelblue3', lwd = 1) +
       geom_point(data = dat_yr
-                 , aes_(x = seas, y = mean, group = lab_yr_ln)
+                 , aes_(x = seas, y = avg, group = lab_yr_ln)
                  , fill = 'steelblue3', shape = 21, size = 2, show.legend = T) +
       labs(x = NULL, y = NULL) +
       scale_y_continuous(limits = c(mn, mx), trans = y_trans)
