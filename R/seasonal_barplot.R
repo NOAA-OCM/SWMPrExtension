@@ -16,7 +16,7 @@
 #' @import ggplot2 dplyr scales rlang
 #'
 #' @importFrom magrittr "%>%"
-#' @importFrom lubridate  year floor_date
+#' @importFrom lubridate  year
 #'
 #' @export
 #'
@@ -32,13 +32,24 @@
 #'
 #' @examples
 #' \dontrun{
-## get data, prep
 #' data(apaebmet)
-#' dat <- apaebmet
-#'
 #' dat <- qaqc(apaebmet, qaqc_keep = c('0', '3', '5'))
-#' prcp_plt <- seasonal_barplot(dat, param = 'do_mgl', hist_rng = c(2012, 2013))
-#' prcp_plt <- seasonal_barplot(dat, param = 'do_mgl', hist_rng = c(2012, 2013), criteria = 2)
+#'
+#' devtools::load_all(".")
+#' x <- seasonal_barplot(dat, param = 'totprcp'
+#'                       , season = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
+#'                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
+#'                       , convert = T)
+#'
+#' x
+#'
+#' y <- seasonal_barplot(dat, param = 'totprcp'
+#'                       , season = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
+#'                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
+#'                       , convert = T
+#'                       , plot = F)
+#'
+#' y
 #' }
 
 seasonal_barplot <- function(swmpr_in, ...) UseMethod('seasonal_barplot')
@@ -98,9 +109,6 @@ seasonal_barplot.swmpr <- function(swmpr_in
   if(attr(dat, 'qaqc_cols'))
     stop('QAQC columns present. QAQC must be performed before analysis.')
 
-  # Assign date for determining daily stat value
-  # dat$date <- lubridate::floor_date(dat$datetimestamp, unit = 'days')
-
   ##historic range
   dat_hist <- dat %>% dplyr::filter(lubridate::year(.data$datetimestamp) >= rng[[1]]
                                     & lubridate::year(.data$datetimestamp) <= rng[[2]])
@@ -111,34 +119,39 @@ seasonal_barplot.swmpr <- function(swmpr_in
   dat_hist$season <- assign_season(dat_hist$datetimestamp, abb = T, ...)
 
   dat_hist <- dat_hist %>%
-    group_by(!! yr, !! seas) %>%
-    summarise(result = sum(!! parm, na.rm = T)) %>%
+    dplyr::group_by(!! yr, !! seas) %>%
+    dplyr::summarise(result = sum(!! parm, na.rm = T))
 
-  # dat_hist$year <- factor(dat_hist$year)
+  if(convert){
+    dat_hist$result <- dat_hist$result / 25.4
+  }
 
   if(plot){
-    #Plot -----
     seas_col <- c('#1F4E79', '#4374A0', '#5B9BD5', '#97B9E0') %>% rev #will need to adjust color scheme
-    mx <- 10^ceiling(log10(max(dat_hist$result)))
+    yr_mx <- dat_hist %>% group_by(year) %>% summarise(max_val = sum(.data$result, na.rm = T))
+    mx <- ceiling(max(yr_mx$max_val) / 10) * 10
 
-    lab_parm <- paste(var_nm, ' (', min(dat_hist$year), '-', max(dat_hist$year), ')', sep = '')
+    lab_parm <- paste(var_nm, ' (', rng[[1]], '-', rng[[2]], ')', sep = '')
 
     # Add data
     bar_seas <- ggplot(data = dat_hist, aes_(x = yr, y = res, fill = seas)) +
-      geom_bar(stat = "identity") +#, color = 'black',  alpha = 1) +
-      geom_hline(aes(yintercept = mean(dat_hist$result), linetype = factor(lab_parm))
-                 , color = '#D9D9D9', lwd = 1.5, show.legend = T) +
+      geom_bar(stat = "identity") +
       scale_y_continuous(expand = c(0, 0)
                          , limits = c(0, mx)
-                         , breaks = seq(0 , mx, 2)) +
+                         , breaks = seq(0 , mx, 5)) +
       scale_fill_manual(values = seas_col) +
-      scale_linetype_manual(values = 'solid') +
+
       labs(x = NULL, y = NULL)
+
+    bar_seas <- bar_seas +
+      geom_hline(aes(yintercept = mean(dat_hist$result), linetype = factor(lab_parm))
+                 , color = '#D9D9D9', lwd = 1.5, show.legend = T) +
+      scale_linetype_manual(values = 'solid')
 
     # Add themes
     bar_seas <- bar_seas +
       theme_bw() +
-      guides(fill = guide_legend(override.aes = list(linetype = 'blank'))) +
+      guides(fill = guide_legend(override.aes = list(linetype = 'blank'), order = 1)) +
       theme(panel.grid.minor.y = element_blank()
             , panel.grid.major.y = element_line(linetype = 'dashed')) +
       theme(panel.grid.major.x = element_blank()) +
@@ -158,7 +171,10 @@ seasonal_barplot.swmpr <- function(swmpr_in
     return(bar_seas)
 
   } else {
-    # Do things
+
+    tbl <- dat_hist
+    tbl$station <- attr(dat_hist, 'station')
+
     return(tbl)
   }
 }

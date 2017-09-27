@@ -39,11 +39,23 @@ Calculated annual bar plot
 \examples{
 \dontrun{
 data(apaebmet)
-dat <- apaebmet
-
 dat <- qaqc(apaebmet, qaqc_keep = c('0', '3', '5'))
-prcp_plt <- seasonal_barplot(dat, param = 'do_mgl', hist_rng = c(2012, 2013))
-prcp_plt <- seasonal_barplot(dat, param = 'do_mgl', hist_rng = c(2012, 2013), criteria = 2)
+
+devtools::load_all(".")
+x <- seasonal_barplot(dat, param = 'totprcp'
+                      , season = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
+                      , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
+                      , convert = T)
+
+x
+
+y <- seasonal_barplot(dat, param = 'totprcp'
+                      , season = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
+                      , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
+                      , convert = T
+                      , plot = F)
+
+y
 }
 }
 \seealso{
