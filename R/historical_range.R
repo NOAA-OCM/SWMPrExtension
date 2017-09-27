@@ -58,6 +58,7 @@ historical_range.swmpr <- function(swmpr_in
                                    , target_yr = NULL
                                    , criteria = NULL
                                    , log_trans = FALSE
+                                   , plot = TRUE
                                    , ...) {
 
   dat <- swmpr_in
@@ -127,13 +128,13 @@ historical_range.swmpr <- function(swmpr_in
                      , max = max(!! parm, na.rm = TRUE))
 
   #Determine average min/max/mean for each month (for all years together)
-  dat_hist <- df %>%
+  dat_hist <- dat_all %>%
     dplyr::group_by(!! seas) %>%
     dplyr::summarise(mean = mean(!! avg, na.rm = T)
                      , min = mean(!!  mini, na.rm = T)
                      , max = mean(!! maxi, na.rm = T))
 
-  dat_yr <- df %>% dplyr::filter(year(date) == target_yr)
+  dat_yr <- dat_all %>% dplyr::filter(year(date) == target_yr)
 
   dat_yr <- dat_yr %>%
     dplyr::summarise(mean = mean(!! avg, na.rm = T)
@@ -142,7 +143,7 @@ historical_range.swmpr <- function(swmpr_in
 
   if(plot){
     # Set the plot range
-    mx <- max(dat_day$max, na.rm = T)
+    mx <- max(dat_hist$max, na.rm = T)
     mx <- ceiling(mx)
     mn <- ifelse(log_trans == TRUE, 0.1, 0)
 
@@ -171,8 +172,8 @@ historical_range.swmpr <- function(swmpr_in
       geom_point(data = dat_yr
                  , aes_(x = seas, y = mean, group = lab_yr_ln)
                  , fill = 'steelblue3', shape = 21, size = 2, show.legend = T) +
-      labs(x = NULL, y = ttl) +
-      scale_y_continuous(limits = c(mn, mx), trans = y_axis_trans)
+      labs(x = NULL, y = NULL) +
+      scale_y_continuous(limits = c(mn, mx), trans = y_trans)
 
     # Format the scales
     plt_yr <-
@@ -189,7 +190,7 @@ historical_range.swmpr <- function(swmpr_in
              , shape = guide_legend(override.aes = list(shape = NA))
              , linetype = guide_legend(override.aes = list(shape = c(NA, 21), linetype = c('solid', 'dashed')))
              , colour = guide_legend(override.aes = list(shape = c(NA, 21))))
-    +
+
       # Adjust theme
       plt_yr <-
       plt_yr +

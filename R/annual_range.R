@@ -51,10 +51,11 @@ annual_range <- function(swmpr_in, ...) UseMethod('annual_range')
 #' @method annual_range swmpr
 #'
 annual_range.swmpr <- function(swmpr_in
-                                   , param = NULL
-                                   , target_yr = NULL
-                                   , criteria = NULL
-                                   , log_trans = FALSE
+                               , param = NULL
+                               , target_yr = NULL
+                               , criteria = NULL
+                               , log_trans = FALSE
+                               , plot = TRUE
                                    , ...) {
 
   dat <- swmpr_in
