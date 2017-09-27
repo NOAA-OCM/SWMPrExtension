@@ -150,10 +150,10 @@ historical_range.swmpr <- function(swmpr_in
     mn <- ifelse(log_trans == TRUE, 0.1, 0)
 
     # Make some labels
-    lab_hist_rng <- paste(rng[[1]], '-', rng[[2]], ' Daily Average Range by Month', sep = '') %>% sym
-    lab_hist_ln <- paste(rng[[1]], '-', rng[[2]], ' Daily Average by Month', sep = '') %>% sym
-    lab_yr_rng <- paste(target_yr, ' Daily Average Range by Month', sep = '') %>% sym
-    lab_yr_ln <- paste(target_yr, ' Daily Average by Month', sep = '') %>% sym
+    lab_hist_rng <- paste(rng[[1]], '-', rng[[2]], ' Daily Average Range by Month', sep = '')
+    lab_hist_ln <- paste(rng[[1]], '-', rng[[2]], ' Daily Average by Month', sep = '')
+    lab_yr_rng <- paste(target_yr, ' Daily Average Range by Month', sep = '')
+    lab_yr_ln <- paste(target_yr, ' Daily Average by Month', sep = '')
 
     plt_yr <-
       ggplot() +
