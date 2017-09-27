@@ -90,6 +90,10 @@ seasonal_boxplot.swmpr <- function(swmpr_in
   if(attr(dat, 'qaqc_cols'))
     warning('QAQC columns present. QAQC not performed before analysis.')
 
+  ##historic range
+  dat_hist <- dat %>% dplyr::filter(lubridate::year(.data$datetimestamp) >= rng[[1]]
+                                    & lubridate::year(.data$datetimestamp) <= rng[[2]])
+
   # Assign the seasons and order them
   dat$season <- assign_season(dat$datetimestamp, abb = T, ...)
 
@@ -98,10 +102,6 @@ seasonal_boxplot.swmpr <- function(swmpr_in
 
   # Filter for parameter of interest
   dat <- dat %>% dplyr::select(.data$datetimestamp, date, .data$season, !!parm)
-
-  ##historic range
-  dat_hist <- dat %>% dplyr::filter(lubridate::year(.data$datetimestamp) >= rng[[1]]
-                                    & lubridate::year(.data$datetimestamp) <= rng[[2]])
 
   dat_hist <- dat_hist %>%
     group_by(!! seas, !! dt) %>%

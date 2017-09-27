@@ -22,6 +22,8 @@ annual_range(swmpr_in, ...)
 \item{criteria}{numeric, a numeric criteria that will be plotted as a horizontal line}
 
 \item{log_trans}{logical, should y-axis be log? Defaults to \code{FALSE}}
+
+\item{plot}{logical, should a plot be returned? Defaults to \code{TRUE}}
 }
 \value{
 A \code{\link[ggplot2]{ggplot}} object
