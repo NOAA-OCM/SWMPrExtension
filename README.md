@@ -1,6 +1,6 @@
 
 ![](swmpr_logo.png)
-### *Julie Padilla, jpadilla@limno.com*, [LimnoTech](www.limno.com)
+#### *Julie Padilla, jpadilla@limno.com*, [LimnoTech](www.limno.com)
 
 [![Travis-CI Build Status](https://travis-ci.org/padilla410/SWMPrExtension.svg?branch=master)](https://travis-ci.org/padilla410/SWMPrExtension)
 
