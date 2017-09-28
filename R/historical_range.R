@@ -38,8 +38,14 @@
 #' dat <- apacpwq
 #'
 #' dat <- qaqc(apacpwq, qaqc_keep = c('0', '3', '5'))
-#' do_plt <- historical_range(dat, param = 'do_mgl', target_yr = 2012)
-#' do_plt <- historical_range(dat, param = 'do_mgl', target_yr = 2012, criteria = 2)
+#' # with criteria
+#' y <- historical_range(dat, param = 'do_mgl', target_yr = 2013, criteria = 2, abb = T)
+#'
+#' # w/o criteria
+#' x <- historical_range(dat, param = 'do_mgl', target_yr = 2013, abb = T)
+#'
+#' # add a y label
+#' x <- x + labs(x = NULL, y = "Dissolved Oxygen (mg/L)")
 #' }
 
 historical_range <- function(swmpr_in, ...) UseMethod('historical_range')
@@ -65,13 +71,10 @@ historical_range.swmpr <- function(swmpr_in
   parm <- sym(param)
 
   seas <- sym('season')
-  # res <- sym('result')
   dt <- sym('date')
   avg <- sym('mean')
   mini <- sym('min')
   maxi <- sym('max')
-  # mini_avg <- sym('min_avg')
-  # maxi_avg <- sym('max_avg')
 
   rng <- hist_rng
 
@@ -81,7 +84,6 @@ historical_range.swmpr <- function(swmpr_in
 
   #TESTS
   #determine type WQ, MET, NUT
-  #determine log scale transformation
   if(substr(station, 6, nchar(station)) == 'nut')
     warning('Nutrient data detected. Consider specifying seasons > 1 month. See `?assign_season` for details.')
 
@@ -117,16 +119,17 @@ historical_range.swmpr <- function(swmpr_in
   dat <- dat %>% dplyr::select(.data$datetimestamp, date, !!parm)
   dat <- dat %>% dplyr::filter(!is.na(!! parm))
 
-  #Determine min/max/mean for each day
+  # Determine min/max/mean for each day
   dat_all <- dat %>%
     dplyr::group_by(!! dt) %>%
     dplyr::summarise(mean = mean(!! parm, na.rm = TRUE)
                      , min = min(!! parm, na.rm = TRUE)
                      , max = max(!! parm, na.rm = TRUE))
 
+  # Assign seasons
   dat_all$season <- assign_season(dat_all$date, ...)
 
-  #Determine average min/max/mean for each month (for all years together)
+  # Determine average min/max/mean for each month (for all years together)
   dat_hist <- dat_all %>%
     dplyr::group_by(!! seas) %>%
     dplyr::summarise(mean = mean(!! avg, na.rm = T)
@@ -153,6 +156,7 @@ historical_range.swmpr <- function(swmpr_in
     lab_yr_rng <- paste(target_yr, ' Daily Avg Range', sep = '')
     lab_yr_ln <- paste(target_yr, ' Daily Avg', sep = '')
 
+    # Make plot
     plt <-
       ggplot(data = dat_yr, aes_(x = seas, y = avg, group = 1)) +
       geom_ribbon(data = dat_hist, aes_(x = seas, ymin = mini, ymax = maxi
@@ -167,6 +171,7 @@ historical_range.swmpr <- function(swmpr_in
       theme_bw() +
       theme(legend.position = 'top', legend.direction = 'horizontal')
 
+    # Adjust scale
     plt <-
       plt +
       scale_color_manual('', values = c('gray40')) +
@@ -174,6 +179,7 @@ historical_range.swmpr <- function(swmpr_in
       scale_shape_manual('', values = c(21)) +
       scale_alpha_manual('', values = rep(0.25, 2))
 
+    # Override legend defaults
     plt <-
       plt +
       guides(alpha = guide_legend(override.aes = list(fill = c('steelblue3', 'gray40')), order = 3, reverse = T)
@@ -190,7 +196,7 @@ historical_range.swmpr <- function(swmpr_in
         theme(axis.title.y = element_text(margin = unit(c(0, 8, 0, 0), 'pt'), angle = 90)) +
         theme(text = element_text(size = 16))
 
-    # Adjust legend
+    # Adjust legend keys and spacing
     plt <-
       plt +
       theme(legend.key.size = unit(7, 'pt')) +
