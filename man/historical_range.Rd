@@ -44,8 +44,8 @@ data(apacpwq)
 dat <- apacpwq
 
 dat <- qaqc(apacpwq, qaqc_keep = c('0', '3', '5'))
-do_plt <- annual_range(dat, param = 'do_mgl', target_yr = 2012)
-do_plt <- annual_range(dat, param = 'do_mgl', target_yr = 2012, criteria = 2)
+do_plt <- historical_range(dat, param = 'do_mgl', target_yr = 2012)
+do_plt <- historical_range(dat, param = 'do_mgl', target_yr = 2012, criteria = 2)
 }
 }
 \seealso{

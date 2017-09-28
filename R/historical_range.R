@@ -107,7 +107,7 @@ historical_range.swmpr <- function(swmpr_in
     warning('QAQC columns present. QAQC not performed before analysis.')
 
   # Filter to historic range
-  dat_hist <- dat %>% dplyr::filter(lubridate::year(.data$datetimestamp) >= rng[[1]]
+  dat <- dat %>% dplyr::filter(lubridate::year(.data$datetimestamp) >= rng[[1]]
                                     & lubridate::year(.data$datetimestamp) <= rng[[2]])
 
   # Assign the seasons and order them
@@ -139,9 +139,12 @@ historical_range.swmpr <- function(swmpr_in
   dat_yr <- dat_all %>% dplyr::filter(year(date) == target_yr)
 
   dat_yr <- dat_yr %>%
+    dplyr::group_by(!! seas) %>%
     dplyr::summarise(mean = mean(!! avg, na.rm = T)
                      , min = mean(!!  mini, na.rm = T)
                      , max = mean(!! maxi, na.rm = T))
+
+  # return(dat_yr)
 
   if(plot){
     # Set the plot range
@@ -155,66 +158,87 @@ historical_range.swmpr <- function(swmpr_in
     lab_yr_rng <- paste(target_yr, ' Daily Average Range by Month', sep = '')
     lab_yr_ln <- paste(target_yr, ' Daily Average by Month', sep = '')
 
-    plt_yr <-
-      ggplot() +
-      geom_ribbon(data = dat_yr
-                  , aes_(x = seas, ymin = mini, ymax = maxi, fill = lab_yr_rng, group = lab_yr_rng)) +
-      geom_line(data = dat_hist
-                , aes_(x = seas, y = maxi, group = lab_hist_rng, linetype = lab_hist_rng, color = lab_hist_rng)
-                , show.legend = F) +
-      geom_line(data = dat_hist
-                , aes_(x = seas, y = mini, group = lab_hist_rng, linetype = lab_hist_rng, color = lab_hist_rng)
-      ) +
-      geom_line(data = dat_hist
-                , aes_(x = seas, y = mean, color = lab_hist_ln, group = lab_hist_ln)
-                , linetype = 'solid', lwd = 1) +
-      geom_line(data = dat_yr
-                , aes_(x = seas, y = avg,  group = lab_yr_ln, linetype = lab_yr_ln)
-                , color = 'steelblue3', lwd = 1) +
-      geom_point(data = dat_yr
-                 , aes_(x = seas, y = avg, group = lab_yr_ln)
-                 , fill = 'steelblue3', shape = 21, size = 2, show.legend = T) +
-      labs(x = NULL, y = NULL) +
-      scale_y_continuous(limits = c(mn, mx), trans = y_trans)
+    # lyr <- sym(lab_yr_rng)
+
+    #THIS WHOLE PLOTTING SECTION NEEDS TO BE REDONE OR THOUGHT OUT
+    plt <-
+      ggplot(data = dat_yr, aes_(x = seas, y = avg, group = 1)) +
+      geom_ribbon(data = dat_hist, aes_(x = seas, ymin = mini, ymax = maxi)
+                  , fill = 'gray40', alpha = 0.25) +
+      geom_ribbon(data = dat_yr, aes_(x = seas, ymin = mini, ymax = maxi)
+                  , fill = 'steelblue1', alpha = 0.25) +
+      geom_line(data = dat_hist, aes_(x = seas, y = avg)
+                , color = 'gray40', linetype = 'solid', lwd = 1) +
+      geom_line(color = 'steelblue3', lwd = 1) +
+      geom_point(fill = 'steelblue3', shape = 21, size = 2) +
+      # scale_y_continuous(limits = c(mn, mx), trans = y_trans) +
+      theme_bw()
+
+    plt <-
+      plt +
+      scale_fill_manual('', values = c(rep('steelblue3', 3)), guide = F) +
+      scale_shape_manual('', values = c(21)) +
+      scale_alpha_manual('', values = c(0.4, 0.15))
+    # plt_yr <-
+      # ggplot() +
+      # geom_ribbon(data = dat_yr
+      #             , aes_(x = seas, ymin = mini, ymax = maxi, fill = lyr, group = lyr)) +
+      # geom_line(data = dat_hist
+      #           , aes_(x = seas, y = maxi, group = lab_hist_rng, linetype = lab_hist_rng, color = lab_hist_rng)
+      #           , show.legend = F) +
+      # geom_line(data = dat_hist
+      #           , aes_(x = seas, y = mini, group = lab_hist_rng, linetype = lab_hist_rng, color = lab_hist_rng)
+      # ) +
+      # geom_line(data = dat_hist
+      #           , aes_(x = seas, y = mean, color = lab_hist_ln, group = lab_hist_ln)
+      #           , linetype = 'solid', lwd = 1) +
+      # geom_line(data = dat_yr
+      #           , aes_(x = seas, y = avg,  group = lab_yr_ln, linetype = lab_yr_ln)
+      #           , color = 'steelblue3', lwd = 1) +
+      # geom_point(data = dat_yr
+      #            , aes_(x = seas, y = avg, group = lab_yr_ln)
+      #            , fill = 'steelblue3', shape = 21, size = 2, show.legend = T) +
+      # labs(x = NULL, y = NULL) +
+      # scale_y_continuous(limits = c(mn, mx), trans = y_trans)
 
     # Format the scales
-    plt_yr <-
-      plt_yr +
-      scale_fill_manual(values = c('lightskyblue1')) +
-      # scale_shape_manual(values = c(21)) +
-      scale_color_manual(name = '', values = c('gray40', 'gray40', 'gray40', 'steelblue3')) +
-      scale_shape_manual(name = '', values = c(NA, NA, NA, 21)) +
-      scale_linetype_manual(name = '', values = c('dashed', 'solid', 'dashed', 'solid'))
-
-    plt_yr <-
-      plt_yr +
-      guides(fill = guide_legend(override.aes = list(shape = NA))
-             , shape = guide_legend(override.aes = list(shape = NA))
-             , linetype = guide_legend(override.aes = list(shape = c(NA, 21), linetype = c('solid', 'dashed')))
-             , colour = guide_legend(override.aes = list(shape = c(NA, 21))))
-
-      # Adjust theme
-      plt_yr <-
-      plt_yr +
-      theme_bw() +
-      theme(panel.grid.major = element_blank(),
-            panel.grid.minor = element_blank(),
-            strip.background = element_blank(),
-            panel.border = element_rect(color = 'black')) +
-      theme(axis.title.y = element_text(margin = unit(c(0, 8, 0, 0), 'pt'), angle = 90)) +
-      theme(text = element_text(size = 16))
-
-    # Adjust legend
-    plt_yr <-
-      plt_yr +
-      # guides(color = guide_legend(order = 2),
-      #        fill = guide_legend(order = 1, ncol = 2, nrow = 1)) +
-      theme(legend.position = 'top'
-            , legend.box = c('vertical')
-            , legend.title = element_blank()) +
-      # theme(legend.key.size = unit(7, 'pt')) +
-      theme(legend.text = element_text(size = 8)) +
-      theme(legend.spacing.x = unit(-5, 'pt'))
+    # plt_yr <-
+    #   plt_yr +
+    #   scale_fill_manual(values = c('lightskyblue1')) +
+    #   # scale_shape_manual(values = c(21)) +
+    #   scale_color_manual(name = '', values = c('gray40', 'gray40', 'gray40', 'steelblue3')) +
+    #   scale_shape_manual(name = '', values = c(NA, NA, NA, 21)) +
+    #   scale_linetype_manual(name = '', values = c('dashed', 'solid', 'dashed', 'solid'))
+    #
+    # plt_yr <-
+    #   plt_yr +
+    #   guides(fill = guide_legend(override.aes = list(shape = NA))
+    #          , shape = guide_legend(override.aes = list(shape = NA))
+    #          , linetype = guide_legend(override.aes = list(shape = c(NA, 21), linetype = c('solid', 'dashed')))
+    #          , colour = guide_legend(override.aes = list(shape = c(NA, 21))))
+    #
+    #   # Adjust theme
+    #   plt_yr <-
+    #   plt_yr +
+    #   theme_bw() +
+    #   theme(panel.grid.major = element_blank(),
+    #         panel.grid.minor = element_blank(),
+    #         strip.background = element_blank(),
+    #         panel.border = element_rect(color = 'black')) +
+    #   theme(axis.title.y = element_text(margin = unit(c(0, 8, 0, 0), 'pt'), angle = 90)) +
+    #   theme(text = element_text(size = 16))
+    #
+    # # Adjust legend
+    # plt_yr <-
+    #   plt_yr +
+    #   # guides(color = guide_legend(order = 2),
+    #   #        fill = guide_legend(order = 1, ncol = 2, nrow = 1)) +
+    #   theme(legend.position = 'top'
+    #         , legend.box = c('vertical')
+    #         , legend.title = element_blank()) +
+    #   # theme(legend.key.size = unit(7, 'pt')) +
+    #   theme(legend.text = element_text(size = 8)) +
+    #   theme(legend.spacing.x = unit(-5, 'pt'))
 
     # plt <-
     #   ggplot(data = dat_month, aes_(x = seas, y = avg, group = 1)) +
@@ -259,7 +283,11 @@ historical_range.swmpr <- function(swmpr_in
 
   } else {
 
+    dat_hist$rng <- paste(rng[[1]], '-', rng[[2]])
+    dat_yr$rng <- as.character(target_yr)
+
     tbl <- rbind(dat_hist, dat_yr)
+
     tbl$station <- attr(dat, 'station')
 
     return(tbl)
