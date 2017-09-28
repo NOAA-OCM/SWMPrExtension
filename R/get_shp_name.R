@@ -6,12 +6,9 @@
 #' 
 #' @concept reporting
 #' 
-#' @import dplyr SWMPr
-#' 
 #' @export
-#' 
-#' 
-#' @return Returns a character string of the full reserve name
+#'  
+#' @return Returns a character string of the shapefile for the reserve boundary
 #'
 
 get_shp_name <- function(gis.file.loc){

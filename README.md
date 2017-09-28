@@ -1,12 +1,3 @@
----
-output:
-  html_document:
-    keep_md: yes
-    toc: no
-    self_contained: no
-  pdf_document:
-    toc: yes
----
 
 ![](swmpr_logo.png)
 #### *Julie Padilla, jpadilla@limno.com*, [LimnoTech](www.limno.com)
@@ -15,13 +6,7 @@ output:
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, echo = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "README-"
-)
-```
+
 
 # Overview 
 
@@ -37,7 +22,8 @@ This package is not currently available on CRAN, but will be in the near future
 
 The development (unstable) version of this package can be installed from Github:
 
-```{r eval = F, message = F}
+
+```r
 install.packages('devtools')
 library(devtools)
 install_github('padilla410/SWMPrExtension')
