@@ -2,7 +2,7 @@
 #'
 #' Annual time series for year of interest on top of long-term percentiles
 #'
-#' @param swmpr_in input swmpe object
+#' @param swmpr_in input swmpr object
 #' @param param chr string of variable to plot
 #' @param hist_rng numeric vector, if historic range is not specified then the min/max values of the data set will be used.
 #' @param target_yr numeric, the target year that should be compared against the historic range. If target year is not specified then dot will not be plotted
