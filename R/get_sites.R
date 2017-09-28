@@ -8,7 +8,7 @@
 #' 
 #' @concept reporting
 #' 
-#' @import dplyr stringr SWMPr
+#' @importFrom SWMPr site_codes
 #' 
 #' @export
 #' 

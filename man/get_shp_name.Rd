@@ -10,7 +10,7 @@ get_shp_name(gis.file.loc)
 \item{gis.file.loc}{path to gis file location}
 }
 \value{
-Returns a character string of the full reserve name
+Returns a character string of the shapefile for the reserve boundary
 }
 \description{
 Identify the shapefile name associated with the reserve in the data file

@@ -6,9 +6,7 @@
 #' 
 #' @concept reporting
 #' 
-#' @import dplyr stringr
-#' 
-#' @importFrom magrittr "%>%"
+#' @importFrom SWMPr site_codes
 #' 
 #' @export
 #' 
@@ -26,7 +24,7 @@ get_reserve <- function(data.file){
 
   res_data <- res_data[res_data$nerr_site_id == get_site_code(data.file), ]
   
-  reserve <- res_data$reserve_name[1] %>% as.character
+  reserve <- as.character(res_data$reserve_name[1])
   
   return(reserve)
 }

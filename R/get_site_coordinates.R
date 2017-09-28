@@ -7,12 +7,12 @@
 #'
 #' @concept reporting
 #'
-#' @import dplyr SWMPr
-#'
+#' @importFrom dplyr group_by summarise
+#' @importFrom magrittr "%>%"
 #' @importFrom rlang .data
+#' @importFrom SWMPr site_codes
 #'
 #' @export
-#'
 #'
 #' @return Returns a dataframe of station ids, station names, lat/long
 #'
@@ -20,7 +20,7 @@
 get_site_coordinates <- function(data.file, active = TRUE){
 
 
-  if (active == TRUE){
+  if (active){
     res_data <- SWMPr::site_codes()
     res_data <- res_data[res_data$nerr_site_id == get_site_code(data.file) & res_data$status == 'Active', ]
   }else{
@@ -29,9 +29,9 @@ get_site_coordinates <- function(data.file, active = TRUE){
   }
 
   sites <- res_data %>%
-    group_by(.data$nerr_site_id, .data$station_name
+    dplyr::group_by(.data$nerr_site_id, .data$station_name
              , .data$latitude, .data$longitude) %>%
-    summarise()
+    dplyr::summarise()
 
   sites$latitude <- as.numeric(as.character(sites$latitude))
   sites$longitude <- -as.numeric(as.character(sites$longitude))

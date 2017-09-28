@@ -44,8 +44,14 @@ data(apacpwq)
 dat <- apacpwq
 
 dat <- qaqc(apacpwq, qaqc_keep = c('0', '3', '5'))
-do_plt <- historical_range(dat, param = 'do_mgl', target_yr = 2012)
-do_plt <- historical_range(dat, param = 'do_mgl', target_yr = 2012, criteria = 2)
+# with criteria
+y <- historical_range(dat, param = 'do_mgl', target_yr = 2013, criteria = 2, abb = T)
+
+# w/o criteria
+x <- historical_range(dat, param = 'do_mgl', target_yr = 2013, abb = T)
+
+# add a y label
+x <- x + labs(x = NULL, y = "Dissolved Oxygen (mg/L)")
 }
 }
 \seealso{
