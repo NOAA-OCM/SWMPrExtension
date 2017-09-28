@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title></title>
+
+<script src="README_files/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="README_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="README_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="README_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="README_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="README_files/navigation-1.1/tabsets.js"></script>
+<link href="README_files/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="README_files/highlightjs-1.1/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
+
+
+<p><img src="swmpr_logo.png" /> ### <em>Julie Padilla, <a href="mailto:jpadilla@limno.com">jpadilla@limno.com</a></em>, <a href="www.limno.com">LimnoTech</a></p>
+<p><a href="https://travis-ci.org/padilla410/SWMPrExtension"><img src="https://travis-ci.org/padilla410/SWMPrExtension.svg?branch=master" alt="Travis-CI Build Status" /></a></p>
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+<div id="overview" class="section level1">
+<h1>Overview</h1>
+<p>The System Wide Monitoring Program (<a href="http://nerrs.noaa.gov/RCDefault.aspx?ID=18">SWMP</a>) was implemented by the National Estuarine Research Reserve System (<a href="http://nerrs.noaa.gov/">NERRS</a>) in 1995 to provide continuous monitoring data at over 140 continuous monitoring stations in 28 estuaries across the United States. SWMPrExtension (pronounce “swamper extension”) is an R package that provides additional functions to organize and analyze SWMP data and is intended as a companion package for <a href="https://github.com/fawda123/SWMPr">SWMPr</a> (pronounced “swamper”). Currently, there is no citation for SWMPrExtension.</p>
+<p><a href="https://github.com/fawda123/SWMPr">SWMPr</a> is an R package for retrieving, organizing, and analyzing estuary monitoring data from SWMP.SWMPr can be cited as follows:</p>
+<p>*Beck MW. 2016. SWMPr: An R package for retrieving, organizing, and analyzing environmental data for estuaries. The R Journal. 8(1):219-232. <a href="https://journal.r-project.org/archive/2016-1/beck.pdf*" class="uri">https://journal.r-project.org/archive/2016-1/beck.pdf*</a></p>
+</div>
+<div id="installing-the-package" class="section level1">
+<h1>Installing the package</h1>
+<p>This package is not currently available on CRAN, but will be in the near future</p>
+<p>The development (unstable) version of this package can be installed from Github:</p>
+<pre class="r"><code>install.packages(&#39;devtools&#39;)
+library(devtools)
+install_github(&#39;padilla410/SWMPrExtension&#39;)
+library(SWMPrExtension)</code></pre>
+</div>
+<div id="using-the-package" class="section level1">
+<h1>Using the package</h1>
+<p>Documentation for SWMPrExtension is currently in development.</p>
+<p>A quick summary of the SWMPr package can be found <a href="https://github.com/fawda123/SWMPr">here</a>. A detailed manuscript describing full use of the SWMPr package is available from the <a href="https://journal.r-project.org/archive/accepted/beck.pdf">R Journal</a>. All source materials for the manuscript are available <a href="https://github.com/fawda123/swmpr_manu">here</a>.</p>
+<p>SWMPrExtension adds several functions to existing concepts in SWMPr and introduces a new concept called “Reporting”.</p>
+<h3>
+Analyze
+</h3>
+<table>
+<tr>
+<td>
+<code>annual_range.swmpr</code>
+</td>
+<td>
+Working…
+</td>
+</tr>
+<tr>
+<td>
+<code>historical_range.swmpr</code>
+</td>
+<td>
+Working…
+</td>
+</tr>
+<tr>
+<td>
+<code>raw_boxplot.swmpr</code>
+</td>
+<td>
+Working…
+</td>
+</tr>
+<tr>
+<td>
+<code>seasonal_barplot.swmpr</code>
+</td>
+<td>
+Working…
+</td>
+</tr>
+<tr>
+<td>
+<code>seasonal_boxplot.swmpr</code>
+</td>
+<td>
+Working…
+</td>
+</tr>
+</table>
+<h3>
+Misc
+</h3>
+<table>
+<tr>
+<td>
+<code>assign_season</code>
+</td>
+<td>
+Working…
+</td>
+</tr>
+</table>
+<h3>
+Reporting
+</h3>
+<table>
+<tr>
+<td>
+<code>get_reserve</code>
+</td>
+<td>
+Working…
+</td>
+</tr>
+<tr>
+<td>
+<code>get_shp_name</code>
+</td>
+<td>
+Working…
+</td>
+</tr>
+<tr>
+<td>
+<code>get_site_code</code>
+</td>
+<td>
+Working…
+</td>
+</tr>
+<tr>
+<td>
+<code>get_site_coordinates</code>
+</td>
+<td>
+Working…
+</td>
+</tr>
+<tr>
+<td>
+<code>get_sites</code>
+</td>
+<td>
+Working…
+</td>
+</tr>
+</table>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

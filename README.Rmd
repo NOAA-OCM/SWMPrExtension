@@ -1,6 +1,13 @@
 ---
-output: github_document
+output:
+  html_document:
+    keep_md: yes
+    toc: no
+    self_contained: no
+  pdf_document:
+    toc: yes
 ---
+
 ![](swmpr_logo.png)
 ### *Julie Padilla, jpadilla@limno.com*, [LimnoTech](www.limno.com)
 
@@ -42,3 +49,28 @@ library(SWMPrExtension)
 Documentation for SWMPrExtension is currently in development.
 
 A quick summary of the SWMPr package can be found [here](https://github.com/fawda123/SWMPr). A detailed manuscript describing full use of the SWMPr package is available from the [R Journal](https://journal.r-project.org/archive/accepted/beck.pdf). All source materials for the manuscript are available [here](https://github.com/fawda123/swmpr_manu).
+
+SWMPrExtension adds several functions to existing concepts in SWMPr and introduces a new concept called "Reporting".
+
+<h3>Analyze</h3>
+<table>
+<tr><td><code>annual_range.swmpr</code></td><td>Working...</td></tr>
+<tr><td><code>historical_range.swmpr</code></td><td>Working...</td></tr>
+<tr><td><code>raw_boxplot.swmpr</code></td><td>Working...</td></tr>
+<tr><td><code>seasonal_barplot.swmpr</code></td><td>Working...</td></tr>
+<tr><td><code>seasonal_boxplot.swmpr</code></td><td>Working...</td></tr>
+</table>
+
+<h3>Misc</h3>
+<table>
+<tr><td><code>assign_season</code></td><td>Working...</td></tr>
+</table>
+
+<h3>Reporting</h3>
+<table>
+<tr><td><code>get_reserve</code></td><td>Working...</td></tr>
+<tr><td><code>get_shp_name</code></td><td>Working...</td></tr>
+<tr><td><code>get_site_code</code></td><td>Working...</td></tr>
+<tr><td><code>get_site_coordinates</code></td><td>Working...</td></tr>
+<tr><td><code>get_sites</code></td><td>Working...</td></tr>
+</table>
