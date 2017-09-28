@@ -133,16 +133,16 @@ annual_range.swmpr <- function(swmpr_in
     mx <- ceiling(mx)
     mn <- ifelse(log_trans == TRUE, 0.1, 0)
 
-    ln <- paste(target_yr, ' Daily Average', sep = '')
-    rng_avg <- paste(target_yr, ' Avg Daily Range', sep = '')
-    rng_mx <- paste(target_yr, ' Daily Range', sep = '')
+    lab_ln <- paste(target_yr, ' Daily Average', sep = '')
+    lab_rng_avg <- paste(target_yr, ' Avg Daily Range', sep = '')
+    lab_rng_mx <- paste(target_yr, ' Daily Range', sep = '')
 
     plt <-
       ggplot(data = dat_month, aes_(x = seas, y = avg, group = 1)) +
-      geom_ribbon(aes_(x = seas, ymax = maxi_avg, ymin = mini_avg, fill = rng_avg, alpha = rng_avg)) +
-      geom_ribbon(aes_(x = seas, ymax = maxi, ymin = mini, group = 1, fill = rng_mx, alpha = rng_mx)) +
+      geom_ribbon(aes_(x = seas, ymax = maxi_avg, ymin = mini_avg, fill = lab_rng_avg, alpha = lab_rng_avg)) +
+      geom_ribbon(aes_(x = seas, ymax = maxi, ymin = mini, group = 1, fill = lab_rng_mx, alpha = lab_rng_mx)) +
       geom_line(lwd = 1, color = 'steelblue3') +
-      geom_point(aes_(fill = ln, shape = ln), color = 'black', size = 2) +
+      geom_point(aes_(fill = lab_ln, shape = lab_ln), color = 'black', size = 2) +
       scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = comma) +
       labs(x = '', y = '') +
       theme_bw() +

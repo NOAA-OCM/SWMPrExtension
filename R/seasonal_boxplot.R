@@ -111,9 +111,9 @@ seasonal_boxplot.swmpr <- function(swmpr_in
   mx <- ceiling(mx)
   mn <- ifelse(log_trans == TRUE, 0.1, 0)
 
-  bp_fill <- paste(hist_rng[[1]], '-', hist_rng[[2]], ' Daily Averages', sep = '') # need to add in flex for 'min', 'max'
+  lab_bp_fill <- paste(hist_rng[[1]], '-', hist_rng[[2]], ' Daily Averages', sep = '') # need to add in flex for 'min', 'max'
 
-  plt <- ggplot(data = dat_hist, aes_(x = seas, y = res, fill = factor(bp_fill))) +
+  plt <- ggplot(data = dat_hist, aes_(x = seas, y = res, fill = lab_bp_fill)) +
     geom_boxplot(outlier.size = 0.5) +
     scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma) +
     scale_fill_manual(name = '', values = c('skyblue1')) +

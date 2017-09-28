@@ -136,11 +136,8 @@ seasonal_barplot.swmpr <- function(swmpr_in
     # Add data
     bar_seas <- ggplot(data = dat_hist, aes_(x = yr, y = res, fill = seas)) +
       geom_bar(stat = "identity") +
-      scale_y_continuous(expand = c(0, 0)
-                         , limits = c(0, mx)
-                         , breaks = seq(0 , mx, 5)) +
+      scale_y_continuous(expand = c(0, 0), limits = c(0, mx), breaks = seq(0 , mx, 5)) +
       scale_fill_manual(values = seas_col) +
-
       labs(x = NULL, y = NULL)
 
     bar_seas <- bar_seas +
@@ -165,7 +162,7 @@ seasonal_barplot.swmpr <- function(swmpr_in
 
     bar_seas <- bar_seas +
       theme(legend.key.size = unit(7, 'pt')) +
-      theme(legend.text = element_text(size = 9)) +
+      theme(legend.text = element_text(size = 8)) +
       theme(legend.spacing.x = unit(-5, 'pt'))
 
     return(bar_seas)
