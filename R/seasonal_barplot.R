@@ -35,7 +35,6 @@
 #' data(apaebmet)
 #' dat <- qaqc(apaebmet, qaqc_keep = c('0', '3', '5'))
 #'
-#' devtools::load_all(".")
 #' x <- seasonal_barplot(dat, param = 'totprcp'
 #'                       , season = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
 #'                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
