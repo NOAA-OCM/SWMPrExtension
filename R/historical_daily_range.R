@@ -109,7 +109,7 @@ historical_daily_range.swmpr <- function(swmpr_in
 
   #determine y axis transformation and y axis label
   y_trans <- ifelse(log_trans, 'log10', 'identity')
-  # y_label <- y_labeler(param = param, ...)
+  y_label <- y_labeler(param = param, ...)
 
   #determine if QAQC has been conducted
   if(attr(dat, 'qaqc_cols'))
@@ -175,6 +175,7 @@ historical_daily_range.swmpr <- function(swmpr_in
       geom_ribbon(data = dat_hist_avg, aes_(x = jd, ymin = mini, ymax = maxi, fill = lab_hist_avg_rng)) + #, alpha = lab_hist_obs_rng)) +
       geom_line(aes(color = lab_yr_ln), lwd = 1.5) +
       scale_x_continuous(breaks = brks, labels = brk_labs) +
+      expand_limits(y = 0) +
       labs(x = NULL, y = eval(y_label)) +
       theme_bw() +
       theme(legend.position = 'top', legend.direction = 'horizontal')
@@ -223,7 +224,8 @@ historical_daily_range.swmpr <- function(swmpr_in
     #
     #   plt <-
     #     plt +
-    #     ggtitle(ttl)
+    #     ggtitle(ttl) +
+    #     theme(plot.title = element_text(hjust = 0.5))
     # }
 
     return(plt)
