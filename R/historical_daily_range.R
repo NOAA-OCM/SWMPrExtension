@@ -219,14 +219,14 @@ historical_daily_range.swmpr <- function(swmpr_in
     }
 
     # add plot title if specified
-    # if(plot_title) {
-    #   ttl <- title_labeler(nerr_site_id = station)
-    #
-    #   plt <-
-    #     plt +
-    #     ggtitle(ttl) +
-    #     theme(plot.title = element_text(hjust = 0.5))
-    # }
+    if(plot_title) {
+      ttl <- title_labeler(nerr_site_id = station)
+
+      plt <-
+        plt +
+        ggtitle(ttl) +
+        theme(plot.title = element_text(hjust = 0.5))
+    }
 
     return(plt)
 
