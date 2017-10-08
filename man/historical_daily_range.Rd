@@ -9,7 +9,7 @@ historical_daily_range(swmpr_in, ...)
 
 \method{historical_daily_range}{swmpr}(swmpr_in, param = NULL,
   hist_rng = NULL, target_yr = NULL, criteria = NULL, log_trans = FALSE,
-  plot = TRUE, ...)
+  plot_title = FALSE, plot = TRUE, ...)
 }
 \arguments{
 \item{swmpr_in}{input swmpe object}
@@ -25,6 +25,8 @@ historical_daily_range(swmpr_in, ...)
 \item{criteria}{numeric, a numeric criteria that will be plotted as a horizontal line}
 
 \item{log_trans}{logical, should y-axis be log? Defaults to \code{FALSE}}
+
+\item{plot_title}{logical, should the station name be included as the plot title? Defaults to \code{FALSE}}
 
 \item{plot}{logical, should a plot be returned? Defaults to \code{TRUE}}
 }

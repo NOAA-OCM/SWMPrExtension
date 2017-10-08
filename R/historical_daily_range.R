@@ -8,6 +8,7 @@
 #' @param target_yr numeric, the target year that should be compared against the historic range. If target year is not specified then dot will not be plotted
 #' @param criteria numeric, a numeric criteria that will be plotted as a horizontal line
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
+#' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
 #' @param plot logical, should a plot be returned? Defaults to \code{TRUE}
 #' @param ... additional arguments passed to other methods (not used for this function).
 #'
@@ -65,6 +66,7 @@ historical_daily_range.swmpr <- function(swmpr_in
                                    , target_yr = NULL
                                    , criteria = NULL
                                    , log_trans = FALSE
+                                   , plot_title = FALSE
                                    , plot = TRUE
                                    , ...) {
 
@@ -105,8 +107,9 @@ historical_daily_range.swmpr <- function(swmpr_in
   if(is.null(target_yr))
     warning('No target year provided. Only historic range will be plotted.')
 
-  #determine y axis transformation
+  #determine y axis transformation and y axis label
   y_trans <- ifelse(log_trans, 'log10', 'identity')
+  y_label <- y_labeler(param = param, ...)
 
   #determine if QAQC has been conducted
   if(attr(dat, 'qaqc_cols'))
@@ -145,7 +148,7 @@ historical_daily_range.swmpr <- function(swmpr_in
                      , min = min(!!  mini, na.rm = T)
                      , max = max(!! maxi, na.rm = T))
 
-  dat_yr <- dat_all %>% dplyr::filter(year(date) == target_yr)
+  dat_yr <- dat_all %>% dplyr::filter(lubridate::year(date) == target_yr)
 
   if(length(dat_yr[1, ] < 365)) {
     jday_fill <- data.frame(julian_day = c(1:365))
@@ -172,7 +175,7 @@ historical_daily_range.swmpr <- function(swmpr_in
       geom_ribbon(data = dat_hist_avg, aes_(x = jd, ymin = mini, ymax = maxi, fill = lab_hist_avg_rng)) + #, alpha = lab_hist_obs_rng)) +
       geom_line(aes(color = lab_yr_ln), lwd = 1.5) +
       scale_x_continuous(breaks = brks, labels = brk_labs) +
-      labs(x = NULL, y = NULL) +
+      labs(x = NULL, y = eval(y_label)) +
       theme_bw() +
       theme(legend.position = 'top', legend.direction = 'horizontal')
 
@@ -181,13 +184,6 @@ historical_daily_range.swmpr <- function(swmpr_in
       plt +
       scale_color_manual('', values = c('steelblue3')) +
       scale_fill_manual('', values = c('gray80', 'gray60'))
-
-    # Override legend defaults
-    # plt <-
-    #   plt +
-    #   guides(alpha = guide_legend(override.aes = list(fill = c('steelblue3', 'gray40')), order = 3, reverse = T)
-    #          , shape = guide_legend(override.aes = list(fill = 'steelblue3'), order = 1)
-    #          , color = guide_legend(override.aes = list(color = 'gray40'), order = 2))
 
     # Adjust theme
     plt <-
@@ -221,8 +217,16 @@ historical_daily_range.swmpr <- function(swmpr_in
                , linetype = guide_legend(override.aes = list(color = 'red'), order = 3))
     }
 
+    # add plot title if specified
+    if(plot_title) {
+      ttl <- title_labeler(nerr_site_id = station)
+
+      plt <-
+        plt +
+        ggtitle(ttl)
+    }
+
     return(plt)
-    # return(dat_yr)
 
   } else {
 
