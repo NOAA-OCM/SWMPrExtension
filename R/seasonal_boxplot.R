@@ -58,6 +58,7 @@ seasonal_boxplot.swmpr <- function(swmpr_in
   res <- sym('result')
   dt <- sym('date')
   avg <- sym('mean')
+  medi <- sym('med')
 
   rng <- hist_rng
 
@@ -133,12 +134,12 @@ seasonal_boxplot.swmpr <- function(swmpr_in
       dplyr::group_by(!! seas, !! dt) %>%
       dplyr::summarise(result = FUN(!! parm)) %>%
       dplyr::group_by(!! seas) %>%
-      dplyr::summarise(mean = mean(.data$result, na.rm = T))
+      dplyr::summarise(med = median(.data$result, na.rm = T))
 
     pt_fill <- paste(target_yr, ' Average Daily Average', sep = '')
 
     plt <- plt +
-      geom_point(data = dat_yr, aes_(x = seas, y = avg, shape = factor(pt_fill)), fill = 'red', size = 2) +
+      geom_point(data = dat_yr, aes_(x = seas, y = medi, shape = factor(pt_fill)), fill = 'red', size = 2) +
       scale_shape_manual(name = '', values = c(21))
   }
 
