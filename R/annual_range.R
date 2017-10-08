@@ -7,8 +7,9 @@
 #' @param target_yr numeric, the target year that should be compared against the historic range. If target year is not specified then dot will not be plotted
 #' @param criteria numeric, a numeric criteria that will be plotted as a horizontal line
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
+#' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
 #' @param plot logical, should a plot be returned? Defaults to \code{TRUE}
-#' @param ... additional arguments passed to other methods. See \code{\link{assign_season}}
+#' @param ... additional arguments passed to other methods. See \code{\link{assign_season}} and \code{\link{y_labeler}}.
 #'
 #' @concept analyze
 #'
@@ -55,6 +56,7 @@ annual_range.swmpr <- function(swmpr_in
                                , target_yr = NULL
                                , criteria = NULL
                                , log_trans = FALSE
+                               , plot_title = FALSE
                                , plot = TRUE
                                    , ...) {
 
@@ -96,8 +98,9 @@ annual_range.swmpr <- function(swmpr_in
   if(is.null(target_yr))
     stop('No target year provided')
 
-  #determine y axis transformation
+  #determine y axis transformation and y axis label
   y_trans <- ifelse(log_trans, 'log10', 'identity')
+  y_label <- y_labeler(param = param, ...)
 
   #determine if QAQC has been conducted
   if(attr(dat, 'qaqc_cols'))
@@ -144,7 +147,7 @@ annual_range.swmpr <- function(swmpr_in
       geom_line(lwd = 1, color = 'steelblue3') +
       geom_point(aes_(fill = lab_ln, shape = lab_ln), color = 'black', size = 2) +
       scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = comma) +
-      labs(x = '', y = '') +
+      labs(x = NULL, y = eval(y_label)) +
       theme_bw() +
       theme(legend.position = 'top', legend.direction = 'horizontal')
 
@@ -174,6 +177,16 @@ annual_range.swmpr <- function(swmpr_in
         guides(alpha = guide_legend(override.aes = list(fill = 'steelblue3', linetype = 0), order = 2)
                , shape = guide_legend(override.aes = list(fill = 'steelblue3', linetype = 0), order = 1)
                , 'WQ Threshold' = guide_legend(order = 3))
+    }
+
+    # add plot title if specified
+    if(plot_title) {
+      ttl <- title_labeler(nerr_site_id = station)
+
+      plt <-
+        plt +
+        ggtitle(ttl) +
+        theme(plot.title = element_text(hjust = 0.5))
     }
 
     return(plt)

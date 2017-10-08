@@ -6,8 +6,9 @@
 #' @param param chr string of variable to plot
 #' @param target_yr numeric, if target year is not specified then dot will not be plotted. If target year is not specified the most recent year in the \code{swmpr_in} will be used.
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
+#' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
 #' @param criteria numeric, a numeric criteria that will be plotted as a horizontal line
-#' @param ... additional arguments passed to other methods. See \code{\link{assign_season}}
+#' @param ... additional arguments passed to other methods. See \code{\link{assign_season}} and \code{\link{y_labeler}}.
 #'
 #' @concept analyze
 #'
@@ -37,11 +38,12 @@ raw_boxplot <- function(swmpr_in, ...) UseMethod('raw_boxplot')
 #' @method raw_boxplot swmpr
 #'
 raw_boxplot.swmpr <- function(swmpr_in
-                                   , param = NULL
-                                   , target_yr = NULL
-                                   , criteria = NULL
-                                   , log_trans = FALSE
-                                   , ...) {
+                              , param = NULL
+                              , target_yr = NULL
+                              , criteria = NULL
+                              , log_trans = FALSE
+                              , plot_title = FALSE
+                              , ...) {
 
   dat <- swmpr_in
   parm <- sym(param)
@@ -80,8 +82,9 @@ raw_boxplot.swmpr <- function(swmpr_in
   #determine parameter column index
   parm_index <- grep(param, colnames(dat))
 
-  #determine y axis transformation
+  #determine y axis transformation and y axis label
   y_trans <- ifelse(log_trans, 'log10', 'identity')
+  y_label <- y_labeler(param = param, ...)
 
   # Assign the seasons and order them
   dat$season <- assign_season(dat$datetimestamp, abb = T, ...)
@@ -96,10 +99,9 @@ raw_boxplot.swmpr <- function(swmpr_in
 
   plt <- ggplot(data = dat, aes_(x = seas, y = parm, fill = factor(bp_fill))) +
     geom_boxplot(outlier.size = 0.5) +
-    scale_y_continuous(trans = y_trans, labels = scales::comma) +
     scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma) +
     scale_fill_manual(name = '', values = c('skyblue1')) +
-    labs(x = '', y = '') +
+    labs(x = NULL, y = eval(y_label)) +
     theme_bw() +
     theme(legend.position = 'top'
           , legend.direction = 'horizontal')
@@ -117,6 +119,16 @@ raw_boxplot.swmpr <- function(swmpr_in
                     , 'WQ Threshold' = guide_legend(order = 2))
 
 
+  }
+
+  # add plot title if specified
+  if(plot_title) {
+    ttl <- title_labeler(nerr_site_id = station)
+
+    plt <-
+      plt +
+      ggtitle(ttl) +
+      theme(plot.title = element_text(hjust = 0.5))
   }
 
   return(plt)

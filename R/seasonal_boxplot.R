@@ -8,8 +8,9 @@
 #' @param target_yr numeric, the target year that should be compared against the historic range. If target year is not specified then dot will not be plotted
 #' @param criteria numeric, a numeric criteria that will be plotted as a horizontal line
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
+#' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
 #' @param FUN function used to aggregate daily SWMP data
-#' @param ... additional arguments passed to other methods. See \code{\link{assign_season}}
+#' @param ... additional arguments passed to other methods. See \code{\link{assign_season}} and \code{\link{y_labeler}}.
 #'
 #' @concept analyze
 #'
@@ -46,6 +47,7 @@ seasonal_boxplot.swmpr <- function(swmpr_in
                                    , target_yr = NULL
                                    , criteria = NULL
                                    , log_trans = FALSE
+                                   , plot_title = FALSE
                                    , FUN = function(x) mean(x, na.rm = T)
                                    , ...) {
 
@@ -83,8 +85,9 @@ seasonal_boxplot.swmpr <- function(swmpr_in
   if(!is.null(target_yr))
     warning('No target year provided')
 
-  #determine y axis transformation
+  #determine y axis transformation and y axis label
   y_trans <- ifelse(log_trans, 'log10', 'identity')
+  y_label <- y_labeler(param = param, ...)
 
   #determine if QAQC has been conducted
   if(attr(dat, 'qaqc_cols'))
@@ -117,7 +120,7 @@ seasonal_boxplot.swmpr <- function(swmpr_in
     geom_boxplot(outlier.size = 0.5) +
     scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma) +
     scale_fill_manual(name = '', values = c('skyblue1')) +
-    labs(x = '', y = '') +
+    labs(x = NULL, y = eval(y_label)) +
     theme_bw() +
     theme(legend.position = 'top'
           , legend.direction = 'horizontal')
@@ -151,8 +154,16 @@ seasonal_boxplot.swmpr <- function(swmpr_in
     plt <- plt + guides(fill = guide_legend(order = 1)
                     , shape = guide_legend(order = 2, override.aes = list(linetype = 0))
                     , 'WQ Threshold' = guide_legend(order = 3))
+  }
 
+  # add plot title if specified
+  if(plot_title) {
+    ttl <- title_labeler(nerr_site_id = station)
 
+    plt <-
+      plt +
+      ggtitle(ttl) +
+      theme(plot.title = element_text(hjust = 0.5))
   }
 
   return(plt)

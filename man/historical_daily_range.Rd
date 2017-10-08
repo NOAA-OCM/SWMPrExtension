@@ -12,7 +12,7 @@ historical_daily_range(swmpr_in, ...)
   plot_title = FALSE, plot = TRUE, ...)
 }
 \arguments{
-\item{swmpr_in}{input swmpe object}
+\item{swmpr_in}{input swmp object}
 
 \item{...}{additional arguments passed to other methods (not used for this function).}
 

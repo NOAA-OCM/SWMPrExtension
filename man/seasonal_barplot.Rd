@@ -8,12 +8,13 @@
 seasonal_barplot(swmpr_in, ...)
 
 \method{seasonal_barplot}{swmpr}(swmpr_in, param = NULL, hist_rng = NULL,
-  rng_avg = FALSE, log_trans = FALSE, convert = FALSE, plot = TRUE, ...)
+  rng_avg = FALSE, log_trans = FALSE, convert = FALSE,
+  plot_title = FALSE, plot = TRUE, ...)
 }
 \arguments{
 \item{swmpr_in}{input swmpe object}
 
-\item{...}{additional arguments passed to other methods. See \code{\link{assign_season}}}
+\item{...}{additional arguments passed to other methods. See \code{\link{assign_season}} and \code{\link{y_labeler}}.}
 
 \item{param}{chr string of variable to plot}
 
@@ -24,6 +25,8 @@ seasonal_barplot(swmpr_in, ...)
 \item{log_trans}{logical, should y-axis be log? Defaults to \code{FALSE}}
 
 \item{convert}{logical, convert from metric to US units? Defaults to \code{FALSE}}
+
+\item{plot_title}{logical, should the station name be included as the plot title? Defaults to \code{FALSE}}
 
 \item{plot}{logical, should a plot be returned? Defaults to \code{TRUE}}
 }
