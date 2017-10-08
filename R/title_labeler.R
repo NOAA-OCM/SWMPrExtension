@@ -12,17 +12,19 @@
 #'
 title_labeler <- function(nerr_site_id) {
 
-  abbrev <- substr(nerr_site_id, 4, 5)
+  # abbrev <- substr(nerr_site_id, 4, 5)
+  #
+  # dat_locs <- get('sampling_stations', envir = 'data')
+  #
+  # dat_locs$Station.Code <- trimws(dat_locs$Station.Code)
+  #
+  # ttl <- dat_locs[dat_locs$Station.Code == nerr_site_id, ]$Station.Name
+  #
+  # ttl <- trimws(ttl)
+  #
+  # ttl <- paste(ttl, '(', abbrev, ')', sep = '')
 
-  dat_locs <- data(sampling_stations)#get('sampling_stations')
-
-  dat_locs$Station.Code <- trimws(dat_locs$Station.Code)
-
-  ttl <- dat_locs[dat_locs$Station.Code == nerr_site_id, ]$Station.Name
-
-  ttl <- trimws(ttl)
-
-  ttl <- paste(ttl, '(', abbrev, ')', sep = '')
+  ttl <- 'fake title'
 
   return(ttl)
 }

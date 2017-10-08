@@ -109,7 +109,7 @@ historical_daily_range.swmpr <- function(swmpr_in
 
   #determine y axis transformation and y axis label
   y_trans <- ifelse(log_trans, 'log10', 'identity')
-  y_label <- y_labeler(param = param, ...)
+  # y_label <- y_labeler(param = param, ...)
 
   #determine if QAQC has been conducted
   if(attr(dat, 'qaqc_cols'))
@@ -218,13 +218,13 @@ historical_daily_range.swmpr <- function(swmpr_in
     }
 
     # add plot title if specified
-    if(plot_title) {
-      ttl <- title_labeler(nerr_site_id = station)
-
-      plt <-
-        plt +
-        ggtitle(ttl)
-    }
+    # if(plot_title) {
+    #   ttl <- title_labeler(nerr_site_id = station)
+    #
+    #   plt <-
+    #     plt +
+    #     ggtitle(ttl)
+    # }
 
     return(plt)
 
