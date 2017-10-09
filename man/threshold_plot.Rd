@@ -3,36 +3,44 @@
 \name{threshold_plot}
 \alias{threshold_plot}
 \alias{threshold_plot.swmpr}
-\title{Seasonal boxplots}
+\title{Water Quality Threshold Plot}
 \usage{
 threshold_plot(swmpr_in, ...)
 
-\method{threshold_plot}{swmpr}(swmpr_in, param = NULL, hist_rng = NULL,
-  target_yr = NULL, thresholds = NULL, log_trans = FALSE, ...)
+\method{threshold_plot}{swmpr}(swmpr_in, param = NULL, rng = NULL,
+  thresholds = NULL, threshold_labs = c("Poor", "Fair", "Good"),
+  crit_threshold = F, log_trans = FALSE, monthly_smooth = FALSE,
+  plot_title = FALSE, ...)
 }
 \arguments{
 \item{swmpr_in}{input swmpr object}
 
-\item{...}{additional arguments passed to other methods. See \code{\link{assign_season}}}
+\item{...}{additional arguments passed to other methods.#' @param ... additional arguments passed to other methods. See \code{\link{y_labeler}}.}
 
-\item{param}{chr string of variable to plot}
+\item{param}{chr string of variable to plot, also includes the calculated parameter dissolved inorganic nitrogen ('din'). See details for more information.}
 
-\item{hist_rng}{numeric vector, if historic range is not specified then the min/max values of the data set will be used.}
-
-\item{target_yr}{numeric, the target year that should be compared against the historic range. If target year is not specified then dot will not be plotted}
+\item{rng}{numeric vector, if range is not specified then the entire data set will be used.}
 
 \item{thresholds}{numeric vector, numeric criteria that will be plotted in the background}
 
+\item{threshold_labs}{chr vector of labels for categories created by \code{thresholds}.}
+
+\item{crit_threshold}{logical, should the critical threshold be highlighted with a bold, dashed line? Defaults to \code{FALSE}}
+
 \item{log_trans}{logical, should y-axis be log? Defaults to \code{FALSE}}
+
+\item{monthly_smooth}{logical, calculate a monthly average? Defaults to \code{FALSE}}
+
+\item{plot_title}{logical, should the station name be included as the plot title? Defaults to \code{FALSE}}
 }
 \value{
 A \code{\link[ggplot2]{ggplot}} object
 }
 \description{
-Annual time series for year of interest on top of long-term percentiles
+Visualize water quality exceedances
 }
 \details{
-Annual time series for year of interest on top of long-term percentiles
+Visualize exceedances of user-specified water quality thresholds.
 }
 \seealso{
 \code{\link[ggplot2]{ggplot}}
