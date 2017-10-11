@@ -8,9 +8,9 @@
 threshold_plot(swmpr_in, ...)
 
 \method{threshold_plot}{swmpr}(swmpr_in, param = NULL, rng = NULL,
-  thresholds = NULL, threshold_labs = c("Poor", "Fair", "Good"),
-  crit_threshold = F, log_trans = FALSE, monthly_smooth = FALSE,
-  plot_title = FALSE, ...)
+  thresholds = NULL, threshold_labs = c("Good", "Fair", "Poor"),
+  threshold_cols = c("#ABD9E9", "#FFFFCC", "#FEC596"), crit_threshold = F,
+  log_trans = FALSE, monthly_smooth = FALSE, plot_title = FALSE, ...)
 }
 \arguments{
 \item{swmpr_in}{input swmpr object}
@@ -24,6 +24,8 @@ threshold_plot(swmpr_in, ...)
 \item{thresholds}{numeric vector, numeric criteria that will be plotted in the background}
 
 \item{threshold_labs}{chr vector of labels for categories created by \code{thresholds}.}
+
+\item{threshold_cols}{chr vector of color values for categories created by \code{thresholds}.}
 
 \item{crit_threshold}{logical, should the critical threshold be highlighted with a bold, dashed line? Defaults to \code{FALSE}}
 
@@ -41,6 +43,65 @@ Visualize water quality exceedances
 }
 \details{
 Visualize exceedances of user-specified water quality thresholds.
+}
+\examples{
+\dontrun{
+data(apacpwq)
+dat_wq <- apacpwq
+
+dat_wq <- qaqc(dat_wq, qaqc_keep = c(0, 3, 5))
+
+## Due to the volume of instantaneous data, these plots are a bit slow
+x <-
+  threshold_plot(dat_wq, param = 'do_mgl'
+                 , thresholds = c(2, 5)
+                 , threshold_labs = c('Poor', 'Fair', 'Good')
+                 , monthly_smooth = T
+                 , threshold_cols = c('#FEC596', '#FFFFCC', '#ABD9E9'))
+
+
+y <-
+  threshold_plot(dat_wq, param = 'do_mgl'
+                 , rng = 2012
+                 , thresholds = c(2, 5)
+                 , threshold_labs = c('Poor', 'Fair', 'Good')
+                 , threshold_cols = c('#FEC596', '#FFFFCC', '#ABD9E9'))
+
+z <-
+  threshold_plot(dat_wq, param = 'do_mgl'
+                 , rng = 2012
+                 , thresholds = c(2, 5)
+                 , threshold_labs = c('Poor', 'Fair', 'Good')
+                 , threshold_cols = c('#FEC596', '#FFFFCC', '#ABD9E9')
+                 , monthly_smooth = T)
+
+
+data(apacpnut)
+dat_nut <- apacpnut
+
+dat_nut <- qaqc(dat_nut, qaqc_keep = c(0, 3, 5))
+dat_nut <- rem_reps(dat_nut)
+
+x <-
+  threshold_plot(dat_nut, param = 'chla_n'
+                 , thresholds = c(2, 5)
+                 , threshold_labs = c('Good', 'Fair', 'Poor'))
+
+
+y <-
+  threshold_plot(dat_nut, param = 'chla_n'
+                 , rng = 2012
+                 , thresholds = c(2, 5)
+                 , threshold_labs = c('Good', 'Fair', 'Poor'))
+
+## Nutrient plots are not capable of accidentally displaying any kind of smooth
+z <-
+  threshold_plot(dat_nut, param = 'chla_n'
+                 , rng = 2012
+                 , thresholds = c(2, 5)
+                 , threshold_labs = c('Good', 'Fair', 'Poor')
+                 , monthly_smooth = T)
+}
 }
 \seealso{
 \code{\link[ggplot2]{ggplot}}

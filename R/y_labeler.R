@@ -20,7 +20,7 @@ y_labeler <- function(param, converted = F) {
   met_params <- c('atemp', 'rh', 'bp', 'wspd', 'maxwspd'
                   , 'maxwspdt', 'wdir', 'swdir', 'totpar'
                   , 'totprcp', 'totsorad')
-  nut_params <- c('po4f', 'nh4f', 'no2f', 'no3f', 'no23f', 'chla_n')
+  nut_params <- c('po4f', 'nh4f', 'no2f', 'no3f', 'no23f', 'chla_n', 'din', 'dip')
 
   # Parameter labels
   wq_lab <- c(quote(expression(paste('Water Temperature (', ~degree, 'C)'))), 'Specific Conductivity (mS/cm)', 'Salinity (psu)', 'Dissolved Oxygen Saturation (%)'
@@ -31,7 +31,8 @@ y_labeler <- function(param, converted = F) {
                , 'Maximum Wind Speed (m/s)', 'Maximum Time of Wind Speed Measurement (hh:mm)', 'Wind Direction', 'Wind Direction Standard Deviation (sd)'
                , quote(expression(paste('Photosynthetically Active Radiation (mmol/ '~m^2, ')'))), 'Precipitiation (mm)', quote(expression(paste('Total Solar Radiation (W/ '~m^2, ')'))))
 
-  nut_lab <- c('Orthophosphate (mg/L)', 'Ammonium (mg/L)', 'Nitrite (mg/L)', 'Nitrate  (mg/L)', 'Nitrite + Nitrate  (mg/L)', quote(expression(paste('Chlorophyll-a (', ~mu, 'g/L)'))))
+  nut_lab <- c('Orthophosphate (mg/L)', 'Ammonium (mg/L)', 'Nitrite (mg/L)', 'Nitrate  (mg/L)', 'Nitrite + Nitrate  (mg/L)', quote(expression(paste('Chlorophyll-a (', ~mu, 'g/L)')))
+               , 'Dissolved Inorganic Nitrogen (mg/L)', 'Dissolved Inorganic Phosphorus (mg/L)')
 
   # Combine together for lookup
   all_params <- c(wq_params, met_params, nut_params)
