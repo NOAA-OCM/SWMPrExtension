@@ -9,11 +9,17 @@ set_date_break_labs(rng)
 \arguments{
 \item{rng}{date range years}
 }
+\value{
+a chr string for \code{\link[scales]{date_labels}}
+}
 \description{
 Select reasonable labels for breaks used in scale_x_datetime
 }
 \details{
-Annual time series for year of interest on top of long-term percentiles
+A helper function for easier date label setting
+}
+\seealso{
+\code{\link{set_date_breaks}}
 }
 \author{
 Julie Padilla
