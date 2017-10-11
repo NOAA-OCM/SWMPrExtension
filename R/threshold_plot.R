@@ -130,7 +130,6 @@ threshold_plot.swmpr <- function(swmpr_in
     rng <- c(min(lubridate::year(dat$datetimestamp), na.rm = T), max(lubridate::year(dat$datetimestamp), na.rm = T))
   }
 
-  # return(rng)
   #determine that variable name exists
   if(!any(param %in% parameters | param != 'din'))
     stop('Param argument must name input column')
@@ -154,16 +153,6 @@ threshold_plot.swmpr <- function(swmpr_in
                           , lubridate::year(.data$datetimestamp) >= min(rng))
   }
 
-
-  #determine plotting color palette based on range
-  ts_col <- ifelse(length(unique(rng)) > 1, 'gray80', 'steelblue3') #check with colorcop
-  smooth_col <- ifelse(length(unique(rng)) > 1, 'gray50', 'royalblue4') #check with colorcop
-  smooth_ln <- ifelse(length(unique(rng)) > 3, 'solid', smooth_ln <- 'dashed') #check with colorcop
-  # brks <- ifelse(diff(rng) > 3, '2 years', '1 month')
-  # lab_brks <- ifelse(diff(rng) > 3, '%Y', '%M')
-
-
-  # return(rng)
   if(param == 'din') {
     dat$din <- dat$no2f + dat$no3f + dat$nh4f
   }
@@ -172,6 +161,15 @@ threshold_plot.swmpr <- function(swmpr_in
     dat$din <- dat$po4f
   }
 
+  # plot prep
+  #determine plotting color palette based on range
+  ts_col <- ifelse(length(unique(rng)) > 1, 'gray80', 'steelblue3') #check with colorcop
+  smooth_col <- ifelse(length(unique(rng)) > 1, 'gray50', 'royalblue4') #check with colorcop
+  smooth_ln <- ifelse(length(unique(rng)) > 2, 'solid', 'dashed')
+
+  brks <- set_date_breaks(rng)
+  lab_brks <- set_date_break_labs(rng)
+# return(brks)
   # set y axis range
   mx <- max(dat[, grep(param, colnames(dat))], na.rm = T)
   mx <- ifelse(max(thresholds) > mx, 1.1 * max(thresholds), mx)
@@ -179,7 +177,7 @@ threshold_plot.swmpr <- function(swmpr_in
   mn <- ifelse(log_trans == TRUE, 0.1, 0)
 
   # set legend label and time series line type
-  lab_dat <- ifelse(length(unique(rng)) > 1, paste(rng[[1]], '-', rng[[2]], ' Inst Data'), paste(rng[[1]], ' Inst Data'))
+  lab_dat <- ifelse(length(unique(rng)) > 1, paste(rng[[1]], '-', rng[[2]], ' Data', sep = ''), paste(rng[[1]], ' Data', sep = ''))
   ts_ln <- 'solid'
 
   plt <-
@@ -200,7 +198,7 @@ threshold_plot.swmpr <- function(swmpr_in
   plt <-
     plt +
     geom_line(aes(color = lab_dat, linetype = lab_dat), lwd = 1) +
-    # scale_x_datetime(date_breaks = brks, date_labels = lab_brks) +
+    scale_x_datetime(date_breaks = brks, date_labels = lab_brks) +
     scale_y_continuous(limits = c(mn, mx)) +
     scale_color_manual('', values = c(ts_col)) +
     scale_linetype_manual('', values = c(ts_ln)) +
