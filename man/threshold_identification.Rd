@@ -40,27 +40,26 @@ Add some details about how this thing works here.
 ## change the type argument if plotting discrete and continuous data
 wq <- apacpwq
 nut <- apacpnut
-met <- apaebmet
 
-threshold_identification(wq, param = 'do_mgl'
-, parameter_threshold = c(2)
-, threshold_type = '<', time_threshold = 2)
-threshold_identification(wq, param = c('do_mgl', 'ph', 'temp')
-, parameter_threshold = c('2', '5', '30')
-, threshold_type = c('<', '<', '>'), time_threshold = 2)
+wq_pars<- threshold_identification(dat_wq, param = c('do_mgl', 'ph', 'temp')
+                          , parameter_threshold = c('2', '5', '30')
+                          , threshold_type = c('<', '<', '>'), time_threshold = 2)
+wq_par<- threshold_identification(dat_wq, param = c('do_mgl')
+                          , parameter_threshold = c('2')
+                          , threshold_type = c('<'), time_threshold = 2)
 
-threshold_identification(nut, param = 'do_mgl'
-, parameter_threshold = c(2)
-, threshold_type = '<', time_threshold = 2)
-threshold_identification(nut, param = c('do_mgl', 'ph', 'temp')
-, parameter_threshold = c('2', '5', '30')
-, threshold_type = c('<', '<', '>'), time_threshold = 2)
 
-threshold_identification(met, param = 'tot_prcp', parameter_threshold = c(2)
-, threshold_type = '<', time_threshold = 2)
-threshold_identification(met, param = c('tot_prcp', 'temp', 'temp')
-, parameter_threshold = c('2', '5', '30')
-, threshold_type = c('<', '<', '>'), time_threshold = 2)
+nut_pars <- threshold_identification(dat_nut, param = c('chla_n', 'po4f')
+                          , parameter_threshold = c('10', '0.01')
+                          , threshold_type = c('>', '>'))
+
+nut_par <- threshold_identification(dat_nut, param = c('chla_n')
+                          , parameter_threshold = c('10')
+                          , threshold_type = c('>'))
+
+nut_err <- threshold_identification(dat_nut, param = c('chla_n')
+                          , parameter_threshold = c('30')
+                          , threshold_type = c('>'))
 
 }
 }
