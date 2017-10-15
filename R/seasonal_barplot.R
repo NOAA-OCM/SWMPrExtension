@@ -171,8 +171,8 @@ seasonal_barplot.swmpr <- function(swmpr_in
     if(plot_title) {
       ttl <- title_labeler(nerr_site_id = station)
 
-      plt <-
-        plt +
+      bar_seas <-
+        bar_seas +
         ggtitle(ttl) +
         theme(plot.title = element_text(hjust = 0.5))
     }

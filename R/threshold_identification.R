@@ -150,9 +150,12 @@ threshold_identification.swmpr <- function(swmpr_in, param, parameter_threshold,
       y <- rle(x)
       z <- rel_tbl(x = y, y = dat[, 'datetimestamp'], tstep = ts)
 
+      z$parameter <- param
+
       out <- z %>%
-        dplyr::mutate(.data$parameter == param) %>%
-        dplyr::left_join(.data, df_statements)
+        dplyr::mutate(.data$parameter == param)
+
+      out<- dplyr::left_join(out, df_statements, by = 'parameter')
 
       out <- dplyr::select(out, .data$parameter, .data$starttime
                            , .data$endtime, .data$duration, .data$thr_violation)
