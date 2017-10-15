@@ -145,7 +145,6 @@ threshold_plot.swmpr <- function(swmpr_in
   #determine y axis transformation, y axis label
   y_trans <- ifelse(log_trans, 'log10', 'identity')
   y_label <- y_labeler(param = param, ...)
-  # y_label <- ifelse(param == 'din', 'Dissolved Inorganic Nitrogen (mg/L)', y_labeler(param = param, ...))
 
   ##filter for range
   if(!is.null(rng)) {
