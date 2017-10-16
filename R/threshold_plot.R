@@ -162,8 +162,8 @@ threshold_plot.swmpr <- function(swmpr_in
 
   # plot prep
   #determine plotting color palette based on range
-  ts_col <- ifelse(length(unique(rng)) > 1, 'gray80', 'steelblue3') #check with colorcop
-  smooth_col <- ifelse(length(unique(rng)) > 1, 'gray50', 'royalblue4') #check with colorcop
+  ts_col <- ifelse(length(unique(rng)) > 1, '#B3B3B3', '#4F94CD') #check with colorcop
+  smooth_col <- ifelse(length(unique(rng)) > 1, '#7F7F7F', '#36648B') #check with colorcop
   smooth_ln <- ifelse(length(unique(rng)) > 2, 'solid', 'dashed')
 
   brks <- set_date_breaks(rng)
@@ -262,8 +262,8 @@ threshold_plot.swmpr <- function(swmpr_in
     plt <-
       plt +
       geom_line(data = df_smooth, aes_(x = dt, y = avg, color = lab_smooth, linetype = lab_smooth), lwd = 1) +
-      scale_color_manual('', values = c(smooth_col, ts_col)) +
-      scale_linetype_manual('', values = c(smooth_ln, ts_ln))
+      scale_color_manual('', values = c(ts_col, smooth_col)) +
+      scale_linetype_manual('', values = c(ts_col, smooth_col))
 
   }
 

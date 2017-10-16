@@ -95,10 +95,6 @@ seasonal_boxplot.swmpr <- function(swmpr_in
   if(attr(dat, 'qaqc_cols'))
     warning('QAQC columns present. QAQC not performed before analysis.')
 
-  ##historic range
-  dat_hist <- dat %>% dplyr::filter(lubridate::year(.data$datetimestamp) >= rng[[1]]
-                                    & lubridate::year(.data$datetimestamp) <= rng[[2]])
-
   # Assign the seasons and order them
   dat$season <- assign_season(dat$datetimestamp, abb = T, ...)
 
@@ -106,7 +102,11 @@ seasonal_boxplot.swmpr <- function(swmpr_in
   dat$date <- lubridate::floor_date(dat$datetimestamp, unit = 'days')
 
   # Filter for parameter of interest
-  dat <- dat %>% dplyr::select(.data$datetimestamp, date, .data$season, !!parm)
+  dat <- dat[, c('date', 'season', param)]
+
+  ##historic range
+  dat_hist <- dat %>% dplyr::filter(lubridate::year(.data$datetimestamp) >= rng[[1]]
+                                    & lubridate::year(.data$datetimestamp) <= rng[[2]])
 
   dat_hist <- dat_hist %>%
     group_by(!! seas, !! dt) %>%
@@ -116,12 +116,12 @@ seasonal_boxplot.swmpr <- function(swmpr_in
   mx <- ceiling(mx)
   mn <- ifelse(log_trans == TRUE, 0.1, 0)
 
-  lab_bp_fill <- paste(hist_rng[[1]], '-', hist_rng[[2]], ' Daily Averages', sep = '') # need to add in flex for 'min', 'max'
+  lab_bp_fill <- lab_bp_fill <- paste('Daily Averages (', rng[[1]], '-', rng[[2]], ')', sep = '') # need to add in flex for 'min', 'max'
 
   plt <- ggplot(data = dat_hist, aes_(x = seas, y = res, fill = lab_bp_fill)) +
     geom_boxplot(outlier.size = 0.5) +
     scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma) +
-    scale_fill_manual(name = '', values = c('skyblue1')) +
+    scale_fill_manual(name = '', values = c('#D9D9D9')) +
     labs(x = NULL, y = eval(y_label)) +
     theme_bw() +
     theme(legend.position = 'top'
@@ -145,8 +145,8 @@ seasonal_boxplot.swmpr <- function(swmpr_in
     theme(legend.spacing.x = unit(-6, 'pt'))
 
   # Add target year dots if specified
-  if(!is.null(target_yr)) {
-    dat_yr <- dat %>% dplyr::filter(lubridate::year(.data$datetimestamp) == target_yr)
+  if(is.null(target_yr)) {
+    dat_yr <- dat %>% dplyr::filter(lubridate::year(.data$date) == target_yr)
 
     dat_yr <- dat_yr %>%
       dplyr::group_by(!! seas, !! dt) %>%
@@ -154,10 +154,10 @@ seasonal_boxplot.swmpr <- function(swmpr_in
       dplyr::group_by(!! seas) %>%
       dplyr::summarise(med = stats::median(.data$result, na.rm = T))
 
-    pt_fill <- paste(target_yr, ' Average Daily Average', sep = '')
+    pt_fill <- paste('Median Daily Average (', target_yr, ')', sep = '')
 
     plt <- plt +
-      geom_point(data = dat_yr, aes_(x = seas, y = medi, shape = factor(pt_fill)), fill = 'red', size = 2) +
+      geom_point(data = dat_yr, aes_(x = seas, y = medi, shape = factor(pt_fill)), fill = '#65BCFF', size = 2) +
       scale_shape_manual(name = '', values = c(21))
   }
 
