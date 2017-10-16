@@ -8,8 +8,9 @@
 #' @param rng_avg logical, should a longterm average be included on the plot? Defaults to \code{FALSE}
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
 #' @param convert logical, convert from metric to US units? Defaults to \code{FALSE}
+#' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
 #' @param plot logical, should a plot be returned? Defaults to \code{TRUE}
-#' @param ... additional arguments passed to other methods. See \code{\link{assign_season}}
+#' @param ... additional arguments passed to other methods. See \code{\link{assign_season}} and \code{\link{y_labeler}}.
 #'
 #' @concept analyze
 #'
@@ -35,7 +36,6 @@
 #' data(apaebmet)
 #' dat <- qaqc(apaebmet, qaqc_keep = c('0', '3', '5'))
 #'
-#' devtools::load_all(".")
 #' x <- seasonal_barplot(dat, param = 'totprcp'
 #'                       , season = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
 #'                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
@@ -68,6 +68,7 @@ seasonal_barplot.swmpr <- function(swmpr_in
                                , rng_avg = FALSE
                                , log_trans = FALSE
                                , convert = FALSE
+                               , plot_title = FALSE
                                , plot = TRUE
                                , ...) {
 
@@ -102,8 +103,9 @@ seasonal_barplot.swmpr <- function(swmpr_in
   if(!(param %in% c('totprcp', 'totpar')))
     stop('Param argument must be precipitation (totprcp) or PAR (totpar)')
 
-  #determine y axis transformation
+  #determine y axis transformation and y axis label
   y_trans <- ifelse(log_trans, 'log10', 'identity')
+  y_label <- y_labeler(param = param, ...)
 
   #determine if QAQC has been conducted
   if(attr(dat, 'qaqc_cols'))
@@ -138,7 +140,7 @@ seasonal_barplot.swmpr <- function(swmpr_in
       geom_bar(stat = "identity") +
       scale_y_continuous(expand = c(0, 0), limits = c(0, mx), breaks = seq(0 , mx, 5)) +
       scale_fill_manual(values = seas_col) +
-      labs(x = NULL, y = NULL)
+      labs(x = NULL, y = eval(y_label))
 
     bar_seas <- bar_seas +
       geom_hline(aes(yintercept = mean(dat_hist$result), linetype = factor(lab_parm))
@@ -156,7 +158,7 @@ seasonal_barplot.swmpr <- function(swmpr_in
       theme(axis.title.x = element_text(margin = unit(c(8, 0, 0, 0), 'pt'))
             , axis.title.y = element_text(margin = unit(c(0, 8, 0, 0), 'pt'), angle = 90))
 
-    # AMF formatting requests
+    # Formatting text
     bar_seas <- bar_seas +
       theme(text = element_text(size = 16))
 
@@ -164,6 +166,16 @@ seasonal_barplot.swmpr <- function(swmpr_in
       theme(legend.key.size = unit(7, 'pt')) +
       theme(legend.text = element_text(size = 8)) +
       theme(legend.spacing.x = unit(-5, 'pt'))
+
+    # add plot title if specified
+    if(plot_title) {
+      ttl <- title_labeler(nerr_site_id = station)
+
+      bar_seas <-
+        bar_seas +
+        ggtitle(ttl) +
+        theme(plot.title = element_text(hjust = 0.5))
+    }
 
     return(bar_seas)
 

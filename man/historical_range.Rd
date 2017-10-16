@@ -3,18 +3,18 @@
 \name{historical_range}
 \alias{historical_range}
 \alias{historical_range.swmpr}
-\title{Historical Range Timeseries}
+\title{Historical Monthly/Seasonal Range Timeseries}
 \usage{
 historical_range(swmpr_in, ...)
 
 \method{historical_range}{swmpr}(swmpr_in, param = NULL, hist_rng = NULL,
-  target_yr = NULL, criteria = NULL, log_trans = FALSE, plot = TRUE,
-  ...)
+  target_yr = NULL, criteria = NULL, log_trans = FALSE,
+  plot_title = FALSE, plot = TRUE, ...)
 }
 \arguments{
 \item{swmpr_in}{input swmpe object}
 
-\item{...}{additional arguments passed to other methods. See \code{\link{assign_season}}}
+\item{...}{additional arguments passed to other methods. See \code{\link{assign_season}} and \code{\link{y_labeler}}.}
 
 \item{param}{chr string of variable to plot}
 
@@ -25,6 +25,8 @@ historical_range(swmpr_in, ...)
 \item{criteria}{numeric, a numeric criteria that will be plotted as a horizontal line}
 
 \item{log_trans}{logical, should y-axis be log? Defaults to \code{FALSE}}
+
+\item{plot_title}{logical, should the station name be included as the plot title? Defaults to \code{FALSE}}
 
 \item{plot}{logical, should a plot be returned? Defaults to \code{TRUE}}
 }

@@ -8,12 +8,12 @@
 raw_boxplot(swmpr_in, ...)
 
 \method{raw_boxplot}{swmpr}(swmpr_in, param = NULL, target_yr = NULL,
-  criteria = NULL, log_trans = FALSE, ...)
+  criteria = NULL, log_trans = FALSE, plot_title = FALSE, ...)
 }
 \arguments{
 \item{swmpr_in}{input swmp object}
 
-\item{...}{additional arguments passed to other methods. See \code{\link{assign_season}}}
+\item{...}{additional arguments passed to other methods. See \code{\link{assign_season}} and \code{\link{y_labeler}}.}
 
 \item{param}{chr string of variable to plot}
 
@@ -22,6 +22,8 @@ raw_boxplot(swmpr_in, ...)
 \item{criteria}{numeric, a numeric criteria that will be plotted as a horizontal line}
 
 \item{log_trans}{logical, should y-axis be log? Defaults to \code{FALSE}}
+
+\item{plot_title}{logical, should the station name be included as the plot title? Defaults to \code{FALSE}}
 }
 \value{
 A \code{\link[ggplot2]{ggplot}} object

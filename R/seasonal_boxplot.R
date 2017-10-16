@@ -2,14 +2,15 @@
 #'
 #' Annual time series for year of interest on top of long-term percentiles
 #'
-#' @param swmpr_in input swmpe object
+#' @param swmpr_in input swmpr object
 #' @param param chr string of variable to plot
 #' @param hist_rng numeric vector, if historic range is not specified then the min/max values of the data set will be used.
 #' @param target_yr numeric, the target year that should be compared against the historic range. If target year is not specified then dot will not be plotted
 #' @param criteria numeric, a numeric criteria that will be plotted as a horizontal line
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
+#' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
 #' @param FUN function used to aggregate daily SWMP data
-#' @param ... additional arguments passed to other methods. See \code{\link{assign_season}}
+#' @param ... additional arguments passed to other methods. See \code{\link{assign_season}} and \code{\link{y_labeler}}.
 #'
 #' @concept analyze
 #'
@@ -17,6 +18,7 @@
 #'
 #' @importFrom magrittr "%>%"
 #' @importFrom lubridate  year floor_date
+#' @importFrom stats median
 #'
 #' @export
 #'
@@ -46,6 +48,7 @@ seasonal_boxplot.swmpr <- function(swmpr_in
                                    , target_yr = NULL
                                    , criteria = NULL
                                    , log_trans = FALSE
+                                   , plot_title = FALSE
                                    , FUN = function(x) mean(x, na.rm = T)
                                    , ...) {
 
@@ -56,6 +59,7 @@ seasonal_boxplot.swmpr <- function(swmpr_in
   res <- sym('result')
   dt <- sym('date')
   avg <- sym('mean')
+  medi <- sym('med')
 
   rng <- hist_rng
 
@@ -83,8 +87,9 @@ seasonal_boxplot.swmpr <- function(swmpr_in
   if(!is.null(target_yr))
     warning('No target year provided')
 
-  #determine y axis transformation
+  #determine y axis transformation and y axis label
   y_trans <- ifelse(log_trans, 'log10', 'identity')
+  y_label <- y_labeler(param = param, ...)
 
   #determine if QAQC has been conducted
   if(attr(dat, 'qaqc_cols'))
@@ -117,10 +122,27 @@ seasonal_boxplot.swmpr <- function(swmpr_in
     geom_boxplot(outlier.size = 0.5) +
     scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma) +
     scale_fill_manual(name = '', values = c('skyblue1')) +
-    labs(x = '', y = '') +
+    labs(x = NULL, y = eval(y_label)) +
     theme_bw() +
     theme(legend.position = 'top'
           , legend.direction = 'horizontal')
+
+  # Adjust theme
+  plt <-
+    plt +
+    theme(panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          strip.background = element_blank(),
+          panel.border = element_rect(color = 'black')) +
+    theme(axis.title.y = element_text(margin = unit(c(0, 8, 0, 0), 'pt'), angle = 90)) +
+    theme(text = element_text(size = 16))
+
+  # Adjust legend keys and spacing
+  plt <-
+    plt +
+    theme(legend.key.size = unit(7, 'pt')) +
+    theme(legend.text = element_text(size = 8)) +
+    theme(legend.spacing.x = unit(-6, 'pt'))
 
   # Add target year dots if specified
   if(!is.null(target_yr)) {
@@ -130,12 +152,12 @@ seasonal_boxplot.swmpr <- function(swmpr_in
       dplyr::group_by(!! seas, !! dt) %>%
       dplyr::summarise(result = FUN(!! parm)) %>%
       dplyr::group_by(!! seas) %>%
-      dplyr::summarise(mean = mean(.data$result, na.rm = T))
+      dplyr::summarise(med = stats::median(.data$result, na.rm = T))
 
     pt_fill <- paste(target_yr, ' Average Daily Average', sep = '')
 
     plt <- plt +
-      geom_point(data = dat_yr, aes_(x = seas, y = avg, shape = factor(pt_fill)), fill = 'red', size = 2) +
+      geom_point(data = dat_yr, aes_(x = seas, y = medi, shape = factor(pt_fill)), fill = 'red', size = 2) +
       scale_shape_manual(name = '', values = c(21))
   }
 
@@ -151,8 +173,16 @@ seasonal_boxplot.swmpr <- function(swmpr_in
     plt <- plt + guides(fill = guide_legend(order = 1)
                     , shape = guide_legend(order = 2, override.aes = list(linetype = 0))
                     , 'WQ Threshold' = guide_legend(order = 3))
+  }
 
+  # add plot title if specified
+  if(plot_title) {
+    ttl <- title_labeler(nerr_site_id = station)
 
+    plt <-
+      plt +
+      ggtitle(ttl) +
+      theme(plot.title = element_text(hjust = 0.5))
   }
 
   return(plt)
