@@ -55,10 +55,20 @@ SWMPrExtension adds several functions to existing concepts in SWMPr and introduc
 <h3>Analyze</h3>
 <table>
 <tr><td><code>annual_range.swmpr</code></td><td>Working...</td></tr>
+<tr><td><code>historical_daily_range.swmpr</code></td><td>Working...</td></tr>
 <tr><td><code>historical_range.swmpr</code></td><td>Working...</td></tr>
 <tr><td><code>raw_boxplot.swmpr</code></td><td>Working...</td></tr>
 <tr><td><code>seasonal_barplot.swmpr</code></td><td>Working...</td></tr>
 <tr><td><code>seasonal_boxplot.swmpr</code></td><td>Working...</td></tr>
+<tr><td><code>threshold_identification.swmpr</code></td><td>Working...</td></tr>
+<tr><td><code>threshold_percentile_plot.swmpr</code></td><td>Working...</td></tr>
+<tr><td><code>threshold_plot.swmpr</code></td><td>Working...</td></tr>
+<tr><td><code>threshold_summary.swmpr</code></td><td>Working...</td></tr>
+</table>
+
+<h3>Retrieve</h3>
+<table>
+<tr><td><code>import_local_nut</code></td><td>Working...</td></tr>
 </table>
 
 <h3>Misc</h3>
