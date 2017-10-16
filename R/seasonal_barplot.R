@@ -105,7 +105,7 @@ seasonal_barplot.swmpr <- function(swmpr_in
 
   #determine y axis transformation and y axis label
   y_trans <- ifelse(log_trans, 'log10', 'identity')
-  y_label <- y_labeler(param = param, ...)
+  y_label <- y_labeler(param = param)# y_label <- y_labeler(param = param, ...)
 
   #determine if QAQC has been conducted
   if(attr(dat, 'qaqc_cols'))

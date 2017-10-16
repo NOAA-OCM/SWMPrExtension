@@ -105,7 +105,7 @@ historical_range.swmpr <- function(swmpr_in
 
   #determine y axis transformation and y axis label
   y_trans <- ifelse(log_trans, 'log10', 'identity')
-  y_label <- y_labeler(param = param, ...)
+  y_label <- y_labeler(param = param)
 
   #determine if QAQC has been conducted
   if(attr(dat, 'qaqc_cols'))
@@ -130,7 +130,7 @@ historical_range.swmpr <- function(swmpr_in
                      , max = max(!! parm, na.rm = TRUE))
 
   # Assign seasons
-  dat_all$season <- assign_season(dat_all$date, ...)
+  dat_all$season <- assign_season(dat_all$date, abb = T)
 
   # Determine average min/max/mean for each month (for all years together)
   dat_hist <- dat_all %>%
@@ -141,6 +141,7 @@ historical_range.swmpr <- function(swmpr_in
 
   dat_yr <- dat_all %>% dplyr::filter(year(date) == target_yr)
 
+
   dat_yr <- dat_yr %>%
     dplyr::group_by(!! seas) %>%
     dplyr::summarise(mean = mean(!! avg, na.rm = T)
@@ -149,7 +150,8 @@ historical_range.swmpr <- function(swmpr_in
 
   if(plot){
     # Set the plot range
-    mx <- max(dat_hist$max, na.rm = T)
+    mx <- ifelse(max(dat_yr[ , c(2:4)], na.rm = T) > max(dat_hist[ , c(2:4)], na.rm = T)
+                 , max(dat_yr[ , c(2:4)], na.rm = T), max(dat_hist[ , c(2:4)], na.rm = T))
     mx <- ceiling(mx)
     mn <- ifelse(log_trans == TRUE, 0.1, 0)
 
