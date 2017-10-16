@@ -71,7 +71,7 @@ SWMPrExtension adds several functions to existing concepts in SWMPr and introduc
 <tr><td><code>import_local_nut</code></td><td>A modified version of import_local from the <code>SWMPr</code> package. This version allows the user to specify the collection method (<code>CollMethd</code>) argument to separate monthly nutrient sampling data from monthly 24-hr nutrient sampling data.</td></tr>
 </table>
 
-<h3>Misc</h3>
+<h3>Miscellaneous</h3>
 <table>
 <tr><td><code>assign_season</code></td><td>Assign seasons to SWMPr sampling data on a monthly basis or user-defined basis</td></tr>
 </table>
