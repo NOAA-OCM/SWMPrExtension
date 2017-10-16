@@ -106,6 +106,8 @@ annual_range.swmpr <- function(swmpr_in
   if(attr(dat, 'qaqc_cols'))
     warning('QAQC columns present. QAQC not performed before analysis.')
 
+  # Filter data to target year
+  dat <- dat %>% filter(lubridate::year(.data$datetimestamp) == rng)
   # Assign the seasons and order them
   dat$season <- assign_season(dat$datetimestamp, abb = T, ...)
 
@@ -172,11 +174,6 @@ annual_range.swmpr <- function(swmpr_in
         scale_color_manual('', values = c('WQ Threshold' = 'red')) +
         scale_linetype_manual('', values = c('WQ Threshold' = 'longdash'))
 
-      plt <-
-        plt +
-        guides(alpha = guide_legend(override.aes = list(fill = 'steelblue3', linetype = 0), order = 2)
-               , shape = guide_legend(override.aes = list(fill = 'steelblue3', linetype = 0), order = 1)
-               , 'WQ Threshold' = guide_legend(order = 3))
     }
 
     # add plot title if specified
@@ -188,6 +185,12 @@ annual_range.swmpr <- function(swmpr_in
         ggtitle(ttl) +
         theme(plot.title = element_text(hjust = 0.5))
     }
+
+    plt <-
+      plt +
+      guides(alpha = guide_legend(override.aes = list(fill = 'steelblue3', linetype = 0), order = 2)
+             , shape = guide_legend(override.aes = list(fill = 'steelblue3', linetype = 0), order = 1)
+             , 'WQ Threshold' = guide_legend(order = 3))
 
     return(plt)
 
