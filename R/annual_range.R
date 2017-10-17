@@ -109,8 +109,9 @@ annual_range.swmpr <- function(swmpr_in
   # Filter data to target year
 
   # Assign the seasons and order them
-  dat$season <- assign_season(dat$datetimestamp, abb = T, ...)
   dat <- dat %>% filter(lubridate::year(.data$datetimestamp) == rng)
+  dat$season <- assign_season(dat$datetimestamp, abb = T, ...)
+  
 
   # Assign date for determining daily stat value
   dat$date <- lubridate::floor_date(dat$datetimestamp, unit = 'days')
