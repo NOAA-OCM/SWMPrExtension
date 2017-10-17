@@ -49,6 +49,7 @@ seasonal_boxplot.swmpr <- function(swmpr_in
                                    , criteria = NULL
                                    , log_trans = FALSE
                                    , plot_title = FALSE
+                                   , plot = T
                                    , FUN = function(x) mean(x, na.rm = T)
                                    , ...) {
 
@@ -89,7 +90,7 @@ seasonal_boxplot.swmpr <- function(swmpr_in
 
   #determine y axis transformation and y axis label
   y_trans <- ifelse(log_trans, 'log10', 'identity')
-  y_label <- y_labeler(param = param, ...)
+  y_label <- y_labeler(param = param)#, ...)
 
   #determine if QAQC has been conducted
   if(attr(dat, 'qaqc_cols'))
@@ -105,85 +106,92 @@ seasonal_boxplot.swmpr <- function(swmpr_in
   dat <- dat[, c('date', 'season', param)]
 
   ##historic range
-  dat_hist <- dat %>% dplyr::filter(lubridate::year(.data$datetimestamp) >= rng[[1]]
-                                    & lubridate::year(.data$datetimestamp) <= rng[[2]])
+  dat_hist <- dat %>% dplyr::filter(lubridate::year(.data$date) >= rng[[1]]
+                                    & lubridate::year(.data$date) <= rng[[2]])
 
   dat_hist <- dat_hist %>%
     group_by(!! seas, !! dt) %>%
     summarise(result = FUN(!! parm))
 
-  mx <- max(dat_hist$result, na.rm = T)
-  mx <- ceiling(mx)
-  mn <- ifelse(log_trans == TRUE, 0.1, 0)
+  if(plot) {
+    mx <- max(dat_hist$result, na.rm = T)
+    mx <- ceiling(mx)
+    mn <- ifelse(log_trans == TRUE, 0.1, 0)
 
-  lab_bp_fill <- lab_bp_fill <- paste('Daily Averages (', rng[[1]], '-', rng[[2]], ')', sep = '') # need to add in flex for 'min', 'max'
+    lab_bp_fill <- lab_bp_fill <- paste('Daily Averages (', rng[[1]], '-', rng[[2]], ')', sep = '') # need to add in flex for 'min', 'max'
 
-  plt <- ggplot(data = dat_hist, aes_(x = seas, y = res, fill = lab_bp_fill)) +
-    geom_boxplot(outlier.size = 0.5) +
-    scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma) +
-    scale_fill_manual(name = '', values = c('#D9D9D9')) +
-    labs(x = NULL, y = eval(y_label)) +
-    theme_bw() +
-    theme(legend.position = 'top'
-          , legend.direction = 'horizontal')
+    plt <- ggplot(data = dat_hist, aes_(x = seas, y = res, fill = lab_bp_fill)) +
+      geom_boxplot(outlier.size = 0.5) +
+      scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma) +
+      scale_fill_manual(name = '', values = c('#D9D9D9')) +
+      labs(x = NULL, y = eval(y_label)) +
+      theme_bw() +
+      theme(legend.position = 'top'
+            , legend.direction = 'horizontal')
 
-  # Adjust theme
-  plt <-
-    plt +
-    theme(panel.grid.major = element_blank(),
-          panel.grid.minor = element_blank(),
-          strip.background = element_blank(),
-          panel.border = element_rect(color = 'black')) +
-    theme(axis.title.y = element_text(margin = unit(c(0, 8, 0, 0), 'pt'), angle = 90)) +
-    theme(text = element_text(size = 16))
-
-  # Adjust legend keys and spacing
-  plt <-
-    plt +
-    theme(legend.key.size = unit(7, 'pt')) +
-    theme(legend.text = element_text(size = 8)) +
-    theme(legend.spacing.x = unit(-6, 'pt'))
-
-  # Add target year dots if specified
-  if(is.null(target_yr)) {
-    dat_yr <- dat %>% dplyr::filter(lubridate::year(.data$date) == target_yr)
-
-    dat_yr <- dat_yr %>%
-      dplyr::group_by(!! seas, !! dt) %>%
-      dplyr::summarise(result = FUN(!! parm)) %>%
-      dplyr::group_by(!! seas) %>%
-      dplyr::summarise(med = stats::median(.data$result, na.rm = T))
-
-    pt_fill <- paste('Median Daily Average (', target_yr, ')', sep = '')
-
-    plt <- plt +
-      geom_point(data = dat_yr, aes_(x = seas, y = medi, shape = factor(pt_fill)), fill = '#65BCFF', size = 2) +
-      scale_shape_manual(name = '', values = c(21))
-  }
-
-  # Add criteria line if specified
-  if(!is.null(criteria)) {
-
-    plt <- plt +
-      geom_hline(aes(yintercept = criteria, color = factor('WQ Threshold'), linetype = factor('WQ Threshold'))
-                  , show.legend = T) +
-      scale_color_manual('', values = c('WQ Threshold' = 'red')) +
-      scale_linetype_manual('', values = c('WQ Threshold' = 'longdash'))
-
-    plt <- plt + guides(fill = guide_legend(order = 1)
-                    , shape = guide_legend(order = 2, override.aes = list(linetype = 0))
-                    , 'WQ Threshold' = guide_legend(order = 3))
-  }
-
-  # add plot title if specified
-  if(plot_title) {
-    ttl <- title_labeler(nerr_site_id = station)
-
+    # Adjust theme
     plt <-
       plt +
-      ggtitle(ttl) +
-      theme(plot.title = element_text(hjust = 0.5))
-  }
+      theme(panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            strip.background = element_blank(),
+            panel.border = element_rect(color = 'black')) +
+      theme(axis.title.y = element_text(margin = unit(c(0, 8, 0, 0), 'pt'), angle = 90)) +
+      theme(text = element_text(size = 16))
 
-  return(plt)
+    # Adjust legend keys and spacing
+    plt <-
+      plt +
+      theme(legend.key.size = unit(7, 'pt')) +
+      theme(legend.text = element_text(size = 8)) +
+      theme(legend.spacing.x = unit(-6, 'pt'))
+
+    # Add target year dots if specified
+    if(!is.null(target_yr)) {
+      dat_yr <- dat %>% dplyr::filter(lubridate::year(.data$date) == target_yr)
+
+      dat_yr <- dat_yr %>%
+        dplyr::group_by(!! seas, !! dt) %>%
+        dplyr::summarise(result = FUN(!! parm)) %>%
+        dplyr::group_by(!! seas) %>%
+        dplyr::summarise(med = stats::median(.data$result, na.rm = T))
+
+      pt_fill <- paste('Median Daily Average (', target_yr, ')', sep = '')
+
+      plt <- plt +
+        geom_point(data = dat_yr, aes_(x = seas, y = medi, shape = factor(pt_fill)), fill = '#65BCFF', size = 2) +
+        scale_shape_manual(name = '', values = c(21))
+    }
+
+    # Add criteria line if specified
+    if(!is.null(criteria)) {
+
+      plt <- plt +
+        geom_hline(aes(yintercept = criteria, color = factor('WQ Threshold'), linetype = factor('WQ Threshold'))
+                   , show.legend = T) +
+        scale_color_manual('', values = c('WQ Threshold' = 'red')) +
+        scale_linetype_manual('', values = c('WQ Threshold' = 'longdash'))
+
+      plt <- plt + guides(fill = guide_legend(order = 1)
+                          , shape = guide_legend(order = 2, override.aes = list(linetype = 0))
+                          , 'WQ Threshold' = guide_legend(order = 3))
+    }
+
+    # add plot title if specified
+    if(plot_title) {
+      ttl <- title_labeler(nerr_site_id = station)
+
+      plt <-
+        plt +
+        ggtitle(ttl) +
+        theme(plot.title = element_text(hjust = 0.5))
+    }
+
+    return(plt)
+  } else {
+
+    dat_hist$range <- paste(paste(rng[[1]], '-', rng[[2]], sep = ''))
+    dat_hist$summ_stat <- 'average'
+    return(dat_hist)
+  }
 }
