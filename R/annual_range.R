@@ -58,7 +58,7 @@ annual_range.swmpr <- function(swmpr_in
                                , log_trans = FALSE
                                , plot_title = FALSE
                                , plot = TRUE
-                                   , ...) {
+                               , ...) {
 
   dat <- swmpr_in
   parm <- sym(param)
