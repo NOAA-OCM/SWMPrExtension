@@ -4,7 +4,8 @@
 \alias{res_local_map}
 \title{Local Reserve Map}
 \usage{
-res_local_map(nerr_site_id, stations, bbox)
+res_local_map(nerr_site_id, stations, bbox, shp, station_labs = T,
+  lab_loc = NULL, scale_pos = "bottomleft")
 }
 \arguments{
 \item{nerr_site_id}{chr string of the reserve to make, first three characters used by NERRS}
@@ -12,6 +13,18 @@ res_local_map(nerr_site_id, stations, bbox)
 \item{stations}{chr string of the reserve stations to include in the map}
 
 \item{bbox}{a bounding box associated with the reserve}
+
+\item{shp}{shape file}
+
+\item{station_labs}{logical, should stations be labeled? Defaults to \code{TRUE}}
+
+\item{lab_loc}{chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.}
+
+\item{scale_pos}{scale_pos where should the scale be placed? Options are 'topleft', 'topright', 'bottomleft', or 'bottomright'. Defaults to 'bottomleft'}
+}
+\value{
+returns a leaflet object. This function is intended to be used with mapshot to generate a png
+for the reserve level report
 }
 \description{
 Create a stylized reserve level map for use with the reserve level reporting template
@@ -29,4 +42,5 @@ This function was developed from a blog post by Bob Rudis (https://rud.is/b/2014
 
 ## a multicomponent reserve
 }
+
 }
