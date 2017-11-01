@@ -9,6 +9,7 @@
 #' @param criteria numeric, a numeric criteria that will be plotted as a horizontal line
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
 #' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
+#' @param plot logical, should a plot be returned? Defaults to \code{TRUE}
 #' @param FUN function used to aggregate daily SWMP data
 #' @param ... additional arguments passed to other methods. See \code{\link{assign_season}} and \code{\link{y_labeler}}.
 #'

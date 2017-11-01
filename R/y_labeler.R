@@ -22,38 +22,44 @@ y_labeler <- function(param, converted = F) {
                   , 'totprcp', 'totsorad')
   nut_params <- c('po4f', 'nh4f', 'no2f', 'no3f', 'no23f', 'chla_n', 'din', 'dip')
 
-  # Parameter labels
-  wq_lab <- c(quote(expression(paste('Water Temperature (', ~degree, 'C)'))), 'Specific Conductivity (mS/cm)', 'Salinity (psu)', 'Dissolved Oxygen Saturation (%)'
-              , 'Dissolved Oxygen (mg/L)', 'Sonde Depth (m)', 'Depth, Corrected for Barometric Pressure (m)', 'Sonde Depth (m)'
-              , 'Level, corrected for Barometric Pressure (m)', 'pH (su)', 'Turbidity (NTU)', quote(expression(paste('Chlorophyll Fluorescence (', ~mu, 'g/L)'))))
-
-  met_lab <- c(quote(expression(paste('Air Temperature (', ~degree, 'C)'))), 'Relative Humidity (%)', 'Barometric Pressure (mb)', 'Wind Speed (m/s)'
-               , 'Maximum Wind Speed (m/s)', 'Maximum Time of Wind Speed Measurement (hh:mm)', 'Wind Direction', 'Wind Direction Standard Deviation (sd)'
-               , quote(expression(paste('Photosynthetically Active Radiation (mmol/ '~m^2, ')'))), 'Precipitiation (mm)', quote(expression(paste('Total Solar Radiation (W/ '~m^2, ')'))))
-
-  nut_lab <- c('Orthophosphate (mg/L)', 'Ammonium (mg/L)', 'Nitrite (mg/L)', 'Nitrate  (mg/L)', 'Nitrite + Nitrate  (mg/L)', quote(expression(paste('Chlorophyll-a (', ~mu, 'g/L)')))
-               , 'Dissolved Inorganic Nitrogen (mg/L)', 'Dissolved Inorganic Phosphorus (mg/L)')
-
-  # Combine together for lookup
-  all_params <- c(wq_params, met_params, nut_params)
-  labs <- c(wq_lab, met_lab, nut_lab)
-
-  names(labs) <- all_params
-
-  if(converted){
-    # Create labels for select parameters in english units
-    converted_param <- c('temp', 'depth', 'cdepth', 'level', 'clevel'
-                         , 'atemp', 'wspd', 'maxwspd', 'totprcp')
-    converted_labs <- c(quote(expression(paste('Water Temperature (', ~degree, 'F)'))), 'Sonde Depth (ft)', 'Depth, Corrected for Barometric Pressure (ft)', 'Sonde Depth (ft)'
-                       , 'Level, corrected for Barometric Pressure (ft)', quote(expression(paste('Air Temperature (', ~degree, 'F)'))), 'Wind Speed (ft/s)'
-                       , 'Maximum Wind Speed (ft/s)','Precipitiation (in)')
-
-    names(converted_labs) <- converted_param
-
-    y_lab <- converted_labs[[param]]
-
+  if(!std_param_check(param)){
+    # if user enters a non-std parameter, return the name of the parameter for a label
+    y_lab <- c(param)
   } else {
-    y_lab <- labs[[param]]
+
+    # Parameter labels
+    wq_lab <- c(quote(expression(paste('Water Temperature (', ~degree, 'C)'))), 'Specific Conductivity (mS/cm)', 'Salinity (psu)', 'Dissolved Oxygen Saturation (%)'
+                , 'Dissolved Oxygen (mg/L)', 'Sonde Depth (m)', 'Depth, Corrected for Barometric Pressure (m)', 'Sonde Depth (m)'
+                , 'Level, corrected for Barometric Pressure (m)', 'pH (su)', 'Turbidity (NTU)', quote(expression(paste('Chlorophyll Fluorescence (', ~mu, 'g/L)'))))
+
+    met_lab <- c(quote(expression(paste('Air Temperature (', ~degree, 'C)'))), 'Relative Humidity (%)', 'Barometric Pressure (mb)', 'Wind Speed (m/s)'
+                 , 'Maximum Wind Speed (m/s)', 'Maximum Time of Wind Speed Measurement (hh:mm)', 'Wind Direction', 'Wind Direction Standard Deviation (sd)'
+                 , quote(expression(paste('Photosynthetically Active Radiation (mmol/ '~m^2, ')'))), 'Precipitiation (mm)', quote(expression(paste('Total Solar Radiation (W/ '~m^2, ')'))))
+
+    nut_lab <- c('Orthophosphate (mg/L)', 'Ammonium (mg/L)', 'Nitrite (mg/L)', 'Nitrate  (mg/L)', 'Nitrite + Nitrate  (mg/L)', quote(expression(paste('Chlorophyll-a (', ~mu, 'g/L)')))
+                 , 'Dissolved Inorganic Nitrogen (mg/L)', 'Dissolved Inorganic Phosphorus (mg/L)')
+
+    # Combine together for lookup
+    all_params <- c(wq_params, met_params, nut_params)
+    labs <- c(wq_lab, met_lab, nut_lab)
+
+    names(labs) <- all_params
+
+    if(converted){
+      # Create labels for select parameters in english units
+      converted_param <- c('temp', 'depth', 'cdepth', 'level', 'clevel'
+                           , 'atemp', 'wspd', 'maxwspd', 'totprcp')
+      converted_labs <- c(quote(expression(paste('Water Temperature (', ~degree, 'F)'))), 'Sonde Depth (ft)', 'Depth, Corrected for Barometric Pressure (ft)', 'Sonde Depth (ft)'
+                          , 'Level, corrected for Barometric Pressure (ft)', quote(expression(paste('Air Temperature (', ~degree, 'F)'))), 'Wind Speed (ft/s)'
+                          , 'Maximum Wind Speed (ft/s)','Precipitiation (in)')
+
+      names(converted_labs) <- converted_param
+
+      y_lab <- converted_labs[[param]]
+
+    } else {
+      y_lab <- labs[[param]]
+    }
   }
 
   return(y_lab)

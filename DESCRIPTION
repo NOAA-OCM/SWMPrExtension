@@ -17,11 +17,16 @@ Depends: R (>= 2.10)
 Imports: SWMPr,
     dplyr,
 	ggplot2,
+	ggthemes,
 	lubridate,
+	magrittr,
+	maptools,
 	scales,
+	rgdal,
+	rgeos,
+    rlang,
     stringr,
-    magrittr,
-    rlang
+	sp
 Authors@R: person(given = "Julie", family = "Padilla",
     role = c("aut", "cre"),
 	email = "jpadilla@limno.com")
