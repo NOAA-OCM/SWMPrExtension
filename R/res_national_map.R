@@ -122,28 +122,29 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
 
   if(is.null(highlight_states)) {
     gg <- gg + geom_map(data = map, map = map
-                        , aes(map$long, map$lat, map_id = map$id)
+                        , aes_string('long', 'lat', map_id = 'id')
                         , fill = '#f8f8f8', color = '#999999'
                         , size = 0.15, show.legend = F)
   } else {
     map$flag <- ifelse(map$id %in% highlight_states, TRUE, FALSE)
 
     gg <- gg + geom_map(data = map, map = map
-                        , aes(map$long, map$lat, map_id = map$id, fill = map$flag)
+                        , aes_string('long', 'lat', map_id = 'id', fill = 'flag')
                         , color = '#999999', size = 0.15, show.legend = F) +
       scale_fill_manual(values = c('#f8f8f8', '#cccccc'))
   }
 
   # add reserve locations
+  # return(reserve_locations)
   gg <- gg +
-    geom_point(data = reserve_locations, aes(x = .data$Longitude, y = .data$Latitude)
+    geom_point(data = reserve_locations, aes_string(x = 'Longitude', y = 'Latitude')
                , fill = '#444e65', shape = 21, size = 1)
 
   # add highlighted reserves, if specified
   if(!is.null(highlight_reserves)) {
     highlight_locations <- reserve_locs(incl = incl, subset_reserve =  highlight_reserves)
 
-    gg <- gg + geom_point(data = highlight_locations, aes(x = .data$Longitude, y = .data$Latitude)
+    gg <- gg + geom_point(data = highlight_locations, aes_string(x = 'Longitude', y = 'Latitude')
                           , fill = 'yellow', shape = 21, size = 2)
   }
 
