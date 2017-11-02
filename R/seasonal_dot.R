@@ -196,6 +196,8 @@ seasonal_dot.swmpr <- function(swmpr_in
 
     # add regression p-values if specified
     if(ln_lab) {
+
+      # return(plt_data)
       p_labs <- lm_p_labs(plt_data)
 
       plt <-

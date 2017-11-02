@@ -22,16 +22,17 @@
 lm_p_labs <- function(dat_in) {
   lm_results <- dat_in %>%
     group_by(season) %>%
-    do(reg_min = lm(min ~ year, data = .)
-       , reg_mean = lm(mean ~ year, data = .)
-       , reg_max = lm(max ~ year, data = .))
+    do(reg_min = lm(.data$min ~ .data$year, data = .data)
+       , reg_mean = lm(.data$mean ~ .data$year, data = .data)
+       , reg_max = lm(.data$max ~ .data$year), data = .data)
 
+  # return(lm_results)
   lm_min_tidy <- tidy(lm_results, reg_min) %>%
-    filter(term == 'year')
+    filter(.data$term == '.data$year')
   lm_mean_tidy <- tidy(lm_results, reg_mean) %>%
-    filter(term == 'year')
+    filter(.data$term == '.data$year')
   lm_max_tidy <- tidy(lm_results, reg_max) %>%
-    filter(term == 'year')
+    filter(.data$term == '.data$year')
 
   lm_min_tidy$lab <- ifelse(lm_min_tidy$p.value < 0.05, 'p < 0.05', 'p > 0.05')
   lm_mean_tidy$lab <- ifelse(lm_mean_tidy$p.value < 0.05, 'p < 0.05', 'p > 0.05')
