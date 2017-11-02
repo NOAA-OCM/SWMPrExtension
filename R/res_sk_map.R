@@ -1,10 +1,10 @@
-#' Local Reserve Map
+#' Local Reserve Map of Seasonal Kendall Results
 #'
-#' Create a stylized reserve level map for use with the reserve level reporting template
+#' Create a stylized reserve level map to display seasonal kendall results
 #'
 #' @param nerr_site_id chr string of the reserve to make, first three characters used by NERRS
 #' @param stations chr string of the reserve stations to include in the map
-#' @param bbox a bounding box associated with the reserve. Must be in the format of c(X1, Y1, X2, Y2)
+#' @param bbox a bounding box associated with the reserve
 #' @param shp shape file
 #' @param station_labs logical, should stations be labeled? Defaults to \code{TRUE}
 #' @param lab_loc chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.
@@ -38,62 +38,38 @@
 #' @return returns a leaflet object. This function is intended to be used with mapshot to generate a png
 #' for the reserve level report
 
-res_local_map <- function(nerr_site_id, stations, bbox, shp, station_labs = T, lab_loc = NULL, scale_pos = 'bottomleft') {
+res_sk_map <- function(nerr_site_id, stations, bbox, shp, station_labs = T, lab_loc = NULL, scale_pos = 'bottomleft') {
 
   # check that a shape file exists
-  if(class(shp) != 'SpatialPolygons')
-    stop('shapefile (shp) must be SpatialPolygons object')
-
-  # check that length(lab_loc) = length(stations)
-  if(station_labs && length(lab_loc != length(stations)))
-    stop('Incorrect number of label location identifiers specified. A R or L designation must be made for each station.' )
-
+  # check that legnth(lab) = length(stations)
   # check that the bb has the right dimensions
-  if(!is.null(bbox))
-    stop('Specify a bounding box (bbox) in the form of c(X1, Y1, X2, Y2)')
-  if(length(bbox) != 4)
-    stop('Incorrect number of elements specified for bbox. Specify a bounding box (bbox) in the form of c(X1, Y1, X2, Y2)')
 
   #This loc stuff should be abstracted out
   loc <- get('sampling_stations')
   loc <- loc[(loc$Station.Code %in% stations), ]
   loc$abbrev <- substr(loc$Station.Code, start = 4, stop = 5)
-  # add something about loc color
 
   # add some logic to determine if r and l labs exist
-  if(lab_loc){
-    left_labs <- grep('L', lab_loc)
-    right_labs <- grep('R', lab_loc)
-  } else {
-    #default to left labels
-    left_labs <- rep('L', length(stations))
-  }
-
+  left_labs <- grep('L', lab_loc)
+  right_labs <- grep('R', lab_loc)
   # then parse out m and "addmarkers" only if the RHS label/LHS label exist
 
   # NOTE you can add in conditional colors. Add a factor #add a column that assigns HEX color
   m <- leaflet(loc, options = leafletOptions(zoomControl = FALSE), width = 500, height = 500) %>%
     addProviderTiles(leaflet::providers$Esri.WorldGrayCanvas) %>%  # Add default OpenStreetMap map tiles, CartoDB.Positron
     addPolygons(data = shp, weight = 2, color = '#B3B300', fillColor = 'yellow') %>%
-
-  if(length(left_labs) > 0){
-    m <- m %>%  # left labs
-      addCircleMarkers(lng = ~Longitude[left_labs] * -1, lat = ~Latitude[left_labs], radius = 5
-                       , weight = 0, fillOpacity = 1, color = '#444e65'
-                       , label = loc$abbrev[left_labs]
-                       , labelOptions = labelOptions(noHide = station_labs, direction = c('left')))
-  }
-
-  if(length(right_labs) > 0){
-    m <- m %>%
-      #right labs
-      addCircleMarkers(lng = ~Longitude[right_labs] * -1, lat = ~Latitude[right_labs], radius = 5
-                       , weight = 0, fillOpacity = 1, color = '#444e65'
-                       , label = loc$abbrev[right_labs]
-                       , labelOptions = labelOptions(noHide = station_labs, direction = c('right')))
-  }
-
-  m <- m %>%
+    # left labs
+    addCircleMarkers(lng = ~Longitude[left_labs] * -1, lat = ~Latitude[left_labs], radius = 5
+                     , weight = 0, fillOpacity = 1, color = '#444e65'
+                     , label = loc$abbrev[left_labs]
+                     , labelOptions = labelOptions(noHide = TRUE, direction = c('left'))
+    ) %>%
+    #right labs
+    addCircleMarkers(lng = ~Longitude[right_labs] * -1, lat = ~Latitude[right_labs], radius = 5
+                     , weight = 0, fillOpacity = 1, color = '#444e65'
+                     , label = loc$abbrev[right_labs]
+                     , labelOptions = labelOptions(noHide = TRUE, direction = c('right'))
+    ) %>%
     addScaleBar(position = scale_pos) %>%
     fitBounds(bbox[1], bbox[2], bbox[3], bbox[4])
 
