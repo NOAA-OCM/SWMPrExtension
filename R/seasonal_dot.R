@@ -1,0 +1,202 @@
+#' Seasonal Trend
+#'
+#' Seasonal trends
+#'
+#' @param swmpr_in input swmpr object
+#' @param param chr string of variable to plot
+#' @param rng numeric vector, if historic range is not specified then the min/max values of the data set will be used.
+#' @param ln_trend logical, add linear trend line?
+#' @param ln_lab logical, add significance label?
+#' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
+#' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
+#' @param plot logical, should a plot be returned? Defaults to \code{TRUE}
+#' @param ... additional arguments passed to other methods. See \code{\link{assign_season}} and \code{\link{y_labeler}}.
+#'
+#' @concept analyze
+#'
+#' @import ggplot2 dplyr scales rlang
+#'
+#' @importFrom lubridate  year floor_date
+#' @importFrom magrittr "%>%"
+#' @importFrom tidyr gather
+#' @importFrom stats median
+#'
+#' @export
+#'
+#' @details average/min/max seasonal values faceted by season
+#'
+#' @author Julie Padilla
+#'
+#' @return A \code{\link[ggplot2]{ggplot}} object
+#'
+#' @seealso \code{\link[ggplot2]{ggplot}}
+#'
+#' @examples
+#' \dontrun{
+#'
+#' dat_wq <- elksmwq
+#' dat_wq <- subset(dat_wq, subset = c('2007-01-01 0:00', '2017-01-01 0:00'))
+#' dat_wq <- qaqc(dat_wq, qaqc_keep = c(0, 3, 5))
+#'
+#' x <-
+#'   seasonal_dot(dat_wq, param = 'do_mgl',
+#'                , ln_trend = F
+#'                , ln_lab = F
+#'                , plot_title = T)
+#'
+#' x <-
+#'   seasonal_dot(dat_wq, param = 'do_mgl',
+#'                , ln_trend = T
+#'                , ln_lab = F
+#'                , plot_title = T)
+#'
+#' x <-
+#'   seasonal_dot(dat_wq, param = 'do_mgl',
+#'                , ln_trend = T
+#'                , ln_lab = T
+#'                , plot_title = T)
+#' }
+
+seasonal_dot <- function(swmpr_in, ...) UseMethod('seasonal_dot')
+
+#' @rdname seasonal_dot
+#'
+#' @concept analyze
+#'
+#' @export
+#'
+#' @method seasonal_dot swmpr
+#'
+seasonal_dot.swmpr <- function(swmpr_in
+                               , param = NULL
+                               , rng = NULL
+                               , ln_trend = F
+                               , ln_lab = F
+                               , log_trans = F
+                               , plot_title = FALSE
+                               , plot = T
+                               , ...) {
+
+  dat <- swmpr_in
+  parm <- sym(param)
+  seas <- sym('season')
+  yr <- sym('year')
+
+  # attributes
+  parameters <- attr(dat, 'parameters')
+  station <- attr(dat, 'station')
+
+  #TESTS
+  #determine type WQ, MET, NUT
+  #determine log scale transformation
+  if(substr(station, 6, nchar(station)) == 'nut')
+    warning('Nutrient data detected. Consider specifying seasons > 1 month.')
+
+  #determine that variable name exists
+  if(!any(param %in% parameters))
+    stop('Param argument must name input column')
+
+  #determine y axis transformation and y axis label
+  y_trans <- ifelse(log_trans, 'log10', 'identity')
+  y_label <- y_labeler(param = param)
+
+  #determine if QAQC has been conducted
+  if(attr(dat, 'qaqc_cols'))
+    warning('QAQC columns present. QAQC not performed before analysis.')
+
+  # Assign the seasons and order them
+  dat$season <- assign_season(dat$datetimestamp, abb = T, ...)
+
+  # Assign date for determining daily stat value
+  dat$year <- lubridate::year(dat$datetimestamp)
+
+  # Filter for parameter of interest and remove missing values (in case there is a month with no data)
+  dat <- dat[, c('year', 'season', param)]
+
+  dat <- dat %>% dplyr::filter(!is.na(!! parm))
+
+
+  # --------
+  # calc seasonal values
+  plt_data <- dat %>%
+    group_by(!! yr, !! seas) %>%
+    summarise(min = min(!! parm, na.rm = T)
+              , mean = mean(!! parm, na.rm = T)
+              , max = max(!! parm, na.rm = T)
+              )
+
+  if(plot) {
+    labs_legend <- factor(paste0('Mean Monthly ', c('Minimum', 'Average', 'Maximum'), sep = ''))
+    brks <- range(plt_data$year)
+
+    plt <-
+      ggplot(data = plt_data, aes_string(x = 'year', y = 'min', color = labs_legend[1])) +
+      geom_point() +
+      geom_point(data = plt_data, aes_string(x = 'year', y = 'mean', color = labs_legend[2])) +
+      geom_point(data = plt_data, aes_string(x = 'year', y = 'max', color = labs_legend[3])) +
+      geom_point() +
+      scale_color_manual('', values = c('black', 'red', 'blue')) +
+      scale_x_continuous(breaks = seq(from = brks[1], to = brks[2], by = 1)) +
+      facet_wrap(~ season) +
+      labs(x = NULL, y = eval(y_label))
+
+    # Adjust theme
+    plt <-
+      plt +
+      theme_bw() +
+      theme(legend.position = 'top'
+            , legend.direction = 'horizontal') +
+      theme(panel.grid.major = element_line(linetype = 'solid'),
+            panel.grid.minor = element_line(linetype = 'solid'),
+            strip.background = element_blank(),
+            panel.border = element_rect(color = 'black')) +
+      theme(axis.text.x = element_text(angle = 90, vjust = 0.5),
+            axis.title.y = element_text(margin = unit(c(0, 8, 0, 0), 'pt'), angle = 90)) +
+      theme(text = element_text(size = 16))
+
+    # Adjust legend keys and spacing
+    plt <-
+      plt +
+      theme(legend.key.size = unit(7, 'pt')) +
+      theme(legend.text = element_text(size = 8)) +
+      theme(legend.spacing.x = unit(-6, 'pt'))
+
+    # add regression line if specified
+    if(ln_trend) {
+      plt <-
+        plt +
+        geom_smooth(method = 'lm', se = F, lwd = 0.5) +
+        geom_smooth(aes_string(x = 'year', y = 'mean', color = labs_legend[2])
+                    , method = 'lm', se = F, lwd = 0.5) +
+        geom_smooth(aes_string(x = 'year', y = 'max', color = labs_legend[3])
+                    , method = 'lm', se = F, lwd = 0.5)
+    }
+
+    # add regression p-values if specified
+    if(ln_lab) {
+
+      # pvals <- ln_reg()
+      plt <-
+        plt +
+        geom_smooth(method = 'lm', se = F, lwd = 0.5) +
+        geom_smooth(aes_string(x = 'year', y = 'mean', color = labs_legend[2])
+                    , method = 'lm', se = F, lwd = 0.5) +
+        geom_smooth(aes_string(x = 'year', y = 'max', color = labs_legend[3])
+                    , method = 'lm', se = F, lwd = 0.5)
+    }
+
+    # add plot title if specified
+    if(plot_title) {
+      ttl <- title_labeler(nerr_site_id = station)
+
+      plt <-
+        plt +
+        ggtitle(ttl) +
+        theme(plot.title = element_text(hjust = 0.5))
+    }
+
+    return(plt)
+  } else {
+    return(plt_data)
+  }
+}
