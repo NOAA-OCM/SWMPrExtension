@@ -26,9 +26,6 @@ lm_p_labs <- function(dat_in) {
        , reg_mean = lm(.data$mean ~ .data$year, data = .data)
        , reg_max = lm(.data$max ~ .data$year), data = .data)
 
-
-
-  # return(lm_results)
   lm_min_tidy <- tidy(lm_results, reg_min) %>%
     filter(.data$term == '.data$year')
   lm_mean_tidy <- tidy(lm_results, reg_mean) %>%
