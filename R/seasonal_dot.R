@@ -6,7 +6,7 @@
 #' @param param chr string of variable to plot
 #' @param rng numeric vector, if historic range is not specified then the min/max values of the data set will be used.
 #' @param ln_trend logical, add linear trend line?
-#' @param ln_lab logical, add significance label?
+#' @param ln_lab logical, add significance label? Statisically significant results will appear in bold.
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
 #' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
 #' @param plot logical, should a plot be returned? Defaults to \code{TRUE}
@@ -52,6 +52,28 @@
 #'
 #' x <-
 #'   seasonal_dot(dat_wq, param = 'do_mgl',
+#'                , ln_trend = T
+#'                , ln_lab = T
+#'                , plot_title = T)
+#'
+#' dat_nut <- elksmnut
+#' dat_nut <- subset(dat_nut, subset = c('2007-01-01 0:00', '2017-01-01 0:00'))
+#' dat_nut <- qaqc(dat_nut, qaqc_keep = c(0, 3, 5))
+#'
+#' x <-
+#'   seasonal_dot(dat_nut, param = 'chla_n',
+#'                , ln_trend = F
+#'                , ln_lab = F
+#'                , plot_title = T)
+#'
+#' x <-
+#'   seasonal_dot(dat_nut, param = 'chla_n',
+#'                , ln_trend = T
+#'                , ln_lab = F
+#'                , plot_title = T)
+#'
+#' x <-
+#'   seasonal_dot(dat_nut, param = 'chla_n',
 #'                , ln_trend = T
 #'                , ln_lab = T
 #'                , plot_title = T)
@@ -112,9 +134,7 @@ seasonal_dot.swmpr <- function(swmpr_in
 
   # Filter for parameter of interest and remove missing values (in case there is a month with no data)
   dat <- dat[, c('year', 'season', param)]
-
   dat <- dat %>% dplyr::filter(!is.na(!! parm))
-
 
   # --------
   # calc seasonal values
@@ -128,6 +148,7 @@ seasonal_dot.swmpr <- function(swmpr_in
   if(plot) {
     labs_legend <- factor(paste0('Mean Monthly ', c('Minimum', 'Average', 'Maximum'), sep = ''))
     brks <- range(plt_data$year)
+    y_lims <- c(0, max(plt_data[ , c(3:5)]) * 1.2)
 
     plt <-
       ggplot(data = plt_data, aes_string(x = 'year', y = 'min', color = labs_legend[1])) +
@@ -137,6 +158,7 @@ seasonal_dot.swmpr <- function(swmpr_in
       geom_point() +
       scale_color_manual('', values = c('black', 'red', 'blue')) +
       scale_x_continuous(breaks = seq(from = brks[1], to = brks[2], by = 1)) +
+      scale_y_continuous(limits = y_lims) +
       facet_wrap(~ season) +
       labs(x = NULL, y = eval(y_label))
 
@@ -174,15 +196,20 @@ seasonal_dot.swmpr <- function(swmpr_in
 
     # add regression p-values if specified
     if(ln_lab) {
+      p_labs <- lm_p_labs(plt_data)
 
-      # pvals <- ln_reg()
       plt <-
         plt +
-        geom_smooth(method = 'lm', se = F, lwd = 0.5) +
-        geom_smooth(aes_string(x = 'year', y = 'mean', color = labs_legend[2])
-                    , method = 'lm', se = F, lwd = 0.5) +
-        geom_smooth(aes_string(x = 'year', y = 'max', color = labs_legend[3])
-                    , method = 'lm', se = F, lwd = 0.5)
+        annotate("text", x = 2017, y = y_lims[2]
+                 , label = p_labs$max, fontface = ifelse(p_labs$max == 'p < 0.05', 2, 1)
+                 , hjust = 1, color = 'red') +
+        annotate("text", x = 2017, y = y_lims[2] * 0.9
+                 , label = p_labs$mean, fontface = ifelse(p_labs$mean == 'p < 0.05', 2, 1)
+                 , hjust = 1, color = 'black') +
+        annotate("text", x = 2017, y = y_lims[2] * 0.8
+                 , label = p_labs$min, fontface = ifelse(p_labs$min == 'p < 0.05', 2, 1)
+                 , hjust = 1, color = 'blue')
+
     }
 
     # add plot title if specified

@@ -8,7 +8,8 @@
 seasonal_dot(swmpr_in, ...)
 
 \method{seasonal_dot}{swmpr}(swmpr_in, param = NULL, rng = NULL,
-  ln_trend = F, ln_lab = F, plot_title = FALSE, plot = T, ...)
+  ln_trend = F, ln_lab = F, log_trans = F, plot_title = FALSE,
+  plot = T, ...)
 }
 \arguments{
 \item{swmpr_in}{input swmpr object}
@@ -23,6 +24,8 @@ seasonal_dot(swmpr_in, ...)
 
 \item{ln_lab}{logical, add significance label?}
 
+\item{log_trans}{logical, should y-axis be log? Defaults to \code{FALSE}}
+
 \item{plot_title}{logical, should the station name be included as the plot title? Defaults to \code{FALSE}}
 
 \item{plot}{logical, should a plot be returned? Defaults to \code{TRUE}}
@@ -35,6 +38,32 @@ Seasonal trends
 }
 \details{
 average/min/max seasonal values faceted by season
+}
+\examples{
+\dontrun{
+
+dat_wq <- elksmwq
+dat_wq <- subset(dat_wq, subset = c('2007-01-01 0:00', '2017-01-01 0:00'))
+dat_wq <- qaqc(dat_wq, qaqc_keep = c(0, 3, 5))
+
+x <-
+  seasonal_dot(dat_wq, param = 'do_mgl',
+               , ln_trend = F
+               , ln_lab = F
+               , plot_title = T)
+
+x <-
+  seasonal_dot(dat_wq, param = 'do_mgl',
+               , ln_trend = T
+               , ln_lab = F
+               , plot_title = T)
+
+x <-
+  seasonal_dot(dat_wq, param = 'do_mgl',
+               , ln_trend = T
+               , ln_lab = T
+               , plot_title = T)
+}
 }
 \seealso{
 \code{\link[ggplot2]{ggplot}}
