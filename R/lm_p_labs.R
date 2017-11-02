@@ -8,6 +8,8 @@
 #'
 #' @importFrom broom tidy
 #' @importFrom magrittr "%>%"
+#' @importFrom rlang .data
+#' @importFrom stats lm
 #' @export
 #'
 #' @details This function returns a data.frame of p-value labels for use with the seasonal dot plot. P-values are taken from linear regression.
@@ -18,7 +20,7 @@
 
 
 lm_p_labs <- function(dat_in) {
-  lm_results <- plt_data %>%
+  lm_results <- dat_in %>%
     group_by(season) %>%
     do(reg_min = lm(min ~ year, data = .)
        , reg_mean = lm(mean ~ year, data = .)

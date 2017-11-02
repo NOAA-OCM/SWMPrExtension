@@ -22,7 +22,7 @@ seasonal_dot(swmpr_in, ...)
 
 \item{ln_trend}{logical, add linear trend line?}
 
-\item{ln_lab}{logical, add significance label?}
+\item{ln_lab}{logical, add significance label? Statisically significant results will appear in bold.}
 
 \item{log_trans}{logical, should y-axis be log? Defaults to \code{FALSE}}
 
@@ -60,6 +60,28 @@ x <-
 
 x <-
   seasonal_dot(dat_wq, param = 'do_mgl',
+               , ln_trend = T
+               , ln_lab = T
+               , plot_title = T)
+
+dat_nut <- elksmnut
+dat_nut <- subset(dat_nut, subset = c('2007-01-01 0:00', '2017-01-01 0:00'))
+dat_nut <- qaqc(dat_nut, qaqc_keep = c(0, 3, 5))
+
+x <-
+  seasonal_dot(dat_nut, param = 'chla_n',
+               , ln_trend = F
+               , ln_lab = F
+               , plot_title = T)
+
+x <-
+  seasonal_dot(dat_nut, param = 'chla_n',
+               , ln_trend = T
+               , ln_lab = F
+               , plot_title = T)
+
+x <-
+  seasonal_dot(dat_nut, param = 'chla_n',
                , ln_trend = T
                , ln_lab = T
                , plot_title = T)
