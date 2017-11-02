@@ -21,10 +21,12 @@
 
 lm_p_labs <- function(dat_in) {
   lm_results <- dat_in %>%
-    group_by(season) %>%
+    group_by(.data$season) %>%
     do(reg_min = lm(.data$min ~ .data$year, data = .data)
        , reg_mean = lm(.data$mean ~ .data$year, data = .data)
        , reg_max = lm(.data$max ~ .data$year), data = .data)
+
+
 
   # return(lm_results)
   lm_min_tidy <- tidy(lm_results, reg_min) %>%

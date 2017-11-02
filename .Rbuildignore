@@ -1,6 +1,9 @@
 ^packrat/
 ^\.Rprofile$
 ^.*\.Rproj$
+^README_files*
+^README.*
+^swmpr_logo.png$
 ^\.Rproj\.user$
 ^\.travis\.yml$
 ^README\.Rmd$
