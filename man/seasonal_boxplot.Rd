@@ -41,6 +41,21 @@ Annual time series for year of interest on top of long-term percentiles
 \details{
 Annual time series for year of interest on top of long-term percentiles
 }
+\examples{
+\dontrun{
+dat <- elksmwq
+
+dat <- qaqc(dat, qaqc_keep = c('0', '3', '5'))
+
+do_plt <- seasonal_boxplot(dat, param = 'do_mgl')
+
+do_plt <- seasonal_boxplot(dat, param = 'do_mgl',
+target_yr = 2015,
+season = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12)),
+season_names = c('Winter', 'Spring', 'Summer', 'Fall'),
+season_start = 'Spring')
+}
+}
 \seealso{
 \code{\link[ggplot2]{ggplot}}
 }
