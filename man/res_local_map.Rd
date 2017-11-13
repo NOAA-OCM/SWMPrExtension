@@ -14,7 +14,7 @@ res_local_map(nerr_site_id, stations, bbox, shp, station_labs = T,
 
 \item{bbox}{a bounding box associated with the reserve. Must be in the format of c(X1, Y1, X2, Y2)}
 
-\item{shp}{shape file}
+\item{shp}{SpatialPolygons object}
 
 \item{station_labs}{logical, should stations be labeled? Defaults to \code{TRUE}}
 
@@ -40,7 +40,41 @@ This function was developed from a blog post by Bob Rudis (https://rud.is/b/2014
 
 ## a compact reserve
 
+### set plotting parameters
+stations <-
+sampling_stations[(sampling_stations$NERR.Site.ID == 'elk'
+& sampling_stations$Status == 'Active'), ]$Station.Code
+to_match <- c('wq', 'met')
+stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
+shp_fl <- elk_spatial
+bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
+lab_dir <- c('L', 'R', 'L', 'L', 'L')
+labs <- c('ap', 'cw', 'nm', 'sm', 'vm')
+pos <- 'bottomleft'
+
+### plot
+res_local_map('elk', stations = stns, bbox = bounding_elk,
+lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
+
+
 ## a multicomponent reserve (show two different bounding boxes)
+### set plotting parameters
+stations <-
+sampling_stations[(sampling_stations$NERR.Site.ID == 'cbm'
+& sampling_stations$Status == 'Active'), ]$Station.Code
+to_match <- c('wq', 'met')
+stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
+shp_fl <- cbm_spatial
+bounding_cbm_1 <- c(-77.393, 39.741, -75.553, 38.277)
+bounding_cbm_2 <- c(-121.810978, 36.868218, -121.708667, 36.764050)
+lab_dir <- c('L', 'R', 'L', 'L', 'L')
+labs <- c('ap', 'cw', 'nm', 'sm', 'vm')
+pos <- 'bottomleft'
+
+### plot
+res_local_map('elk', stations = stns, bbox = bounding_elk,
+lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
+
 }
 
 }
