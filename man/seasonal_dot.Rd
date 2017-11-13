@@ -8,7 +8,7 @@
 seasonal_dot(swmpr_in, ...)
 
 \method{seasonal_dot}{swmpr}(swmpr_in, param = NULL, rng = NULL,
-  ln_trend = F, ln_lab = F, log_trans = F, plot_title = FALSE,
+  lm_trend = F, lm_lab = F, log_trans = F, plot_title = FALSE,
   plot = T, ...)
 }
 \arguments{
@@ -20,9 +20,9 @@ seasonal_dot(swmpr_in, ...)
 
 \item{rng}{numeric vector, if historic range is not specified then the min/max values of the data set will be used.}
 
-\item{ln_trend}{logical, add linear trend line?}
+\item{lm_trend}{logical, add linear trend line?}
 
-\item{ln_lab}{logical, add significance label? Statisically significant results will appear in bold.}
+\item{lm_lab}{logical, add significance label? Statisically significant results will appear in bold.}
 
 \item{log_trans}{logical, should y-axis be log? Defaults to \code{FALSE}}
 
@@ -48,20 +48,20 @@ dat_wq <- qaqc(dat_wq, qaqc_keep = c(0, 3, 5))
 
 x <-
   seasonal_dot(dat_wq, param = 'do_mgl',
-               , ln_trend = F
-               , ln_lab = F
+               , lm_trend = F
+               , lm_lab = F
                , plot_title = T)
 
 x <-
   seasonal_dot(dat_wq, param = 'do_mgl',
-               , ln_trend = T
-               , ln_lab = F
+               , lm_trend = T
+               , lm_lab = F
                , plot_title = T)
 
 x <-
   seasonal_dot(dat_wq, param = 'do_mgl',
-               , ln_trend = T
-               , ln_lab = T
+               , lm_trend = T
+               , lm_lab = T
                , plot_title = T)
 
 dat_nut <- elksmnut
@@ -70,20 +70,20 @@ dat_nut <- qaqc(dat_nut, qaqc_keep = c(0, 3, 5))
 
 x <-
   seasonal_dot(dat_nut, param = 'chla_n',
-               , ln_trend = F
-               , ln_lab = F
+               , lm_trend = F
+               , lm_lab = F
                , plot_title = T)
 
 x <-
   seasonal_dot(dat_nut, param = 'chla_n',
-               , ln_trend = T
-               , ln_lab = F
+               , lm_trend = T
+               , lm_lab = F
                , plot_title = T)
 
 x <-
   seasonal_dot(dat_nut, param = 'chla_n',
-               , ln_trend = T
-               , ln_lab = T
+               , lm_trend = T
+               , lm_lab = T
                , plot_title = T)
 }
 }

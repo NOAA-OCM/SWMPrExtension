@@ -5,8 +5,8 @@
 #' @param swmpr_in input swmpr object
 #' @param param chr string of variable to plot
 #' @param rng numeric vector, if historic range is not specified then the min/max values of the data set will be used.
-#' @param ln_trend logical, add linear trend line?
-#' @param ln_lab logical, add significance label? Statisically significant results will appear in bold.
+#' @param lm_trend logical, add linear trend line?
+#' @param lm_lab logical, add significance label? Statisically significant results will appear in bold.
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
 #' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
 #' @param plot logical, should a plot be returned? Defaults to \code{TRUE}
@@ -40,20 +40,20 @@
 #'
 #' x <-
 #'   seasonal_dot(dat_wq, param = 'do_mgl',
-#'                , ln_trend = F
-#'                , ln_lab = F
+#'                , lm_trend = F
+#'                , lm_lab = F
 #'                , plot_title = T)
 #'
 #' x <-
 #'   seasonal_dot(dat_wq, param = 'do_mgl',
-#'                , ln_trend = T
-#'                , ln_lab = F
+#'                , lm_trend = T
+#'                , lm_lab = F
 #'                , plot_title = T)
 #'
 #' x <-
 #'   seasonal_dot(dat_wq, param = 'do_mgl',
-#'                , ln_trend = T
-#'                , ln_lab = T
+#'                , lm_trend = T
+#'                , lm_lab = T
 #'                , plot_title = T)
 #'
 #' dat_nut <- elksmnut
@@ -62,20 +62,20 @@
 #'
 #' x <-
 #'   seasonal_dot(dat_nut, param = 'chla_n',
-#'                , ln_trend = F
-#'                , ln_lab = F
+#'                , lm_trend = F
+#'                , lm_lab = F
 #'                , plot_title = T)
 #'
 #' x <-
 #'   seasonal_dot(dat_nut, param = 'chla_n',
-#'                , ln_trend = T
-#'                , ln_lab = F
+#'                , lm_trend = T
+#'                , lm_lab = F
 #'                , plot_title = T)
 #'
 #' x <-
 #'   seasonal_dot(dat_nut, param = 'chla_n',
-#'                , ln_trend = T
-#'                , ln_lab = T
+#'                , lm_trend = T
+#'                , lm_lab = T
 #'                , plot_title = T)
 #' }
 
@@ -92,8 +92,8 @@ seasonal_dot <- function(swmpr_in, ...) UseMethod('seasonal_dot')
 seasonal_dot.swmpr <- function(swmpr_in
                                , param = NULL
                                , rng = NULL
-                               , ln_trend = F
-                               , ln_lab = F
+                               , lm_trend = F
+                               , lm_lab = F
                                , log_trans = F
                                , plot_title = FALSE
                                , plot = T
@@ -184,7 +184,7 @@ seasonal_dot.swmpr <- function(swmpr_in
       theme(legend.spacing.x = unit(-6, 'pt'))
 
     # add regression line if specified
-    if(ln_trend) {
+    if(lm_trend) {
       plt <-
         plt +
         geom_smooth(method = 'lm', se = F, lwd = 0.5) +
@@ -195,7 +195,7 @@ seasonal_dot.swmpr <- function(swmpr_in
     }
 
     # add regression p-values if specified
-    if(ln_lab) {
+    if(lm_lab) {
 
       # return(plt_data)
       p_labs <- lm_p_labs(plt_data)

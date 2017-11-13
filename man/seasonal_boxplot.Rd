@@ -9,7 +9,8 @@ seasonal_boxplot(swmpr_in, ...)
 
 \method{seasonal_boxplot}{swmpr}(swmpr_in, param = NULL, hist_rng = NULL,
   target_yr = NULL, criteria = NULL, log_trans = FALSE,
-  plot_title = FALSE, plot = T, FUN = function(x) mean(x, na.rm = T), ...)
+  stat_lab = "Average", plot_title = FALSE, plot = T, FUN = function(x)
+  mean(x, na.rm = T), ...)
 }
 \arguments{
 \item{swmpr_in}{input swmpr object}
@@ -26,6 +27,8 @@ seasonal_boxplot(swmpr_in, ...)
 
 \item{log_trans}{logical, should y-axis be log? Defaults to \code{FALSE}}
 
+\item{stat_lab}{chr, label for the summary statistic defined in \code{FUN}. Defaults to "Average"}
+
 \item{plot_title}{logical, should the station name be included as the plot title? Defaults to \code{FALSE}}
 
 \item{plot}{logical, should a plot be returned? Defaults to \code{TRUE}}
@@ -33,7 +36,7 @@ seasonal_boxplot(swmpr_in, ...)
 \item{FUN}{function used to aggregate daily SWMP data}
 }
 \value{
-A \code{\link[ggplot2]{ggplot}} object
+A \code{\link[ggplot2]{ggplot}} object or a \code{data.frame} if plot = \code{FALSE}
 }
 \description{
 Annual time series for year of interest on top of long-term percentiles
@@ -54,6 +57,12 @@ target_yr = 2015,
 season = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12)),
 season_names = c('Winter', 'Spring', 'Summer', 'Fall'),
 season_start = 'Spring')
+
+do_plt_min <- seasonal_boxplot(dat, param = 'do_mgl',
+stat_lab = 'Minimum', FUN = function(x) min(x, na.rm = T))
+
+do_plt_max <- seasonal_boxplot(dat, param = 'do_mgl',
+stat_lab = 'Maximum', FUN = function(x) max(x, na.rm = T))
 }
 }
 \seealso{
