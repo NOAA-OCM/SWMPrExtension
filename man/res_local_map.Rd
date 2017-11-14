@@ -27,7 +27,7 @@ returns a leaflet object. This function is intended to be used with mapshot to g
 for the reserve level report
 }
 \description{
-Create a stylized reserve level map for use with the reserve level reporting template
+Create a stylized reserve-level map for use with the reserve level reporting template
 }
 \details{
 Creates a base map of the US with options for including AK, HI, and PR. The user can also

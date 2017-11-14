@@ -1,6 +1,6 @@
 #' Local Reserve Map
 #'
-#' Create a stylized reserve level map for use with the reserve level reporting template
+#' Create a stylized reserve-level map for use with the reserve level reporting template
 #'
 #' @param nerr_site_id chr string of the reserve to make, first three characters used by NERRS
 #' @param stations chr string of the reserve stations to include in the map

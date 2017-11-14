@@ -2,19 +2,21 @@
 % Please edit documentation in R/res_sk_map.R
 \name{res_sk_map}
 \alias{res_sk_map}
-\title{Local Reserve Map of Seasonal Kendall Results}
+\title{Local Reserve Map With Seasonal Kendall Results}
 \usage{
-res_sk_map(nerr_site_id, stations, bbox, shp, station_labs = T,
-  lab_loc = NULL, scale_pos = "bottomleft")
+res_sk_map(nerr_site_id, stations, sk_result = NULL, bbox, shp,
+  station_labs = T, lab_loc = NULL, scale_pos = "bottomleft")
 }
 \arguments{
 \item{nerr_site_id}{chr string of the reserve to make, first three characters used by NERRS}
 
 \item{stations}{chr string of the reserve stations to include in the map}
 
-\item{bbox}{a bounding box associated with the reserve}
+\item{sk_result}{vector of values denoting direction and significance of seasonal kendall results. Result should be c(-1, 0, 1) for sig. negative, no sig. results, and sig. positive result}
 
-\item{shp}{shape file}
+\item{bbox}{a bounding box associated with the reserve. Must be in the format of c(X1, Y1, X2, Y2)}
+
+\item{shp}{SpatialPolygons object}
 
 \item{station_labs}{logical, should stations be labeled? Defaults to \code{TRUE}}
 
@@ -27,7 +29,7 @@ returns a leaflet object. This function is intended to be used with mapshot to g
 for the reserve level report
 }
 \description{
-Create a stylized reserve level map to display seasonal kendall results
+Create a stylized reserve-level map of seasonal kendall results for use with the reserve level reporting template
 }
 \details{
 Creates a base map of the US with options for including AK, HI, and PR. The user can also
@@ -40,7 +42,41 @@ This function was developed from a blog post by Bob Rudis (https://rud.is/b/2014
 
 ## a compact reserve
 
+### set plotting parameters
+stations <-
+sampling_stations[(sampling_stations$NERR.Site.ID == 'elk'
+& sampling_stations$Status == 'Active'), ]$Station.Code
+to_match <- c('wq', 'met')
+stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
+shp_fl <- elk_spatial
+bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
+lab_dir <- c('L', 'R', 'L', 'L', 'L')
+labs <- c('ap', 'cw', 'nm', 'sm', 'vm')
+pos <- 'bottomleft'
+
+### plot
+res_local_map('elk', stations = stns, bbox = bounding_elk,
+lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
+
+
 ## a multicomponent reserve (show two different bounding boxes)
+### set plotting parameters
+stations <-
+sampling_stations[(sampling_stations$NERR.Site.ID == 'cbm'
+& sampling_stations$Status == 'Active'), ]$Station.Code
+to_match <- c('wq', 'met')
+stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
+shp_fl <- cbm_spatial
+bounding_cbm_1 <- c(-77.393, 39.741, -75.553, 38.277)
+bounding_cbm_2 <- c(-121.810978, 36.868218, -121.708667, 36.764050)
+lab_dir <- c('L', 'R', 'L', 'L', 'L')
+labs <- c('ap', 'cw', 'nm', 'sm', 'vm')
+pos <- 'bottomleft'
+
+### plot
+res_local_map('elk', stations = stns, bbox = bounding_elk,
+lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
+
 }
 
 }
