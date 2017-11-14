@@ -8,7 +8,9 @@
 #' @param target_yr numeric, the target year that should be compared against the historic range. If target year is not specified then dot will not be plotted
 #' @param criteria numeric, a numeric criteria that will be plotted as a horizontal line
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
+#' @param stat_lab chr, label for the summary statistic defined in \code{FUN}. Defaults to "Average"
 #' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
+#' @param plot logical, should a plot be returned? Defaults to \code{TRUE}
 #' @param FUN function used to aggregate daily SWMP data
 #' @param ... additional arguments passed to other methods. See \code{\link{assign_season}} and \code{\link{y_labeler}}.
 #'
@@ -26,11 +28,31 @@
 #'
 #' @author Julie Padilla
 #'
-#' @return A \code{\link[ggplot2]{ggplot}} object
+#' @return A \code{\link[ggplot2]{ggplot}} object or a \code{data.frame} if plot = \code{FALSE}
 #'
 #' @seealso \code{\link[ggplot2]{ggplot}}
 #'
+#' @examples
+#' \dontrun{
+## get data, prep
+#' dat <- elksmwq
 #'
+#' dat <- qaqc(dat, qaqc_keep = c('0', '3', '5'))
+#'
+#' do_plt <- seasonal_boxplot(dat, param = 'do_mgl')
+#'
+#' do_plt <- seasonal_boxplot(dat, param = 'do_mgl',
+#' target_yr = 2015,
+#' season = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12)),
+#' season_names = c('Winter', 'Spring', 'Summer', 'Fall'),
+#' season_start = 'Spring')
+#'
+#' do_plt_min <- seasonal_boxplot(dat, param = 'do_mgl',
+#' stat_lab = 'Minimum', FUN = function(x) min(x, na.rm = T))
+#'
+#' do_plt_max <- seasonal_boxplot(dat, param = 'do_mgl',
+#' stat_lab = 'Maximum', FUN = function(x) max(x, na.rm = T))
+#' }
 
 seasonal_boxplot <- function(swmpr_in, ...) UseMethod('seasonal_boxplot')
 
@@ -48,6 +70,7 @@ seasonal_boxplot.swmpr <- function(swmpr_in
                                    , target_yr = NULL
                                    , criteria = NULL
                                    , log_trans = FALSE
+                                   , stat_lab = 'Average'
                                    , plot_title = FALSE
                                    , plot = T
                                    , FUN = function(x) mean(x, na.rm = T)
@@ -104,11 +127,13 @@ seasonal_boxplot.swmpr <- function(swmpr_in
 
   # Filter for parameter of interest
   dat <- dat[, c('date', 'season', param)]
+  dat <- dat %>% dplyr::filter(!is.na(!! parm))
 
-  ##historic range
+  # Filter for historic range
   dat_hist <- dat %>% dplyr::filter(lubridate::year(.data$date) >= rng[[1]]
                                     & lubridate::year(.data$date) <= rng[[2]])
 
+  # Calc summary stat defined by FUN by season and day
   dat_hist <- dat_hist %>%
     group_by(!! seas, !! dt) %>%
     summarise(result = FUN(!! parm))
@@ -118,7 +143,7 @@ seasonal_boxplot.swmpr <- function(swmpr_in
     mx <- ceiling(mx)
     mn <- ifelse(log_trans == TRUE, 0.1, 0)
 
-    lab_bp_fill <- lab_bp_fill <- paste('Daily Averages (', rng[[1]], '-', rng[[2]], ')', sep = '') # need to add in flex for 'min', 'max'
+    lab_bp_fill <- lab_bp_fill <- paste('Daily ', stat_lab, 's (', rng[[1]], '-', rng[[2]], ')', sep = '') # need to add in flex for 'min', 'max'
 
     plt <- ggplot(data = dat_hist, aes_(x = seas, y = res, fill = lab_bp_fill)) +
       geom_boxplot(outlier.size = 0.5) +
@@ -156,7 +181,7 @@ seasonal_boxplot.swmpr <- function(swmpr_in
         dplyr::group_by(!! seas) %>%
         dplyr::summarise(med = stats::median(.data$result, na.rm = T))
 
-      pt_fill <- paste('Median Daily Average (', target_yr, ')', sep = '')
+      pt_fill <- paste('Median Daily ', stat_lab, ' (', target_yr, ')', sep = '')
 
       plt <- plt +
         geom_point(data = dat_yr, aes_(x = seas, y = medi, shape = factor(pt_fill)), fill = '#65BCFF', size = 2) +

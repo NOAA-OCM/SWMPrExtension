@@ -17,6 +17,7 @@
 #'
 #' @importFrom magrittr "%>%"
 #' @importFrom lubridate  year floor_date
+#' @importFrom tidyr complete
 #'
 #' @export
 #'
@@ -111,12 +112,11 @@ annual_range.swmpr <- function(swmpr_in
   # Assign the seasons and order them
   dat <- dat %>% filter(lubridate::year(.data$datetimestamp) == rng)
   dat$season <- assign_season(dat$datetimestamp, abb = T, ...)
-  
 
-  # Assign date for determining daily stat value
+    # Assign date for determining daily stat value
   dat$date <- lubridate::floor_date(dat$datetimestamp, unit = 'days')
 
-  # Filter for parameter of interest and remove NA values
+  # # Filter for parameter of interest and remove NA values
   dat <- dat %>% dplyr::select(.data$datetimestamp, date, .data$season, !!parm)
   dat <- dat %>% dplyr::filter(!is.na(!! parm))
 
@@ -133,6 +133,9 @@ annual_range.swmpr <- function(swmpr_in
               , max_avg = mean(!! maxi, na.rm = T)
               , min = min(!! mini, na.rm = T)
               , max = max(!! maxi, na.rm = T))
+
+  # ensure all factor levels are accounted for, even if there is no data
+  dat_month <- tidyr::complete(dat_month, .data$season)
 
   if(plot){
     # Set the plot range
