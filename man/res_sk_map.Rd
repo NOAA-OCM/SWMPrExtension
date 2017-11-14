@@ -5,7 +5,7 @@
 \title{Local Reserve Map With Seasonal Kendall Results}
 \usage{
 res_sk_map(nerr_site_id, stations, sk_result = NULL, bbox, shp,
-  station_labs = T, lab_loc = NULL, scale_pos = "bottomleft")
+  scale_pos = "bottomleft")
 }
 \arguments{
 \item{nerr_site_id}{chr string of the reserve to make, first three characters used by NERRS}
@@ -18,10 +18,6 @@ res_sk_map(nerr_site_id, stations, sk_result = NULL, bbox, shp,
 
 \item{shp}{SpatialPolygons object}
 
-\item{station_labs}{logical, should stations be labeled? Defaults to \code{TRUE}}
-
-\item{lab_loc}{chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.}
-
 \item{scale_pos}{scale_pos where should the scale be placed? Options are 'topleft', 'topright', 'bottomleft', or 'bottomright'. Defaults to 'bottomleft'}
 }
 \value{
@@ -32,8 +28,7 @@ for the reserve level report
 Create a stylized reserve-level map of seasonal kendall results for use with the reserve level reporting template
 }
 \details{
-Creates a base map of the US with options for including AK, HI, and PR. The user can also
-This function was developed from a blog post by Bob Rudis (https://rud.is/b/2014/11/16/moving-the-earth-well-alaska-hawaii-with-r/)
+Creates a reserve level map with arrows that indicate trends
 }
 \examples{
 \dontrun{
@@ -46,17 +41,16 @@ This function was developed from a blog post by Bob Rudis (https://rud.is/b/2014
 stations <-
 sampling_stations[(sampling_stations$NERR.Site.ID == 'elk'
 & sampling_stations$Status == 'Active'), ]$Station.Code
-to_match <- c('wq', 'met')
+to_match <- c('wq')
 stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
 shp_fl <- elk_spatial
 bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
-lab_dir <- c('L', 'R', 'L', 'L', 'L')
-labs <- c('ap', 'cw', 'nm', 'sm', 'vm')
 pos <- 'bottomleft'
+sk_res <- c('inc', 'dec', 'dec', 'insig')
 
 ### plot
-res_local_map('elk', stations = stns, bbox = bounding_elk,
-lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
+res_sk_map('elk', stations = stns, sk_result = sk_res,
+bbox = bounding_elk, scale_pos = pos, shp = shp_fl)
 
 
 ## a multicomponent reserve (show two different bounding boxes)
@@ -64,18 +58,20 @@ lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
 stations <-
 sampling_stations[(sampling_stations$NERR.Site.ID == 'cbm'
 & sampling_stations$Status == 'Active'), ]$Station.Code
-to_match <- c('wq', 'met')
+to_match <- c('wq')
 stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
 shp_fl <- cbm_spatial
 bounding_cbm_1 <- c(-77.393, 39.741, -75.553, 38.277)
 bounding_cbm_2 <- c(-121.810978, 36.868218, -121.708667, 36.764050)
-lab_dir <- c('L', 'R', 'L', 'L', 'L')
-labs <- c('ap', 'cw', 'nm', 'sm', 'vm')
 pos <- 'bottomleft'
+sk_res <- c('inc', 'dec', 'dec', 'insig')
 
 ### plot
-res_local_map('elk', stations = stns, bbox = bounding_elk,
-lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
+res_local_map('cbm', stations = stns, bbox = bounding_cmb_1,
+scale_pos = pos, shp = shp_fl)
+
+res_local_map('cbm', stations = stns, bbox = bounding_cmb_2,
+scale_pos = pos, shp = shp_fl)
 
 }
 

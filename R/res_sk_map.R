@@ -7,8 +7,6 @@
 #' @param sk_result vector of values denoting direction and significance of seasonal kendall results. Result should be c(-1, 0, 1) for sig. negative, no sig. results, and sig. positive result
 #' @param bbox a bounding box associated with the reserve. Must be in the format of c(X1, Y1, X2, Y2)
 #' @param shp SpatialPolygons object
-#' @param station_labs logical, should stations be labeled? Defaults to \code{TRUE}
-#' @param lab_loc chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.
 #' @param scale_pos scale_pos where should the scale be placed? Options are 'topleft', 'topright', 'bottomleft', or 'bottomright'. Defaults to 'bottomleft'
 #'
 #' @import leaflet
@@ -23,8 +21,7 @@
 #'
 #' @export
 #'
-#' @details Creates a base map of the US with options for including AK, HI, and PR. The user can also
-#' This function was developed from a blog post by Bob Rudis (https://rud.is/b/2014/11/16/moving-the-earth-well-alaska-hawaii-with-r/)
+#' @details Creates a reserve level map with arrows that indicate trends
 #'
 #' @examples
 #' \dontrun{
@@ -37,17 +34,16 @@
 #' stations <-
 #' sampling_stations[(sampling_stations$NERR.Site.ID == 'elk'
 #' & sampling_stations$Status == 'Active'), ]$Station.Code
-#' to_match <- c('wq', 'met')
+#' to_match <- c('wq')
 #' stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
 #' shp_fl <- elk_spatial
 #' bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
-#' lab_dir <- c('L', 'R', 'L', 'L', 'L')
-#' labs <- c('ap', 'cw', 'nm', 'sm', 'vm')
 #' pos <- 'bottomleft'
+#' sk_res <- c('inc', 'dec', 'dec', 'insig')
 #'
 #' ### plot
-#' res_local_map('elk', stations = stns, bbox = bounding_elk,
-#' lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
+#' res_sk_map('elk', stations = stns, sk_result = sk_res,
+#' bbox = bounding_elk, scale_pos = pos, shp = shp_fl)
 #'
 #'
 #' ## a multicomponent reserve (show two different bounding boxes)
@@ -55,25 +51,27 @@
 #' stations <-
 #' sampling_stations[(sampling_stations$NERR.Site.ID == 'cbm'
 #' & sampling_stations$Status == 'Active'), ]$Station.Code
-#' to_match <- c('wq', 'met')
+#' to_match <- c('wq')
 #' stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
 #' shp_fl <- cbm_spatial
 #' bounding_cbm_1 <- c(-77.393, 39.741, -75.553, 38.277)
 #' bounding_cbm_2 <- c(-121.810978, 36.868218, -121.708667, 36.764050)
-#' lab_dir <- c('L', 'R', 'L', 'L', 'L')
-#' labs <- c('ap', 'cw', 'nm', 'sm', 'vm')
 #' pos <- 'bottomleft'
+#' sk_res <- c('inc', 'dec', 'dec', 'insig')
 #'
 #' ### plot
-#' res_local_map('elk', stations = stns, bbox = bounding_elk,
-#' lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
+#' res_local_map('cbm', stations = stns, bbox = bounding_cmb_1,
+#' scale_pos = pos, shp = shp_fl)
+#'
+#' res_local_map('cbm', stations = stns, bbox = bounding_cmb_2,
+#' scale_pos = pos, shp = shp_fl)
 #'
 #' }
 #'
 #' @return returns a leaflet object. This function is intended to be used with mapshot to generate a png
 #' for the reserve level report
 
-res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, station_labs = T, lab_loc = NULL, scale_pos = 'bottomleft') {
+res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, scale_pos = 'bottomleft') {
 
   # check that a shape file exists
   if(class(shp) != 'SpatialPolygons')
@@ -83,9 +81,9 @@ res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, stat
   if(length(stations) != length(sk_result))
     stop('Incorrect number of seasonal kendall results specified.')
 
-  # check that length(lab_loc) = length(stations)
-  if(!is.null(station_labs) && length(lab_loc) != length(stations))
-    stop('Incorrect number of label location identifiers specified. R or L designation must be made for each station.' )
+  # # check that length(lab_loc) = length(stations)
+  # if(!is.null(station_labs) && length(lab_loc) != length(stations))
+  #   stop('Incorrect number of label location identifiers specified. R or L designation must be made for each station.' )
 
   # check that the bb has the right dimensions
   if(is.null(bbox))
@@ -97,16 +95,15 @@ res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, stat
   loc <- get('sampling_stations')
   loc <- loc[(loc$Station.Code %in% stations), ]
   loc$abbrev <- substr(loc$Station.Code, start = 4, stop = 5)
-  # add something about loc color
 
-  # Determine if r and l labs exist
-  if(!is.null(lab_loc)){
-    left_labs <- grep('L', lab_loc)
-    right_labs <- grep('R', lab_loc)
-  } else {
-    #default to left labels
-    left_labs <- rep('L', length(stations))
-  }
+  # # Determine if r and l labs exist
+  # if(!is.null(lab_loc)){
+  #   left_labs <- grep('L', lab_loc)
+  #   right_labs <- grep('R', lab_loc)
+  # } else {
+  #   #default to left labels
+  #   left_labs <- rep('L', length(stations))
+  # }
 
   # Determine the types of results
   if('inc' %in% sk_result){inc_icons <- grep('inc', sk_result)}
@@ -118,38 +115,56 @@ res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, stat
     addProviderTiles(leaflet::providers$Esri.WorldGrayCanvas) %>%  # Add default OpenStreetMap map tiles, CartoDB.Positron
     addPolygons(data = shp, weight = 2, color = '#B3B300', fillColor = 'yellow')
 
-  # return(m)
-
-  # look for info on "custom markers"
   if(exists('inc_icons')){
+    # create file path for icon image
+    ico_loc <- system.file('extdata', 'arrow_inc.png', package = 'SWMPrExtension')
 
-    icons <- makeAwesomeIcon(icon = "arrow-up", library = "glyphicon",
-                    markerColor = "blue", iconColor = "red", spin = FALSE,
-                    extraClasses = NULL, squareMarker = FALSE, iconRotate = 0,
-                    fontFamily = "monospace", text = NULL)
+    # make icon
+    icon_img <- makeIcon(iconUrl = ico_loc
+                     , iconWidth = 30
+                     , iconHeight = 30
+                     , iconAnchorX = 15
+                     , iconAnchorY = 15)
 
-    # makeIcon("/Users/jazzurro/Documents/Stack Overflow/blue.png", iconWidth = 24, iconHeight =32)
-    # return(icons)
-
-    #https://rstudio.github.io/leaflet/markers.html
+    # plot custom icon
     m <- m %>%
       addMarkers(lng = ~Longitude[inc_icons] * -1, lat = ~Latitude[inc_icons]
-                 , icon = icons)
-
-
+                 , icon = icon_img)
   }
 
-  # if(exists('dec_icons')){
-  #   m <- m %>%
-  #     addAwesomeMarkers(lng = ~Longitude[inc_icons] * -1, lat = ~Latitude[inc_icons]
-  #                       , icon = 'ion-ios-arrow-thin-down'
-  #                       # , weight = 0
-  #                       # , fillOpacity = 1
-  #                       , color = 'red'
-  #                       # , label = loc$abbrev[inc_icons]
-  #                       # , labelOptions = labelOptions(noHide = station_labs, direction = c('left'), opacity = 1)
-  #     )
-  # }
+  if(exists('dec_icons')){
+    # create file path for icon image
+    ico_loc <- system.file('extdata', 'arrow_dec.png', package = 'SWMPrExtension')
+
+    # make icon
+    icon_img <- makeIcon(iconUrl = ico_loc
+                         , iconWidth = 30
+                         , iconHeight = 30
+                         , iconAnchorX = 15
+                         , iconAnchorY = 15)
+
+    # plot custom icon
+    m <- m %>%
+      addMarkers(lng = ~Longitude[dec_icons] * -1, lat = ~Latitude[dec_icons]
+                 , icon = icon_img)
+  }
+
+  if(exists('insig_icons')){
+    # create file path for icon image
+    ico_loc <- system.file('extdata', 'bar_insig.png', package = 'SWMPrExtension')
+
+    # make icon
+    icon_img <- makeIcon(iconUrl = ico_loc
+                         , iconWidth = 40
+                         , iconHeight = 14
+                         , iconAnchorX = 20
+                         , iconAnchorY = 7)
+
+    # plot custom icon
+    m <- m %>%
+      addMarkers(lng = ~Longitude[insig_icons] * -1, lat = ~Latitude[insig_icons]
+                 , icon = icon_img)
+  }
 
   m <- m %>%
     addScaleBar(position = scale_pos) %>%
