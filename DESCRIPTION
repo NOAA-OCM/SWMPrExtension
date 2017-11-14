@@ -15,13 +15,22 @@ Encoding: UTF-8
 LazyData: true
 Depends: R (>= 2.10)
 Imports: SWMPr,
+    broom,
     dplyr,
 	ggplot2,
+	ggthemes,
+	leaflet,
 	lubridate,
+	magrittr,
+	maptools,
+	methods,
+	tidyr,
 	scales,
+	rgdal,
+	rgeos,
+    rlang,
     stringr,
-    magrittr,
-    rlang
+	sp
 Authors@R: person(given = "Julie", family = "Padilla",
     role = c("aut", "cre"),
 	email = "jpadilla@limno.com")

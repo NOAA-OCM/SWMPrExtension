@@ -1,0 +1,290 @@
+argfix                  Reshape list elements to match that of the
+                        first element
+gsw                     R implementation of Thermodynamic Equation Of
+                        Seawater - 2010 (TEOS-10)
+gsw_CT_first_derivatives
+                        First Derivatives of Conservative Temperature
+gsw_CT_first_derivatives_wrt_t_exact
+                        Derivatives of Conservative Temperature with
+                        Respect to or at Constant in-situ Temperature
+gsw_CT_freezing         Conservative Temperature of Freezing Seawater
+gsw_CT_freezing_first_derivatives
+                        First Derivatives of Conservative Temperature
+                        for Freezing Water
+gsw_CT_freezing_first_derivatives_poly
+                        First Derivatives of Conservative Temperature
+                        for Freezing Water (Polynomial version)
+gsw_CT_freezing_poly    Conservative Temperature Freezing Point
+                        (Polynomial version)
+gsw_CT_from_enthalpy    Conservative Temperature from Enthalpy
+gsw_CT_from_entropy     Conservative Temperature from Entropy
+gsw_CT_from_pt          Conservative Temperature from Potential
+                        Temperature
+gsw_CT_from_rho         Conservative Temperature from Density, Absolute
+                        Salinity and Pressure
+gsw_CT_from_t           Convert from temperature to conservative
+                        temperature
+gsw_CT_maxdensity       Conservative Temperature at Maximum Density
+gsw_CT_second_derivatives
+                        Second Derivatives of Conservative Temperature
+gsw_C_from_SP           Electrical Conductivity from Practical Salinity
+gsw_Fdelta              Ratio of Absolute to Preformed Salinity, minus
+                        1
+gsw_Helmholtz_energy_ice
+                        Helmholtz Energy of Ice
+gsw_IPV_vs_fNsquared_ratio
+                        Ratio of vert. gradient of pot. density to vert
+                        grad of locally-referenced pot density
+gsw_Nsquared            Calculate Brunt Vaisala Frequency squared
+gsw_SAAR                Absolute Salinity Anomaly Ratio
+gsw_SA_freezing_from_CT
+                        Compute Absolute Salinity at Freezing
+                        Conservative Temperature
+gsw_SA_freezing_from_CT_poly
+                        Compute Absolute Salinity at Freezing Point
+                        (Polynomial version)
+gsw_SA_freezing_from_t
+                        Compute Absolute Salinity at Freezing in-situ
+                        Temperature
+gsw_SA_freezing_from_t_poly
+                        Compute Absolute Salinity at Freezing in-situ
+                        Temperature (Polynomial version)
+gsw_SA_from_SP          Convert from Practical Salinity to Absolute
+                        Salinity
+gsw_SA_from_SP_Baltic   Convert from Practical Salinity to Absolute
+                        Salinity (Baltic)
+gsw_SA_from_Sstar       Absolute Salinity from Preformed Salinity
+gsw_SA_from_rho         Compute Absolute Salinity from Density, etc
+gsw_SP_from_C           Convert from Electrical Conductivity to
+                        Practical Salinity
+gsw_SP_from_SA          Convert from Absolute Salinity to Practical
+                        Salinity
+gsw_SP_from_SK          Calculate Practical Salinity from Knudsen
+                        Salinity
+gsw_SP_from_SR          Calculate Practical Salinity from Reference
+                        Salinity
+gsw_SP_from_Sstar       Practical Salinity from Preformed Salinity
+gsw_SR_from_SP          Calculate Reference Salinity from Practical
+                        Salinity
+gsw_Sstar_from_SA       Convert from Absolute Salinity to Preformed
+                        Salinity
+gsw_Sstar_from_SP       Convert from Practical Salinity to Preformed
+                        Salinity
+gsw_Turner_Rsubrho      Turner Angle and Density Ratio
+gsw_adiabatic_lapse_rate_from_CT
+                        Adiabatic Lapse Rate
+gsw_adiabatic_lapse_rate_ice
+                        Adiabatic Lapse Rate of Ice
+gsw_alpha               Thermal expansion coefficient with respect to
+                        Conservative Temperature
+gsw_alpha_on_beta       Thermal expansion coefficient over haline
+                        contraction coefficient
+gsw_alpha_wrt_t_exact   Thermal expansion coefficient with respect to
+                        in-situ temperature
+gsw_alpha_wrt_t_ice     Ice Thermal Expansion Coefficient with Respect
+                        to in-situ Temperature
+gsw_beta                Haline contraction coefficient at constant
+                        Conservative Temperature
+gsw_beta_const_t_exact
+                        Haline contraction coefficient at constant
+                        in-situ temperature
+gsw_cabbeling           Cabbeling coefficient
+gsw_chem_potential_water_ice
+                        Chemical Potential of Ice
+gsw_chem_potential_water_t_exact
+                        Chemical Potential of Water in Seawater
+gsw_cp_ice              Specific heat to ice
+gsw_cp_t_exact          Isobaric heat capacity
+gsw_deltaSA_from_SP     Absolute Salinity Anomaly from Practical
+                        Salinity
+gsw_dilution_coefficient_t_exact
+                        Dilution coefficient
+gsw_dynamic_enthalpy    Dynamic enthalpy of seawater (75-term equation)
+gsw_enthalpy            Specific enthalpy of seawater (75-term
+                        equation)
+gsw_enthalpy_CT_exact   Seawater Specific Enthalpy in terms of
+                        Conservative Temperature
+gsw_enthalpy_diff       Specific Enthalpy Difference with Pressure
+gsw_enthalpy_first_derivatives
+                        First Derivatives of Enthalpy
+gsw_enthalpy_first_derivatives_CT_exact
+                        First Derivatives of Enthalpy wrt CT
+gsw_enthalpy_ice        Ice Specific Enthalpy
+gsw_enthalpy_second_derivatives
+                        Second Derivatives of Enthalpy
+gsw_enthalpy_second_derivatives_CT_exact
+                        Second Derivatives of Enthalpy (exact)
+gsw_enthalpy_t_exact    Seawater Specific Enthalpy in terms of in-situ
+                        Temperature
+gsw_entropy_first_derivatives
+                        First Derivatives of Entropy
+gsw_entropy_from_pt     Specific Entropy ito Absolute Salinity and
+                        Potential Temperature
+gsw_entropy_from_t      Specific Entropy i.t.o. Absolute Salinity,
+                        Temperature, and Pressure
+gsw_entropy_ice         Entropy of ice
+gsw_entropy_second_derivatives
+                        Second Derivatives of Entropy
+gsw_frazil_properties   Properties of Frazil ice
+gsw_frazil_properties_potential
+                        Properties of Frazil ice i.t.o. potential
+                        enthalpy
+gsw_frazil_properties_potential_poly
+                        Properties of Frazil ice i.t.o. potential
+                        enthalpy (polynomial version)
+gsw_frazil_ratios_adiabatic
+                        Ratios of SA, CT and p changes when Frazil Ice
+                        Forms
+gsw_frazil_ratios_adiabatic_poly
+                        Ratios of SA, CT and p changes when Frazil Ice
+                        Forms (polynomial form)
+gsw_geo_strf_dyn_height
+                        Geostrophic Dynamic Height Anomaly
+gsw_geo_strf_dyn_height_pc
+                        Geostrophic Dynamic Height Anomaly
+                        (Piecewise-Constant Profile)
+gsw_gibbs               Gibbs Energy of Seawater, and its Derivatives
+gsw_gibbs_ice           Gibbs Energy of Ice, and its Derivatives
+gsw_grav                Gravitational Acceleration
+gsw_ice_fraction_to_freeze_seawater
+                        Ice Fraction to Cool Seawater to Freezing
+gsw_internal_energy     Specific Internal Energy of Seawater (75-term
+                        equation)
+gsw_internal_energy_ice
+                        Specific Internal Energy of Ice (75-term
+                        equation)
+gsw_kappa               Isentropic Compressibility of Seawater (75-term
+                        equation)
+gsw_kappa_const_t_ice   Isothermal Compressibility of Ice
+gsw_kappa_ice           Isentropic Compressibility of Ice
+gsw_kappa_t_exact       Isentropic compressibility of seawater (exact)
+gsw_latentheat_evap_CT
+                        Latent heat of evaporation
+gsw_latentheat_evap_t   Latent heat of evaporation
+gsw_latentheat_melting
+                        Latent Heat of Melting
+gsw_melting_ice_SA_CT_ratio
+                        Calculate d(SA)/d(CT) for Ice Melting in
+                        Seawater
+gsw_melting_ice_SA_CT_ratio_poly
+                        Calculate d(SA)/d(CT) for Ice Melting in
+                        Seawater (Polynomial version)
+gsw_melting_ice_equilibrium_SA_CT_ratio
+                        Calculate d(SA)/d(CT) for Ice Melting in
+                        near-freezing Seawater
+gsw_melting_ice_equilibrium_SA_CT_ratio_poly
+                        Calculate d(SA)/d(CT) for Ice Melting in
+                        near-freezing Seawater (Polynomial version)
+gsw_melting_ice_into_seawater
+                        Calculate properties related to ice melting in
+                        seawater
+gsw_melting_seaice_into_seawater
+                        Calculate properties related to seaice melting
+                        in seawater
+gsw_p_from_z            Pressure from height (75-term equation)
+gsw_pot_enthalpy_from_pt_ice
+                        Potential Enthalpy of Ice
+gsw_pot_enthalpy_from_pt_ice_poly
+                        Potential Enthalpy of Ice (Polynomial version)
+gsw_pot_enthalpy_ice_freezing
+                        Potential Enthalpy of Ice at Freezing Point
+gsw_pot_enthalpy_ice_freezing_first_derivatives
+                        First Derivatives of Potential Enthalpy
+gsw_pot_enthalpy_ice_freezing_first_derivatives_poly
+                        First Derivatives of Potential Enthalpy
+                        (Polynomial version)
+gsw_pot_enthalpy_ice_freezing_poly
+                        Potential Enthalpy of Ice at Freezing Point
+                        (Polynomial version)
+gsw_pot_rho_t_exact     Potential density
+gsw_pressure_coefficient_ice
+                        Pressure Coefficient for Ice
+gsw_pressure_freezing_CT
+                        Pressure at which Seawater Freezes
+gsw_pt0_from_t          Potential temperature referenced to the surface
+gsw_pt0_from_t_ice      Potential Temperature of Ice Referenced to the
+                        Surface
+gsw_pt_first_derivatives
+                        First Derivatives of Potential Temperature
+gsw_pt_from_CT          Potential temperature from Conservative
+                        Temperature
+gsw_pt_from_entropy     Potential Temperature from Entropy
+gsw_pt_from_pot_enthalpy_ice
+                        Potential Temperature from Potential Enthalpy
+                        of Ice
+gsw_pt_from_pot_enthalpy_ice_poly
+                        Potential Temperature from Potential Enthalpy
+                        of Ice (Polynomial version)
+gsw_pt_from_t           Potential Temperature from in-situ Temperature
+gsw_pt_from_t_ice       Potential Temperature of Ice from in-situ
+                        Temperature
+gsw_pt_second_derivatives
+                        Second Derivatives of Potential Temperature
+gsw_rho                 In-situ density
+gsw_rho_alpha_beta      In-situ density, thermal expansion coefficient
+                        and haline contraction coefficient (75-term
+                        equation)
+gsw_rho_first_derivatives
+                        Density First Derivatives wrt SA, CT and p
+                        (75-term equation)
+gsw_rho_first_derivatives_wrt_enthalpy
+                        Density First Derivatives wrt enthalpy (75-term
+                        equation)
+gsw_rho_ice             In-situ density of ice
+gsw_rho_second_derivatives
+                        Second Derivatives of Density
+gsw_rho_second_derivatives_wrt_enthalpy
+                        Second Derivatives of Density wrt Enthalpy
+gsw_rho_t_exact         In-situ Density of Seawater
+gsw_seaice_fraction_to_freeze_seawater
+                        Sea ice Fraction to Cool Seawater to Freezing
+gsw_sigma0              Potential density anomaly referenced to 0 dbar
+gsw_sigma1              Potential density anomaly referenced to 1000
+                        dbar
+gsw_sigma2              Potential density anomaly referenced to 2000
+                        dbar
+gsw_sigma3              Potential density anomaly referenced to 3000
+                        dbar
+gsw_sigma4              Potential density anomaly referenced to 4000
+                        dbar
+gsw_sound_speed         Sound speed
+gsw_sound_speed_ice     Sound speed in ice
+gsw_sound_speed_t_exact
+                        Sound Speed in Seawater
+gsw_specvol             Specific Volume of Seawater
+gsw_specvol_alpha_beta
+                        Specific Volume, alpha, and beta
+gsw_specvol_anom_standard
+                        Specific volume anomaly [standard] (75-term
+                        equation)
+gsw_specvol_first_derivatives
+                        First Derivatives of Specific Volume
+gsw_specvol_first_derivatives_wrt_enthalpy
+                        First Derivatives of Specific Volume wrt
+                        Enthalpy
+gsw_specvol_ice         Specific Volume of Ice
+gsw_specvol_second_derivatives
+                        Second Derivatives of Specific Volume
+gsw_specvol_second_derivatives_wrt_enthalpy
+                        Second Derivatives of Specific Volume wrt
+                        Enthalpy
+gsw_specvol_t_exact     Specific Volume of Seawater
+gsw_spiciness0          Seawater Spiciness at p=0 dbar
+gsw_spiciness1          Seawater Spiciness at p=1000 dbar
+gsw_spiciness2          Seawater Spiciness at p=2000 dbar
+gsw_t_deriv_chem_potential_water_t_exact
+                        Derivative of Chemical Potential of Water in
+                        Seawater wrt Temperature
+gsw_t_freezing          Freezing Temperature of Seawater
+gsw_t_freezing_first_derivatives
+                        Derivatives of Freezing Water Properties
+gsw_t_freezing_first_derivatives_poly
+                        Derivatives of Freezing Water Properties
+                        (Polynomial version)
+gsw_t_from_CT           In situ temperature from Conservative
+                        Temperature
+gsw_t_from_pt0_ice      In situ Temperature from Potential Temperature
+                        at 0dbar
+gsw_thermobaric         Thermobaric coefficient (75-term equation)
+gsw_z_from_p            Height from Pressure
+saar                    Global SA lookup file

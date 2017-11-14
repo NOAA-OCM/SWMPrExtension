@@ -1,0 +1,559 @@
+GMTOffsetFromTz         Determine time offset from timezone
+ODF2oce                 Create ODF object from the output of
+                        'ODF::read_ODF()'
+ODFNames2oceNames       Translate from ODF Names to Oce Names
+T68fromT90              Convert from ITS-90 to IPTS-68 temperature
+T90fromT48              Convert from ITS-48 to ITS-90 temperature
+T90fromT68              Convert from IPTS-68 to ITS-90 temperature
+[[,adp-method           Extract Parts of an ADP Object In addition to
+                        the usual extraction of elements by name, some
+                        shortcuts are also provided, e.g. 'x[["u1"]]'
+                        retrieves 'v[,1]', and similarly for the other
+                        velocity components. The 'a' and 'q' data can
+                        be retrieved in 'raw' form or numeric form (see
+                        examples). The coordinate system may be
+                        retrieved with e.g. 'x[["coordinate"]]'.
+[[,adv-method           Extract Parts of an ADV Object
+[[,amsr-method          Extract Something From an amsr Object
+[[,argo-method          Extract Something From an Argo Object
+[[,bremen-method        Extract Something From a Bremen Object
+[[,cm-method            Extract Something From a CM Object
+[[,coastline-method     Extract Something From a Coastline Object
+[[,ctd-method           Extract Parts of a CTD Object
+[[,echosounder-method   Extract Parts of an Echosounder Object
+[[,g1sst-method         Extract Something From a G1SST Object
+[[,gps-method           Extract Something From a GPS Object
+[[,ladp-method          Extract Something From an ladp Object
+[[,landsat-method       Extract Something From a landsat Object
+[[,lisst-method         Extract Something From a LISST Object
+[[,lobo-method          Extract Something From a LOBO Object
+[[,met-method           Extract Something From a met Object
+[[,oce-method           Extract Something From an oce Object
+[[,odf-method           Extract Something From an ODF Object
+[[,rsk-method           Extract Something From a Rsk Object
+[[,sealevel-method      Extract Something From a Sealevel Object
+[[,section-method       Extract Something From a Section Object
+[[,tidem-method         Extract Something From a Tidem Object
+[[,topo-method          Extract Something From a Topo Object
+[[,windrose-method      Extract Something From a Windrose Object
+[[<-,adp-method         Replace Parts of an ADP Object
+[[<-,adv-method         Replace Parts of an ADV Object
+[[<-,amsr-method        Replace Parts of an AMSR Object
+[[<-,argo-method        Replace Parts of an Argo Object
+[[<-,bremen-method      Replace Parts of a Bremen Object
+[[<-,cm-method          Replace Parts of a CM Object
+[[<-,coastline-method   Replace Parts of a Coastline Object
+[[<-,ctd-method         Replace Parts of a CTD Object
+[[<-,echosounder-method
+                        Replace Parts of an Echosounder Object
+[[<-,g1sst-method       Replace Parts of a G1SST Object
+[[<-,gps-method         Replace Parts of a GPS Object
+[[<-,lisst-method       Replace Parts of a LISST Object
+[[<-,lobo-method        Replace Parts of a LOBO Object
+[[<-,met-method         Replace Parts of a met Object
+[[<-,oce-method         Replace Parts of an Oce Object
+[[<-,odf-method         Replace Parts of an ODF Object
+[[<-,rsk-method         Replace Parts of a Rsk Object
+[[<-,sealevel-method    Replace Parts of a Sealevel Object
+[[<-,section-method     Replace Parts of a Section Object
+[[<-,tidem-method       Replace Parts of a Tidem Object
+[[<-,topo-method        Replace Parts of a Topo Object
+[[<-,windrose-method    Replace Parts of a Windrose Object
+abbreviateTimeLabels    Abbreviate a vector of times by removing
+                        commonalities
+addColumn               Add a Column to the Data Slot of an Oce object
+                        [deprecated]
+adp                     ADP (acoustic-doppler profiler) dataset
+adp-class               Class to Hold ADP (ADCP) Data
+adpEnsembleAverage      Ensemble Average an ADP Object in Time
+adv                     ADV (acoustic-doppler velocimeter) dataset
+adv-class               Class to Hold adv Data
+airRho                  Air density
+amsr-class              Class to Hold amsr Data
+angleRemap              Convert angles from 0:360 to -180:180
+applyMagneticDeclination
+                        Earth magnetic declination
+approx3d                Trilinear interpolation in a 3D array
+argShow                 Show an argument to a function, e.g. for
+                        debugging
+argo                    ARGO float dataset
+argo-class              Class to hold Argo data
+argoGrid                Grid Argo float data
+argoNames2oceNames      Convert Argo Data Name to Oce Name
+as.adp                  Create an ADP Object
+as.argo                 Coerce Data Into an Argo Dataset
+as.cm                   Coerce data into a CM object
+as.coastline            Coerce Data into a Coastline Object
+as.ctd                  Coerce data into CTD object
+as.echosounder          Coerce Data into an Echosounder Object
+as.gps                  Coerce data into a GPS dataset
+as.ladp                 Coerce data into an ladp object
+as.lisst                Coerce Data Into a LISST Object
+as.lobo                 Coerce Data into a Lobo Object
+as.met                  Coerce Data into met Object
+as.oce                  Coerce Something Into an Oce Object
+as.rsk                  Coerce Data Into a Rsk Object
+as.sealevel             Coerce Data Into a Sealevel Object
+as.section              Create a Section
+as.topo                 Coerce Data into Topo Object
+as.unit                 Convert a String to a Unit
+as.windrose             Create a Windrose Object
+bcdToInteger            Decode BCD to integer
+beamName                Get names of Acoustic-Doppler Beams
+beamToXyz               Change ADV or ADP coordinate systems
+beamToXyzAdp            Convert ADP From Beam to XYZ Coordinates
+beamToXyzAdv            Convert ADV from Beam to XYZ Coordinates
+beamUnspreadAdp         Adjust ADP Signal for Spherical Spreading
+binApply1D              Apply a function to vector data
+binApply2D              Apply a function to matrix data
+binAverage              Bin-average a vector y, based on x values
+binCount1D              Bin-count vector data
+binCount2D              Bin-count matrix data
+binMean1D               Bin-average f=f(x)
+binMean2D               Bin-average f=f(x,y)
+binmapAdp               Bin-map an ADP object
+bound125                Calculate a rounded bound, rounded up to
+                        matissa 1, 2, or 5
+bremen-class            Class for data stored in a format used at
+                        Bremen
+byteToBinary            Format bytes as binary
+cm                      A CM Record
+cm-class                Class to Store Current Meter (CM) Data
+cnvName2oceName         Infer variable name, units and scale from a
+                        Seabird (.cnv) header line
+coastline-class         Class to Store Coastline Data
+coastlineBest           Find the Name of the Best Coastline Object
+coastlineCut            Cut a Coastline Object at Specified Longitude
+coastlineWorld          World Coastline
+colormap                Calculate colour map
+colors                  Data that define some colour palettes
+composite               Create a composite object by averaging across
+                        good data
+composite,amsr-method   Create a composite of amsr satellite data
+composite,list-method   Composite by Averaging Across Data
+coriolis                Coriolis parameter on rotating earth
+ctd                     A CTD profile in Halifax Harbour
+ctd-class               Class to Store CTD (or general hydrographic)
+                        Data
+ctdAddColumn            Add a Column to the Data Slot of a CTD Object
+                        [deprecated]
+ctdDecimate             Decimate a CTD profile
+ctdFindProfiles         Find Profiles within a Tow-Yow CTD Record
+ctdRaw                  Seawater CTD Profile, Without Trimming of
+                        Extraneous Data
+ctdTrim                 Trim Beginning and Ending of a CTD cast
+ctdUpdateHeader         Update a CTD Header [deprecated]
+ctimeToSeconds          Interpret a character string as a time interval
+curl                    Curl of 2D vector field
+dataLabel               Try to associate data names with units, for use
+                        by summary()
+decimate                Smooth and Decimate, or Subsample, an Oce
+                        Object
+decodeHeaderNortek      Decode a Nortek Header
+decodeTime              Oce Version of as.POSIXct
+despike                 Remove spikes from a time series
+detrend                 Detrend a set of observations
+download.amsr           Download and Cache an amsr File
+download.coastline      Download a coastline File
+download.met            Download and Cache a met File
+download.topo           Download and Cache a topo File
+drawDirectionField      Draw a Direction Field
+drawIsopycnals          Add Isopycnal Curves to TS Plot
+drawPalette             Draw a palette, leaving margins suitable for
+                        accompanying plot
+echosounder             Echosounder Dataset
+echosounder-class       Class to Store Echosounder Data
+eclipticalToEquatorial
+                        Convert ecliptical to equatorial coordinate
+enuToOther              Rotate acoustic-Doppler data to a new
+                        coordinate system
+enuToOtherAdp           Convert ADP ENU to Rotated Coordinate
+enuToOtherAdv           Convert ENU to Other Coordinate
+equatorialToLocalHorizontal
+                        Convert equatorial to local horizontal
+                        coordinate
+errorbars               Draw error bars on an existing xy diagram
+fillGap                 Fill a gap in an oce object
+findBottom              Find the Ocean Bottom in an Echosounder Object
+findInOrdered           Find indices of times in an ordered vector
+firstFinite             Get first finite value in a vector or array, or
+                        NULL if none
+formatCI                Confidence interval in parenthetic notation
+formatPosition          Format Geographical Position in Degrees and
+                        Minutes
+fullFilename            Full name of file, including path
+g1sst-class             Class to Hold G1SST Satellite-model Data
+geodDist                Compute Geodesic Distance on Surface of Earth
+geodGc                  Great-circle Segments Between Points on Earth
+geodXy                  Convert From Geographical to Geodesic
+                        Coordinates
+geodXyInverse           Inverse Geodesic Calculation
+gps-class               Class to Store GPS Data
+grad                    Calculate the grad of a matrix by first
+                        differences
+gravity                 Acceleration due to earth gravity
+handleFlags             Handle flags in oce objects
+handleFlags,argo-method
+                        Handle Flags in ARGO Objects
+handleFlags,ctd-method
+                        Handle Flags in CTD Objects
+handleFlags,section-method
+                        Handle flags in Section Objects
+handleFlags,vector-method
+                        Signal erroneous application to non-oce objects
+head.oce                Extract The Start of an Oce Object
+imagep                  Plot an Image with a Color Palette
+integerToAscii          Decode integer to corresponding ASCII code
+integrateTrapezoid      Trapezoidal Integration
+interpBarnes            Grid data using Barnes algorithm
+julianCenturyAnomaly    Julian-Day number to Julian century
+julianDay               Convert a POSIXt time to a Julian day
+ladp-class              Class to store lowered-adp data
+landsat                 Sample landsat Dataset
+landsat-class           Class to Hold landsat Data
+landsatAdd              Add a Band to a landsat Object
+landsatTrim             Trim a landsat Image to a Geographical Region
+latFormat               Format a latitude
+latlonFormat            Format a latitude-longitude pair
+lisst                   LISST Dataset
+lisst-class             Class to Store LISST Data
+lobo                    LOBO Dataset
+lobo-class              Class to Store LOBO Data
+lonFormat               Format a longitude
+lonlat2map              Convert Longitude and Latitude to X and Y
+lonlat2utm              Convert Longitude and Latitude to UTM
+lookWithin              Look Within the First Element of a List for
+                        Replacement Values
+lowpass                 Perform lowpass digital filtering
+magneticField           Earth magnetic declination, inclination, and
+                        intensity
+makeFilter              Make a digital filter
+makeSection             Make a Section (DEFUNCT)
+map2lonlat              Convert X and Y to Longitude and Latitude
+mapArrows               Add Arrows to a Map
+mapAxis                 Add Axis Labels to an Existing Map
+mapContour              Add Contours on a Existing map
+mapCoordinateSystem     Draw a coordinate system
+mapDirectionField       Add a Direction Field to an Existing Map
+mapGrid                 Add a Longitude and Latitude Grid to a Map
+mapImage                Add an Image to a Map
+mapLines                Add Lines to a Map
+mapLocator              Locate Points on a Map
+mapLongitudeLatitudeXY
+                        Convert From Longitude and Latitude to X and Y
+mapMeridians            Add Meridians on a Map [deprecated]
+mapPlot                 Draw a Map
+mapPoints               Add Points to a Map
+mapPolygon              Add a Polygon to a Map
+mapScalebar             Add a Scalebar to a Map
+mapText                 Add Text to a Map
+mapTissot               Add Tissot Indicatrices to a Map
+mapZones                Add Zones to a Map [deprecated]
+matchBytes              Locate byte sequences in a raw vector
+matrixShiftLongitude    Rearrange areal matrix so Greenwich is near the
+                        centre
+matrixSmooth            Smooth a Matrix
+met                     Sample met Object
+met-class               Class to Store Meteorological Data
+metNames2oceNames       Convert met Data Name to Oce Name
+moonAngle               Lunar Angle as Function of Space and Time
+numberAsHMS             Convert a Numeric Time to Hour, Minute, and
+                        Second
+numberAsPOSIXct         Convert a Numeric Time to a POSIXct Time
+oce                     oce: A Package for Oceanographic Analysis
+oce-class               Base Class for oce Objects
+oce-deprecated          Deprecated and Defunct Elements of package
+                        'oce'
+oce.as.POSIXlt          Oce Variant of as.POSIXlt [deprecated]
+oce.as.raw              Version of as.raw() that clips data
+oce.axis.POSIXct        Oce Version of axis.POSIXct
+oce.colorsGebco         Gebco Colors
+oce.colorsTwo           Create a Palette of Colours
+oce.contour             Oce Variant of contour
+oce.grid                Add a Grid to an Existing Oce Plot
+oce.plot.ts             Oce Variant of plot.ts
+oce.write.table         Write the Data Portion of Object to a File
+oceApprox               Interpolate 1D Data with UNESCO or
+                        Reiniger-Ross Algorithm
+oceCRS                  Coordinate Reference System strings for some
+                        oceans
+oceConvolve             Convolve two time series
+oceDebug                Print a debugging message
+oceDeleteData           Delete data from an 'oce' object
+oceDeleteMetadata       Delete metadata from an 'oce' object
+oceEdit                 Edit an Oce Object
+oceFilter               Filter a time-series
+oceGetData              Get data from an 'oce' object
+oceGetMetadata          Get metadata element from an 'oce' object
+oceMagic                Find the Type of an Oceanographic Data File
+oceNames2whpNames       Translate Oce Data Names to WHP Data Names
+ocePmatch               Partial matching of strings or numbers
+oceSetData              Set something in the 'data' slot of an 'oce'
+                        object
+oceSetMetadata          Set something in the 'metadata' slot of an
+                        'oce' object
+oceSmooth               Smooth an Oce Object
+oceSpectrum             Wrapper to give normalized spectrum
+oceUnits2whpUnits       Translate oce unit to WHP unit
+odf-class               Class to Store ODF data
+parseLatLon             Parse a Latitude or Longitude String
+plot,adp-method         Plot ADP Data
+plot,adv-method         Plot ADV data
+plot,amsr-method        Plot an amsr Object
+plot,argo-method        Plot Argo Data
+plot,bremen-method      Plot a Bremen Object
+plot,cm-method          Plot CM data
+plot,coastline-method   Plot a Coastline
+plot,ctd-method         Plot CTD Data
+plot,echosounder-method
+                        Plot Echosounder Data
+plot,gps-method         Plot a GPS Object
+plot,ladp-method        Plot an ladp object
+plot,landsat-method     Plot a landsat Object
+plot,lisst-method       Plot LISST data
+plot,lobo-method        Plot LOBO data
+plot,met-method         Plot met Data
+plot,oce-method         Plot an oce Object
+plot,odf-method         Plot an ODF Object
+plot,rsk-method         Plot Rsk Data
+plot,satellite-method   Plot a satellite object
+plot,sealevel-method    Plot Sealevel Data
+plot,section-method     Plot a Section
+plot,tidem-method       Plot a Tidem Prediction
+plot,topo-method        Plot a Topo Object
+plot,windrose-method    Plot Windrose data
+plotInset               Plot an Inset Diagram
+plotPolar               Draw a Polar Plot
+plotProfile             Plot a CTD Profile
+plotScan                Plot CTD data in a Low-Level Fashion
+plotSticks              Draw a Stick Plot
+plotTS                  Plot Temperature-Salinity Diagram
+plotTaylor              Plot a Model-data Comparison Diagram
+predict.tidem           Predict a Time Series from a Tidem Tidal Model
+prettyPosition          Pretty lat/lon in deg, min, sec
+processingLog<-         Add an item to a processing log (in place)
+processingLogAppend     Append an item to a processing log
+processingLogItem       Create an item that can be inserted into a
+                        processing log
+processingLogShow       Show the processing log of an 'oce' object
+pwelch                  Welch periodogram
+rangeExtended           Calculate Range, Extended a Little, as is Done
+                        for Axes
+rangeLimit              Substitute NA for data outside a range
+read.ad2cp              Read an AD2CP File
+read.adp                Read an ADP File
+read.adp.nortek         Read a Nortek ADP File
+read.adp.rdi            Read a Teledyne/RDI ADP File
+read.adp.sontek         Read a Sontek ADP File
+read.adp.sontek.serial
+                        Read a serial Sontek ADP file
+read.adv                Read an ADV data file
+read.adv.nortek         Read an ADV data file
+read.adv.sontek.adr     Read an ADV data file
+read.adv.sontek.serial
+                        Read an ADV data file
+read.adv.sontek.text    Read an ADV data file
+read.amsr               Read an amsr File
+read.aquadopp           Read a Nortek Aquadopp File
+read.aquadoppHR         Read Nortek Aquadopp-HR File
+read.aquadoppProfiler   Read a Nortek Aquadopp-Profiler File
+read.argo               Read an Argo Data File
+read.bremen             Read a Bremen File
+read.cm                 Read a CM file
+read.coastline          Read a Coastline File
+read.coastline.openstreetmap
+                        Read a Coastline File in Openstreetmap Format
+read.coastline.shapefile
+                        Read a Coastline File in Shapefile Format
+read.ctd                Read a General CTD File
+read.ctd.itp            Read an ITP-type CTD File
+read.ctd.odf            Read a CTD file in ODF format
+read.ctd.sbe            Read a Seabird CTD File
+read.ctd.woce           Read a WOCE-type CTD file with First Word "CTD"
+read.ctd.woce.other     Read a WOCE-type CTD file with First Word
+                        "EXPOCODE"
+read.echosounder        Read an Echosounder File
+read.g1sst              Read a G1SST file
+read.gps                Read a GPS File
+read.index              Read a NOAA ocean index file
+read.landsat            Read a landsat File Directory
+read.lisst              Read a LISST File
+read.lobo               Read a LOBO File
+read.met                Read a met File
+read.netcdf             Read a NetCDF File
+read.oce                Read an Oceanographic Data File
+read.odf                Read an ODF file
+read.rsk                Read a Rsk file
+read.sealevel           Read a Sealevel File
+read.section            Read a Section File
+read.topo               Read a Topo File
+renameData              Rename items in the data slot of an oce object
+rescale                 Rescale values to lie in a given range
+resizableLabel          Provide axis names in adjustable sizes
+retime                  Adjust the time within Oce object
+rsk                     Sample Rsk Dataset
+rsk-class               Class to Store Rsk Data
+rsk2ctd                 Create a ctd Object from an rsk Object
+rskPatm                 Estimate Atmospheric Pressure in Rsk Object
+rskToc                  Decode table-of-contents File from a Rsk File
+runlm                   Calculate running linear models
+satellite-class         Class to hold satellite data
+sealevel                Sealevel data for Halifax Harbour
+sealevel-class          Class to Store Sealevel Data
+sealevelTuktoyaktuk     Sea-level data set acquired in 1975 at
+                        Tuktoyaktuk
+secondsToCtime          Time interval as colon-separated string
+section                 Hydrographic section
+section-class           Class to Store Hydrographic Section Data
+sectionAddStation       Add a CTD Station to a Section
+sectionGrid             Grid a Section
+sectionSmooth           Smooth a Section
+sectionSort             Sort a Section
+shiftLongitude          Shift Longitude to Range -180 to 180
+showMetadataItem        Show metadata item
+siderealTime            Convert a POSIXt time to a sidereal time
+standardDepths          Standard Oceanographic Depths
+standardizeLongitude    Put longitude in the range from -180 to 180
+subset,adp-method       Subset an ADP Object
+subset,adv-method       Subset an ADV Object
+subset,amsr-method      Subset an amsr Object
+subset,argo-method      Subset an Argo Object
+subset,cm-method        Subset a CM Object
+subset,coastline-method
+                        Subset a Coastline Object
+subset,ctd-method       Subset a CTD Object
+subset,echosounder-method
+                        Subset an Echosounder Object
+subset,lobo-method      Subset a LOBO Object
+subset,met-method       Subset a met Object
+subset,oce-method       Subset an oce Object
+subset,odf-method       Subset an ODF object
+subset,rsk-method       Subset a Rsk Object
+subset,sealevel-method
+                        Subset a Sealevel Object
+subset,section-method   Subset a Section Object
+subset,topo-method      Subset a Topo Object
+subtractBottomVelocity
+                        Subtract Bottom Velocity from ADP
+summary,adp-method      Summarize an ADP Object
+summary,adv-method      Summarize an ADV object
+summary,amsr-method     Summarize an AMSR Object
+summary,argo-method     Summarize an Argo Object
+summary,bremen-method   Summarize a Bremen Object
+summary,cm-method       Summarize a CM Object
+summary,coastline-method
+                        Summarize a Coastline Object
+summary,ctd-method      Summarize a CTD Object
+summary,echosounder-method
+                        Summarize an Echosounder Object
+summary,gps-method      Summarize a GPS Object
+summary,ladp-method     Summarize an ladp object
+summary,landsat-method
+                        Summarize a landsat Object
+summary,lisst-method    Summarize a LISST Object
+summary,lobo-method     Summarize a LOBO Object
+summary,met-method      Summarize a met Object
+summary,oce-method      Summarize an oce Object
+summary,odf-method      Summarize an ODF Object
+summary,rsk-method      Summarize a Rsk Object
+summary,satellite-method
+                        Summarize a satellite object
+summary,sealevel-method
+                        Summarize a Sealevel Object
+summary,section-method
+                        Summarize a Section Object
+summary,tidem-method    Summarize a Tidem Object
+summary,topo-method     Summarize A Topo Object
+summary,windrose-method
+                        Summarize a 'windrose' object
+sunAngle                Solar Angle as Function of Space and Time
+swAbsoluteSalinity      Seawater absolute salinity, in GSW formulation
+swAlpha                 Seawater thermal expansion coefficient
+swAlphaOverBeta         Ratio of seawater thermal expansion coefficient
+                        to haline contraction coefficient
+swBeta                  Seawater haline contraction coefficient
+swCSTp                  Electrical conductivity ratio from salinity,
+                        temperature and pressure
+swConservativeTemperature
+                        Seawater conservative temperature, in GSW
+                        formulation
+swDepth                 Water depth
+swDynamicHeight         Dynamic height of seawater profile
+swLapseRate             Seawater lapse rate
+swN2                    Squared buoyancy frequency for seawater
+swPressure              Water pressure
+swRho                   Seawater density
+swRrho                  Density ratio
+swSCTp                  Salinity from electrical conductivity,
+                        temperature and pressure
+swSTrho                 Seawater salinity from temperature and density
+swSigma                 Seawater density anomaly
+swSigma0                Seawater potential density anomaly referenced
+                        to surface pressure
+swSigma1                Seawater potential density anomaly referenced
+                        to 1000db pressure
+swSigma2                Seawater potential density anomaly referenced
+                        to 2000db pressure
+swSigma3                Seawater potential density anomaly referenced
+                        to 3000db pressure
+swSigma4                Seawater potential density anomaly referenced
+                        to 4000db pressure
+swSigmaT                Seawater quasi-potential density anomaly
+swSigmaTheta            Seawater potential density anomaly
+swSoundAbsorption       Seawater sound absorption in dB/m
+swSoundSpeed            Seawater sound speed
+swSpecificHeat          Seawater specific heat Source=
+                        http://sam.ucsd.edu/sio210/propseawater/ppsw_fortran/ppsw.f
+                        check value: cpsw = 3849.500 j/(kg deg. c) for
+                        s = 40 (ipss-78),
+swSpice                 Seawater spiciness
+swTFreeze               Seawater freezing temperature
+swTSrho                 Seawater temperature from salinity and density
+swThermalConductivity   Seawater thermal conductivity
+swTheta                 Seawater potential temperature
+swViscosity             Seawater viscosity
+swZ                     Vertical coordinate
+tail.oce                Extract the End of an Oce Object
+threenum                Calculate min, mean, and max values
+tidedata                Tidal Constituent Information
+tidem                   Fit a Tidem (Tidal Model) to a Timeseries
+tidem-class             Class to Store Tidal Models
+tidemAstron             Astronomical Calculations for Tidem
+tidemVuf                Nodal Modulation Calculations for Tidem
+titleCase               Capitalize first letter of each of a vector of
+                        words
+toEnu                   Rotate acoustic-Doppler data to the enu
+                        coordinate system
+toEnuAdp                Convert an ADP Object to ENU Coordinates
+toEnuAdv                Convert an ADV Object to ENU Coordinates
+topo-class              Class to Store Topographic Data
+topoInterpolate         Interpolate Within a Topo Object
+topoWorld               Global Topographic Dataset at Half-degree
+                        Resolution
+trimString              Remove leading and trailing whitespace from
+                        strings
+unabbreviateYear        Determine year from various abbreviations
+undriftTime             Correct for drift in instrument clock
+unduplicateNames        Rename duplicated items (used in reading CTD
+                        files)
+ungrid                  Extract (x, y, z) from (x, y, grid)
+unitFromString          Decode units, from strings
+unitFromStringRsk       Infer Rsk units from a vector of strings
+unwrapAngle             Unwrap an angle that suffers modulo-360
+                        problems
+useHeading              Replace the Heading for One Instrument With
+                        That of Another
+utm2lonlat              Convert UTM to Longitude and Latitude
+vectorShow              Show some values from a vector
+velocityStatistics      Report Statistics of adp or adv Velocities
+webtide                 Get a Tidal Prediction from a WebTide Database
+wind                    Wind dataset
+window.oce              Window an Oce Object by Time or Distance
+windrose-class          Class to Store Windrose Data
+woceNames2oceNames      Translate WOCE Data Names to Oce Data Names
+woceUnit2oceUnit        Translate WOCE units to oce units
+write.ctd               Write a CTD Data Object as a CSV File
+xyzToEnu                Convert acoustic-Doppler data from xyz
+                        coordinates to enu coordinates
+xyzToEnuAdp             Convert ADP From XYZ to ENU Coordinates
+xyzToEnuAdv             Convert an ADP from XYZ to ENU Coordinates
