@@ -1,0 +1,46 @@
+aggremetab              Aggregate metabolism data
+aggreswmp               Aggregate swmpr data
+all_params              Import current station records from the CDMO
+all_params_dtrng        Get CDMO records within a date range
+apacpnut                Example nutrient data for Apalachicola Bay Cat
+                        Point station.
+apacpwq                 Example water quality data for Apalachicola Bay
+                        Cat Point station.
+apadbwq                 Example water quality data for Apalachicola Bay
+                        Dry Bar station.
+apaebmet                Example weather data for Apalachicola Bay East
+                        Bay station.
+calckl                  Calculate oxygen mass transfer coefficient
+comb                    Combine swmpr data
+decomp                  Simple trend decomposition
+decompTs                Decompose a time series
+decomp_cj               Simple trend decomposition of monthly swmpr
+                        data
+ecometab                Ecosystem metabolism
+gradcols                Get colors for plots
+hist.swmpr              Plot swmpr using a histogram
+import_local            Import local CDMO data
+map_reserve             Map a reserve
+metab_day               Identify metabolic days in a time series
+na.approx.swmpr         Linearly interpolate gaps
+overplot                Plot multiple SWMP time series on the same
+                        y-axis
+oxySol                  Dissolved oxygen at saturation
+param_names             Get parameters of a given type
+parser                  Parse web results for swmpr
+plot.swmpr              Plot swmpr data
+plot_metab              Plot ecosystem metabolism for a swmpr object
+plot_summary            Plot graphical summaries of SWMP data
+plot_wind               Create a wind rose
+qaqc                    QAQC filtering for SWMP data
+qaqcchk                 Summary of QAQC flags in SWMP data
+rem_reps                Remove replicates in nutrient data
+setstep                 Format a swmpr time vector
+single_param            Get CDMO records for a single parameter
+site_codes              Obtain metadata for all stations
+site_codes_ind          Obtain metadata for a single reserve
+smoother                Smooth swmpr data
+stat_locs               Locations of NERRS sites
+subset.swmpr            Subset a swmpr object
+swmpr                   Create a swmpr object
+time_vec                Format SWMP datetimestamp

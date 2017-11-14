@@ -1,0 +1,31 @@
+Package: SWMPr
+Type: Package
+Title: Retrieving, Organizing, and Analyzing Estuary Monitoring Data
+Version: 2.2.0
+Date: 2016-11-07
+Author: Marcus W. Beck [aut, cre]
+Maintainer: Marcus W. Beck <mbafs2012@gmail.com>
+Description: Tools for retrieving, organizing, and analyzing
+    environmental data from the System Wide Monitoring Program of the
+    National Estuarine Research Reserve System
+    <http://cdmo.baruch.sc.edu/>. These tools address common challenges
+    associated with continuous time series data for environmental
+    decision making.
+BugReports: http://github.com/fawda123/SWMPr/issues
+License: CC0
+Imports: data.table, httr, ggmap, gridExtra, maptools, oce, dplyr,
+    lattice, openair, RColorBrewer, reshape2, tictoc, tidyr, XML
+LazyData: true
+Depends: R (>= 3.2.0), ggplot2, zoo
+Suggests: colorspace
+Authors@R: person(given = "Marcus W.", family = "Beck", role =
+    c("aut","cre"), email = "mbafs2012@gmail.com")
+RoxygenNote: 5.0.1
+NeedsCompilation: no
+Packaged: 2016-11-07 23:28:50 UTC; MBeck
+Repository: CRAN
+Date/Publication: 2016-11-08 00:41:23
+Built: R 3.4.1; ; 2017-09-14 20:14:13 UTC; windows
+InstallAgent: packrat 0.4.8.1
+InstallSource: CRAN
+Hash: 55f3d66788a3772860cc6ba569fb3aca

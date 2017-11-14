@@ -1,0 +1,47 @@
+Package: gsw
+Version: 1.0-5
+Date: 2017-08-08
+Title: Gibbs Sea Water Functions
+Authors@R: c(person("Dan", "Kelley", role=c("aut","cre","cph"),
+    email="dan.kelley@dal.ca", comment="C wrapper plus R code, tests,
+    and documentation"), person("Clark", "Richards",
+    role=c("aut","cph"), email="clark.richards@gmail.com", comment="C
+    wrapper plus R code, tests, and documentation"), person("WG127",
+    "SCOR/IAPSO", role=c("aut","cph"), comment="Original 'Matlab' and
+    derived code"))
+Copyright: Original algorithms and 'Matlab'/C library (c) 2015-2017
+    WG127 SCOR/IAPSO (Scientific Committee on Oceanic Research /
+    International Association for the Physical Sciences of the Oceans,
+    Working Group 127); C wrapper code and R code (c) 2015-2017 Dan
+    Kelley and Clark Richards
+Maintainer: Dan Kelley <dan.kelley@dal.ca>
+Depends: R (>= 2.15), testthat
+Suggests: knitr,
+BugReports: https://github.com/TEOS-10/GSW-R/issues
+Description: Provides an interface to the Gibbs 'SeaWater' ('TEOS-10')
+    C library, version 3.05-4 (commit
+    '5b4d959e54031f9e972f3e863f63e67fa4f5bfec', dated 2017-08-07,
+    available at <https://github.com/TEOS-10/GSW-C>, which stems from
+    'Matlab' and other code written by members of Working Group 127 of
+    'SCOR'/'IAPSO' (Scientific Committee on Oceanic Research /
+    International Association for the Physical Sciences of the Oceans).
+URL: http://teos-10.github.io/GSW-R/index.html
+License: GPL (>= 2) | file LICENSE
+LazyLoad: yes
+LazyData: no
+Packaged: 2017-08-09 14:47:12 UTC; kelley
+Encoding: UTF-8
+RoxygenNote: 6.0.1
+VignetteBuilder: knitr
+NeedsCompilation: yes
+Author: Dan Kelley [aut, cre, cph] (C wrapper plus R code, tests, and
+    documentation), Clark Richards [aut, cph] (C wrapper plus R code,
+    tests, and documentation), WG127 SCOR/IAPSO [aut, cph] (Original
+    'Matlab' and derived code)
+Repository: CRAN
+Date/Publication: 2017-08-09 21:05:24 UTC
+Built: R 3.4.1; x86_64-w64-mingw32; 2017-09-14 18:04:48 UTC; windows
+Archs: i386, x64
+InstallAgent: packrat 0.4.8.1
+InstallSource: CRAN
+Hash: da12db05dc6c80a0877a90cd02e46ed0

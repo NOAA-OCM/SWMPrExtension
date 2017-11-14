@@ -1,0 +1,44 @@
+Package: oce
+Type: Package
+Title: Analysis of Oceanographic Data
+Version: 0.9-22
+Authors@R: c(person(given="Dan", family="Kelley",
+    email="Dan.Kelley@Dal.Ca", role=c("aut", "cre")),
+    person(given="Clark", family="Richards",
+    email="clark.richards@gmail.com", role=c("aut")),
+    person(given="Chantelle", family="Layton",
+    email="chantelle.layton@dal.ca", role=c("ctb"), comment="curl()
+    coauthor"), person(given="British Geological Survey",
+    role=c("ctb","cph"), comment="magnetic-field subroutine"))
+Maintainer: Dan Kelley <Dan.Kelley@Dal.Ca>
+Depends: R (>= 2.15), utils, methods, gsw, testthat
+Suggests: ocedata, foreign, ncdf4, tiff, akima, RSQLite, DBI, rgdal (>=
+    1.1-9), R.utils, knitr, rmarkdown, marmap, lubridate
+BugReports: https://github.com/dankelley/oce/issues
+Description: Supports the analysis of Oceanographic data, including
+    'ADCP' measurements, measurements made with 'argo' floats, 'CTD'
+    measurements, sectional data, sea-level time series, coastline and
+    topographic data, etc. Provides specialized functions for
+    calculating seawater properties such as potential temperature in
+    either the 'UNESCO' or 'TEOS-10' equation of state. Produces
+    graphical displays that conform to the conventions of the
+    Oceanographic literature.
+License: GPL (>= 2)
+Encoding: UTF-8
+URL: https://dankelley.github.io/oce
+LazyData: false
+RoxygenNote: 6.0.1
+BuildVignettes: true
+VignetteBuilder: knitr
+NeedsCompilation: yes
+Packaged: 2017-08-28 15:25:38 UTC; kelley
+Author: Dan Kelley [aut, cre], Clark Richards [aut], Chantelle Layton
+    [ctb] (curl() coauthor), British Geological Survey [ctb, cph]
+    (magnetic-field subroutine)
+Repository: CRAN
+Date/Publication: 2017-08-28 18:50:30 UTC
+Built: R 3.4.1; x86_64-w64-mingw32; 2017-09-14 19:09:12 UTC; windows
+Archs: i386, x64
+InstallAgent: packrat 0.4.8.1
+InstallSource: CRAN
+Hash: f0e7a7c5b6cb93fbfee3f4cdc962c8fb

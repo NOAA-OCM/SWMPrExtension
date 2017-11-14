@@ -1,0 +1,9 @@
+assign_season           Assign seasons to SWMP sampling data
+get_reserve             Identify NERRS reserve from metadata
+get_shp_name            Identify shapefile for NERRS reserve
+get_site_code           Return NERRS reserve site code based on data in
+                        the data file
+get_site_coordinates    Identify NERRS reserve from metadata
+get_sites               Identify NERRS reserve stations from metadata
+raw_boxplot             Seasonal boxplots of raw data
+seasonal_boxplot        Seasonal boxplots

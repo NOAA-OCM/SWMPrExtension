@@ -1,0 +1,1221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>R: Analysis of Oceanographic Data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+<h1> Analysis of Oceanographic Data
+<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]" />
+</h1>
+<hr/>
+<div style="text-align: center;">
+<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
+<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
+</div><h2>Documentation for package &lsquo;oce&rsquo; version 0.9-22</h2>
+
+<ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
+<li><a href="../doc/index.html">User guides, package vignettes and other documentation.</a></li>
+<li><a href="../demo">Code demos</a>.  Use <a href="../../utils/help/demo">demo()</a> to run them.</li>
+<li><a href="../NEWS">Package NEWS</a>.</li>
+</ul>
+
+<h2>Help Pages</h2>
+
+
+<p style="text-align: center;">
+<a href="# "> </a>
+<a href="#A">A</a>
+<a href="#B">B</a>
+<a href="#C">C</a>
+<a href="#D">D</a>
+<a href="#E">E</a>
+<a href="#F">F</a>
+<a href="#G">G</a>
+<a href="#H">H</a>
+<a href="#I">I</a>
+<a href="#J">J</a>
+<a href="#L">L</a>
+<a href="#M">M</a>
+<a href="#N">N</a>
+<a href="#O">O</a>
+<a href="#P">P</a>
+<a href="#R">R</a>
+<a href="#S">S</a>
+<a href="#T">T</a>
+<a href="#U">U</a>
+<a href="#V">V</a>
+<a href="#W">W</a>
+<a href="#X">X</a>
+<a href="#misc">misc</a>
+</p>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="oce.html">oce-package</a></td>
+<td>oce: A Package for Oceanographic Analysis</td></tr>
+</table>
+
+<h2><a name="A">-- A --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="abbreviateTimeLabels.html">abbreviateTimeLabels</a></td>
+<td>Abbreviate a vector of times by removing commonalities</td></tr>
+<tr><td style="width: 25%;"><a href="addColumn.html">addColumn</a></td>
+<td>Add a Column to the Data Slot of an Oce object [deprecated]</td></tr>
+<tr><td style="width: 25%;"><a href="adp.html">adp</a></td>
+<td>ADP (acoustic-doppler profiler) dataset</td></tr>
+<tr><td style="width: 25%;"><a href="adp-class.html">adp-class</a></td>
+<td>Class to Hold ADP (ADCP) Data</td></tr>
+<tr><td style="width: 25%;"><a href="adpEnsembleAverage.html">adpEnsembleAverage</a></td>
+<td>Ensemble Average an ADP Object in Time</td></tr>
+<tr><td style="width: 25%;"><a href="adv.html">adv</a></td>
+<td>ADV (acoustic-doppler velocimeter) dataset</td></tr>
+<tr><td style="width: 25%;"><a href="adv-class.html">adv-class</a></td>
+<td>Class to Hold adv Data</td></tr>
+<tr><td style="width: 25%;"><a href="airRho.html">airRho</a></td>
+<td>Air density</td></tr>
+<tr><td style="width: 25%;"><a href="amsr-class.html">amsr-class</a></td>
+<td>Class to Hold amsr Data</td></tr>
+<tr><td style="width: 25%;"><a href="angleRemap.html">angleRemap</a></td>
+<td>Convert angles from 0:360 to -180:180</td></tr>
+<tr><td style="width: 25%;"><a href="applyMagneticDeclination.html">applyMagneticDeclination</a></td>
+<td>Earth magnetic declination</td></tr>
+<tr><td style="width: 25%;"><a href="approx3d.html">approx3d</a></td>
+<td>Trilinear interpolation in a 3D array</td></tr>
+<tr><td style="width: 25%;"><a href="argo.html">argo</a></td>
+<td>ARGO float dataset</td></tr>
+<tr><td style="width: 25%;"><a href="argo-class.html">argo-class</a></td>
+<td>Class to hold Argo data</td></tr>
+<tr><td style="width: 25%;"><a href="argoGrid.html">argoGrid</a></td>
+<td>Grid Argo float data</td></tr>
+<tr><td style="width: 25%;"><a href="argoNames2oceNames.html">argoNames2oceNames</a></td>
+<td>Convert Argo Data Name to Oce Name</td></tr>
+<tr><td style="width: 25%;"><a href="argShow.html">argShow</a></td>
+<td>Show an argument to a function, e.g. for debugging</td></tr>
+<tr><td style="width: 25%;"><a href="as.adp.html">as.adp</a></td>
+<td>Create an ADP Object</td></tr>
+<tr><td style="width: 25%;"><a href="as.argo.html">as.argo</a></td>
+<td>Coerce Data Into an Argo Dataset</td></tr>
+<tr><td style="width: 25%;"><a href="as.cm.html">as.cm</a></td>
+<td>Coerce data into a CM object</td></tr>
+<tr><td style="width: 25%;"><a href="as.coastline.html">as.coastline</a></td>
+<td>Coerce Data into a Coastline Object</td></tr>
+<tr><td style="width: 25%;"><a href="as.ctd.html">as.ctd</a></td>
+<td>Coerce data into CTD object</td></tr>
+<tr><td style="width: 25%;"><a href="as.echosounder.html">as.echosounder</a></td>
+<td>Coerce Data into an Echosounder Object</td></tr>
+<tr><td style="width: 25%;"><a href="as.gps.html">as.gps</a></td>
+<td>Coerce data into a GPS dataset</td></tr>
+<tr><td style="width: 25%;"><a href="as.ladp.html">as.ladp</a></td>
+<td>Coerce data into an ladp object</td></tr>
+<tr><td style="width: 25%;"><a href="as.lisst.html">as.lisst</a></td>
+<td>Coerce Data Into a LISST Object</td></tr>
+<tr><td style="width: 25%;"><a href="as.lobo.html">as.lobo</a></td>
+<td>Coerce Data into a Lobo Object</td></tr>
+<tr><td style="width: 25%;"><a href="as.met.html">as.met</a></td>
+<td>Coerce Data into met Object</td></tr>
+<tr><td style="width: 25%;"><a href="as.oce.html">as.oce</a></td>
+<td>Coerce Something Into an Oce Object</td></tr>
+<tr><td style="width: 25%;"><a href="as.rsk.html">as.rsk</a></td>
+<td>Coerce Data Into a Rsk Object</td></tr>
+<tr><td style="width: 25%;"><a href="as.sealevel.html">as.sealevel</a></td>
+<td>Coerce Data Into a Sealevel Object</td></tr>
+<tr><td style="width: 25%;"><a href="as.section.html">as.section</a></td>
+<td>Create a Section</td></tr>
+<tr><td style="width: 25%;"><a href="as.topo.html">as.topo</a></td>
+<td>Coerce Data into Topo Object</td></tr>
+<tr><td style="width: 25%;"><a href="as.unit.html">as.unit</a></td>
+<td>Convert a String to a Unit</td></tr>
+<tr><td style="width: 25%;"><a href="as.windrose.html">as.windrose</a></td>
+<td>Create a Windrose Object</td></tr>
+</table>
+
+<h2><a name="B">-- B --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="bcdToInteger.html">bcdToInteger</a></td>
+<td>Decode BCD to integer</td></tr>
+<tr><td style="width: 25%;"><a href="beamName.html">beamName</a></td>
+<td>Get names of Acoustic-Doppler Beams</td></tr>
+<tr><td style="width: 25%;"><a href="beamToXyz.html">beamToXyz</a></td>
+<td>Change ADV or ADP coordinate systems</td></tr>
+<tr><td style="width: 25%;"><a href="beamToXyzAdp.html">beamToXyzAdp</a></td>
+<td>Convert ADP From Beam to XYZ Coordinates</td></tr>
+<tr><td style="width: 25%;"><a href="beamToXyzAdv.html">beamToXyzAdv</a></td>
+<td>Convert ADV from Beam to XYZ Coordinates</td></tr>
+<tr><td style="width: 25%;"><a href="beamUnspreadAdp.html">beamUnspreadAdp</a></td>
+<td>Adjust ADP Signal for Spherical Spreading</td></tr>
+<tr><td style="width: 25%;"><a href="binApply1D.html">binApply1D</a></td>
+<td>Apply a function to vector data</td></tr>
+<tr><td style="width: 25%;"><a href="binApply2D.html">binApply2D</a></td>
+<td>Apply a function to matrix data</td></tr>
+<tr><td style="width: 25%;"><a href="binAverage.html">binAverage</a></td>
+<td>Bin-average a vector y, based on x values</td></tr>
+<tr><td style="width: 25%;"><a href="binCount1D.html">binCount1D</a></td>
+<td>Bin-count vector data</td></tr>
+<tr><td style="width: 25%;"><a href="binCount2D.html">binCount2D</a></td>
+<td>Bin-count matrix data</td></tr>
+<tr><td style="width: 25%;"><a href="binmapAdp.html">binmapAdp</a></td>
+<td>Bin-map an ADP object</td></tr>
+<tr><td style="width: 25%;"><a href="binMean1D.html">binMean1D</a></td>
+<td>Bin-average f=f(x)</td></tr>
+<tr><td style="width: 25%;"><a href="binMean2D.html">binMean2D</a></td>
+<td>Bin-average f=f(x,y)</td></tr>
+<tr><td style="width: 25%;"><a href="bound125.html">bound125</a></td>
+<td>Calculate a rounded bound, rounded up to matissa 1, 2, or 5</td></tr>
+<tr><td style="width: 25%;"><a href="bremen-class.html">bremen-class</a></td>
+<td>Class for data stored in a format used at Bremen</td></tr>
+<tr><td style="width: 25%;"><a href="byteToBinary.html">byteToBinary</a></td>
+<td>Format bytes as binary</td></tr>
+</table>
+
+<h2><a name="C">-- C --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="cm.html">cm</a></td>
+<td>A CM Record</td></tr>
+<tr><td style="width: 25%;"><a href="cm-class.html">cm-class</a></td>
+<td>Class to Store Current Meter (CM) Data</td></tr>
+<tr><td style="width: 25%;"><a href="cnvName2oceName.html">cnvName2oceName</a></td>
+<td>Infer variable name, units and scale from a Seabird (.cnv) header line</td></tr>
+<tr><td style="width: 25%;"><a href="coastline-class.html">coastline-class</a></td>
+<td>Class to Store Coastline Data</td></tr>
+<tr><td style="width: 25%;"><a href="coastlineBest.html">coastlineBest</a></td>
+<td>Find the Name of the Best Coastline Object</td></tr>
+<tr><td style="width: 25%;"><a href="coastlineCut.html">coastlineCut</a></td>
+<td>Cut a Coastline Object at Specified Longitude</td></tr>
+<tr><td style="width: 25%;"><a href="coastlineWorld.html">coastlineWorld</a></td>
+<td>World Coastline</td></tr>
+<tr><td style="width: 25%;"><a href="colormap.html">colormap</a></td>
+<td>Calculate colour map</td></tr>
+<tr><td style="width: 25%;"><a href="colors.html">colors</a></td>
+<td>Data that define some colour palettes</td></tr>
+<tr><td style="width: 25%;"><a href="composite.html">composite</a></td>
+<td>Create a composite object by averaging across good data</td></tr>
+<tr><td style="width: 25%;"><a href="composite-amsr-method.html">composite-method</a></td>
+<td>Create a composite of amsr satellite data</td></tr>
+<tr><td style="width: 25%;"><a href="composite-list-method.html">composite-method</a></td>
+<td>Composite by Averaging Across Data</td></tr>
+<tr><td style="width: 25%;"><a href="coriolis.html">coriolis</a></td>
+<td>Coriolis parameter on rotating earth</td></tr>
+<tr><td style="width: 25%;"><a href="ctd.html">ctd</a></td>
+<td>A CTD profile in Halifax Harbour</td></tr>
+<tr><td style="width: 25%;"><a href="ctd-class.html">ctd-class</a></td>
+<td>Class to Store CTD (or general hydrographic) Data</td></tr>
+<tr><td style="width: 25%;"><a href="ctdAddColumn.html">ctdAddColumn</a></td>
+<td>Add a Column to the Data Slot of a CTD Object [deprecated]</td></tr>
+<tr><td style="width: 25%;"><a href="ctdDecimate.html">ctdDecimate</a></td>
+<td>Decimate a CTD profile</td></tr>
+<tr><td style="width: 25%;"><a href="ctdFindProfiles.html">ctdFindProfiles</a></td>
+<td>Find Profiles within a Tow-Yow CTD Record</td></tr>
+<tr><td style="width: 25%;"><a href="ctdRaw.html">ctdRaw</a></td>
+<td>Seawater CTD Profile, Without Trimming of Extraneous Data</td></tr>
+<tr><td style="width: 25%;"><a href="ctdTrim.html">ctdTrim</a></td>
+<td>Trim Beginning and Ending of a CTD cast</td></tr>
+<tr><td style="width: 25%;"><a href="ctdUpdateHeader.html">ctdUpdateHeader</a></td>
+<td>Update a CTD Header [deprecated]</td></tr>
+<tr><td style="width: 25%;"><a href="ctimeToSeconds.html">ctimeToSeconds</a></td>
+<td>Interpret a character string as a time interval</td></tr>
+<tr><td style="width: 25%;"><a href="curl.html">curl</a></td>
+<td>Curl of 2D vector field</td></tr>
+</table>
+
+<h2><a name="D">-- D --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="dataLabel.html">dataLabel</a></td>
+<td>Try to associate data names with units, for use by summary()</td></tr>
+<tr><td style="width: 25%;"><a href="decimate.html">decimate</a></td>
+<td>Smooth and Decimate, or Subsample, an Oce Object</td></tr>
+<tr><td style="width: 25%;"><a href="decodeHeaderNortek.html">decodeHeaderNortek</a></td>
+<td>Decode a Nortek Header</td></tr>
+<tr><td style="width: 25%;"><a href="decodeTime.html">decodeTime</a></td>
+<td>Oce Version of as.POSIXct</td></tr>
+<tr><td style="width: 25%;"><a href="despike.html">despike</a></td>
+<td>Remove spikes from a time series</td></tr>
+<tr><td style="width: 25%;"><a href="detrend.html">detrend</a></td>
+<td>Detrend a set of observations</td></tr>
+<tr><td style="width: 25%;"><a href="download.amsr.html">download.amsr</a></td>
+<td>Download and Cache an amsr File</td></tr>
+<tr><td style="width: 25%;"><a href="download.coastline.html">download.coastline</a></td>
+<td>Download a coastline File</td></tr>
+<tr><td style="width: 25%;"><a href="download.met.html">download.met</a></td>
+<td>Download and Cache a met File</td></tr>
+<tr><td style="width: 25%;"><a href="download.topo.html">download.topo</a></td>
+<td>Download and Cache a topo File</td></tr>
+<tr><td style="width: 25%;"><a href="drawDirectionField.html">drawDirectionField</a></td>
+<td>Draw a Direction Field</td></tr>
+<tr><td style="width: 25%;"><a href="drawIsopycnals.html">drawIsopycnals</a></td>
+<td>Add Isopycnal Curves to TS Plot</td></tr>
+<tr><td style="width: 25%;"><a href="drawPalette.html">drawPalette</a></td>
+<td>Draw a palette, leaving margins suitable for accompanying plot</td></tr>
+</table>
+
+<h2><a name="E">-- E --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="echosounder.html">echosounder</a></td>
+<td>Echosounder Dataset</td></tr>
+<tr><td style="width: 25%;"><a href="echosounder-class.html">echosounder-class</a></td>
+<td>Class to Store Echosounder Data</td></tr>
+<tr><td style="width: 25%;"><a href="eclipticalToEquatorial.html">eclipticalToEquatorial</a></td>
+<td>Convert ecliptical to equatorial coordinate</td></tr>
+<tr><td style="width: 25%;"><a href="enuToOther.html">enuToOther</a></td>
+<td>Rotate acoustic-Doppler data to a new coordinate system</td></tr>
+<tr><td style="width: 25%;"><a href="enuToOtherAdp.html">enuToOtherAdp</a></td>
+<td>Convert ADP ENU to Rotated Coordinate</td></tr>
+<tr><td style="width: 25%;"><a href="enuToOtherAdv.html">enuToOtherAdv</a></td>
+<td>Convert ENU to Other Coordinate</td></tr>
+<tr><td style="width: 25%;"><a href="equatorialToLocalHorizontal.html">equatorialToLocalHorizontal</a></td>
+<td>Convert equatorial to local horizontal coordinate</td></tr>
+<tr><td style="width: 25%;"><a href="errorbars.html">errorbars</a></td>
+<td>Draw error bars on an existing xy diagram</td></tr>
+</table>
+
+<h2><a name="F">-- F --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="fillGap.html">fillGap</a></td>
+<td>Fill a gap in an oce object</td></tr>
+<tr><td style="width: 25%;"><a href="findBottom.html">findBottom</a></td>
+<td>Find the Ocean Bottom in an Echosounder Object</td></tr>
+<tr><td style="width: 25%;"><a href="findInOrdered.html">findInOrdered</a></td>
+<td>Find indices of times in an ordered vector</td></tr>
+<tr><td style="width: 25%;"><a href="firstFinite.html">firstFinite</a></td>
+<td>Get first finite value in a vector or array, or NULL if none</td></tr>
+<tr><td style="width: 25%;"><a href="formatCI.html">formatCI</a></td>
+<td>Confidence interval in parenthetic notation</td></tr>
+<tr><td style="width: 25%;"><a href="formatPosition.html">formatPosition</a></td>
+<td>Format Geographical Position in Degrees and Minutes</td></tr>
+<tr><td style="width: 25%;"><a href="fullFilename.html">fullFilename</a></td>
+<td>Full name of file, including path</td></tr>
+</table>
+
+<h2><a name="G">-- G --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="g1sst-class.html">g1sst-class</a></td>
+<td>Class to Hold G1SST Satellite-model Data</td></tr>
+<tr><td style="width: 25%;"><a href="geodDist.html">geodDist</a></td>
+<td>Compute Geodesic Distance on Surface of Earth</td></tr>
+<tr><td style="width: 25%;"><a href="geodGc.html">geodGc</a></td>
+<td>Great-circle Segments Between Points on Earth</td></tr>
+<tr><td style="width: 25%;"><a href="geodXy.html">geodXy</a></td>
+<td>Convert From Geographical to Geodesic Coordinates</td></tr>
+<tr><td style="width: 25%;"><a href="geodXyInverse.html">geodXyInverse</a></td>
+<td>Inverse Geodesic Calculation</td></tr>
+<tr><td style="width: 25%;"><a href="GMTOffsetFromTz.html">GMTOffsetFromTz</a></td>
+<td>Determine time offset from timezone</td></tr>
+<tr><td style="width: 25%;"><a href="gps-class.html">gps-class</a></td>
+<td>Class to Store GPS Data</td></tr>
+<tr><td style="width: 25%;"><a href="grad.html">grad</a></td>
+<td>Calculate the grad of a matrix by first differences</td></tr>
+<tr><td style="width: 25%;"><a href="gravity.html">gravity</a></td>
+<td>Acceleration due to earth gravity</td></tr>
+</table>
+
+<h2><a name="H">-- H --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="handleFlags.html">handleFlags</a></td>
+<td>Handle flags in oce objects</td></tr>
+<tr><td style="width: 25%;"><a href="handleFlags-argo-method.html">handleFlags-method</a></td>
+<td>Handle Flags in ARGO Objects</td></tr>
+<tr><td style="width: 25%;"><a href="handleFlags-ctd-method.html">handleFlags-method</a></td>
+<td>Handle Flags in CTD Objects</td></tr>
+<tr><td style="width: 25%;"><a href="handleFlags-section-method.html">handleFlags-method</a></td>
+<td>Handle flags in Section Objects</td></tr>
+<tr><td style="width: 25%;"><a href="handleFlags-vector-method.html">handleFlags-method</a></td>
+<td>Signal erroneous application to non-oce objects</td></tr>
+<tr><td style="width: 25%;"><a href="head.oce.html">head.oce</a></td>
+<td>Extract The Start of an Oce Object</td></tr>
+</table>
+
+<h2><a name="I">-- I --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="imagep.html">imagep</a></td>
+<td>Plot an Image with a Color Palette</td></tr>
+<tr><td style="width: 25%;"><a href="integerToAscii.html">integerToAscii</a></td>
+<td>Decode integer to corresponding ASCII code</td></tr>
+<tr><td style="width: 25%;"><a href="integrateTrapezoid.html">integrateTrapezoid</a></td>
+<td>Trapezoidal Integration</td></tr>
+<tr><td style="width: 25%;"><a href="interpBarnes.html">interpBarnes</a></td>
+<td>Grid data using Barnes algorithm</td></tr>
+</table>
+
+<h2><a name="J">-- J --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="julianCenturyAnomaly.html">julianCenturyAnomaly</a></td>
+<td>Julian-Day number to Julian century</td></tr>
+<tr><td style="width: 25%;"><a href="julianDay.html">julianDay</a></td>
+<td>Convert a POSIXt time to a Julian day</td></tr>
+</table>
+
+<h2><a name="L">-- L --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="ladp-class.html">ladp-class</a></td>
+<td>Class to store lowered-adp data</td></tr>
+<tr><td style="width: 25%;"><a href="landsat.html">landsat</a></td>
+<td>Sample landsat Dataset</td></tr>
+<tr><td style="width: 25%;"><a href="landsat-class.html">landsat-class</a></td>
+<td>Class to Hold landsat Data</td></tr>
+<tr><td style="width: 25%;"><a href="landsatAdd.html">landsatAdd</a></td>
+<td>Add a Band to a landsat Object</td></tr>
+<tr><td style="width: 25%;"><a href="landsatTrim.html">landsatTrim</a></td>
+<td>Trim a landsat Image to a Geographical Region</td></tr>
+<tr><td style="width: 25%;"><a href="latFormat.html">latFormat</a></td>
+<td>Format a latitude</td></tr>
+<tr><td style="width: 25%;"><a href="latlonFormat.html">latlonFormat</a></td>
+<td>Format a latitude-longitude pair</td></tr>
+<tr><td style="width: 25%;"><a href="lisst.html">lisst</a></td>
+<td>LISST Dataset</td></tr>
+<tr><td style="width: 25%;"><a href="lisst-class.html">lisst-class</a></td>
+<td>Class to Store LISST Data</td></tr>
+<tr><td style="width: 25%;"><a href="lobo.html">lobo</a></td>
+<td>LOBO Dataset</td></tr>
+<tr><td style="width: 25%;"><a href="lobo-class.html">lobo-class</a></td>
+<td>Class to Store LOBO Data</td></tr>
+<tr><td style="width: 25%;"><a href="lonFormat.html">lonFormat</a></td>
+<td>Format a longitude</td></tr>
+<tr><td style="width: 25%;"><a href="lonlat2map.html">lonlat2map</a></td>
+<td>Convert Longitude and Latitude to X and Y</td></tr>
+<tr><td style="width: 25%;"><a href="lonlat2utm.html">lonlat2utm</a></td>
+<td>Convert Longitude and Latitude to UTM</td></tr>
+<tr><td style="width: 25%;"><a href="lookWithin.html">lookWithin</a></td>
+<td>Look Within the First Element of a List for Replacement Values</td></tr>
+<tr><td style="width: 25%;"><a href="lowpass.html">lowpass</a></td>
+<td>Perform lowpass digital filtering</td></tr>
+</table>
+
+<h2><a name="M">-- M --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="magneticField.html">magneticField</a></td>
+<td>Earth magnetic declination, inclination, and intensity</td></tr>
+<tr><td style="width: 25%;"><a href="makeFilter.html">makeFilter</a></td>
+<td>Make a digital filter</td></tr>
+<tr><td style="width: 25%;"><a href="makeSection.html">makeSection</a></td>
+<td>Make a Section (DEFUNCT)</td></tr>
+<tr><td style="width: 25%;"><a href="map2lonlat.html">map2lonlat</a></td>
+<td>Convert X and Y to Longitude and Latitude</td></tr>
+<tr><td style="width: 25%;"><a href="mapArrows.html">mapArrows</a></td>
+<td>Add Arrows to a Map</td></tr>
+<tr><td style="width: 25%;"><a href="mapAxis.html">mapAxis</a></td>
+<td>Add Axis Labels to an Existing Map</td></tr>
+<tr><td style="width: 25%;"><a href="mapContour.html">mapContour</a></td>
+<td>Add Contours on a Existing map</td></tr>
+<tr><td style="width: 25%;"><a href="mapCoordinateSystem.html">mapCoordinateSystem</a></td>
+<td>Draw a coordinate system</td></tr>
+<tr><td style="width: 25%;"><a href="mapDirectionField.html">mapDirectionField</a></td>
+<td>Add a Direction Field to an Existing Map</td></tr>
+<tr><td style="width: 25%;"><a href="mapGrid.html">mapGrid</a></td>
+<td>Add a Longitude and Latitude Grid to a Map</td></tr>
+<tr><td style="width: 25%;"><a href="mapImage.html">mapImage</a></td>
+<td>Add an Image to a Map</td></tr>
+<tr><td style="width: 25%;"><a href="mapLines.html">mapLines</a></td>
+<td>Add Lines to a Map</td></tr>
+<tr><td style="width: 25%;"><a href="mapLocator.html">mapLocator</a></td>
+<td>Locate Points on a Map</td></tr>
+<tr><td style="width: 25%;"><a href="mapLongitudeLatitudeXY.html">mapLongitudeLatitudeXY</a></td>
+<td>Convert From Longitude and Latitude to X and Y</td></tr>
+<tr><td style="width: 25%;"><a href="mapMeridians.html">mapMeridians</a></td>
+<td>Add Meridians on a Map [deprecated]</td></tr>
+<tr><td style="width: 25%;"><a href="mapPlot.html">mapPlot</a></td>
+<td>Draw a Map</td></tr>
+<tr><td style="width: 25%;"><a href="mapPoints.html">mapPoints</a></td>
+<td>Add Points to a Map</td></tr>
+<tr><td style="width: 25%;"><a href="mapPolygon.html">mapPolygon</a></td>
+<td>Add a Polygon to a Map</td></tr>
+<tr><td style="width: 25%;"><a href="mapScalebar.html">mapScalebar</a></td>
+<td>Add a Scalebar to a Map</td></tr>
+<tr><td style="width: 25%;"><a href="mapText.html">mapText</a></td>
+<td>Add Text to a Map</td></tr>
+<tr><td style="width: 25%;"><a href="mapTissot.html">mapTissot</a></td>
+<td>Add Tissot Indicatrices to a Map</td></tr>
+<tr><td style="width: 25%;"><a href="mapZones.html">mapZones</a></td>
+<td>Add Zones to a Map [deprecated]</td></tr>
+<tr><td style="width: 25%;"><a href="matchBytes.html">matchBytes</a></td>
+<td>Locate byte sequences in a raw vector</td></tr>
+<tr><td style="width: 25%;"><a href="matrixShiftLongitude.html">matrixShiftLongitude</a></td>
+<td>Rearrange areal matrix so Greenwich is near the centre</td></tr>
+<tr><td style="width: 25%;"><a href="matrixSmooth.html">matrixSmooth</a></td>
+<td>Smooth a Matrix</td></tr>
+<tr><td style="width: 25%;"><a href="met.html">met</a></td>
+<td>Sample met Object</td></tr>
+<tr><td style="width: 25%;"><a href="met-class.html">met-class</a></td>
+<td>Class to Store Meteorological Data</td></tr>
+<tr><td style="width: 25%;"><a href="metNames2oceNames.html">metNames2oceNames</a></td>
+<td>Convert met Data Name to Oce Name</td></tr>
+<tr><td style="width: 25%;"><a href="moonAngle.html">moonAngle</a></td>
+<td>Lunar Angle as Function of Space and Time</td></tr>
+</table>
+
+<h2><a name="N">-- N --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="numberAsHMS.html">numberAsHMS</a></td>
+<td>Convert a Numeric Time to Hour, Minute, and Second</td></tr>
+<tr><td style="width: 25%;"><a href="numberAsPOSIXct.html">numberAsPOSIXct</a></td>
+<td>Convert a Numeric Time to a POSIXct Time</td></tr>
+</table>
+
+<h2><a name="O">-- O --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="oce.html">oce</a></td>
+<td>oce: A Package for Oceanographic Analysis</td></tr>
+<tr><td style="width: 25%;"><a href="oce-class.html">oce-class</a></td>
+<td>Base Class for oce Objects</td></tr>
+<tr><td style="width: 25%;"><a href="oce-deprecated.html">oce-defunct</a></td>
+<td>Deprecated and Defunct Elements of package 'oce'</td></tr>
+<tr><td style="width: 25%;"><a href="oce-deprecated.html">oce-deprecated</a></td>
+<td>Deprecated and Defunct Elements of package 'oce'</td></tr>
+<tr><td style="width: 25%;"><a href="oceApprox.html">oce.approx</a></td>
+<td>Interpolate 1D Data with UNESCO or Reiniger-Ross Algorithm</td></tr>
+<tr><td style="width: 25%;"><a href="oce.as.POSIXlt.html">oce.as.POSIXlt</a></td>
+<td>Oce Variant of as.POSIXlt [deprecated]</td></tr>
+<tr><td style="width: 25%;"><a href="oce.as.raw.html">oce.as.raw</a></td>
+<td>Version of as.raw() that clips data</td></tr>
+<tr><td style="width: 25%;"><a href="oce.axis.POSIXct.html">oce.axis.POSIXct</a></td>
+<td>Oce Version of axis.POSIXct</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oce.colors</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsGebco.html">oce.colors.gebco</a></td>
+<td>Gebco Colors</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oce.colors9A</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oce.colors9B</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oce.colorsCDOM</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oce.colorsChlorophyll</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oce.colorsDensity</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oce.colorsFreesurface</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsGebco.html">oce.colorsGebco</a></td>
+<td>Gebco Colors</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oce.colorsJet</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oce.colorsOxygen</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oce.colorsPalette</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oce.colorsPAR</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oce.colorsPhase</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oce.colorsSalinity</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oce.colorsTemperature</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oce.colorsTurbidity</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oce.colorsTwo</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oce.colorsVelocity</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oce.colorsViridis</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oce.colorsVorticity</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.contour.html">oce.contour</a></td>
+<td>Oce Variant of contour</td></tr>
+<tr><td style="width: 25%;"><a href="oceConvolve.html">oce.convolve</a></td>
+<td>Convolve two time series</td></tr>
+<tr><td style="width: 25%;"><a href="oceDebug.html">oce.debug</a></td>
+<td>Print a debugging message</td></tr>
+<tr><td style="width: 25%;"><a href="oceEdit.html">oce.edit</a></td>
+<td>Edit an Oce Object</td></tr>
+<tr><td style="width: 25%;"><a href="oceFilter.html">oce.filter</a></td>
+<td>Filter a time-series</td></tr>
+<tr><td style="width: 25%;"><a href="oce.grid.html">oce.grid</a></td>
+<td>Add a Grid to an Existing Oce Plot</td></tr>
+<tr><td style="width: 25%;"><a href="oceMagic.html">oce.magic</a></td>
+<td>Find the Type of an Oceanographic Data File</td></tr>
+<tr><td style="width: 25%;"><a href="oce.plot.ts.html">oce.plot.ts</a></td>
+<td>Oce Variant of plot.ts</td></tr>
+<tr><td style="width: 25%;"><a href="ocePmatch.html">oce.pmatch</a></td>
+<td>Partial matching of strings or numbers</td></tr>
+<tr><td style="width: 25%;"><a href="oceSmooth.html">oce.smooth</a></td>
+<td>Smooth an Oce Object</td></tr>
+<tr><td style="width: 25%;"><a href="oceSpectrum.html">oce.spectrum</a></td>
+<td>Wrapper to give normalized spectrum</td></tr>
+<tr><td style="width: 25%;"><a href="oce.write.table.html">oce.write.table</a></td>
+<td>Write the Data Portion of Object to a File</td></tr>
+<tr><td style="width: 25%;"><a href="oceApprox.html">oceApprox</a></td>
+<td>Interpolate 1D Data with UNESCO or Reiniger-Ross Algorithm</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oceColors</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oceColors9A</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oceColors9B</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oceColorsCDOM</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oceColorsChlorophyll</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oceColorsDensity</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oceColorsFreesurface</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsGebco.html">oceColorsGebco</a></td>
+<td>Gebco Colors</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oceColorsJet</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oceColorsOxygen</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oceColorsPalette</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oceColorsPAR</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oceColorsPhase</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oceColorsSalinity</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oceColorsTemperature</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oceColorsTurbidity</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oceColorsTwo</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oceColorsVelocity</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oceColorsViridis</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.colorsTwo.html">oceColorsVorticity</a></td>
+<td>Create a Palette of Colours</td></tr>
+<tr><td style="width: 25%;"><a href="oce.contour.html">oceContour</a></td>
+<td>Oce Variant of contour</td></tr>
+<tr><td style="width: 25%;"><a href="oceConvolve.html">oceConvolve</a></td>
+<td>Convolve two time series</td></tr>
+<tr><td style="width: 25%;"><a href="oceCRS.html">oceCRS</a></td>
+<td>Coordinate Reference System strings for some oceans</td></tr>
+<tr><td style="width: 25%;"><a href="oceDebug.html">oceDebug</a></td>
+<td>Print a debugging message</td></tr>
+<tr><td style="width: 25%;"><a href="oceDeleteData.html">oceDeleteData</a></td>
+<td>Delete data from an 'oce' object</td></tr>
+<tr><td style="width: 25%;"><a href="oceDeleteMetadata.html">oceDeleteMetadata</a></td>
+<td>Delete metadata from an 'oce' object</td></tr>
+<tr><td style="width: 25%;"><a href="oceEdit.html">oceEdit</a></td>
+<td>Edit an Oce Object</td></tr>
+<tr><td style="width: 25%;"><a href="oceFilter.html">oceFilter</a></td>
+<td>Filter a time-series</td></tr>
+<tr><td style="width: 25%;"><a href="oceGetData.html">oceGetData</a></td>
+<td>Get data from an 'oce' object</td></tr>
+<tr><td style="width: 25%;"><a href="oceGetMetadata.html">oceGetMetadata</a></td>
+<td>Get metadata element from an 'oce' object</td></tr>
+<tr><td style="width: 25%;"><a href="oceMagic.html">oceMagic</a></td>
+<td>Find the Type of an Oceanographic Data File</td></tr>
+<tr><td style="width: 25%;"><a href="oceNames2whpNames.html">oceNames2whpNames</a></td>
+<td>Translate Oce Data Names to WHP Data Names</td></tr>
+<tr><td style="width: 25%;"><a href="ocePmatch.html">ocePmatch</a></td>
+<td>Partial matching of strings or numbers</td></tr>
+<tr><td style="width: 25%;"><a href="oceSetData.html">oceSetData</a></td>
+<td>Set something in the 'data' slot of an 'oce' object</td></tr>
+<tr><td style="width: 25%;"><a href="oceSetMetadata.html">oceSetMetadata</a></td>
+<td>Set something in the 'metadata' slot of an 'oce' object</td></tr>
+<tr><td style="width: 25%;"><a href="oceSmooth.html">oceSmooth</a></td>
+<td>Smooth an Oce Object</td></tr>
+<tr><td style="width: 25%;"><a href="oceSpectrum.html">oceSpectrum</a></td>
+<td>Wrapper to give normalized spectrum</td></tr>
+<tr><td style="width: 25%;"><a href="oceUnits2whpUnits.html">oceUnits2whpUnits</a></td>
+<td>Translate oce unit to WHP unit</td></tr>
+<tr><td style="width: 25%;"><a href="odf-class.html">odf-class</a></td>
+<td>Class to Store ODF data</td></tr>
+<tr><td style="width: 25%;"><a href="ODF2oce.html">ODF2oce</a></td>
+<td>Create ODF object from the output of 'ODF::read_ODF()'</td></tr>
+<tr><td style="width: 25%;"><a href="ODFNames2oceNames.html">ODFNames2oceNames</a></td>
+<td>Translate from ODF Names to Oce Names</td></tr>
+</table>
+
+<h2><a name="P">-- P --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="parseLatLon.html">parseLatLon</a></td>
+<td>Parse a Latitude or Longitude String</td></tr>
+<tr><td style="width: 25%;"><a href="plot-adp-method.html">plot-method</a></td>
+<td>Plot ADP Data</td></tr>
+<tr><td style="width: 25%;"><a href="plot-adv-method.html">plot-method</a></td>
+<td>Plot ADV data</td></tr>
+<tr><td style="width: 25%;"><a href="plot-amsr-method.html">plot-method</a></td>
+<td>Plot an amsr Object</td></tr>
+<tr><td style="width: 25%;"><a href="plot-argo-method.html">plot-method</a></td>
+<td>Plot Argo Data</td></tr>
+<tr><td style="width: 25%;"><a href="plot-bremen-method.html">plot-method</a></td>
+<td>Plot a Bremen Object</td></tr>
+<tr><td style="width: 25%;"><a href="plot-cm-method.html">plot-method</a></td>
+<td>Plot CM data</td></tr>
+<tr><td style="width: 25%;"><a href="plot-coastline-method.html">plot-method</a></td>
+<td>Plot a Coastline</td></tr>
+<tr><td style="width: 25%;"><a href="plot-ctd-method.html">plot-method</a></td>
+<td>Plot CTD Data</td></tr>
+<tr><td style="width: 25%;"><a href="plot-echosounder-method.html">plot-method</a></td>
+<td>Plot Echosounder Data</td></tr>
+<tr><td style="width: 25%;"><a href="plot-gps-method.html">plot-method</a></td>
+<td>Plot a GPS Object</td></tr>
+<tr><td style="width: 25%;"><a href="plot-ladp-method.html">plot-method</a></td>
+<td>Plot an ladp object</td></tr>
+<tr><td style="width: 25%;"><a href="plot-landsat-method.html">plot-method</a></td>
+<td>Plot a landsat Object</td></tr>
+<tr><td style="width: 25%;"><a href="plot-lisst-method.html">plot-method</a></td>
+<td>Plot LISST data</td></tr>
+<tr><td style="width: 25%;"><a href="plot-lobo-method.html">plot-method</a></td>
+<td>Plot LOBO data</td></tr>
+<tr><td style="width: 25%;"><a href="plot-met-method.html">plot-method</a></td>
+<td>Plot met Data</td></tr>
+<tr><td style="width: 25%;"><a href="plot-oce-method.html">plot-method</a></td>
+<td>Plot an oce Object</td></tr>
+<tr><td style="width: 25%;"><a href="plot-odf-method.html">plot-method</a></td>
+<td>Plot an ODF Object</td></tr>
+<tr><td style="width: 25%;"><a href="plot-rsk-method.html">plot-method</a></td>
+<td>Plot Rsk Data</td></tr>
+<tr><td style="width: 25%;"><a href="plot-satellite-method.html">plot-method</a></td>
+<td>Plot a satellite object</td></tr>
+<tr><td style="width: 25%;"><a href="plot-sealevel-method.html">plot-method</a></td>
+<td>Plot Sealevel Data</td></tr>
+<tr><td style="width: 25%;"><a href="plot-section-method.html">plot-method</a></td>
+<td>Plot a Section</td></tr>
+<tr><td style="width: 25%;"><a href="plot-tidem-method.html">plot-method</a></td>
+<td>Plot a Tidem Prediction</td></tr>
+<tr><td style="width: 25%;"><a href="plot-topo-method.html">plot-method</a></td>
+<td>Plot a Topo Object</td></tr>
+<tr><td style="width: 25%;"><a href="plot-windrose-method.html">plot-method</a></td>
+<td>Plot Windrose data</td></tr>
+<tr><td style="width: 25%;"><a href="plotInset.html">plotInset</a></td>
+<td>Plot an Inset Diagram</td></tr>
+<tr><td style="width: 25%;"><a href="plotPolar.html">plotPolar</a></td>
+<td>Draw a Polar Plot</td></tr>
+<tr><td style="width: 25%;"><a href="plotProfile.html">plotProfile</a></td>
+<td>Plot a CTD Profile</td></tr>
+<tr><td style="width: 25%;"><a href="plotScan.html">plotScan</a></td>
+<td>Plot CTD data in a Low-Level Fashion</td></tr>
+<tr><td style="width: 25%;"><a href="plotSticks.html">plotSticks</a></td>
+<td>Draw a Stick Plot</td></tr>
+<tr><td style="width: 25%;"><a href="plotTaylor.html">plotTaylor</a></td>
+<td>Plot a Model-data Comparison Diagram</td></tr>
+<tr><td style="width: 25%;"><a href="plotTS.html">plotTS</a></td>
+<td>Plot Temperature-Salinity Diagram</td></tr>
+<tr><td style="width: 25%;"><a href="predict.tidem.html">predict.tidem</a></td>
+<td>Predict a Time Series from a Tidem Tidal Model</td></tr>
+<tr><td style="width: 25%;"><a href="prettyPosition.html">prettyPosition</a></td>
+<td>Pretty lat/lon in deg, min, sec</td></tr>
+<tr><td style="width: 25%;"><a href="processingLog-set.html">processingLog&lt;-</a></td>
+<td>Add an item to a processing log (in place)</td></tr>
+<tr><td style="width: 25%;"><a href="processingLogAppend.html">processingLogAppend</a></td>
+<td>Append an item to a processing log</td></tr>
+<tr><td style="width: 25%;"><a href="processingLogItem.html">processingLogItem</a></td>
+<td>Create an item that can be inserted into a processing log</td></tr>
+<tr><td style="width: 25%;"><a href="processingLogShow.html">processingLogShow</a></td>
+<td>Show the processing log of an 'oce' object</td></tr>
+<tr><td style="width: 25%;"><a href="pwelch.html">pwelch</a></td>
+<td>Welch periodogram</td></tr>
+</table>
+
+<h2><a name="R">-- R --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="rangeExtended.html">rangeExtended</a></td>
+<td>Calculate Range, Extended a Little, as is Done for Axes</td></tr>
+<tr><td style="width: 25%;"><a href="rangeLimit.html">rangeLimit</a></td>
+<td>Substitute NA for data outside a range</td></tr>
+<tr><td style="width: 25%;"><a href="read.ad2cp.html">read.ad2cp</a></td>
+<td>Read an AD2CP File</td></tr>
+<tr><td style="width: 25%;"><a href="read.adp.html">read.adp</a></td>
+<td>Read an ADP File</td></tr>
+<tr><td style="width: 25%;"><a href="read.adp.nortek.html">read.adp.nortek</a></td>
+<td>Read a Nortek ADP File</td></tr>
+<tr><td style="width: 25%;"><a href="read.adp.rdi.html">read.adp.rdi</a></td>
+<td>Read a Teledyne/RDI ADP File</td></tr>
+<tr><td style="width: 25%;"><a href="read.adp.sontek.html">read.adp.sontek</a></td>
+<td>Read a Sontek ADP File</td></tr>
+<tr><td style="width: 25%;"><a href="read.adp.sontek.serial.html">read.adp.sontek.serial</a></td>
+<td>Read a serial Sontek ADP file</td></tr>
+<tr><td style="width: 25%;"><a href="read.adv.html">read.adv</a></td>
+<td>Read an ADV data file</td></tr>
+<tr><td style="width: 25%;"><a href="read.adv.nortek.html">read.adv.nortek</a></td>
+<td>Read an ADV data file</td></tr>
+<tr><td style="width: 25%;"><a href="read.adv.sontek.adr.html">read.adv.sontek.adr</a></td>
+<td>Read an ADV data file</td></tr>
+<tr><td style="width: 25%;"><a href="read.adv.sontek.serial.html">read.adv.sontek.serial</a></td>
+<td>Read an ADV data file</td></tr>
+<tr><td style="width: 25%;"><a href="read.adv.sontek.text.html">read.adv.sontek.text</a></td>
+<td>Read an ADV data file</td></tr>
+<tr><td style="width: 25%;"><a href="read.amsr.html">read.amsr</a></td>
+<td>Read an amsr File</td></tr>
+<tr><td style="width: 25%;"><a href="read.aquadopp.html">read.aquadopp</a></td>
+<td>Read a Nortek Aquadopp File</td></tr>
+<tr><td style="width: 25%;"><a href="read.aquadoppHR.html">read.aquadoppHR</a></td>
+<td>Read Nortek Aquadopp-HR File</td></tr>
+<tr><td style="width: 25%;"><a href="read.aquadoppProfiler.html">read.aquadoppProfiler</a></td>
+<td>Read a Nortek Aquadopp-Profiler File</td></tr>
+<tr><td style="width: 25%;"><a href="read.argo.html">read.argo</a></td>
+<td>Read an Argo Data File</td></tr>
+<tr><td style="width: 25%;"><a href="read.bremen.html">read.bremen</a></td>
+<td>Read a Bremen File</td></tr>
+<tr><td style="width: 25%;"><a href="read.cm.html">read.cm</a></td>
+<td>Read a CM file</td></tr>
+<tr><td style="width: 25%;"><a href="read.coastline.html">read.coastline</a></td>
+<td>Read a Coastline File</td></tr>
+<tr><td style="width: 25%;"><a href="read.coastline.openstreetmap.html">read.coastline.openstreetmap</a></td>
+<td>Read a Coastline File in Openstreetmap Format</td></tr>
+<tr><td style="width: 25%;"><a href="read.coastline.shapefile.html">read.coastline.shapefile</a></td>
+<td>Read a Coastline File in Shapefile Format</td></tr>
+<tr><td style="width: 25%;"><a href="read.ctd.html">read.ctd</a></td>
+<td>Read a General CTD File</td></tr>
+<tr><td style="width: 25%;"><a href="read.ctd.itp.html">read.ctd.itp</a></td>
+<td>Read an ITP-type CTD File</td></tr>
+<tr><td style="width: 25%;"><a href="read.ctd.odf.html">read.ctd.odf</a></td>
+<td>Read a CTD file in ODF format</td></tr>
+<tr><td style="width: 25%;"><a href="read.ctd.sbe.html">read.ctd.sbe</a></td>
+<td>Read a Seabird CTD File</td></tr>
+<tr><td style="width: 25%;"><a href="read.ctd.woce.html">read.ctd.woce</a></td>
+<td>Read a WOCE-type CTD file with First Word "CTD"</td></tr>
+<tr><td style="width: 25%;"><a href="read.ctd.woce.other.html">read.ctd.woce.other</a></td>
+<td>Read a WOCE-type CTD file with First Word "EXPOCODE"</td></tr>
+<tr><td style="width: 25%;"><a href="read.echosounder.html">read.echosounder</a></td>
+<td>Read an Echosounder File</td></tr>
+<tr><td style="width: 25%;"><a href="read.g1sst.html">read.g1sst</a></td>
+<td>Read a G1SST file</td></tr>
+<tr><td style="width: 25%;"><a href="read.gps.html">read.gps</a></td>
+<td>Read a GPS File</td></tr>
+<tr><td style="width: 25%;"><a href="read.index.html">read.index</a></td>
+<td>Read a NOAA ocean index file</td></tr>
+<tr><td style="width: 25%;"><a href="read.landsat.html">read.landsat</a></td>
+<td>Read a landsat File Directory</td></tr>
+<tr><td style="width: 25%;"><a href="read.lisst.html">read.lisst</a></td>
+<td>Read a LISST File</td></tr>
+<tr><td style="width: 25%;"><a href="read.lobo.html">read.lobo</a></td>
+<td>Read a LOBO File</td></tr>
+<tr><td style="width: 25%;"><a href="read.met.html">read.met</a></td>
+<td>Read a met File</td></tr>
+<tr><td style="width: 25%;"><a href="read.netcdf.html">read.netcdf</a></td>
+<td>Read a NetCDF File</td></tr>
+<tr><td style="width: 25%;"><a href="read.oce.html">read.oce</a></td>
+<td>Read an Oceanographic Data File</td></tr>
+<tr><td style="width: 25%;"><a href="read.odf.html">read.odf</a></td>
+<td>Read an ODF file</td></tr>
+<tr><td style="width: 25%;"><a href="read.rsk.html">read.rsk</a></td>
+<td>Read a Rsk file</td></tr>
+<tr><td style="width: 25%;"><a href="read.sealevel.html">read.sealevel</a></td>
+<td>Read a Sealevel File</td></tr>
+<tr><td style="width: 25%;"><a href="read.section.html">read.section</a></td>
+<td>Read a Section File</td></tr>
+<tr><td style="width: 25%;"><a href="read.topo.html">read.topo</a></td>
+<td>Read a Topo File</td></tr>
+<tr><td style="width: 25%;"><a href="renameData.html">renameData</a></td>
+<td>Rename items in the data slot of an oce object</td></tr>
+<tr><td style="width: 25%;"><a href="rescale.html">rescale</a></td>
+<td>Rescale values to lie in a given range</td></tr>
+<tr><td style="width: 25%;"><a href="resizableLabel.html">resizableLabel</a></td>
+<td>Provide axis names in adjustable sizes</td></tr>
+<tr><td style="width: 25%;"><a href="retime.html">retime</a></td>
+<td>Adjust the time within Oce object</td></tr>
+<tr><td style="width: 25%;"><a href="rsk.html">rsk</a></td>
+<td>Sample Rsk Dataset</td></tr>
+<tr><td style="width: 25%;"><a href="rsk-class.html">rsk-class</a></td>
+<td>Class to Store Rsk Data</td></tr>
+<tr><td style="width: 25%;"><a href="rsk2ctd.html">rsk2ctd</a></td>
+<td>Create a ctd Object from an rsk Object</td></tr>
+<tr><td style="width: 25%;"><a href="rskPatm.html">rskPatm</a></td>
+<td>Estimate Atmospheric Pressure in Rsk Object</td></tr>
+<tr><td style="width: 25%;"><a href="rskToc.html">rskToc</a></td>
+<td>Decode table-of-contents File from a Rsk File</td></tr>
+<tr><td style="width: 25%;"><a href="runlm.html">runlm</a></td>
+<td>Calculate running linear models</td></tr>
+</table>
+
+<h2><a name="S">-- S --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="satellite-class.html">satellite-class</a></td>
+<td>Class to hold satellite data</td></tr>
+<tr><td style="width: 25%;"><a href="sealevel.html">sealevel</a></td>
+<td>Sealevel data for Halifax Harbour</td></tr>
+<tr><td style="width: 25%;"><a href="sealevel-class.html">sealevel-class</a></td>
+<td>Class to Store Sealevel Data</td></tr>
+<tr><td style="width: 25%;"><a href="sealevelTuktoyaktuk.html">sealevelTuktoyaktuk</a></td>
+<td>Sea-level data set acquired in 1975 at Tuktoyaktuk</td></tr>
+<tr><td style="width: 25%;"><a href="secondsToCtime.html">secondsToCtime</a></td>
+<td>Time interval as colon-separated string</td></tr>
+<tr><td style="width: 25%;"><a href="section.html">section</a></td>
+<td>Hydrographic section</td></tr>
+<tr><td style="width: 25%;"><a href="section-class.html">section-class</a></td>
+<td>Class to Store Hydrographic Section Data</td></tr>
+<tr><td style="width: 25%;"><a href="sectionAddStation.html">sectionAddCtd</a></td>
+<td>Add a CTD Station to a Section</td></tr>
+<tr><td style="width: 25%;"><a href="sectionAddStation.html">sectionAddStation</a></td>
+<td>Add a CTD Station to a Section</td></tr>
+<tr><td style="width: 25%;"><a href="sectionGrid.html">sectionGrid</a></td>
+<td>Grid a Section</td></tr>
+<tr><td style="width: 25%;"><a href="sectionSmooth.html">sectionSmooth</a></td>
+<td>Smooth a Section</td></tr>
+<tr><td style="width: 25%;"><a href="sectionSort.html">sectionSort</a></td>
+<td>Sort a Section</td></tr>
+<tr><td style="width: 25%;"><a href="shiftLongitude.html">shiftLongitude</a></td>
+<td>Shift Longitude to Range -180 to 180</td></tr>
+<tr><td style="width: 25%;"><a href="showMetadataItem.html">showMetadataItem</a></td>
+<td>Show metadata item</td></tr>
+<tr><td style="width: 25%;"><a href="siderealTime.html">siderealTime</a></td>
+<td>Convert a POSIXt time to a sidereal time</td></tr>
+<tr><td style="width: 25%;"><a href="standardDepths.html">standardDepths</a></td>
+<td>Standard Oceanographic Depths</td></tr>
+<tr><td style="width: 25%;"><a href="standardizeLongitude.html">standardizeLongitude</a></td>
+<td>Put longitude in the range from -180 to 180</td></tr>
+<tr><td style="width: 25%;"><a href="subset-adp-method.html">subset-method</a></td>
+<td>Subset an ADP Object</td></tr>
+<tr><td style="width: 25%;"><a href="subset-adv-method.html">subset-method</a></td>
+<td>Subset an ADV Object</td></tr>
+<tr><td style="width: 25%;"><a href="subset-amsr-method.html">subset-method</a></td>
+<td>Subset an amsr Object</td></tr>
+<tr><td style="width: 25%;"><a href="subset-argo-method.html">subset-method</a></td>
+<td>Subset an Argo Object</td></tr>
+<tr><td style="width: 25%;"><a href="subset-cm-method.html">subset-method</a></td>
+<td>Subset a CM Object</td></tr>
+<tr><td style="width: 25%;"><a href="subset-coastline-method.html">subset-method</a></td>
+<td>Subset a Coastline Object</td></tr>
+<tr><td style="width: 25%;"><a href="subset-ctd-method.html">subset-method</a></td>
+<td>Subset a CTD Object</td></tr>
+<tr><td style="width: 25%;"><a href="subset-echosounder-method.html">subset-method</a></td>
+<td>Subset an Echosounder Object</td></tr>
+<tr><td style="width: 25%;"><a href="subset-lobo-method.html">subset-method</a></td>
+<td>Subset a LOBO Object</td></tr>
+<tr><td style="width: 25%;"><a href="subset-met-method.html">subset-method</a></td>
+<td>Subset a met Object</td></tr>
+<tr><td style="width: 25%;"><a href="subset-oce-method.html">subset-method</a></td>
+<td>Subset an oce Object</td></tr>
+<tr><td style="width: 25%;"><a href="subset-odf-method.html">subset-method</a></td>
+<td>Subset an ODF object</td></tr>
+<tr><td style="width: 25%;"><a href="subset-rsk-method.html">subset-method</a></td>
+<td>Subset a Rsk Object</td></tr>
+<tr><td style="width: 25%;"><a href="subset-sealevel-method.html">subset-method</a></td>
+<td>Subset a Sealevel Object</td></tr>
+<tr><td style="width: 25%;"><a href="subset-section-method.html">subset-method</a></td>
+<td>Subset a Section Object</td></tr>
+<tr><td style="width: 25%;"><a href="subset-topo-method.html">subset-method</a></td>
+<td>Subset a Topo Object</td></tr>
+<tr><td style="width: 25%;"><a href="subtractBottomVelocity.html">subtractBottomVelocity</a></td>
+<td>Subtract Bottom Velocity from ADP</td></tr>
+<tr><td style="width: 25%;"><a href="summary-adp-method.html">summary-method</a></td>
+<td>Summarize an ADP Object</td></tr>
+<tr><td style="width: 25%;"><a href="summary-adv-method.html">summary-method</a></td>
+<td>Summarize an ADV object</td></tr>
+<tr><td style="width: 25%;"><a href="summary-amsr-method.html">summary-method</a></td>
+<td>Summarize an AMSR Object</td></tr>
+<tr><td style="width: 25%;"><a href="summary-argo-method.html">summary-method</a></td>
+<td>Summarize an Argo Object</td></tr>
+<tr><td style="width: 25%;"><a href="summary-bremen-method.html">summary-method</a></td>
+<td>Summarize a Bremen Object</td></tr>
+<tr><td style="width: 25%;"><a href="summary-cm-method.html">summary-method</a></td>
+<td>Summarize a CM Object</td></tr>
+<tr><td style="width: 25%;"><a href="summary-coastline-method.html">summary-method</a></td>
+<td>Summarize a Coastline Object</td></tr>
+<tr><td style="width: 25%;"><a href="summary-ctd-method.html">summary-method</a></td>
+<td>Summarize a CTD Object</td></tr>
+<tr><td style="width: 25%;"><a href="summary-echosounder-method.html">summary-method</a></td>
+<td>Summarize an Echosounder Object</td></tr>
+<tr><td style="width: 25%;"><a href="summary-gps-method.html">summary-method</a></td>
+<td>Summarize a GPS Object</td></tr>
+<tr><td style="width: 25%;"><a href="summary-ladp-method.html">summary-method</a></td>
+<td>Summarize an ladp object</td></tr>
+<tr><td style="width: 25%;"><a href="summary-landsat-method.html">summary-method</a></td>
+<td>Summarize a landsat Object</td></tr>
+<tr><td style="width: 25%;"><a href="summary-lisst-method.html">summary-method</a></td>
+<td>Summarize a LISST Object</td></tr>
+<tr><td style="width: 25%;"><a href="summary-lobo-method.html">summary-method</a></td>
+<td>Summarize a LOBO Object</td></tr>
+<tr><td style="width: 25%;"><a href="summary-met-method.html">summary-method</a></td>
+<td>Summarize a met Object</td></tr>
+<tr><td style="width: 25%;"><a href="summary-oce-method.html">summary-method</a></td>
+<td>Summarize an oce Object</td></tr>
+<tr><td style="width: 25%;"><a href="summary-odf-method.html">summary-method</a></td>
+<td>Summarize an ODF Object</td></tr>
+<tr><td style="width: 25%;"><a href="summary-rsk-method.html">summary-method</a></td>
+<td>Summarize a Rsk Object</td></tr>
+<tr><td style="width: 25%;"><a href="summary-satellite-method.html">summary-method</a></td>
+<td>Summarize a satellite object</td></tr>
+<tr><td style="width: 25%;"><a href="summary-sealevel-method.html">summary-method</a></td>
+<td>Summarize a Sealevel Object</td></tr>
+<tr><td style="width: 25%;"><a href="summary-section-method.html">summary-method</a></td>
+<td>Summarize a Section Object</td></tr>
+<tr><td style="width: 25%;"><a href="summary-tidem-method.html">summary-method</a></td>
+<td>Summarize a Tidem Object</td></tr>
+<tr><td style="width: 25%;"><a href="summary-topo-method.html">summary-method</a></td>
+<td>Summarize A Topo Object</td></tr>
+<tr><td style="width: 25%;"><a href="summary-windrose-method.html">summary-method</a></td>
+<td>Summarize a 'windrose' object</td></tr>
+<tr><td style="width: 25%;"><a href="summary-adp-method.html">summary.adp</a></td>
+<td>Summarize an ADP Object</td></tr>
+<tr><td style="width: 25%;"><a href="sunAngle.html">sunAngle</a></td>
+<td>Solar Angle as Function of Space and Time</td></tr>
+<tr><td style="width: 25%;"><a href="swAbsoluteSalinity.html">swAbsoluteSalinity</a></td>
+<td>Seawater absolute salinity, in GSW formulation</td></tr>
+<tr><td style="width: 25%;"><a href="swAlpha.html">swAlpha</a></td>
+<td>Seawater thermal expansion coefficient</td></tr>
+<tr><td style="width: 25%;"><a href="swAlphaOverBeta.html">swAlphaOverBeta</a></td>
+<td>Ratio of seawater thermal expansion coefficient to haline contraction coefficient</td></tr>
+<tr><td style="width: 25%;"><a href="swBeta.html">swBeta</a></td>
+<td>Seawater haline contraction coefficient</td></tr>
+<tr><td style="width: 25%;"><a href="swConservativeTemperature.html">swConservativeTemperature</a></td>
+<td>Seawater conservative temperature, in GSW formulation</td></tr>
+<tr><td style="width: 25%;"><a href="swCSTp.html">swCSTp</a></td>
+<td>Electrical conductivity ratio from salinity, temperature and pressure</td></tr>
+<tr><td style="width: 25%;"><a href="swDepth.html">swDepth</a></td>
+<td>Water depth</td></tr>
+<tr><td style="width: 25%;"><a href="swDynamicHeight.html">swDynamicHeight</a></td>
+<td>Dynamic height of seawater profile</td></tr>
+<tr><td style="width: 25%;"><a href="swLapseRate.html">swLapseRate</a></td>
+<td>Seawater lapse rate</td></tr>
+<tr><td style="width: 25%;"><a href="swN2.html">swN2</a></td>
+<td>Squared buoyancy frequency for seawater</td></tr>
+<tr><td style="width: 25%;"><a href="swPressure.html">swPressure</a></td>
+<td>Water pressure</td></tr>
+<tr><td style="width: 25%;"><a href="swRho.html">swRho</a></td>
+<td>Seawater density</td></tr>
+<tr><td style="width: 25%;"><a href="swRrho.html">swRrho</a></td>
+<td>Density ratio</td></tr>
+<tr><td style="width: 25%;"><a href="swSCTp.html">swSCTp</a></td>
+<td>Salinity from electrical conductivity, temperature and pressure</td></tr>
+<tr><td style="width: 25%;"><a href="swSigma.html">swSigma</a></td>
+<td>Seawater density anomaly</td></tr>
+<tr><td style="width: 25%;"><a href="swSigma0.html">swSigma0</a></td>
+<td>Seawater potential density anomaly referenced to surface pressure</td></tr>
+<tr><td style="width: 25%;"><a href="swSigma1.html">swSigma1</a></td>
+<td>Seawater potential density anomaly referenced to 1000db pressure</td></tr>
+<tr><td style="width: 25%;"><a href="swSigma2.html">swSigma2</a></td>
+<td>Seawater potential density anomaly referenced to 2000db pressure</td></tr>
+<tr><td style="width: 25%;"><a href="swSigma3.html">swSigma3</a></td>
+<td>Seawater potential density anomaly referenced to 3000db pressure</td></tr>
+<tr><td style="width: 25%;"><a href="swSigma4.html">swSigma4</a></td>
+<td>Seawater potential density anomaly referenced to 4000db pressure</td></tr>
+<tr><td style="width: 25%;"><a href="swSigmaT.html">swSigmaT</a></td>
+<td>Seawater quasi-potential density anomaly</td></tr>
+<tr><td style="width: 25%;"><a href="swSigmaTheta.html">swSigmaTheta</a></td>
+<td>Seawater potential density anomaly</td></tr>
+<tr><td style="width: 25%;"><a href="swSoundAbsorption.html">swSoundAbsorption</a></td>
+<td>Seawater sound absorption in dB/m</td></tr>
+<tr><td style="width: 25%;"><a href="swSoundSpeed.html">swSoundSpeed</a></td>
+<td>Seawater sound speed</td></tr>
+<tr><td style="width: 25%;"><a href="swSpecificHeat.html">swSpecificHeat</a></td>
+<td>Seawater specific heat Source= http://sam.ucsd.edu/sio210/propseawater/ppsw_fortran/ppsw.f check value: cpsw = 3849.500 j/(kg deg. c) for s = 40 (ipss-78),</td></tr>
+<tr><td style="width: 25%;"><a href="swSpice.html">swSpice</a></td>
+<td>Seawater spiciness</td></tr>
+<tr><td style="width: 25%;"><a href="swSTrho.html">swSTrho</a></td>
+<td>Seawater salinity from temperature and density</td></tr>
+<tr><td style="width: 25%;"><a href="swTFreeze.html">swTFreeze</a></td>
+<td>Seawater freezing temperature</td></tr>
+<tr><td style="width: 25%;"><a href="swThermalConductivity.html">swThermalConductivity</a></td>
+<td>Seawater thermal conductivity</td></tr>
+<tr><td style="width: 25%;"><a href="swTheta.html">swTheta</a></td>
+<td>Seawater potential temperature</td></tr>
+<tr><td style="width: 25%;"><a href="swTSrho.html">swTSrho</a></td>
+<td>Seawater temperature from salinity and density</td></tr>
+<tr><td style="width: 25%;"><a href="swViscosity.html">swViscosity</a></td>
+<td>Seawater viscosity</td></tr>
+<tr><td style="width: 25%;"><a href="swZ.html">swZ</a></td>
+<td>Vertical coordinate</td></tr>
+</table>
+
+<h2><a name="T">-- T --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="T68fromT90.html">T68fromT90</a></td>
+<td>Convert from ITS-90 to IPTS-68 temperature</td></tr>
+<tr><td style="width: 25%;"><a href="T90fromT48.html">T90fromT48</a></td>
+<td>Convert from ITS-48 to ITS-90 temperature</td></tr>
+<tr><td style="width: 25%;"><a href="T90fromT68.html">T90fromT68</a></td>
+<td>Convert from IPTS-68 to ITS-90 temperature</td></tr>
+<tr><td style="width: 25%;"><a href="tail.oce.html">tail.oce</a></td>
+<td>Extract the End of an Oce Object</td></tr>
+<tr><td style="width: 25%;"><a href="threenum.html">threenum</a></td>
+<td>Calculate min, mean, and max values</td></tr>
+<tr><td style="width: 25%;"><a href="tidedata.html">tidedata</a></td>
+<td>Tidal Constituent Information</td></tr>
+<tr><td style="width: 25%;"><a href="tidem.html">tidem</a></td>
+<td>Fit a Tidem (Tidal Model) to a Timeseries</td></tr>
+<tr><td style="width: 25%;"><a href="tidem-class.html">tidem-class</a></td>
+<td>Class to Store Tidal Models</td></tr>
+<tr><td style="width: 25%;"><a href="tidemAstron.html">tidemAstron</a></td>
+<td>Astronomical Calculations for Tidem</td></tr>
+<tr><td style="width: 25%;"><a href="tidemVuf.html">tidemVuf</a></td>
+<td>Nodal Modulation Calculations for Tidem</td></tr>
+<tr><td style="width: 25%;"><a href="titleCase.html">titleCase</a></td>
+<td>Capitalize first letter of each of a vector of words</td></tr>
+<tr><td style="width: 25%;"><a href="toEnu.html">toEnu</a></td>
+<td>Rotate acoustic-Doppler data to the enu coordinate system</td></tr>
+<tr><td style="width: 25%;"><a href="toEnuAdp.html">toEnuAdp</a></td>
+<td>Convert an ADP Object to ENU Coordinates</td></tr>
+<tr><td style="width: 25%;"><a href="toEnuAdv.html">toEnuAdv</a></td>
+<td>Convert an ADV Object to ENU Coordinates</td></tr>
+<tr><td style="width: 25%;"><a href="topo-class.html">topo-class</a></td>
+<td>Class to Store Topographic Data</td></tr>
+<tr><td style="width: 25%;"><a href="topoInterpolate.html">topoInterpolate</a></td>
+<td>Interpolate Within a Topo Object</td></tr>
+<tr><td style="width: 25%;"><a href="topoWorld.html">topoWorld</a></td>
+<td>Global Topographic Dataset at Half-degree Resolution</td></tr>
+<tr><td style="width: 25%;"><a href="trimString.html">trimString</a></td>
+<td>Remove leading and trailing whitespace from strings</td></tr>
+</table>
+
+<h2><a name="U">-- U --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="unabbreviateYear.html">unabbreviateYear</a></td>
+<td>Determine year from various abbreviations</td></tr>
+<tr><td style="width: 25%;"><a href="undriftTime.html">undriftTime</a></td>
+<td>Correct for drift in instrument clock</td></tr>
+<tr><td style="width: 25%;"><a href="unduplicateNames.html">unduplicateNames</a></td>
+<td>Rename duplicated items (used in reading CTD files)</td></tr>
+<tr><td style="width: 25%;"><a href="ungrid.html">ungrid</a></td>
+<td>Extract (x, y, z) from (x, y, grid)</td></tr>
+<tr><td style="width: 25%;"><a href="unitFromString.html">unitFromString</a></td>
+<td>Decode units, from strings</td></tr>
+<tr><td style="width: 25%;"><a href="unitFromStringRsk.html">unitFromStringRsk</a></td>
+<td>Infer Rsk units from a vector of strings</td></tr>
+<tr><td style="width: 25%;"><a href="unwrapAngle.html">unwrapAngle</a></td>
+<td>Unwrap an angle that suffers modulo-360 problems</td></tr>
+<tr><td style="width: 25%;"><a href="useHeading.html">useHeading</a></td>
+<td>Replace the Heading for One Instrument With That of Another</td></tr>
+<tr><td style="width: 25%;"><a href="utm2lonlat.html">utm2lonlat</a></td>
+<td>Convert UTM to Longitude and Latitude</td></tr>
+</table>
+
+<h2><a name="V">-- V --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="vectorShow.html">vectorShow</a></td>
+<td>Show some values from a vector</td></tr>
+<tr><td style="width: 25%;"><a href="velocityStatistics.html">velocityStatistics</a></td>
+<td>Report Statistics of adp or adv Velocities</td></tr>
+</table>
+
+<h2><a name="W">-- W --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="webtide.html">webtide</a></td>
+<td>Get a Tidal Prediction from a WebTide Database</td></tr>
+<tr><td style="width: 25%;"><a href="wind.html">wind</a></td>
+<td>Wind dataset</td></tr>
+<tr><td style="width: 25%;"><a href="window.oce.html">window.oce</a></td>
+<td>Window an Oce Object by Time or Distance</td></tr>
+<tr><td style="width: 25%;"><a href="windrose-class.html">windrose-class</a></td>
+<td>Class to Store Windrose Data</td></tr>
+<tr><td style="width: 25%;"><a href="woceNames2oceNames.html">woceNames2oceNames</a></td>
+<td>Translate WOCE Data Names to Oce Data Names</td></tr>
+<tr><td style="width: 25%;"><a href="woceUnit2oceUnit.html">woceUnit2oceUnit</a></td>
+<td>Translate WOCE units to oce units</td></tr>
+<tr><td style="width: 25%;"><a href="write.ctd.html">write.ctd</a></td>
+<td>Write a CTD Data Object as a CSV File</td></tr>
+</table>
+
+<h2><a name="X">-- X --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="xyzToEnu.html">xyzToEnu</a></td>
+<td>Convert acoustic-Doppler data from xyz coordinates to enu coordinates</td></tr>
+<tr><td style="width: 25%;"><a href="xyzToEnuAdp.html">xyzToEnuAdp</a></td>
+<td>Convert ADP From XYZ to ENU Coordinates</td></tr>
+<tr><td style="width: 25%;"><a href="xyzToEnuAdv.html">xyzToEnuAdv</a></td>
+<td>Convert an ADP from XYZ to ENU Coordinates</td></tr>
+</table>
+
+<h2><a name="misc">-- misc --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="sub-sub-adp-method.html">[[-method</a></td>
+<td>Extract Parts of an ADP Object In addition to the usual extraction of elements by name, some shortcuts are also provided, e.g. 'x[["u1"]]' retrieves 'v[,1]', and similarly for the other velocity components. The 'a' and 'q' data can be retrieved in 'raw' form or numeric form (see examples). The coordinate system may be retrieved with e.g. 'x[["coordinate"]]'.</td></tr>
+<tr><td style="width: 25%;"><a href="sub-sub-adv-method.html">[[-method</a></td>
+<td>Extract Parts of an ADV Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-sub-amsr-method.html">[[-method</a></td>
+<td>Extract Something From an amsr Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-sub-argo-method.html">[[-method</a></td>
+<td>Extract Something From an Argo Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-sub-bremen-method.html">[[-method</a></td>
+<td>Extract Something From a Bremen Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-sub-cm-method.html">[[-method</a></td>
+<td>Extract Something From a CM Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-sub-coastline-method.html">[[-method</a></td>
+<td>Extract Something From a Coastline Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-sub-ctd-method.html">[[-method</a></td>
+<td>Extract Parts of a CTD Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-sub-echosounder-method.html">[[-method</a></td>
+<td>Extract Parts of an Echosounder Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-sub-g1sst-method.html">[[-method</a></td>
+<td>Extract Something From a G1SST Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-sub-gps-method.html">[[-method</a></td>
+<td>Extract Something From a GPS Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-sub-ladp-method.html">[[-method</a></td>
+<td>Extract Something From an ladp Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-sub-landsat-method.html">[[-method</a></td>
+<td>Extract Something From a landsat Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-sub-lisst-method.html">[[-method</a></td>
+<td>Extract Something From a LISST Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-sub-lobo-method.html">[[-method</a></td>
+<td>Extract Something From a LOBO Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-sub-met-method.html">[[-method</a></td>
+<td>Extract Something From a met Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-sub-oce-method.html">[[-method</a></td>
+<td>Extract Something From an oce Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-sub-odf-method.html">[[-method</a></td>
+<td>Extract Something From an ODF Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-sub-rsk-method.html">[[-method</a></td>
+<td>Extract Something From a Rsk Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-sub-sealevel-method.html">[[-method</a></td>
+<td>Extract Something From a Sealevel Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-sub-section-method.html">[[-method</a></td>
+<td>Extract Something From a Section Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-sub-tidem-method.html">[[-method</a></td>
+<td>Extract Something From a Tidem Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-sub-topo-method.html">[[-method</a></td>
+<td>Extract Something From a Topo Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-sub-windrose-method.html">[[-method</a></td>
+<td>Extract Something From a Windrose Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-subset-adp-method.html">[[&lt;--method</a></td>
+<td>Replace Parts of an ADP Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-subset-adv-method.html">[[&lt;--method</a></td>
+<td>Replace Parts of an ADV Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-subset-amsr-method.html">[[&lt;--method</a></td>
+<td>Replace Parts of an AMSR Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-subset-argo-method.html">[[&lt;--method</a></td>
+<td>Replace Parts of an Argo Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-subset-bremen-method.html">[[&lt;--method</a></td>
+<td>Replace Parts of a Bremen Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-subset-cm-method.html">[[&lt;--method</a></td>
+<td>Replace Parts of a CM Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-subset-coastline-method.html">[[&lt;--method</a></td>
+<td>Replace Parts of a Coastline Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-subset-ctd-method.html">[[&lt;--method</a></td>
+<td>Replace Parts of a CTD Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-subset-echosounder-method.html">[[&lt;--method</a></td>
+<td>Replace Parts of an Echosounder Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-subset-g1sst-method.html">[[&lt;--method</a></td>
+<td>Replace Parts of a G1SST Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-subset-gps-method.html">[[&lt;--method</a></td>
+<td>Replace Parts of a GPS Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-subset-lisst-method.html">[[&lt;--method</a></td>
+<td>Replace Parts of a LISST Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-subset-lobo-method.html">[[&lt;--method</a></td>
+<td>Replace Parts of a LOBO Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-subset-met-method.html">[[&lt;--method</a></td>
+<td>Replace Parts of a met Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-subset-oce-method.html">[[&lt;--method</a></td>
+<td>Replace Parts of an Oce Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-subset-odf-method.html">[[&lt;--method</a></td>
+<td>Replace Parts of an ODF Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-subset-rsk-method.html">[[&lt;--method</a></td>
+<td>Replace Parts of a Rsk Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-subset-sealevel-method.html">[[&lt;--method</a></td>
+<td>Replace Parts of a Sealevel Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-subset-section-method.html">[[&lt;--method</a></td>
+<td>Replace Parts of a Section Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-subset-tidem-method.html">[[&lt;--method</a></td>
+<td>Replace Parts of a Tidem Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-subset-topo-method.html">[[&lt;--method</a></td>
+<td>Replace Parts of a Topo Object</td></tr>
+<tr><td style="width: 25%;"><a href="sub-subset-windrose-method.html">[[&lt;--method</a></td>
+<td>Replace Parts of a Windrose Object</td></tr>
+</table>
+</body></html>

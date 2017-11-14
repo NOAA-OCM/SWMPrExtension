@@ -1,0 +1,70 @@
+TaylorDiagram           Taylor Diagram for model evaluation with
+                        conditioning
+TheilSen                Tests for trends using Theil-Sen estimates
+aqStats                 Calculate summary statistics for air pollution
+                        data by year
+binData                 Bin data, calculate mean and bootstrap 95%
+                        confidence interval in the mean
+bootMeanDF              Bootsrap confidence intervals in the mean
+calcFno2                Estimate NO2/NOX emission ratios from
+                        monitoring data
+calcPercentile          Calculate percentile values from a time series
+calendarPlot            Plot time series values in convential calendar
+                        format
+conditionalEval         Conditional quantile estimates with additional
+                        variables for model evaluation
+conditionalQuantile     Conditional quantile estimates for model
+                        evaluation
+corPlot                 corrgram plot with conditioning
+cutData                 Function to split data in different ways for
+                        conditioning
+drawOpenKey             Scale key handling for openair
+import                  Generic data import for openair
+importADMS              CERC Atmospheric Dispersion Modelling System
+                        (ADMS) data import function(s) for openair
+importAURN              Import data from the UK Automatic Urban and
+                        Rural Network (AURN)
+importAURNCsv           AURN csv file data import for openair
+importKCL               Import data from King's College London networks
+importMeta              Import monitoring site meta data for the AURN,
+                        KCL and SAQN networks
+importSAQN              Scottish Air Quality Network data import for
+                        openair
+importTraj              Import pre-calculated HYSPLIT 96-hour back
+                        trajectories
+kernelExceed            Kernel density plot for daily mean exceedance
+                        statistics
+linearRelation          Linear relations between pollutants
+modStats                Calculate common model evaluation statistics
+mydata                  Example data for openair
+openColours             openair colours
+openair                 Tools for the analysis of air pollution data
+percentileRose          Function to plot percentiles by wind direction
+polarAnnulus            Bivariate polarAnnulus plot
+polarCluster            K-means clustering of bivariate polar plots
+polarFreq               Function to plot wind speed/direction
+                        frequencies and other statistics
+polarPlot               Function for plotting bivariate polar plots
+                        with smoothing.
+quickText               Automatic text formatting for openair
+rollingMean             Calculate rollingMean values
+scatterPlot             Flexible scatter plots
+selectByDate            Subset a data frame based on date
+selectRunning           Function to extract run lengths greater than a
+                        threshold
+smoothTrend             Calculate nonparametric smooth trends
+splitByDate             Divide up a data frame by time
+summaryPlot             Function to rapidly provide an overview of air
+                        quality data
+timeAverage             Function to calculate time averages for data
+                        frames
+timePlot                Plot time series
+timeProp                Time series plot with categories shown as a
+                        stacked bar chart
+timeVariation           Diurnal, day of the week and monthly variation
+trajCluster             Calculate clusters for back tracectories
+trajLevel               Trajectory level plots with conditioning
+trajPlot                Trajectory line plots with conditioning
+trendLevel              trendLevel
+windRose                Traditional wind rose plot and pollution rose
+                        variation

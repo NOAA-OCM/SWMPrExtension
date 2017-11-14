@@ -1,0 +1,15 @@
+Package: SWMPrExtension
+Type: Package
+Title: What the Package Does (Title Case)
+Version: 0.1.0
+Author: Who wrote it
+Maintainer: The package maintainer <yourself@somewhere.net>
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+License: CC0
+Encoding: UTF-8
+LazyData: true
+Imports: SWMPr, dplyr, ggplot2, lubridate, scales, stringr, magrittr,
+        rlang
+RoxygenNote: 6.0.1
+Built: R 3.4.1; ; 2017-09-19 17:14:05 UTC; windows
