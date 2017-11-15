@@ -5,6 +5,7 @@
 #' @param swmpr_in input swmpr object
 #' @param param chr string of variable to plot
 #' @param stat_lab chr, label for the summary statistic defined in \code{FUN}. Defaults to "Average"
+#' @param FUN function used to aggregate monthly SWMP data
 #' @param ... additional arguments passed to other methods. See \code{\link{assign_season}}
 #'
 #' @concept analyze
@@ -49,7 +50,8 @@ sk_monthly <- function(swmpr_in, ...) UseMethod('sk_monthly')
 sk_monthly.swmpr <- function(swmpr_in
                              , param = NULL
                              , stat_lab = 'Average'
-                             , FUN = function(x) mean(x, na.rm = T)) {
+                             , FUN = function(x) mean(x, na.rm = T)
+                             , ...) {
   dat <- swmpr_in
   parm <- sym(param)
   seas <- sym('season')
