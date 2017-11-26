@@ -17,6 +17,7 @@ Depends: R (>= 2.10)
 Imports: SWMPr,
     broom,
     dplyr,
+	EnvStats,
 	ggplot2,
 	ggthemes,
 	leaflet,
