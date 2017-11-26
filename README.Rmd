@@ -64,6 +64,12 @@ SWMPrExtension adds several functions to existing concepts in SWMPr and introduc
 <tr><td><code>threshold_percentile_plot.swmpr</code></td><td>Compare raw data against user-specified percentiles calculated from historical data. User has the option to calculate percentiles on a monthly basis.</td></tr>
 <tr><td><code>threshold_plot.swmpr</code></td><td>Compare raw data against user-specified water quality thresholds</td></tr>
 <tr><td><code>threshold_summary.swmpr</code></td><td>Summarize the results from <code>threshold_identification</code> in either a plot or tabular format. Results can be aggregated on a monthly, seasonal, or annual basis.</td></tr>
+<tr><td><code>res_local_map</code></td><td></td></tr>
+<tr><td><code>res_national_map</code></td><td></td></tr>
+<tr><td><code>res_sk_map</code></td><td></td></tr>
+<tr><td><code>reserve_locs</code></td><td></td></tr>
+<tr><td><code>seasonal_dot.swmpr</code></td><td></td></tr>
+<tr><td><code>sk_monthly</code></td><td></td></tr>
 </table>
 
 <h3>Retrieve</h3>
@@ -74,6 +80,11 @@ SWMPrExtension adds several functions to existing concepts in SWMPr and introduc
 <h3>Miscellaneous</h3>
 <table>
 <tr><td><code>assign_season</code></td><td>Assign seasons to SWMPr sampling data on a monthly basis or user-defined basis</td></tr>
+<tr><td><code>load_shp_file</code></td><td></td></tr>
+<tr><td><code>lm_p_labs</code></td><td></td></tr>
+<tr><td><code>title_labeler</code></td><td></td></tr>
+<tr><td><code>y_count_labeler</code></td><td></td></tr>
+<tr><td><code>y_labeler</code></td><td></td></tr>
 </table>
 
 <h3>Reporting</h3>
