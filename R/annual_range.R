@@ -1,6 +1,6 @@
 #' Annual Range Timeseries
 #'
-#' Monthly average and variability. Looking at variability within each month; no historical context
+#' Assess variability within each season for a single
 #'
 #' @param swmpr_in input swmpr object
 #' @param param chr string of variable to plot
@@ -8,6 +8,7 @@
 #' @param criteria numeric, a numeric criteria that will be plotted as a horizontal line
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
 #' @param converted logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.
+#' @param criteria_lab chr, label for the threshold criteria defined in \code{criteria}. Defaults to "WQ Threshold"
 #' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
 #' @param plot logical, should a plot be returned? Defaults to \code{TRUE}
 #' @param ... additional arguments passed to other methods. See \code{\link{assign_season}}
@@ -20,7 +21,9 @@
 #'
 #' @export
 #'
-#' @details Annual time series for year of interest on top of long-term percentiles
+#' @details This function summarizes average daily values, average daily minimums/maximums, and absolute minimums/maximums across user-defined seasons for a target year (\code{target_yr}).
+#'
+#' The user also has the option to add a threshold hold line using the \code{criteria} argument. Typically, this value is a water quality threshold, which is why \code{criteria_lab} defaults to \code{'WQ Threshold'}. Howver, the user has the option to specify any other type of threshold they wish. when doing so, the value for \code{criteria_lab} should be changed accordingly.
 #'
 #' @author Julie Padilla
 #'
@@ -57,6 +60,7 @@ annual_range.swmpr <- function(swmpr_in
                                , criteria = NULL
                                , log_trans = FALSE
                                , converted = FALSE
+                               , criteria_lab = 'WQ Threshold'
                                , plot_title = FALSE
                                , plot = TRUE
                                , ...) {
@@ -174,11 +178,11 @@ annual_range.swmpr <- function(swmpr_in
     if(!is.null(criteria)) {
 
       plt <- plt +
-        geom_hline(aes(yintercept = criteria, color = factor('WQ Threshold')
-                       , linetype = factor('WQ Threshold'))
+        geom_hline(aes(yintercept = criteria, color = factor(criteria_lab)
+                       , linetype = factor(criteria_lab))
                    , show.legend = T) +
-        scale_color_manual('', values = c('WQ Threshold' = 'red')) +
-        scale_linetype_manual('', values = c('WQ Threshold' = 'longdash'))
+        scale_color_manual('', values = c(criteria_lab = 'red')) +
+        scale_linetype_manual('', values = c(criteria_lab = 'longdash'))
     }
 
     # add plot title if specified

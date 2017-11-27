@@ -4,7 +4,7 @@
 #'
 #' @param nerr_site_id chr string of the reserve to make, first three characters used by NERRS
 #' @param stations chr string of the reserve stations to include in the map
-#' @param sk_result vector of values denoting direction and significance of seasonal kendall results. Result should be c(-1, 0, 1) for sig. negative, no sig. results, and sig. positive result
+#' @param sk_result vector of values denoting direction and significance of seasonal kendall results. Result should be c('inc', 'dec', 'insig') for sig. negative, no sig. results, and sig. positive result
 #' @param bbox a bounding box associated with the reserve. Must be in the format of c(X1, Y1, X2, Y2)
 #' @param shp SpatialPolygons object
 #' @param scale_pos scale_pos where should the scale be placed? Options are 'topleft', 'topright', 'bottomleft', or 'bottomright'. Defaults to 'bottomleft'
@@ -21,7 +21,9 @@
 #'
 #' @export
 #'
-#' @details Creates a reserve level map with arrows that indicate trends
+#' @details Creates a stylized, reserve-leve base map for displaying seasonal kendall results from \code{\link{sk_seasonal}}. The user can specify the reserve and stations to plot. The user can also specify a bounding box. For multi-component reserves, the user should specify a bounding box that highlights the component of interest.
+#'
+#' To display seasonal trends, the user must specify \code{c('inc', 'dec', 'insig')} for each station listed in the \code{stations} argument.
 #'
 #' @author Julie Padilla
 #'

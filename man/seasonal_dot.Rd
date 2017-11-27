@@ -3,7 +3,7 @@
 \name{seasonal_dot}
 \alias{seasonal_dot}
 \alias{seasonal_dot.swmpr}
-\title{Seasonal Trend}
+\title{Seasonal Dot Plot}
 \usage{
 seasonal_dot(swmpr_in, ...)
 
@@ -36,10 +36,12 @@ seasonal_dot(swmpr_in, ...)
 A \code{\link[ggplot2]{ggplot}} object
 }
 \description{
-Seasonal trends
+average/min/max seasonal values faceted by season
 }
 \details{
-average/min/max seasonal values faceted by season
+This function summarizes minimum, mean, and maximum values calculated on a seasonal basis to allow for easier intra-season comparisons over time.
+
+\code{lm_trend = T} adds a linear regression to the plot, and \code{lm_lab = T} will add p-values from the linear regression to the plot. If the p-values are significant (p < 0.05) then the text will appear in bold. \code{lm_lab} text is color coded to match with the corresponding dots.
 }
 \examples{
 \dontrun{

@@ -9,7 +9,7 @@ annual_range(swmpr_in, ...)
 
 \method{annual_range}{swmpr}(swmpr_in, param = NULL, target_yr = NULL,
   criteria = NULL, log_trans = FALSE, converted = FALSE,
-  plot_title = FALSE, plot = TRUE, ...)
+  criteria_lab = "WQ Threshold", plot_title = FALSE, plot = TRUE, ...)
 }
 \arguments{
 \item{swmpr_in}{input swmpr object}
@@ -26,6 +26,8 @@ annual_range(swmpr_in, ...)
 
 \item{converted}{logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.}
 
+\item{criteria_lab}{chr, label for the threshold criteria defined in \code{criteria}. Defaults to "WQ Threshold"}
+
 \item{plot_title}{logical, should the station name be included as the plot title? Defaults to \code{FALSE}}
 
 \item{plot}{logical, should a plot be returned? Defaults to \code{TRUE}}
@@ -34,10 +36,12 @@ annual_range(swmpr_in, ...)
 A \code{\link[ggplot2]{ggplot}} object
 }
 \description{
-Monthly average and variability. Looking at variability within each month; no historical context
+Assess variability within each season for a single
 }
 \details{
-Annual time series for year of interest on top of long-term percentiles
+This function summarizes average daily values, average daily minimums/maximums, and absolute minimums/maximums across user-defined seasons for a target year (\code{target_yr}).
+
+The user also has the option to add a threshold hold line using the \code{criteria} argument. Typically, this value is a water quality threshold, which is why \code{criteria_lab} defaults to \code{'WQ Threshold'}. Howver, the user has the option to specify any other type of threshold they wish. when doing so, the value for \code{criteria_lab} should be changed accordingly.
 }
 \examples{
 \dontrun{

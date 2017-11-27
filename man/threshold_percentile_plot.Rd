@@ -42,7 +42,9 @@ A \code{\link[ggplot2]{ggplot}} object
 Observed data compared against user-defined percentiles
 }
 \details{
-This analysis compares observed data against user-specified percentiles. User has the option to calculate percentiles on a monthly basis.
+This function provides an alternative to \code{threshold_plot}. For parameters that may not have numeric threshold criteria, a percentile threshold can be used instead. For a one-tailed analysis, the 90-th percentile is recommended. For a two-tailed analysis, the 5-th and 95-th percentiles are recommended.
+
+Using \code{by_month}, the user can specify whether the percentiles should be calculated on a monthly basis or by using the entire data set.
 }
 \examples{
 \dontrun{
@@ -74,7 +76,6 @@ x <-
   threshold_percentile_plot(dat_nut, param = 'chla_n'
   , hist_rng = c(2007, 2016), by_month = F)
 
-
 y <-
   threshold_percentile_plot(dat_nut, param = 'chla_n'
   , hist_rng = c(2007, 2016), target_yr = 2016, by_month = F)
@@ -82,7 +83,7 @@ y <-
 
 }
 \seealso{
-\code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}, \code{\link{y_labeler}}
+\code{\link[ggplot2]{ggplot}}, \code{\link{y_labeler}}
 }
 \author{
 Julie Padilla

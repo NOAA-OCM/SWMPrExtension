@@ -1,6 +1,6 @@
-#' Seasonal Trend
+#' Seasonal Dot Plot
 #'
-#' Seasonal trends
+#' average/min/max seasonal values faceted by season
 #'
 #' @param swmpr_in input swmpr object
 #' @param param chr string of variable to plot
@@ -24,7 +24,9 @@
 #'
 #' @export
 #'
-#' @details average/min/max seasonal values faceted by season
+#' @details This function summarizes minimum, mean, and maximum values calculated on a seasonal basis to allow for easier intra-season comparisons over time.
+#'
+#' \code{lm_trend = T} adds a linear regression to the plot, and \code{lm_lab = T} will add p-values from the linear regression to the plot. If the p-values are significant (p < 0.05) then the text will appear in bold. \code{lm_lab} text is color coded to match with the corresponding dots.
 #'
 #' @author Julie Padilla
 #'
@@ -150,7 +152,9 @@ seasonal_dot.swmpr <- function(swmpr_in
               )
 
   if(plot) {
-    labs_legend <- factor(paste0('Mean Monthly ', c('Minimum', 'Average', 'Maximum'), sep = ''))
+    agg_lab <- ifelse(length(levels(plt_data$season)) == 12, 'Monthly ', 'Seasonal ')
+
+    labs_legend <- factor(paste0(agg_lab, c('Minimum', 'Average', 'Maximum'), sep = ''))
     brks <- range(plt_data$year)
     y_lims <- c(0, max(plt_data[ , c(3:5)]) * 1.2)
 
@@ -201,7 +205,6 @@ seasonal_dot.swmpr <- function(swmpr_in
     # add regression p-values if specified
     if(lm_lab) {
 
-      # return(plt_data)
       p_labs <- lm_p_labs(plt_data)
 
       plt <-

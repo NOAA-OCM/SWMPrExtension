@@ -23,7 +23,9 @@
 #'
 #' @export
 #'
-#' @details This function produces an annual bar plot with seasonal components. This function is intended to be an analysis similar to \code{seasonal_boxplot}, but for parameters that are assessed on a cumulative basis (e.g., precipitation)
+#' @details This function uses barplots to summarize parameters that are best viewed on a cumulative basis (e.g., precipitation).
+#'
+#' There are two ways to make interannual comparisons: on an aggregate basis and on a seasonal basis. If the argument \code{season_facet = F} then parameter totals from each season will be added together to compose one, multi-color bar.If \code{season_facet = T} then parameter totals from each season separated into multiple plots for easier intra-season comparison across years.
 #'
 #' @author Julie Padilla
 #'
@@ -126,7 +128,7 @@ seasonal_barplot.swmpr <- function(swmpr_in
   dat_hist$year <- factor(lubridate::year(dat_hist$datetimestamp))
 
   # Assign the seasons and order them
-  dat_hist$season <- assign_season(dat_hist$datetimestamp, abb = T, ...)
+  dat_hist$season <- assign_season(dat_hist$datetimestamp, ...)
 
   # assign colors to a color ramp (may need interpolation)
   cols <- colorRampPalette(RColorBrewer::brewer.pal(9, 'Blues'))
