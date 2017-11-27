@@ -19,6 +19,7 @@
 #' @importFrom grDevices colorRampPalette
 #' @importFrom magrittr "%>%"
 #' @importFrom lubridate  year
+#' @importFrom RColorBrewer brewer.pal
 #'
 #' @export
 #'
@@ -128,8 +129,8 @@ seasonal_barplot.swmpr <- function(swmpr_in
   dat_hist$season <- assign_season(dat_hist$datetimestamp, abb = T, ...)
 
   # assign colors to a color ramp (may need interpolation)
-  cols <- colorRampPalette(brewer.pal(9, 'Blues'))
-  cols <- cols(length(unique(dat_hist$season)) + 1) #
+  cols <- colorRampPalette(RColorBrewer::brewer.pal(9, 'Blues'))
+  cols <- cols(length(unique(dat_hist$season)) + 1) # add one in order to skip over the lightest color in the palette
   cols <- cols[2:length(cols)]
 
   dat_hist <- dat_hist %>%
@@ -140,15 +141,14 @@ seasonal_barplot.swmpr <- function(swmpr_in
     seas_col <- cols
 
     if(season_facet) {
-      yr_mx <- dat_hist %>% group_by(year, season) %>% summarise(max_val = sum(.data$result, na.rm = T))
+      yr_mx <- dat_hist %>% group_by(!! yr, !! seas) %>% summarise(max_val = sum(!! res, na.rm = T))
     } else {
-      yr_mx <- dat_hist %>% group_by(year) %>% summarise(max_val = sum(.data$result, na.rm = T))
+      yr_mx <- dat_hist %>% group_by(!! yr) %>% summarise(max_val = sum(!! res, na.rm = T))
     }
 
     mx <- ceiling(max(yr_mx$max_val) / 10) * 10 * 1.1
     brk_pts <- ifelse(mx < 50, 5, ifelse(mx < 100, 10, ifelse(mx < 1000, 100, 200)))
 
-    # return(mx)
     # Add data
     bar_seas <- ggplot(data = dat_hist, aes_(x = yr, y = res, fill = seas)) +
       geom_bar(stat = "identity") +
@@ -190,17 +190,16 @@ seasonal_barplot.swmpr <- function(swmpr_in
     if(season_facet) {
       bar_seas <-
         bar_seas +
-        facet_wrap(~ season, ncol = 1)
+        facet_wrap(~ .data$season, ncol = 1)
 
       seas_means <- dat_hist %>%
-        group_by(season) %>%
-        summarise(mean = mean(result, na.rm = T))
+        group_by(.data$season) %>%
+        summarise(mean = mean(.data$result, na.rm = T))
 
       dat_hist <- merge(dat_hist, seas_means)
     }
 
-    # return(seas_means)
-    # historica range average if specified
+    # historical range average if specified
     if(hist_avg) {
       var_nm <- ifelse(season_facet, 'Seasonal Average', 'Average')
 
