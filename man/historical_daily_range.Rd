@@ -9,7 +9,7 @@ historical_daily_range(swmpr_in, ...)
 
 \method{historical_daily_range}{swmpr}(swmpr_in, param = NULL,
   hist_rng = NULL, target_yr = NULL, criteria = NULL, log_trans = FALSE,
-  plot_title = FALSE, plot = TRUE, ...)
+  converted = FALSE, plot_title = FALSE, plot = TRUE, ...)
 }
 \arguments{
 \item{swmpr_in}{input swmp object}
@@ -25,6 +25,8 @@ historical_daily_range(swmpr_in, ...)
 \item{criteria}{numeric, a numeric criteria that will be plotted as a horizontal line}
 
 \item{log_trans}{logical, should y-axis be log? Defaults to \code{FALSE}}
+
+\item{converted}{logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.}
 
 \item{plot_title}{logical, should the station name be included as the plot title? Defaults to \code{FALSE}}
 
@@ -57,7 +59,7 @@ x <- x + labs(x = NULL, y = "Dissolved Oxygen (mg/L)")
 }
 }
 \seealso{
-\code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}
+\code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}, \code{\link{y_labeler}}
 }
 \author{
 Julie Padilla

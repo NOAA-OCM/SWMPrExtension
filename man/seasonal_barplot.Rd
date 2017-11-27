@@ -9,7 +9,8 @@ seasonal_barplot(swmpr_in, ...)
 
 \method{seasonal_barplot}{swmpr}(swmpr_in, param = NULL, hist_rng = NULL,
   rng_avg = FALSE, log_trans = FALSE, converted = FALSE,
-  plot_title = FALSE, plot = TRUE, ...)
+  hist_avg = TRUE, season_facet = FALSE, plot_title = FALSE,
+  plot = TRUE, ...)
 }
 \arguments{
 \item{swmpr_in}{input swmpr object}
@@ -25,6 +26,10 @@ seasonal_barplot(swmpr_in, ...)
 \item{log_trans}{logical, should y-axis be log? Defaults to \code{FALSE}}
 
 \item{converted}{logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.}
+
+\item{hist_avg}{logical, should a historical average be included? Defaults to \code{TRUE}.}
+
+\item{season_facet}{logical, should plot be faceted by season? Defaults to \code{FALSE}.}
 
 \item{plot_title}{logical, should the station name be included as the plot title? Defaults to \code{FALSE}}
 
@@ -45,16 +50,23 @@ data(apaebmet)
 dat <- qaqc(apaebmet, qaqc_keep = c('0', '3', '5'))
 
 x <- seasonal_barplot(dat, param = 'totprcp'
-                      , season = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
+                      , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
+                      , hist_avg = T
                       , convert = T)
 
 y <- seasonal_barplot(dat, param = 'totprcp'
-                      , season = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
+                      , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
                       , convert = T
                       , plot = F)
 
+x <- seasonal_barplot(dat, param = 'totprcp'
+                      , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
+                      , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
+                      , season_facet = T
+                      , hist_avg = T
+                      , convert = T)
 }
 }
 \seealso{

@@ -4,10 +4,12 @@
 \alias{sk_tidy}
 \title{Tidy Seasonal Kendall Results}
 \usage{
-sk_tidy(data, param, stat, pval)
+sk_tidy(data, station, param, stat, pval)
 }
 \arguments{
-\item{data}{a vector of POSIXct dates}
+\item{data}{a XXX object produced}
+
+\item{station}{chr string sampling station}
 
 \item{param}{chr string of variable to plot}
 
@@ -16,13 +18,13 @@ sk_tidy(data, param, stat, pval)
 \item{pval}{num, significance level}
 }
 \value{
-a \code{data.frame} of results from \code{kendallSeasonalTrendTest}
+a \code{data.frame} of results from \code{\link[EnvStats]{kendallSeasonalTrendTest}}
 }
 \description{
-Tidy results from \code{EnvStats::kendallSeasonalTrendTest}
+Tidy results from \code{\link[EnvStats]{kendallSeasonalTrendTest}}
 }
 \details{
-A helper function used by \code{sk_monthly} to return a table of tidied values.
+A helper function used by \code{sk_seasonal} to return a table of tidied values.
 }
 \examples{
 \dontrun{

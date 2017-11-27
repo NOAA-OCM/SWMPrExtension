@@ -7,8 +7,9 @@
 \usage{
 sk_seasonal(swmpr_in, ...)
 
-\method{sk_seasonal}{swmpr}(swmpr_in, param = NULL, converted = FALSE,
-  stat_lab = "Average", FUN = function(x) mean(x, na.rm = T), ...)
+\method{sk_seasonal}{swmpr}(swmpr_in, param = NULL,
+  envStats_summary = FALSE, stat_lab = "Average", FUN = function(x)
+  mean(x, na.rm = T), ...)
 }
 \arguments{
 \item{swmpr_in}{input swmpr object}
@@ -17,20 +18,22 @@ sk_seasonal(swmpr_in, ...)
 
 \item{param}{chr string of variable to plot}
 
-\item{converted}{logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.}
+\item{envStats_summary}{logical, should the standard \code{EnvStats::kendallSeasonalTrendTest} be returned? Defaults to \code{FALSE}. See Details for more information.}
 
 \item{stat_lab}{chr, label for the summary statistic defined in \code{FUN}. Defaults to "Average"}
 
 \item{FUN}{function used to aggregate seasonal SWMP data}
 }
 \value{
-A \code{data.frame} object
+A \code{data.frame} object or a summary from \code{EnvStats::kendallSeasonalTrendTest}
 }
 \description{
 Seasonal trends
 }
 \details{
-Seasonal Kendall
+This function performs a seasonal kendall test on seasonally aggregated values using \code{\link[EnvStats]{kendallSeasonalTrendTest}}.
+
+If \code{EnvStats_summary = T} then the detailed output summary from \code{\link[EnvStats]{kendallSeasonalTrendTest}} will be returned. If \code{EnvStats_summary = F} then an abbreviated summary will be returned in a \code{data.frame}. The abbreviated summary contains the station name, the type of statistic used to summarize the data on a seasonal basis (specified by \code{stat_lab}), and the following results from \code{\link[EnvStats]{kendallSeasonalTrendTest}}: tau, slope, p-value for the chi-square test, and the p-value for the trend test.
 }
 \examples{
 \dontrun{

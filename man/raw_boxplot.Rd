@@ -8,7 +8,8 @@
 raw_boxplot(swmpr_in, ...)
 
 \method{raw_boxplot}{swmpr}(swmpr_in, param = NULL, target_yr = NULL,
-  criteria = NULL, log_trans = FALSE, plot_title = FALSE, ...)
+  criteria = NULL, log_trans = FALSE, converted = FALSE,
+  plot_title = FALSE, ...)
 }
 \arguments{
 \item{swmpr_in}{input swmp object}
@@ -23,19 +24,22 @@ raw_boxplot(swmpr_in, ...)
 
 \item{log_trans}{logical, should y-axis be log? Defaults to \code{FALSE}}
 
+\item{converted}{logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.}
+
 \item{plot_title}{logical, should the station name be included as the plot title? Defaults to \code{FALSE}}
 }
 \value{
 A \code{\link[ggplot2]{ggplot}} object
 }
 \description{
-Boxplots of raw data by user-defined season
+Boxplots of raw data by user-defined season for a target year
 }
 \details{
+This function produces boxplots of raw, unaggregated data by user-specified season for
 Annual time series for year of interest
 }
 \seealso{
-\code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}
+\code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}, \code{\link{y_labeler}}
 }
 \author{
 Julie Padilla

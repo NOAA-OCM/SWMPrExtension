@@ -4,13 +4,13 @@
 \alias{assign_season}
 \title{Assign seasons to SWMP sampling data}
 \usage{
-assign_season(data, season = NULL, season_names = NULL,
+assign_season(data, season_grps = NULL, season_names = NULL,
   season_start = NULL, abb = FALSE)
 }
 \arguments{
 \item{data}{a vector of POSIXct dates}
 
-\item{season}{A list of seasons. Months (1-12) are assigned to different groups based on user preference. Defaults to 12 months, starting with January. Must assign a minimum of two seasons}
+\item{season_grps}{A list of seasons. Months (1-12) are assigned to different groups based on user preference. Defaults to 12 months, starting with January. Must assign a minimum of two seasons}
 
 \item{season_names}{A string vector of season names. The number of season names must match the length of the \code{season} list. A minimum of two seasons must be assigned (e.g., 'Wet', 'Dry'). Defaults to 12 months, starting with January. The number of season names must match the number of seasons}
 
@@ -41,16 +41,16 @@ levels(seas)
 seas <- assign_season(dat$datetimestamp, season_start = 'March')
 levels(seas)
 
-seas <- assign_season(dat$datetimestamp, 
+seas <- assign_season(dat$datetimestamp,
 season = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12)),
 season_names = c('Winter', 'Spring', 'Summer', 'Fall'), season_start = 'Spring')
 levels(seas)
 
-seas <- assign_season(dat$datetimestamp, season = list(c(10:12, 1:3), c(4:9)), 
+seas <- assign_season(dat$datetimestamp, season = list(c(10:12, 1:3), c(4:9)),
 season_names = c('Wet', 'Dry'))
 levels(seas)
 }
- 
+
 }
 \author{
 Julie Padilla
