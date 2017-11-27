@@ -35,7 +35,7 @@ A \code{\link[ggplot2]{ggplot}} object
 Boxplots of raw data by user-defined season for a target year
 }
 \details{
-This function produces boxplots of raw, unaggregated data by user-specified season for an annual time series for year of interest
+This function produces boxplots of raw, unaggregated data by user-specified season for year of interest
 }
 \seealso{
 \code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}, \code{\link{y_labeler}}

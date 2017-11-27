@@ -17,7 +17,7 @@
 #'
 #' @export
 #'
-#' @details This function produces boxplots of raw, unaggregated data by user-specified season for an annual time series for year of interest
+#' @details This function produces boxplots of raw, unaggregated data by user-specified season for year of interest
 #'
 #' @author Julie Padilla
 #'

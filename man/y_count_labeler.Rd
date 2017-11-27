@@ -4,12 +4,17 @@
 \alias{y_count_labeler}
 \title{Generate y-axis Label Based on SWMP Parameter Abbreviation}
 \usage{
-y_count_labeler(param, statement, converted = F)
+y_count_labeler(param, parameter_threshold, threshold_type,
+  time_threshold = NULL, converted = F)
 }
 \arguments{
 \item{param}{chr string of variable abbreviation}
 
-\item{statement}{chr string of logical statement used to evaluate thresholds}
+\item{parameter_threshold}{vector of numerical thresholds to evaluate parameters against}
+
+\item{threshold_type}{vector of logical operators ('<', '>', '<=', '>=', '==', '!=')}
+
+\item{time_threshold}{The amount of time an event must last to be counted (in hours)}
 
 \item{converted}{logical, should the parameter label units be converted from metric to english? Defaults to \code{FALSE}. Currently available for \code{temp}, \code{depth}, \code{cdepth}, \code{level}, \code{clevel}, \code{atemp}, \code{wspd}, \code{maxwspd}, and \code{totprcp}}
 }
@@ -24,7 +29,7 @@ A helper function used internally by several plotting functions to generate y-ax
 }
 \examples{
 \dontrun{
-y_lab <- y_count_labeler('do_mgl', '< 2 mg/L', converted = F)
+y_lab <- y_count_labeler(param = 'do_mgl', parameter_threshold = 2, threshold_type = '<', time_threshold = 2, converted = F)
 }
 
 }

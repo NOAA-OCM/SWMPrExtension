@@ -9,8 +9,8 @@ threshold_summary(swmpr_in, ...)
 
 \method{threshold_summary}{swmpr}(swmpr_in, param = NULL,
   summary_type = c("month", "season", "year"), parameter_threshold = NULL,
-  threshold_type = NULL, time_threshold = NULL, pal = "Set3",
-  plot_title = FALSE, plot = TRUE, ...)
+  threshold_type = NULL, time_threshold = NULL, converted = F,
+  pal = "Set3", plot_title = FALSE, plot = TRUE, ...)
 }
 \arguments{
 \item{swmpr_in}{input swmp object}
@@ -26,6 +26,8 @@ threshold_summary(swmpr_in, ...)
 \item{threshold_type}{vector of logical operators ('<', '>', '<=', '>=', '==', '!=')}
 
 \item{time_threshold}{The amount of time an event must last to be counted (in hours)}
+
+\item{converted}{logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.}
 
 \item{pal}{Select a palette for boxplot fill colors. See \code{\link[ggplot2]{scale_fill_brewer}} for more details.}
 
