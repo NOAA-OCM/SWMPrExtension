@@ -8,6 +8,7 @@
 #' @param target_yr numeric, the target year that should be compared against the historic range. If target year is not specified then dot will not be plotted
 #' @param criteria numeric, a numeric criteria that will be plotted as a horizontal line
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
+#' @param converted logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.
 #' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
 #' @param plot logical, should a plot be returned? Defaults to \code{TRUE}
 #' @param ... additional arguments passed to other methods. See \code{\link{assign_season}} and \code{\link{y_labeler}}.
@@ -28,7 +29,7 @@
 #'
 #' @return A \code{\link[ggplot2]{ggplot}} object
 #'
-#' @seealso \code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}
+#' @seealso \code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}, \code{\link{y_labeler}}
 #'
 #' @examples
 #' \dontrun{
@@ -63,12 +64,14 @@ historical_range.swmpr <- function(swmpr_in
                                    , target_yr = NULL
                                    , criteria = NULL
                                    , log_trans = FALSE
+                                   , converted = FALSE
                                    , plot_title = FALSE
                                    , plot = TRUE
                                    , ...) {
 
   dat <- swmpr_in
   parm <- sym(param)
+  conv <- converted
 
   seas <- sym('season')
   dt <- sym('date')
@@ -103,7 +106,7 @@ historical_range.swmpr <- function(swmpr_in
 
   #determine y axis transformation and y axis label
   y_trans <- ifelse(log_trans, 'log10', 'identity')
-  y_label <- y_labeler(param = param)#, ...)
+  y_label <- y_labeler(param = param, converted = conv)
 
   #determine if QAQC has been conducted
   if(attr(dat, 'qaqc_cols'))

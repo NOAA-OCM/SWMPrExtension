@@ -1,11 +1,12 @@
 #' Seasonal boxplots of raw data
 #'
-#' Boxplots of raw data by user-defined season
+#' Boxplots of raw data by user-defined season for a target year
 #'
 #' @param swmpr_in input swmp object
 #' @param param chr string of variable to plot
 #' @param target_yr numeric, if target year is not specified then dot will not be plotted. If target year is not specified the most recent year in the \code{swmpr_in} will be used.
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
+#' @param converted logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.
 #' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
 #' @param criteria numeric, a numeric criteria that will be plotted as a horizontal line
 #' @param ... additional arguments passed to other methods. See \code{\link{assign_season}} and \code{\link{y_labeler}}.
@@ -16,7 +17,8 @@
 #'
 #' @export
 #'
-#' @details Annual time series for year of interest
+#' @details This function produces boxplots of raw, unaggregated data by user-specified season for
+#' Annual time series for year of interest
 #'
 #' @author Julie Padilla
 #'
@@ -24,7 +26,7 @@
 #'
 #' @return A \code{\link[ggplot2]{ggplot}} object
 #'
-#' @seealso \code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}
+#' @seealso \code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}, \code{\link{y_labeler}}
 #'
 raw_boxplot <- function(swmpr_in, ...) UseMethod('raw_boxplot')
 
@@ -41,11 +43,13 @@ raw_boxplot.swmpr <- function(swmpr_in
                               , target_yr = NULL
                               , criteria = NULL
                               , log_trans = FALSE
+                              , converted = FALSE
                               , plot_title = FALSE
                               , ...) {
 
   dat <- swmpr_in
   parm <- sym(param)
+  conv <- converted
 
   rng <- target_yr
 
@@ -83,7 +87,7 @@ raw_boxplot.swmpr <- function(swmpr_in
 
   #determine y axis transformation and y axis label
   y_trans <- ifelse(log_trans, 'log10', 'identity')
-  y_label <- y_labeler(param = param, ...)
+  y_label <- y_labeler(param = param, converted = conv)
 
   # Assign the seasons and order them
   dat$season <- assign_season(dat$datetimestamp, abb = T, ...)

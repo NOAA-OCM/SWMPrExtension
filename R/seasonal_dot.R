@@ -96,7 +96,7 @@ seasonal_dot.swmpr <- function(swmpr_in
                                , lm_trend = FALSE
                                , lm_lab = FALSE
                                , log_trans = FALSE
-							   , converted = FALSE
+							                 , converted = FALSE
                                , plot_title = FALSE
                                , plot = TRUE
                                , ...) {
@@ -104,7 +104,7 @@ seasonal_dot.swmpr <- function(swmpr_in
   dat <- swmpr_in
   parm <- sym(param)
   conv <- converted
-  
+
   seas <- sym('season')
   yr <- sym('year')
 

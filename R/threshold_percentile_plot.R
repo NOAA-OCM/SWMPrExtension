@@ -86,7 +86,7 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
                                          , percentiles = c(0.05, 0.95)
                                          , by_month = TRUE
                                          , log_trans = FALSE
-										 , converted = FALSE
+                                         , converted = FALSE
                                          , plot_title = FALSE
                                          , plot = TRUE
                                          , ...){

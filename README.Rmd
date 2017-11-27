@@ -57,7 +57,7 @@ SWMPrExtension adds several functions to existing concepts in SWMPr and introduc
 <tr><td><code>annual_range.swmpr</code></td><td>For a user-specified year, calculate averages, average ranges, and min/max observed ranges the on a monthly or seasonal basis</td></tr>
 <tr><td><code>historical_daily_range.swmpr</code></td><td>Compare a user-specified year against historical data on a daily basis.</td></tr>
 <tr><td><code>historical_range.swmpr</code></td><td>Compare a user-specified year against historical data on a monthly/seasonal basis.</td></tr>
-<tr><td><code>raw_boxplot.swmpr</code></td><td>Generate a monthly/seasonal boxplots of raw data</td></tr>
+<tr><td><code>raw_boxplot.swmpr</code></td><td>Generate a monthly/seasonal boxplots of raw data for a target year</td></tr>
 <tr><td><code>seasonal_barplot.swmpr</code></td><td>Generate monthly/seasonal barplot for parameters that are better viewed in on a cumulative basis (e.g. precipitation).</td></tr>
 <tr><td><code>seasonal_boxplot.swmpr</code></td><td>Generate monthly/seasonal boxplots for daily average statistics (min/average/max) across a user-specified time period.Includes the option to calculate a median value for a target year and include a line for a water quality threshold.</td></tr>
 <tr><td><code>threshold_identification.swmpr</code></td><td>Identify dates and times that a user-specified water quality threshold is exceeded. For continuous monitoring data, the user can also specify the length of time the threshold must be exceeded for the event to be included (e.g. DO must be < 2 mg/L for at least 2 hours).</td></tr>
