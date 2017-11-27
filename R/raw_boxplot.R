@@ -99,6 +99,9 @@ raw_boxplot.swmpr <- function(swmpr_in
 
   seas <- sym('season')
 
+  # ensure all factor levels are accounted for, even if there is no data
+  dat <- tidyr::complete(dat, !! seas)
+
   plt <- ggplot(data = dat, aes_(x = seas, y = parm, fill = factor(bp_fill))) +
     geom_boxplot(outlier.size = 0.5) +
     scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma) +

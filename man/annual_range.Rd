@@ -36,7 +36,7 @@ annual_range(swmpr_in, ...)
 A \code{\link[ggplot2]{ggplot}} object
 }
 \description{
-Assess variability within each season for a single
+Assess variability within each season for a single year
 }
 \details{
 This function summarizes average daily values, average daily minimums/maximums, and absolute minimums/maximums across user-defined seasons for a target year (\code{target_yr}).

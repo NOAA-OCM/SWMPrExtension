@@ -39,7 +39,7 @@ historical_range(swmpr_in, ...)
 A \code{\link[ggplot2]{ggplot}} object
 }
 \description{
-Monthly average and variability. Looking at variability within each month; no historical context
+Compare seasonal averages/mins/maxes for a target year to historical seasonal averages/mins/maxes
 }
 \details{
 This function summarizes average daily values and average daily minimums/maximums across user-defined seasons for a target year (\code{target_yr}) and for a historical range (\code{hist_rng}). If \code{hist_rng} is not specified then the minimum and maximum years within the data set will be used. If \code{target_yr} is not specified then only the results for the \code{hist_rng} will be returned.

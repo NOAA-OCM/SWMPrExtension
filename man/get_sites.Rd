@@ -22,8 +22,9 @@ Identify the NERRS reserve sampling stations based on the metadata in the data f
 \details{
 This function returns the sampling stations associated with the data in the user-specified data file
 }
+\author{
+Julie Padilla
+}
 \concept{
-reporting
-
 reporting
 }

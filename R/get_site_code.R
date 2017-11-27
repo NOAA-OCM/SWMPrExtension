@@ -1,6 +1,6 @@
 #' Return NERRS reserve site code based on data in the data file
 #'
-#' Identify the 3- letter NERRS reserve code from metadata in the data file
+#' Identify the 3-letter NERRS reserve code from metadata in the data file
 #'
 #' @param data.file data source location
 #'

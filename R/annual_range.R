@@ -1,6 +1,6 @@
 #' Annual Range Timeseries
 #'
-#' Assess variability within each season for a single
+#' Assess variability within each season for a single year
 #'
 #' @param swmpr_in input swmpr object
 #' @param param chr string of variable to plot

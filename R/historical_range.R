@@ -1,6 +1,6 @@
 #' Historical Monthly/Seasonal Range Timeseries
 #'
-#' Monthly average and variability. Looking at variability within each month; no historical context
+#' Compare seasonal averages/mins/maxes for a target year to historical seasonal averages/mins/maxes
 #'
 #' @param swmpr_in input swmpe object
 #' @param param chr string of variable to plot
