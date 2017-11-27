@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_site_coordinates.R
 \name{get_site_coordinates}
 \alias{get_site_coordinates}
-\title{Identify NERRS reserve from metadata}
+\title{Identify NERRS sampling locations from metadata}
 \usage{
 get_site_coordinates(data.file, active = TRUE)
 }
@@ -15,7 +15,13 @@ get_site_coordinates(data.file, active = TRUE)
 Returns a dataframe of station ids, station names, lat/long
 }
 \description{
-Identify the NERRS reserve from metadata in the data file
+Identify the latitude/longitude for sampling stations based on the metadata in the data file
+}
+\details{
+This function returns the coordinates associated with the data in the user-specified data file
+}
+\author{
+Julie Padilla
 }
 \concept{
 reporting

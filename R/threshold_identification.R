@@ -9,8 +9,6 @@
 #' @param threshold_type vector of logical operators ('<', '>', '<=', '>=', '==', '!=')
 #' @param time_threshold The amount of time an event must last to be counted (in hours)
 #'
-#' @concept analyze
-#'
 #' @import dplyr rlang
 #'
 #' @importFrom magrittr "%>%"
@@ -24,6 +22,8 @@
 #' ++Recommended nutrient thresholds are determined by NCCR (say something about DIN)
 #'
 #' @author Julie Padilla
+#'
+#' @concept analyze
 #'
 #' @return A data frame of threshold exceedances by parameter
 #'

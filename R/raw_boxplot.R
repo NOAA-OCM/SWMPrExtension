@@ -10,8 +10,6 @@
 #' @param criteria numeric, a numeric criteria that will be plotted as a horizontal line
 #' @param ... additional arguments passed to other methods. See \code{\link{assign_season}} and \code{\link{y_labeler}}.
 #'
-#' @concept analyze
-#'
 #' @import ggplot2 dplyr scales rlang
 #'
 #' @importFrom magrittr "%>%"
@@ -22,10 +20,11 @@
 #'
 #' @author Julie Padilla
 #'
+#' @concept analyze
+#'
 #' @return A \code{\link[ggplot2]{ggplot}} object
 #'
 #' @seealso \code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}
-#'
 #'
 raw_boxplot <- function(swmpr_in, ...) UseMethod('raw_boxplot')
 

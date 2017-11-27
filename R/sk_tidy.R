@@ -7,19 +7,20 @@
 #' @param stat chr, label to be used for statistic used to group data
 #' @param pval num, significance level
 #'
-#' @examples
-#' \dontrun{
-#' data(elksmwq)
-#'
-#' }
-#'
 #' @export
 #'
 #' @details A helper function used by \code{sk_monthly} to return a table of tidied values.
 #'
+#' @author Julie Padilla
+#'
+#' @concept miscellaneous
+#'
 #' @return a \code{data.frame} of results from \code{kendallSeasonalTrendTest}
 #'
-#'
+#' @examples
+#' \dontrun{
+#' data(elksmwq)
+#' }
 #'
 sk_tidy <- function(data, param, stat, pval) {
   # have a check that verifies the data type as whatever kendallSeasonalTrend returns

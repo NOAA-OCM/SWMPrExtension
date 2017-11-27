@@ -8,13 +8,13 @@
 seasonal_barplot(swmpr_in, ...)
 
 \method{seasonal_barplot}{swmpr}(swmpr_in, param = NULL, hist_rng = NULL,
-  rng_avg = FALSE, log_trans = FALSE, convert = FALSE,
+  rng_avg = FALSE, log_trans = FALSE, converted = FALSE,
   plot_title = FALSE, plot = TRUE, ...)
 }
 \arguments{
-\item{swmpr_in}{input swmpe object}
+\item{swmpr_in}{input swmpr object}
 
-\item{...}{additional arguments passed to other methods. See \code{\link{assign_season}} and \code{\link{y_labeler}}.}
+\item{...}{additional arguments passed to other methods. See \code{\link{assign_season}}}
 
 \item{param}{chr string of variable to plot}
 
@@ -24,7 +24,7 @@ seasonal_barplot(swmpr_in, ...)
 
 \item{log_trans}{logical, should y-axis be log? Defaults to \code{FALSE}}
 
-\item{convert}{logical, convert from metric to US units? Defaults to \code{FALSE}}
+\item{converted}{logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.}
 
 \item{plot_title}{logical, should the station name be included as the plot title? Defaults to \code{FALSE}}
 
@@ -37,7 +37,7 @@ A \code{\link[ggplot2]{ggplot}} object
 Cumulative bar plot over a historic range
 }
 \details{
-Calculated annual bar plot
+This function produces an annual bar plot with seasonal components. This function is intended to be an analysis similar to \code{seasonal_boxplot}, but for parameters that are assessed on a cumulative basis (e.g., precipitation)
 }
 \examples{
 \dontrun{
@@ -49,26 +49,21 @@ x <- seasonal_barplot(dat, param = 'totprcp'
                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
                       , convert = T)
 
-x
-
 y <- seasonal_barplot(dat, param = 'totprcp'
                       , season = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
                       , convert = T
                       , plot = F)
 
-y
 }
 }
 \seealso{
-\code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}
+\code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}, \code{\link{y_labeler}}
 }
 \author{
 Julie Padilla
 }
 \concept{
-analyze
-
 analyze
 
 analyze

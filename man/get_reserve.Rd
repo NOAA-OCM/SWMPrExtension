@@ -15,6 +15,12 @@ Returns a character string of the full reserve name
 \description{
 Identify the NERRS reserve from metadata in the data file
 }
+\details{
+This function determines the name of the NERRS reserve associated with the data in the user-specified data file
+}
+\author{
+Julie Padilla
+}
 \concept{
 reporting
 }

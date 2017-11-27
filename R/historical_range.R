@@ -12,8 +12,6 @@
 #' @param plot logical, should a plot be returned? Defaults to \code{TRUE}
 #' @param ... additional arguments passed to other methods. See \code{\link{assign_season}} and \code{\link{y_labeler}}.
 #'
-#' @concept analyze
-#'
 #' @import ggplot2 dplyr scales rlang
 #'
 #' @importFrom magrittr "%>%"

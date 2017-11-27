@@ -8,6 +8,7 @@
 #' @param lm_trend logical, add linear trend line?
 #' @param lm_lab logical, add significance label? Statisically significant results will appear in bold.
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
+#' @param converted logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.
 #' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
 #' @param plot logical, should a plot be returned? Defaults to \code{TRUE}
 #' @param ... additional arguments passed to other methods. See \code{\link{assign_season}} and \code{\link{y_labeler}}.
@@ -29,7 +30,7 @@
 #'
 #' @return A \code{\link[ggplot2]{ggplot}} object
 #'
-#' @seealso \code{\link[ggplot2]{ggplot}}
+#' @seealso \code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}, \code{\link{y_labeler}}
 #'
 #' @examples
 #' \dontrun{
@@ -92,15 +93,18 @@ seasonal_dot <- function(swmpr_in, ...) UseMethod('seasonal_dot')
 seasonal_dot.swmpr <- function(swmpr_in
                                , param = NULL
                                , rng = NULL
-                               , lm_trend = F
-                               , lm_lab = F
-                               , log_trans = F
+                               , lm_trend = FALSE
+                               , lm_lab = FALSE
+                               , log_trans = FALSE
+							   , converted = FALSE
                                , plot_title = FALSE
-                               , plot = T
+                               , plot = TRUE
                                , ...) {
 
   dat <- swmpr_in
   parm <- sym(param)
+  conv <- converted
+  
   seas <- sym('season')
   yr <- sym('year')
 
@@ -120,7 +124,7 @@ seasonal_dot.swmpr <- function(swmpr_in
 
   #determine y axis transformation and y axis label
   y_trans <- ifelse(log_trans, 'log10', 'identity')
-  y_label <- y_labeler(param = param)
+  y_label <- y_labeler(param = param, converted = conv)
 
   #determine if QAQC has been conducted
   if(attr(dat, 'qaqc_cols'))

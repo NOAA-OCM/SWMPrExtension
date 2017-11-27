@@ -10,15 +10,17 @@
 #' @importFrom magrittr "%>%"
 #' @importFrom rlang .data
 #' @importFrom stats lm
+#'
 #' @export
 #'
-#' @details This function returns a data.frame of p-value labels for use with the seasonal dot plot. P-values are taken from linear regression.
+#' @details A helper function that returns a \code{data.frame} of p-value labels for use with the \code{seasonal_dot_plot}. P-values are taken from linear regression \code{lm}.
+#'
+#' @author Julie Padilla
 #'
 #' @return Returns \code{data.frame} for use with \code{seasonal_dot}
 #'
 #' @seealso \code{lm}
-
-
+#'
 lm_p_labs <- function(dat_in) {
   lm_results <- dat_in %>%
     group_by(.data$season) %>%

@@ -6,7 +6,11 @@
 #'
 #' @export
 #'
-#' @details A helper function used internally by several plotting functions to determine if parameter has a standard y-axis label.
+#' @details A helper function used internally by several plotting functions to determine if parameter has a standard y-axis label. To accomodate the needs of the reserve-level annual report, this function also recognizes dissolved organic phosphorus (DIP) and dissolved inorganic nitrogen (DIN) as standard parameters.
+#'
+#' @author Julie Padilla
+#'
+#' @concept miscellaneous
 #'
 #' @return Returns \code{TRUE} or \code{FALSE}
 #'

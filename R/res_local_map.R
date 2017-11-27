@@ -22,8 +22,14 @@
 #'
 #' @export
 #'
-#' @details Creates a base map of the US with options for including AK, HI, and PR. The user can also
-#' This function was developed from a blog post by Bob Rudis (https://rud.is/b/2014/11/16/moving-the-earth-well-alaska-hawaii-with-r/)
+#' @details Creates a stylized, reserve-level base map. The user can specify the reserve and stations to plot. THe user can also specify a bounding box. For multi-component reserves, the user should specify a bounding box that highlights the component of interest.
+#'
+#' @author Julie Padilla
+#'
+#' @concept analyze
+#'
+#' @return returns a leaflet object. This function is intended to be used with mapshot to generate a png
+#' for the reserve level report.
 #'
 #' @examples
 #' \dontrun{
@@ -69,9 +75,6 @@
 #'
 #' }
 #'
-#' @return returns a leaflet object. This function is intended to be used with mapshot to generate a png
-#' for the reserve level report
-
 res_local_map <- function(nerr_site_id, stations, bbox, shp, station_labs = T, lab_loc = NULL, scale_pos = 'bottomleft') {
 
   # check that a shape file exists
@@ -88,11 +91,10 @@ res_local_map <- function(nerr_site_id, stations, bbox, shp, station_labs = T, l
   if(length(bbox) != 4)
     stop('Incorrect number of elements specified for bbox. Specify a bounding box (bbox) in the form of c(X1, Y1, X2, Y2)')
 
-  #This loc stuff should be abstracted out
+  # generate location labels
   loc <- get('sampling_stations')
   loc <- loc[(loc$Station.Code %in% stations), ]
   loc$abbrev <- substr(loc$Station.Code, start = 4, stop = 5)
-  # add something about loc color
 
   # Determine if r and l labs exist
   if(!is.null(lab_loc)){
@@ -103,14 +105,10 @@ res_local_map <- function(nerr_site_id, stations, bbox, shp, station_labs = T, l
     left_labs <- rep('L', length(stations))
   }
 
-  # return(loc)
-
   # Plot map
   m <- leaflet(loc, options = leafletOptions(zoomControl = FALSE), width = 500, height = 500) %>%
     addProviderTiles(leaflet::providers$Esri.WorldGrayCanvas) %>%  # Add default OpenStreetMap map tiles, CartoDB.Positron
     addPolygons(data = shp, weight = 2, color = '#B3B300', fillColor = 'yellow')
-
-  # return(m)
 
   if(length(left_labs) > 0){
     m <- m %>%

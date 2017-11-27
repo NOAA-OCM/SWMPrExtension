@@ -50,12 +50,12 @@ SWMPrExtension adds several functions to existing concepts in SWMPr and introduc
 <tr><td><code>threshold_percentile_plot.swmpr</code></td><td>Compare raw data against user-specified percentiles calculated from historical data. User has the option to calculate percentiles on a monthly basis.</td></tr>
 <tr><td><code>threshold_plot.swmpr</code></td><td>Compare raw data against user-specified water quality thresholds</td></tr>
 <tr><td><code>threshold_summary.swmpr</code></td><td>Summarize the results from <code>threshold_identification</code> in either a plot or tabular format. Results can be aggregated on a monthly, seasonal, or annual basis.</td></tr>
-<tr><td><code>res_local_map</code></td><td></td></tr>
-<tr><td><code>res_national_map</code></td><td></td></tr>
+<tr><td><code>res_local_map</code></td><td>Create a stylized reserve-level map for use with the reserve level reporting template</td></tr>
+<tr><td><code>res_national_map</code></td><td>Create a base map for NERRS reserves in ggplot</td></tr>
 <tr><td><code>res_sk_map</code></td><td></td></tr>
 <tr><td><code>reserve_locs</code></td><td></td></tr>
 <tr><td><code>seasonal_dot.swmpr</code></td><td></td></tr>
-<tr><td><code>sk_monthly</code></td><td></td></tr>
+<tr><td><code>sk_seasonal</code></td><td></td></tr>
 </table>
 
 <h3>Retrieve</h3>
@@ -67,10 +67,13 @@ SWMPrExtension adds several functions to existing concepts in SWMPr and introduc
 <table>
 <tr><td><code>assign_season</code></td><td>Assign seasons to SWMPr sampling data on a monthly basis or user-defined basis</td></tr>
 <tr><td><code>load_shp_file</code></td><td></td></tr>
-<tr><td><code>lm_p_labs</code></td><td></td></tr>
-<tr><td><code>title_labeler</code></td><td></td></tr>
+<tr><td><code>lm_p_labs</code></td><td>Generate a dataframe of p-value labels based on p-values from linear regression</td></tr>
+<tr><td><code>set_date_breaks</code></td><td>A helper function to select reasonable breaks for <code>scale_x_datetime</code></td></tr>
+<tr><td><code>sk_tidy</code></td><td>Tidy results from <code>kendallSeasonalTrendTest</code></td></tr>
+<tr><td><code>std_param_check</code></td><td>Determine if a parameter is one of the standard SWMP parameters</td></tr>
+<tr><td><code>title_labeler</code></td><td>Generate a plot title based on SWMP station abbreviation</td></tr>
 <tr><td><code>y_count_labeler</code></td><td></td></tr>
-<tr><td><code>y_labeler</code></td><td></td></tr>
+<tr><td><code>y_labeler</code></td><td>Generate a y-axis label based on SWMP parameter abbreviation</td></tr>
 </table>
 
 <h3>Reporting</h3>

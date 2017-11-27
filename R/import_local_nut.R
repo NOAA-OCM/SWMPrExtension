@@ -7,14 +7,10 @@
 #' @param  trace logical indicating if progress is sent to console, default \code{FALSE}
 #' @param collMethd chr string of nutrient data to subset. 1 indicates monthly, 2 indicates diel. Default is both diel and monthly data.
 #'
-#' @concept retrieve
-#'
-#' @export
-#'
 #' @importFrom utils read.csv unzip
 #' @importFrom SWMPr param_names swmpr time_vec
 #'
-#' @return Returns a swmpr object with all parameters and QAQC columns for the station.  The full date range in the raw data are also imported.
+#' @export
 #'
 #' @details
 #' The function is designed to import local data that were downloaded from the CDMO outside of R. This approach works best for larger data requests, specifically those from the zip downloads feature in the advanced query section of the CDMO. The function may also work using data from the data export system, but this feature has not been extensively tested. The downloaded data will be in a compressed folder that includes multiple .csv files by year for a given data type (e.g., apacpwq2002.csv, apacpwq2003.csv, apacpnut2002.csv, etc.). The import_local function can be used to import files directly from the compressed folder or after the folder is decompressed.  In the former case, the requested files are extracted to a temporary directory and then deleted after they are loaded into the current session.  An example dataset is available online to illustrate the format of the data provided through the zip downloads feature.  See the link below to access these data.  All example datasets included with the package were derived from these raw data.
@@ -26,6 +22,11 @@
 #' Example dataset: \url{https://s3.amazonaws.com/swmpexdata/zip_ex.zip}
 #'
 #' @author Marcus Beck, Julie Padilla (addition of 'CollMethd' argument)
+#'
+#' @concept retrieve
+#'
+#' @return Returns a swmpr object with all parameters and QAQC columns for the station.  The full date range in the raw data are also imported.
+#'
 #' @seealso \code{\link{all_params}}, \code{\link{all_params_dtrng}}, \code{\link{rem_reps}}, \code{\link{single_param}}
 #'
 #' @examples
@@ -43,6 +44,7 @@
 #' ## import, do not include file extension
 #' import_local(path, 'apaebmet')
 #' }
+#'
 import_local_nut <- function(path, station_code, collMethd = c(1, 2), trace = FALSE){
 
   # add .zip if not present

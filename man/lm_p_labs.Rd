@@ -16,8 +16,11 @@ Returns \code{data.frame} for use with \code{seasonal_dot}
 Generate a dataframe of p-value labels based on p-values from linear regression
 }
 \details{
-This function returns a data.frame of p-value labels for use with the seasonal dot plot. P-values are taken from linear regression.
+A helper function that returns a \code{data.frame} of p-value labels for use with the \code{seasonal_dot_plot}. P-values are taken from linear regression \code{lm}.
 }
 \seealso{
 \code{lm}
+}
+\author{
+Julie Padilla
 }

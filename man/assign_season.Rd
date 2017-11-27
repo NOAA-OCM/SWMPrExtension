@@ -19,8 +19,7 @@ assign_season(data, season = NULL, season_names = NULL,
 \item{abb}{logical, should abbreviations for month names be used? Defaults to \code{FALSE}}
 }
 \value{
-Returns a vector of ordered 
-season factors.
+Returns a vector of ordered season factors.
 }
 \description{
 Assign seasons to SWMPr sampling data on a monthly basis or user-defined basis
@@ -51,5 +50,11 @@ seas <- assign_season(dat$datetimestamp, season = list(c(10:12, 1:3), c(4:9)),
 season_names = c('Wet', 'Dry'))
 levels(seas)
 }
-
+ 
+}
+\author{
+Julie Padilla
+}
+\concept{
+analyze
 }

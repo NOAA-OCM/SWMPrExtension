@@ -1,14 +1,13 @@
-#' Seasonal Kendall Analysis for Monthly data
+#' Seasonal Kendall Analysis for Seasonal Data
 #'
 #' Seasonal trends
 #'
 #' @param swmpr_in input swmpr object
 #' @param param chr string of variable to plot
+#' @param converted logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.
 #' @param stat_lab chr, label for the summary statistic defined in \code{FUN}. Defaults to "Average"
-#' @param FUN function used to aggregate monthly SWMP data
+#' @param FUN function used to aggregate seasonal SWMP data
 #' @param ... additional arguments passed to other methods. See \code{\link{assign_season}}
-#'
-#' @concept analyze
 #'
 #' @import ggplot2 dplyr scales rlang
 #'
@@ -16,7 +15,6 @@
 #' @importFrom lubridate  year floor_date
 #' @importFrom magrittr "%>%"
 #' @importFrom tidyr gather
-#' @importFrom stats median
 #'
 #' @export
 #'
@@ -24,9 +22,11 @@
 #'
 #' @author Julie Padilla
 #'
+#' @concept analyze
+#'
 #' @return A \code{data.frame} object
 #'
-#' @seealso \code{\link[ggplot2]{ggplot}}, \code{\link[EnvStats]{kendallSeasonalTrendTest}}
+#' @seealso \code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}, \code{\link{y_labeler}}, \code{\link[EnvStats]{kendallSeasonalTrendTest}}
 #'
 #' @examples
 #' \dontrun{
@@ -36,24 +36,26 @@
 #' dat_wq <- qaqc(dat_wq, qaqc_keep = c(0, 3, 5))
 #' }
 
-sk_monthly <- function(swmpr_in, ...) UseMethod('sk_monthly')
+sk_seasonal <- function(swmpr_in, ...) UseMethod('sk_seasonal')
 
-#' @rdname sk_monthly
+#' @rdname sk_seasonal
 #'
 #' @concept analyze
 #'
 #' @export
 #'
-#' @method sk_monthly swmpr
+#' @method sk_seasonal swmpr
 #'
 #'
-sk_monthly.swmpr <- function(swmpr_in
+sk_seasonal.swmpr <- function(swmpr_in
                              , param = NULL
-                             , stat_lab = 'Average'
-                             , FUN = function(x) mean(x, na.rm = T)
+                             , converted = FALSE
+							 , stat_lab = 'Average'
+							 , FUN = function(x) mean(x, na.rm = T)
                              , ...) {
   dat <- swmpr_in
   parm <- sym(param)
+  conv <- converted
   seas <- sym('season')
   yr <- sym('year')
 
@@ -73,7 +75,7 @@ sk_monthly.swmpr <- function(swmpr_in
 
   # determine y axis transformation and y axis label
   y_trans <- ifelse(log_trans, 'log10', 'identity')
-  y_label <- y_labeler(param = param)
+  y_label <- y_labeler(param = param, converted = conv)
 
   # determine if QAQC has been conducted
   if(attr(dat, 'qaqc_cols'))

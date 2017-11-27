@@ -14,8 +14,6 @@
 #' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
 #' @param ... additional arguments passed to other methods.#' @param ... additional arguments passed to other methods. See \code{\link{y_labeler}}.
 #'
-#' @concept analyze
-#'
 #' @import ggplot2 dplyr scales rlang
 #'
 #' @importFrom magrittr "%>%"
@@ -27,6 +25,8 @@
 #'
 #' @author Julie Padilla
 #'
+#' @concept analyze
+
 #' @return A \code{\link[ggplot2]{ggplot}} object
 #'
 #' @seealso \code{\link[ggplot2]{ggplot}}

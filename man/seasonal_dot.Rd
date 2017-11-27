@@ -8,8 +8,8 @@
 seasonal_dot(swmpr_in, ...)
 
 \method{seasonal_dot}{swmpr}(swmpr_in, param = NULL, rng = NULL,
-  lm_trend = F, lm_lab = F, log_trans = F, plot_title = FALSE,
-  plot = T, ...)
+  lm_trend = FALSE, lm_lab = FALSE, log_trans = FALSE,
+  converted = FALSE, plot_title = FALSE, plot = TRUE, ...)
 }
 \arguments{
 \item{swmpr_in}{input swmpr object}
@@ -25,6 +25,8 @@ seasonal_dot(swmpr_in, ...)
 \item{lm_lab}{logical, add significance label? Statisically significant results will appear in bold.}
 
 \item{log_trans}{logical, should y-axis be log? Defaults to \code{FALSE}}
+
+\item{converted}{logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.}
 
 \item{plot_title}{logical, should the station name be included as the plot title? Defaults to \code{FALSE}}
 
@@ -88,7 +90,7 @@ x <-
 }
 }
 \seealso{
-\code{\link[ggplot2]{ggplot}}
+\code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}, \code{\link{y_labeler}}
 }
 \author{
 Julie Padilla

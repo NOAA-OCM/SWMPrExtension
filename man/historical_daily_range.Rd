@@ -66,6 +66,4 @@ Julie Padilla
 analyze
 
 analyze
-
-analyze
 }

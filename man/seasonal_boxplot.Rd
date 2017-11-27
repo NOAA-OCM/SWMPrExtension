@@ -9,8 +9,8 @@ seasonal_boxplot(swmpr_in, ...)
 
 \method{seasonal_boxplot}{swmpr}(swmpr_in, param = NULL, hist_rng = NULL,
   target_yr = NULL, criteria = NULL, log_trans = FALSE,
-  stat_lab = "Average", plot_title = FALSE, plot = T, FUN = function(x)
-  mean(x, na.rm = T), ...)
+  converted = FALSE, stat_lab = "Average", plot_title = FALSE, plot = T,
+  FUN = function(x) mean(x, na.rm = T), ...)
 }
 \arguments{
 \item{swmpr_in}{input swmpr object}
@@ -26,6 +26,8 @@ seasonal_boxplot(swmpr_in, ...)
 \item{criteria}{numeric, a numeric criteria that will be plotted as a horizontal line}
 
 \item{log_trans}{logical, should y-axis be log? Defaults to \code{FALSE}}
+
+\item{converted}{logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.}
 
 \item{stat_lab}{chr, label for the summary statistic defined in \code{FUN}. Defaults to "Average"}
 
@@ -66,7 +68,7 @@ stat_lab = 'Maximum', FUN = function(x) max(x, na.rm = T))
 }
 }
 \seealso{
-\code{\link[ggplot2]{ggplot}}
+\code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}, \code{\link{y_labeler}}
 }
 \author{
 Julie Padilla

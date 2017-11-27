@@ -1,16 +1,20 @@
 #' Identify NERRS reserve stations from metadata
 #' 
-#' A helper function for the NERRS automated reporting template
+#' Identify the NERRS reserve sampling stations based on the metadata in the data file
 #' 
 #' @param data.file location of data
 #' @param type chr string of data station type (\code{'wq'}, \code{'nut'}, or \code{'met'})
 #' @param active logical. Should inactive stations be excluded?
 #' 
-#' @concept reporting
-#' 
 #' @importFrom SWMPr site_codes
 #' 
 #' @export
+#' 
+#' @details This function returns the sampling stations associated with the data in the user-specified data file
+#' 
+#' @concept reporting
+#' 
+#' @concept reporting
 #' 
 #' 
 #' @return Returns a character vector of reserve stations

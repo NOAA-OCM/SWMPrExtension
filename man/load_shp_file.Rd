@@ -21,6 +21,9 @@ Load shapefile for use with res_local_map
 Creates a base map of the US with options for including AK, HI, and PR. The user can also
 This function was developed from a blog post by Bob Rudis (https://rud.is/b/2014/11/16/moving-the-earth-well-alaska-hawaii-with-r/)
 }
+\author{
+Julie Padilla
+}
 \concept{
 reporting
 }

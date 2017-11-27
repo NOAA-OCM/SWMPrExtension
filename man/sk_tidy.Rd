@@ -27,7 +27,12 @@ A helper function used by \code{sk_monthly} to return a table of tidied values.
 \examples{
 \dontrun{
 data(elksmwq)
-
 }
 
+}
+\author{
+Julie Padilla
+}
+\concept{
+miscellaneous
 }

@@ -10,7 +10,16 @@
 #'
 #' @details A helper function used internally by several plotting functions to generate y-axis labels. This function does not convert sample results from metric to english. It only adjusts the units in the y-axis label.
 #'
+#' @author Julie Padilla
+#'
+#' @concept miscellaneous
+#'
 #' @return Returns character vector or an unevaluated expression
+#'
+#' @examples
+#' \dontrun{
+#' y_lab <- y_count_labeler('do_mgl', '< 2 mg/L', converted = F)
+#' }
 #'
 y_count_labeler <- function(param, statement, converted = F) {
 

@@ -24,14 +24,13 @@ res_local_map(nerr_site_id, stations, bbox, shp, station_labs = T,
 }
 \value{
 returns a leaflet object. This function is intended to be used with mapshot to generate a png
-for the reserve level report
+for the reserve level report.
 }
 \description{
 Create a stylized reserve-level map for use with the reserve level reporting template
 }
 \details{
-Creates a base map of the US with options for including AK, HI, and PR. The user can also
-This function was developed from a blog post by Bob Rudis (https://rud.is/b/2014/11/16/moving-the-earth-well-alaska-hawaii-with-r/)
+Creates a stylized, reserve-level base map. The user can specify the reserve and stations to plot. THe user can also specify a bounding box. For multi-component reserves, the user should specify a bounding box that highlights the component of interest.
 }
 \examples{
 \dontrun{
@@ -77,4 +76,10 @@ lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
 
 }
 
+}
+\author{
+Julie Padilla
+}
+\concept{
+analyze
 }

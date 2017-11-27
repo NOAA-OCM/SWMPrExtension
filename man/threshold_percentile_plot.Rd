@@ -9,8 +9,8 @@ threshold_percentile_plot(swmpr_in, ...)
 
 \method{threshold_percentile_plot}{swmpr}(swmpr_in, param = NULL,
   hist_rng = NULL, target_yr = NULL, percentiles = c(0.05, 0.95),
-  by_month = TRUE, log_trans = FALSE, plot_title = FALSE, plot = TRUE,
-  ...)
+  by_month = TRUE, log_trans = FALSE, converted = FALSE,
+  plot_title = FALSE, plot = TRUE, ...)
 }
 \arguments{
 \item{swmpr_in}{input swmp object}
@@ -28,6 +28,8 @@ threshold_percentile_plot(swmpr_in, ...)
 \item{by_month}{logical. should percentiles be calculated on a monthly basis? Defaults to \code{FALSE}}
 
 \item{log_trans}{logical, should y-axis be log? Defaults to \code{FALSE}}
+
+\item{converted}{logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.}
 
 \item{plot_title}{logical, should the station name be included as the plot title? Defaults to \code{FALSE}}
 
@@ -77,16 +79,15 @@ y <-
   threshold_percentile_plot(dat_nut, param = 'chla_n'
   , hist_rng = c(2007, 2016), target_yr = 2016, by_month = F)
 }
+
 }
 \seealso{
-\code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}
+\code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}, \code{\link{y_labeler}}
 }
 \author{
 Julie Padilla
 }
 \concept{
-analyze
-
 analyze
 
 analyze

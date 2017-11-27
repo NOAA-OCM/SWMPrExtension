@@ -23,6 +23,11 @@
 #'
 #' @details Creates a reserve level map with arrows that indicate trends
 #'
+#' @author Julie Padilla
+#'
+#' @return returns a leaflet object. This function is intended to be used with mapshot to generate a png
+#' for the reserve level report
+#'
 #' @examples
 #' \dontrun{
 #'
@@ -46,7 +51,7 @@
 #' bbox = bounding_elk, scale_pos = pos, shp = shp_fl)
 #'
 #'
-#' ## a multicomponent reserve (show two different bounding boxes)
+#' ## a multicomponent reserve (showing two different bounding boxes)
 #' ### set plotting parameters
 #' stations <-
 #' sampling_stations[(sampling_stations$NERR.Site.ID == 'cbm'
@@ -68,9 +73,6 @@
 #'
 #' }
 #'
-#' @return returns a leaflet object. This function is intended to be used with mapshot to generate a png
-#' for the reserve level report
-
 res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, scale_pos = 'bottomleft') {
 
   # check that a shape file exists

@@ -12,8 +12,6 @@
 #' @param plot logical, should a plot be returned? Defaults to \code{TRUE}
 #' @param ... additional arguments passed to other methods (not used for this function).
 #'
-#' @concept analyze
-#'
 #' @import ggplot2 dplyr rlang
 #'
 #' @importFrom magrittr "%>%"

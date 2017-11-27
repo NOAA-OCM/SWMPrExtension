@@ -18,3 +18,15 @@ Generate a plot title based on SWMP station abbreviation
 \details{
 A helper function used internally by several plotting functions to generate plot titles.
 }
+\examples{
+\dontrun{
+ttl <- title_labeler('elkapwq')
+}
+
+}
+\author{
+Julie Padilla
+}
+\concept{
+miscellaneous
+}

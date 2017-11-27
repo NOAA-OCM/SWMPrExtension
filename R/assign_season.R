@@ -9,6 +9,16 @@
 #' @param abb logical, should abbreviations for month names be used? Defaults to \code{FALSE}
 #' 
 #' @importFrom lubridate month is.POSIXt
+#'
+#' @export
+#' 
+#' @details A helper function used by several data analyses to assign seasons to sampling data and to order the seasons. This function also allows the user to designate which season should be first.
+#' 
+#' @author Julie Padilla
+#'
+#' @concept analyze
+#'
+#' @return Returns a vector of ordered season factors.
 #' 
 #' @examples
 #' \dontrun{
@@ -33,16 +43,7 @@
 #' season_names = c('Wet', 'Dry'))
 #' levels(seas)
 #' }
-#'
-#' @export
-#' 
-#' @details A helper function used by several data analyses to assign seasons to sampling data and to order the seasons. This function also allows the user to designate which season should be first.
-#' 
-#' @return Returns a vector of ordered 
-#' season factors. 
 #'  
-#' 
-#' 
 assign_season <- function(data, season = NULL, season_names = NULL, season_start = NULL, abb = FALSE) {
   
   dat <- data

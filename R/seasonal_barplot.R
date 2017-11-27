@@ -2,17 +2,15 @@
 #'
 #' Cumulative bar plot over a historic range
 #'
-#' @param swmpr_in input swmpe object
+#' @param swmpr_in input swmpr object
 #' @param param chr string of variable to plot
 #' @param hist_rng numeric vector, if historic range is not specified then the min/max values of the data set will be used.
 #' @param rng_avg logical, should a longterm average be included on the plot? Defaults to \code{FALSE}
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
-#' @param convert logical, convert from metric to US units? Defaults to \code{FALSE}
+#' @param converted logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.
 #' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
 #' @param plot logical, should a plot be returned? Defaults to \code{TRUE}
-#' @param ... additional arguments passed to other methods. See \code{\link{assign_season}} and \code{\link{y_labeler}}.
-#'
-#' @concept analyze
+#' @param ... additional arguments passed to other methods. See \code{\link{assign_season}}
 #'
 #' @import ggplot2 dplyr scales rlang
 #'
@@ -21,7 +19,7 @@
 #'
 #' @export
 #'
-#' @details Calculated annual bar plot
+#' @details This function produces an annual bar plot with seasonal components. This function is intended to be an analysis similar to \code{seasonal_boxplot}, but for parameters that are assessed on a cumulative basis (e.g., precipitation)
 #'
 #' @author Julie Padilla
 #'
@@ -29,7 +27,7 @@
 #'
 #' @return A \code{\link[ggplot2]{ggplot}} object
 #'
-#' @seealso \code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}
+#' @seealso \code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}, \code{\link{y_labeler}}
 #'
 #' @examples
 #' \dontrun{
@@ -41,17 +39,14 @@
 #'                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
 #'                       , convert = T)
 #'
-#' x
-#'
 #' y <- seasonal_barplot(dat, param = 'totprcp'
 #'                       , season = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
 #'                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
 #'                       , convert = T
 #'                       , plot = F)
 #'
-#' y
 #' }
-
+#"
 seasonal_barplot <- function(swmpr_in, ...) UseMethod('seasonal_barplot')
 
 #' @rdname seasonal_barplot
@@ -67,13 +62,14 @@ seasonal_barplot.swmpr <- function(swmpr_in
                                , hist_rng = NULL
                                , rng_avg = FALSE
                                , log_trans = FALSE
-                               , convert = FALSE
+                               , converted = FALSE
                                , plot_title = FALSE
                                , plot = TRUE
                                , ...) {
 
   dat <- swmpr_in
   parm <- sym(param)
+  conv <- converted
 
   seas <- sym('season')
   res <- sym('result')
@@ -105,7 +101,7 @@ seasonal_barplot.swmpr <- function(swmpr_in
 
   #determine y axis transformation and y axis label
   y_trans <- ifelse(log_trans, 'log10', 'identity')
-  y_label <- y_labeler(param = param)# y_label <- y_labeler(param = param, ...)
+  y_label <- y_labeler(param = param, converted = conv)
 
   #determine if QAQC has been conducted
   if(attr(dat, 'qaqc_cols'))
@@ -123,10 +119,6 @@ seasonal_barplot.swmpr <- function(swmpr_in
   dat_hist <- dat_hist %>%
     dplyr::group_by(!! yr, !! seas) %>%
     dplyr::summarise(result = sum(!! parm, na.rm = T))
-
-  if(convert){
-    dat_hist$result <- dat_hist$result / 25.4
-  }
 
   if(plot){
     seas_col <- c('#1F4E79', '#4374A0', '#5B9BD5', '#97B9E0') %>% rev #will need to adjust color scheme
