@@ -29,7 +29,8 @@ A helper function used internally by several plotting functions to generate y-ax
 }
 \examples{
 \dontrun{
-y_lab <- y_count_labeler(param = 'do_mgl', parameter_threshold = 2, threshold_type = '<', time_threshold = 2, converted = F)
+y_lab <- y_count_labeler(param = 'do_mgl', parameter_threshold = 2
+, threshold_type = '<', time_threshold = 2, converted = F)
 }
 
 }
