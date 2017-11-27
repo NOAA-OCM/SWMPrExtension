@@ -17,7 +17,7 @@ y_count_labeler(param, statement, converted = F)
 Returns character vector or an unevaluated expression
 }
 \description{
-Generate a y-axis label based on SWMP parameter abbreviation
+Generate a y-axis label based on SWMP parameter abbreviation and threshold criteria
 }
 \details{
 A helper function used internally by several plotting functions to generate y-axis labels. This function does not convert sample results from metric to english. It only adjusts the units in the y-axis label.

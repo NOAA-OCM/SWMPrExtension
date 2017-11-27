@@ -1,6 +1,6 @@
 #' Generate y-axis Label Based on SWMP Parameter Abbreviation
 #'
-#' Generate a y-axis label based on SWMP parameter abbreviation
+#' Generate a y-axis label based on SWMP parameter abbreviation and threshold criteria
 #'
 #' @param param chr string of variable abbreviation
 #' @param statement chr string of logical statement used to evaluate thresholds

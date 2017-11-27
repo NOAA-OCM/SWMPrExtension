@@ -15,7 +15,7 @@ reserve_locs(incl = c("contig", "AK", "HI", "PR"), subset_reserve = NULL)
 Returns a \code{dataframe} for internal use with \code{res_national_map}
 }
 \description{
-Create a dataframe of selected NERRS locations
+Create a dataframe of selected NERRS locations for plotting with \code{res_national_map}
 }
 \details{
 A helper function used to generate a dataframe of selected reserve locations for use with \code{res_national_map}

@@ -1,6 +1,6 @@
 #' Load and format shapefile for reserve level map
 #'
-#' Load shapefile for use with res_local_map
+#' Load and format shapefile for use with res_local_map
 #'
 #' @param path path to shapefile and name
 #' @param dissolve_boundaries logical, should reserve boundaries be dissolved? Defaults to \code{TRUE}

@@ -1,6 +1,6 @@
 #' Seasonal Dot Plot
 #'
-#' average/min/max seasonal values faceted by season
+#' Plot average/min/max seasonal values faceted by season
 #'
 #' @param swmpr_in input swmpr object
 #' @param param chr string of variable to plot

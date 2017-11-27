@@ -28,7 +28,7 @@ sk_seasonal(swmpr_in, ...)
 A \code{data.frame} object or a summary from \code{EnvStats::kendallSeasonalTrendTest}
 }
 \description{
-Seasonal trends
+Non-parametric test for monotonic seasonal trends
 }
 \details{
 This function performs a seasonal kendall test on seasonally aggregated values using \code{\link[EnvStats]{kendallSeasonalTrendTest}}.

@@ -15,7 +15,7 @@ load_shp_file(path, dissolve_boundaries = T)
 Returns a character string of the shapefile for the reserve boundary
 }
 \description{
-Load shapefile for use with res_local_map
+Load and format shapefile for use with res_local_map
 }
 \details{
 Creates a base map of the US with options for including AK, HI, and PR. The user can also

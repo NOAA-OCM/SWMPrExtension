@@ -36,7 +36,7 @@ seasonal_dot(swmpr_in, ...)
 A \code{\link[ggplot2]{ggplot}} object
 }
 \description{
-average/min/max seasonal values faceted by season
+Plot average/min/max seasonal values faceted by season
 }
 \details{
 This function summarizes minimum, mean, and maximum values calculated on a seasonal basis to allow for easier intra-season comparisons over time.

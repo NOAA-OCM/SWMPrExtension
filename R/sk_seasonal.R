@@ -1,6 +1,6 @@
 #' Seasonal Kendall Analysis for Seasonal Data
 #'
-#' Seasonal trends
+#' Non-parametric test for monotonic seasonal trends
 #'
 #' @param swmpr_in input swmpr object
 #' @param param chr string of variable to plot

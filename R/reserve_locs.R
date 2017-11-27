@@ -1,6 +1,6 @@
 #' Reserve National Map
 #'
-#' Create a dataframe of selected NERRS locations
+#' Create a dataframe of selected NERRS locations for plotting with \code{res_national_map}
 #'
 #' @param incl Str vector to include AK, HI , and PR
 #' @param subset_reserve chr string of 3 letter reserve IDs to include as data points. To include He'eia use the reserve code 'HEA'
