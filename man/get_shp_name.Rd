@@ -15,6 +15,12 @@ Returns a character string of the shapefile for the reserve boundary
 \description{
 Identify the shapefile name associated with the reserve in the data file
 }
+\details{
+this function identifies the name of the shapefile associated with the NERRS reserve.
+}
+\author{
+Julie Padilla
+}
 \concept{
 reporting
 }

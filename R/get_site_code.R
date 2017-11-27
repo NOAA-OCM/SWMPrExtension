@@ -1,6 +1,6 @@
 #' Return NERRS reserve site code based on data in the data file
 #'
-#' A helper function for the NERRS automated reporting template
+#' Identify the 3- letter NERRS reserve code from metadata in the data file
 #'
 #' @param data.file data source location
 #'
@@ -8,8 +8,14 @@
 #'
 #' @export
 #'
-#' @return Returns reserve site code as chr
-
+#' @details This function returns the 3-letter reserve code associated with the data in the user-specified data file
+#'
+#' @author Julie Padilla
+#'
+#' @concept reporting
+#'
+#' @return Returns 3-letter, reserve site code as chr
+#'
 get_site_code <- function(data.file){
   #Check for data
   if (length(list.files(data.file, pattern = '.csv')) == 0) {

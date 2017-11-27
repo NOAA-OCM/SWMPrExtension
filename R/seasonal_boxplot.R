@@ -8,6 +8,8 @@
 #' @param target_yr numeric, the target year that should be compared against the historic range. If target year is not specified then dot will not be plotted
 #' @param criteria numeric, a numeric criteria that will be plotted as a horizontal line
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
+#' @param converted logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.
+#' @param criteria_lab chr, label for the threshold criteria defined in \code{criteria}. Defaults to "WQ Threshold"
 #' @param stat_lab chr, label for the summary statistic defined in \code{FUN}. Defaults to "Average"
 #' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
 #' @param plot logical, should a plot be returned? Defaults to \code{TRUE}
@@ -24,13 +26,17 @@
 #'
 #' @export
 #'
-#' @details Annual time series for year of interest on top of long-term percentiles
+#' @details This function uses boxplots to summarize statistics calculated on a daily basis across user-defined seasons for all years within the historic range (\code{hist_rng}). If \code{hist_rng} is not specified then the minimum and maximum years within the data set will be used. The summary statistics used to generate the boxplots are \code{ggplot2} defaults: the center of the box is a median, and the lower/upper limits of the box are the 25-th and 75-th percentiles. The whiskers extend to the furthest data point within 1.5 * inter-quartile range (IQR). The dots beyond the whiskers are data points that are greater than 1.5 * IQR. If the user selects a \code{target_yr}, then a median summary statistic value will be plotted as a point against the boxplots.
+#'
+#' Using the \code{FUN} argument, the user can specify the summary statistic to use. Commonly used statistics are \code{min(x, na.rm = T)}, \code{mean(x, na.rm = T)}, and \code{max(x, na.rm = T)}. After specifying \code{FUN}, the user should also specify \code{stat_lab}, which is used to construct appropriate legend labels.
+#'
+#' The user also has the option to add a threshold hold line using the \code{criteria} argument. Typically, this value is a water quality threshold, which is why \code{criteria_lab} defaults to \code{'WQ Threshold'}. Howver, the user has the option to specify any other type of threshold they wish. when doing so, the value for \code{criteria_lab} should be changed accordingly.
 #'
 #' @author Julie Padilla
 #'
 #' @return A \code{\link[ggplot2]{ggplot}} object or a \code{data.frame} if plot = \code{FALSE}
 #'
-#' @seealso \code{\link[ggplot2]{ggplot}}
+#' @seealso \code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}, \code{\link{y_labeler}}
 #'
 #' @examples
 #' \dontrun{
@@ -70,6 +76,8 @@ seasonal_boxplot.swmpr <- function(swmpr_in
                                    , target_yr = NULL
                                    , criteria = NULL
                                    , log_trans = FALSE
+								                   , converted = FALSE
+								                   , criteria_lab = 'WQ Threshold'
                                    , stat_lab = 'Average'
                                    , plot_title = FALSE
                                    , plot = T
@@ -78,6 +86,7 @@ seasonal_boxplot.swmpr <- function(swmpr_in
 
   dat <- swmpr_in
   parm <- sym(param)
+  conv <- converted
 
   seas <- sym('season')
   res <- sym('result')
@@ -113,7 +122,7 @@ seasonal_boxplot.swmpr <- function(swmpr_in
 
   #determine y axis transformation and y axis label
   y_trans <- ifelse(log_trans, 'log10', 'identity')
-  y_label <- y_labeler(param = param)#, ...)
+  y_label <- y_labeler(param = param, converted = conv)
 
   #determine if QAQC has been conducted
   if(attr(dat, 'qaqc_cols'))
@@ -192,7 +201,7 @@ seasonal_boxplot.swmpr <- function(swmpr_in
     if(!is.null(criteria)) {
 
       plt <- plt +
-        geom_hline(aes(yintercept = criteria, color = factor('WQ Threshold'), linetype = factor('WQ Threshold'))
+        geom_hline(aes(yintercept = criteria, color = factor(criteria_lab), linetype = factor('WQ Threshold'))
                    , show.legend = T) +
         scale_color_manual('', values = c('WQ Threshold' = 'red')) +
         scale_linetype_manual('', values = c('WQ Threshold' = 'longdash'))

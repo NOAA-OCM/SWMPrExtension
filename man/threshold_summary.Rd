@@ -40,8 +40,7 @@ A \code{\link[ggplot2]{ggplot}} object (if \code{plot} = \code{T}) or a datafram
 Summary plots for threshold identification analysis
 }
 \details{
-This function produces a plot summary (or a tabular summary) of the results from \code{threshold_identification}.
-The user can summarise results on monthly, seasonal, or annual basis by specifying \code{summary_type} = \code{c('month', 'season', 'year')}. The user can specify \code{'month'} for nutrient parameters, but this is not recommended and will produce a warning.
+This function provides a graphical or tabular summary of the results from \code{threshold_identification}. The user can summarize results on a monthly, seasonal, or annual basis by specifying \code{summary_type = c('month', 'season', 'year')}. The user can specify \code{'month'} for nutrient parameters, but this is not recommended and will produce a warning.
 }
 \examples{
 \dontrun{
@@ -94,8 +93,6 @@ y <-
 Julie Padilla
 }
 \concept{
-analyze
-
 analyze
 
 analyze

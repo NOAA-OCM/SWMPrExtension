@@ -1,38 +1,40 @@
 #' Tidy Seasonal Kendall Results
 #'
-#' Tidy results from \code{EnvStats::kendallSeasonalTrendTest}
+#' Tidy results from \code{\link[EnvStats]{kendallSeasonalTrendTest}}
 #'
-#' @param data a vector of POSIXct dates
+#' @param data a XXX object produced
+#' @param station chr string sampling station
 #' @param param chr string of variable to plot
 #' @param stat chr, label to be used for statistic used to group data
 #' @param pval num, significance level
 #'
+#' @export
+#'
+#' @details A helper function used by \code{sk_seasonal} to return a table of tidied values.
+#'
+#' @author Julie Padilla
+#'
+#' @concept miscellaneous
+#'
+#' @return a \code{data.frame} of results from \code{\link[EnvStats]{kendallSeasonalTrendTest}}
+#'
 #' @examples
 #' \dontrun{
 #' data(elksmwq)
-#'
 #' }
 #'
-#' @export
-#'
-#' @details A helper function used by \code{sk_monthly} to return a table of tidied values.
-#'
-#' @return a \code{data.frame} of results from \code{kendallSeasonalTrendTest}
-#'
-#'
-#'
-sk_tidy <- function(data, param, stat, pval) {
+sk_tidy <- function(data, station, param, stat, pval) {
   # have a check that verifies the data type as whatever kendallSeasonalTrend returns
   dat <- data
   parm <- param
 
-  results <- data.frame(stat, parm
+  results <- data.frame(station, stat, parm
                , dat$estimate[[1]]
                , dat$estimate[[2]]
                , dat$p.value[[1]]
                , dat$p.value[[2]])
 
-  names(results) <- c('type', 'parameter', 'tau', 'slope', 'pval.chisq', 'pval.trend')
+  names(results) <- c('station', 'type', 'parameter', 'tau', 'slope', 'pval.chisq', 'pval.trend')
 
   results$sig.chi <- NA
   results$sig.trend <- NA

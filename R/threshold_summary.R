@@ -13,7 +13,6 @@
 #' @param plot logical, should a plot be returned? Defaults to \code{TRUE}
 #' @param ... additional arguments passed to other methods.
 #'
-#' @concept analyze
 #'
 #' @import ggplot2 dplyr rlang
 #'
@@ -23,9 +22,7 @@
 #'
 #' @export
 #'
-#' @details This function produces a plot summary (or a tabular summary) of the results from \code{threshold_identification}.
-#' The user can summarise results on monthly, seasonal, or annual basis by specifying \code{summary_type} = \code{c('month', 'season', 'year')}. The user can specify \code{'month'} for nutrient parameters, but this is not recommended and will produce a warning.
-#'
+#' @details This function provides a graphical or tabular summary of the results from \code{threshold_identification}. The user can summarize results on a monthly, seasonal, or annual basis by specifying \code{summary_type = c('month', 'season', 'year')}. The user can specify \code{'month'} for nutrient parameters, but this is not recommended and will produce a warning.
 #'
 #' @author Julie Padilla
 #'

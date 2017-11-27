@@ -3,13 +3,13 @@
 \name{seasonal_dot}
 \alias{seasonal_dot}
 \alias{seasonal_dot.swmpr}
-\title{Seasonal Trend}
+\title{Seasonal Dot Plot}
 \usage{
 seasonal_dot(swmpr_in, ...)
 
 \method{seasonal_dot}{swmpr}(swmpr_in, param = NULL, rng = NULL,
-  lm_trend = F, lm_lab = F, log_trans = F, plot_title = FALSE,
-  plot = T, ...)
+  lm_trend = FALSE, lm_lab = FALSE, log_trans = FALSE,
+  converted = FALSE, plot_title = FALSE, plot = TRUE, ...)
 }
 \arguments{
 \item{swmpr_in}{input swmpr object}
@@ -26,6 +26,8 @@ seasonal_dot(swmpr_in, ...)
 
 \item{log_trans}{logical, should y-axis be log? Defaults to \code{FALSE}}
 
+\item{converted}{logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.}
+
 \item{plot_title}{logical, should the station name be included as the plot title? Defaults to \code{FALSE}}
 
 \item{plot}{logical, should a plot be returned? Defaults to \code{TRUE}}
@@ -34,10 +36,12 @@ seasonal_dot(swmpr_in, ...)
 A \code{\link[ggplot2]{ggplot}} object
 }
 \description{
-Seasonal trends
+Plot average/min/max seasonal values faceted by season
 }
 \details{
-average/min/max seasonal values faceted by season
+This function summarizes minimum, mean, and maximum values calculated on a seasonal basis to allow for easier intra-season comparisons over time.
+
+\code{lm_trend = T} adds a linear regression to the plot, and \code{lm_lab = T} will add p-values from the linear regression to the plot. If the p-values are significant (p < 0.05) then the text will appear in bold. \code{lm_lab} text is color coded to match with the corresponding dots.
 }
 \examples{
 \dontrun{
@@ -88,7 +92,7 @@ x <-
 }
 }
 \seealso{
-\code{\link[ggplot2]{ggplot}}
+\code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}, \code{\link{y_labeler}}
 }
 \author{
 Julie Padilla

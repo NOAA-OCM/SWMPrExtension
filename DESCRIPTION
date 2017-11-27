@@ -1,7 +1,7 @@
 Package: SWMPrExtension
 Type: Package
 Title: Additional functions for retrieving, organizing, and analyzing estuary monitoring data
-Version: 0.1.0
+Version: 0.1.6
 Author: Julie Padilla [aut, cre]
 Maintainer: Julie Padilla <jpadilla@limno.com>
 Description: Additional tools for retrieving, organizing, and analyzing environmental
@@ -20,6 +20,7 @@ Imports: SWMPr,
 	EnvStats,
 	ggplot2,
 	ggthemes,
+	grDevices,
 	leaflet,
 	lubridate,
 	magrittr,
@@ -27,6 +28,7 @@ Imports: SWMPr,
 	methods,
 	tidyr,
 	scales,
+	RColorBrewer,
 	rgdal,
 	rgeos,
     rlang,

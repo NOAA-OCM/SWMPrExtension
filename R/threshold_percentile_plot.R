@@ -9,11 +9,10 @@
 #' @param percentiles numeric vector of percentiles to calculate (maximum: 2). Defaults to 5th and 95th percentiles.
 #' @param by_month logical. should percentiles be calculated on a monthly basis? Defaults to \code{FALSE}
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
+#' @param converted logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.
 #' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
 #' @param plot logical, should a plot be returned? Defaults to \code{TRUE}
 #' @param ... additional arguments passed to other methods (not used for this function).
-#'
-#' @concept analyze
 #'
 #' @import ggplot2 dplyr rlang
 #'
@@ -24,8 +23,9 @@
 #'
 #' @export
 #'
-#' @details This analysis compares observed data against user-specified percentiles. User has the option to calculate percentiles on a monthly basis.
+#' @details This function provides an alternative to \code{threshold_plot}. For parameters that may not have numeric threshold criteria, a percentile threshold can be used instead. For a one-tailed analysis, the 90-th percentile is recommended. For a two-tailed analysis, the 5-th and 95-th percentiles are recommended.
 #'
+#' Using \code{by_month}, the user can specify whether the percentiles should be calculated on a monthly basis or by using the entire data set.
 #'
 #' @author Julie Padilla
 #'
@@ -33,7 +33,7 @@
 #'
 #' @return A \code{\link[ggplot2]{ggplot}} object
 #'
-#' @seealso \code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}
+#' @seealso \code{\link[ggplot2]{ggplot}}, \code{\link{y_labeler}}
 #'
 #' @examples
 #' \dontrun{
@@ -65,11 +65,11 @@
 #'   threshold_percentile_plot(dat_nut, param = 'chla_n'
 #'   , hist_rng = c(2007, 2016), by_month = F)
 #'
-#'
 #' y <-
 #'   threshold_percentile_plot(dat_nut, param = 'chla_n'
 #'   , hist_rng = c(2007, 2016), target_yr = 2016, by_month = F)
 #' }
+#'
 threshold_percentile_plot <- function(swmpr_in, ...) UseMethod('threshold_percentile_plot')
 
 #' @rdname threshold_percentile_plot
@@ -87,11 +87,13 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
                                          , percentiles = c(0.05, 0.95)
                                          , by_month = TRUE
                                          , log_trans = FALSE
+                                         , converted = FALSE
                                          , plot_title = FALSE
                                          , plot = TRUE
                                          , ...){
   dat <- swmpr_in
   parm <- sym(param)
+  conv <- converted
   grp <- sym(ifelse(by_month, 'month', 'dummy'))
 
   dt <- sym('datetimestamp')
@@ -120,7 +122,7 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
 
   #determine y axis transformation, y axis label
   y_trans <- ifelse(log_trans, 'log10', 'identity')
-  y_label <- y_labeler(param = param, ...)
+  y_label <- y_labeler(param = param, converted = conv)
 
   ##filter for range
   if(!is.null(hist_rng)) {
@@ -148,7 +150,6 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
       group_by(!! grp) %>%
       summarise(perc_hi = quantile(!! parm, probs = percentiles))
   }
-  # bars$month <- as.character(bars$month)
 
   if(!is.null(target_yr)){
     dat_subset <- dat_subset %>% filter(year == target_yr)

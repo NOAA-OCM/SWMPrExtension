@@ -1,6 +1,6 @@
 #' Load and format shapefile for reserve level map
 #'
-#' Load shapefile for use with res_local_map
+#' Load and format shapefile for use with res_local_map
 #'
 #' @param path path to shapefile and name
 #' @param dissolve_boundaries logical, should reserve boundaries be dissolved? Defaults to \code{TRUE}
@@ -10,13 +10,14 @@
 #' @importFrom rgdal readOGR
 #' @importFrom sp spTransform
 #'
-#' @concept reporting
-#'
 #' @export
-#'
 #'
 #' @details Creates a base map of the US with options for including AK, HI, and PR. The user can also
 #' This function was developed from a blog post by Bob Rudis (https://rud.is/b/2014/11/16/moving-the-earth-well-alaska-hawaii-with-r/)
+#'
+#' @author Julie Padilla
+#'
+#' @concept reporting
 #'
 #' @return Returns a character string of the shapefile for the reserve boundary
 #'

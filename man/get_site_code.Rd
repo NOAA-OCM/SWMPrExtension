@@ -10,11 +10,19 @@ get_site_code(data.file)
 \item{data.file}{data source location}
 }
 \value{
-Returns reserve site code as chr
+Returns 3-letter, reserve site code as chr
 }
 \description{
-A helper function for the NERRS automated reporting template
+Identify the 3- letter NERRS reserve code from metadata in the data file
+}
+\details{
+This function returns the 3-letter reserve code associated with the data in the user-specified data file
+}
+\author{
+Julie Padilla
 }
 \concept{
+reporting
+
 reporting
 }

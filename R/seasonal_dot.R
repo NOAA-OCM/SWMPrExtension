@@ -1,6 +1,6 @@
-#' Seasonal Trend
+#' Seasonal Dot Plot
 #'
-#' Seasonal trends
+#' Plot average/min/max seasonal values faceted by season
 #'
 #' @param swmpr_in input swmpr object
 #' @param param chr string of variable to plot
@@ -8,6 +8,7 @@
 #' @param lm_trend logical, add linear trend line?
 #' @param lm_lab logical, add significance label? Statisically significant results will appear in bold.
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
+#' @param converted logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.
 #' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
 #' @param plot logical, should a plot be returned? Defaults to \code{TRUE}
 #' @param ... additional arguments passed to other methods. See \code{\link{assign_season}} and \code{\link{y_labeler}}.
@@ -23,13 +24,15 @@
 #'
 #' @export
 #'
-#' @details average/min/max seasonal values faceted by season
+#' @details This function summarizes minimum, mean, and maximum values calculated on a seasonal basis to allow for easier intra-season comparisons over time.
+#'
+#' \code{lm_trend = T} adds a linear regression to the plot, and \code{lm_lab = T} will add p-values from the linear regression to the plot. If the p-values are significant (p < 0.05) then the text will appear in bold. \code{lm_lab} text is color coded to match with the corresponding dots.
 #'
 #' @author Julie Padilla
 #'
 #' @return A \code{\link[ggplot2]{ggplot}} object
 #'
-#' @seealso \code{\link[ggplot2]{ggplot}}
+#' @seealso \code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}, \code{\link{y_labeler}}
 #'
 #' @examples
 #' \dontrun{
@@ -92,15 +95,18 @@ seasonal_dot <- function(swmpr_in, ...) UseMethod('seasonal_dot')
 seasonal_dot.swmpr <- function(swmpr_in
                                , param = NULL
                                , rng = NULL
-                               , lm_trend = F
-                               , lm_lab = F
-                               , log_trans = F
+                               , lm_trend = FALSE
+                               , lm_lab = FALSE
+                               , log_trans = FALSE
+							                 , converted = FALSE
                                , plot_title = FALSE
-                               , plot = T
+                               , plot = TRUE
                                , ...) {
 
   dat <- swmpr_in
   parm <- sym(param)
+  conv <- converted
+
   seas <- sym('season')
   yr <- sym('year')
 
@@ -120,7 +126,7 @@ seasonal_dot.swmpr <- function(swmpr_in
 
   #determine y axis transformation and y axis label
   y_trans <- ifelse(log_trans, 'log10', 'identity')
-  y_label <- y_labeler(param = param)
+  y_label <- y_labeler(param = param, converted = conv)
 
   #determine if QAQC has been conducted
   if(attr(dat, 'qaqc_cols'))
@@ -146,7 +152,9 @@ seasonal_dot.swmpr <- function(swmpr_in
               )
 
   if(plot) {
-    labs_legend <- factor(paste0('Mean Monthly ', c('Minimum', 'Average', 'Maximum'), sep = ''))
+    agg_lab <- ifelse(length(levels(plt_data$season)) == 12, 'Monthly ', 'Seasonal ')
+
+    labs_legend <- factor(paste0(agg_lab, c('Minimum', 'Average', 'Maximum'), sep = ''))
     brks <- range(plt_data$year)
     y_lims <- c(0, max(plt_data[ , c(3:5)]) * 1.2)
 
@@ -197,7 +205,6 @@ seasonal_dot.swmpr <- function(swmpr_in
     # add regression p-values if specified
     if(lm_lab) {
 
-      # return(plt_data)
       p_labs <- lm_p_labs(plt_data)
 
       plt <-

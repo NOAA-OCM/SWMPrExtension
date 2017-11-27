@@ -23,8 +23,8 @@ Returns a \code{\link[ggplot2]{ggplot}} object
 Create a base map for NERRS reserves in ggplot
 }
 \details{
-Creates a base map of the US with options for including AK, HI, and PR. The user can also
-This function was developed from a blog post by Bob Rudis (https://rud.is/b/2014/11/16/moving-the-earth-well-alaska-hawaii-with-r/)
+Create a base map of the US with options for including AK, HI, and PR. The user can choose which states and NERRS reserves to highlight.
+This function was developed, in part, from a blog post by Bob Rudis.
 }
 \examples{
 \dontrun{
@@ -48,9 +48,12 @@ res_national_map(highlight_states = nerr_states_west, highlight_reserve = nerrs_
 }
 
 }
+\references{
+Rudis, Bob. 2014. "Moving The Earth (well, Alaska & Hawaii) With R". rud.is (blog). November 16, 2014. https://rud.is/b/2014/11/16/moving-the-earth-well-alaska-hawaii-with-r/
+}
 \author{
 Bob Rudis, Julie Padilla
 }
 \concept{
-mapping
+analyze
 }

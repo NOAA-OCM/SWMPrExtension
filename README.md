@@ -43,9 +43,15 @@ SWMPrExtension adds several functions to existing concepts in SWMPr and introduc
 <tr><td><code>annual_range.swmpr</code></td><td>For a user-specified year, calculate averages, average ranges, and min/max observed ranges the on a monthly or seasonal basis</td></tr>
 <tr><td><code>historical_daily_range.swmpr</code></td><td>Compare a user-specified year against historical data on a daily basis.</td></tr>
 <tr><td><code>historical_range.swmpr</code></td><td>Compare a user-specified year against historical data on a monthly/seasonal basis.</td></tr>
-<tr><td><code>raw_boxplot.swmpr</code></td><td>Generate a monthly/seasonal boxplots of raw data</td></tr>
+<tr><td><code>raw_boxplot.swmpr</code></td><td>Generate a monthly/seasonal boxplots of raw data for a target year</td></tr>
+<tr><td><code>res_local_map</code></td><td>Create a stylized reserve-level map for use with the reserve level reporting template</td></tr>
+<tr><td><code>res_national_map</code></td><td>Create a base map for NERRS reserves in ggplot</td></tr>
+<tr><td><code>res_sk_map</code></td><td>Create a stylized reserve-level map of seasonal kendall results for use with the reserve level reporting template</td></tr>
+<tr><td><code>reserve_locs</code></td><td>Create a dataframe of selected NERRS locations for plotting with <code>res_national_map</code></td></tr>
 <tr><td><code>seasonal_barplot.swmpr</code></td><td>Generate monthly/seasonal barplot for parameters that are better viewed in on a cumulative basis (e.g. precipitation).</td></tr>
 <tr><td><code>seasonal_boxplot.swmpr</code></td><td>Generate monthly/seasonal boxplots for daily average statistics (min/average/max) across a user-specified time period.Includes the option to calculate a median value for a target year and include a line for a water quality threshold.</td></tr>
+<tr><td><code>seasonal_dot.swmpr</code></td><td>Plot average/min/max seasonal values faceted by season</td></tr>
+<tr><td><code>sk_seasonal</code></td><td>Non-parametric test for monotonic seasonal trends</td></tr>
 <tr><td><code>threshold_identification.swmpr</code></td><td>Identify dates and times that a user-specified water quality threshold is exceeded. For continuous monitoring data, the user can also specify the length of time the threshold must be exceeded for the event to be included (e.g. DO must be < 2 mg/L for at least 2 hours).</td></tr>
 <tr><td><code>threshold_percentile_plot.swmpr</code></td><td>Compare raw data against user-specified percentiles calculated from historical data. User has the option to calculate percentiles on a monthly basis.</td></tr>
 <tr><td><code>threshold_plot.swmpr</code></td><td>Compare raw data against user-specified water quality thresholds</td></tr>
@@ -60,6 +66,14 @@ SWMPrExtension adds several functions to existing concepts in SWMPr and introduc
 <h3>Miscellaneous</h3>
 <table>
 <tr><td><code>assign_season</code></td><td>Assign seasons to SWMPr sampling data on a monthly basis or user-defined basis</td></tr>
+<tr><td><code>load_shp_file</code></td><td>Load and format shapefile for use with res_local_map</td></tr>
+<tr><td><code>lm_p_labs</code></td><td>Generate a dataframe of p-value labels based on p-values from linear regression</td></tr>
+<tr><td><code>set_date_breaks</code></td><td>A helper function to select reasonable breaks for <code>scale_x_datetime</code></td></tr>
+<tr><td><code>sk_tidy</code></td><td>Tidy results from <code>kendallSeasonalTrendTest</code></td></tr>
+<tr><td><code>std_param_check</code></td><td>Determine if a parameter is one of the standard SWMP parameters</td></tr>
+<tr><td><code>title_labeler</code></td><td>Generate a plot title based on SWMP station abbreviation</td></tr>
+<tr><td><code>y_count_labeler</code></td><td>Generate a y-axis label based on SWMP parameter abbreviation and threshold criteria</td></tr>
+<tr><td><code>y_labeler</code></td><td>Generate a y-axis label based on SWMP parameter abbreviation</td></tr>
 </table>
 
 <h3>Reporting</h3>

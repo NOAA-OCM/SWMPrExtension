@@ -17,8 +17,13 @@ get_sites(data.file, type = c("wq", "nut", "met"), active = TRUE)
 Returns a character vector of reserve stations
 }
 \description{
-A helper function for the NERRS automated reporting template
+Identify the NERRS reserve sampling stations based on the metadata in the data file
+}
+\details{
+This function returns the sampling stations associated with the data in the user-specified data file
 }
 \concept{
+reporting
+
 reporting
 }

@@ -9,7 +9,16 @@
 #'
 #' @details A helper function used internally by several plotting functions to generate y-axis labels. This function does not convert sample results from metric to english. It only adjusts the units in the y-axis label.
 #'
+#' @author Julie Padilla
+#'
+#' @concept analyze
+#'
 #' @return Returns character vector or an unevaluated expression
+#'
+#' @examples
+#' \dontrun{
+#' y_lab <- y_labeler('do_mgl')
+#' }
 #'
 y_labeler <- function(param, converted = F) {
 
@@ -24,7 +33,7 @@ y_labeler <- function(param, converted = F) {
 
   if(!std_param_check(param)){
     # if user enters a non-std parameter, return the name of the parameter for a label
-    y_lab <- c(param)
+    y_lab <- param
   } else {
 
     # Parameter labels

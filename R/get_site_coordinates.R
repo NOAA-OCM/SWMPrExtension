@@ -1,11 +1,9 @@
-#' Identify NERRS reserve from metadata
+#' Identify NERRS sampling locations from metadata
 #'
-#' Identify the NERRS reserve from metadata in the data file
+#' Identify the latitude/longitude for sampling stations based on the metadata in the data file
 #'
 #' @param data.file location of data
 #' @param active logical. Only return active stations?
-#'
-#' @concept reporting
 #'
 #' @importFrom dplyr group_by summarise
 #' @importFrom magrittr "%>%"
@@ -14,9 +12,14 @@
 #'
 #' @export
 #'
+#' @details This function returns the coordinates associated with the data in the user-specified data file
+#'
+#' @author Julie Padilla
+#'
+#' @concept reporting
+#'
 #' @return Returns a dataframe of station ids, station names, lat/long
 #'
-
 get_site_coordinates <- function(data.file, active = TRUE){
 
 

@@ -4,8 +4,6 @@
 #'
 #' @param rng date range years
 #'
-#' @concept analyze
-#'
 #' @import ggplot2 dplyr scales rlang
 #'
 #' @export
@@ -13,6 +11,8 @@
 #' @details A Helper function for easier date label setting
 #'
 #' @author Julie Padilla
+#'
+#' @concept analyze
 #'
 #' @return a chr string for \code{date_breaks}
 #'

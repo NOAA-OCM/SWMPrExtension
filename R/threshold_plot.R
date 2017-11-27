@@ -14,8 +14,6 @@
 #' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
 #' @param ... additional arguments passed to other methods.#' @param ... additional arguments passed to other methods. See \code{\link{y_labeler}}.
 #'
-#' @concept analyze
-#'
 #' @import ggplot2 dplyr scales rlang
 #'
 #' @importFrom magrittr "%>%"
@@ -23,10 +21,14 @@
 #'
 #' @export
 #'
-#' @details Visualize exceedances of user-specified water quality thresholds.
+#' @details This function vizualizes exceedances of numeric criteria. Suggested numeric criteria for several parameters (dissolved oxygen, dissolved inorganic phosphorus, dissolved inorganic nitrogen, and chlorophyll-a) can be found in the USEPA National Coastal Condition Report (2012).
+#'
+#' If the parameter of interest does not have numeric criteria, then \code{threshold_percentile_plot}
 #'
 #' @author Julie Padilla
 #'
+#' @concept analyze
+
 #' @return A \code{\link[ggplot2]{ggplot}} object
 #'
 #' @seealso \code{\link[ggplot2]{ggplot}}

@@ -9,8 +9,6 @@
 #' @param threshold_type vector of logical operators ('<', '>', '<=', '>=', '==', '!=')
 #' @param time_threshold The amount of time an event must last to be counted (in hours)
 #'
-#' @concept analyze
-#'
 #' @import dplyr rlang
 #'
 #' @importFrom magrittr "%>%"
@@ -18,20 +16,29 @@
 #'
 #' @export
 #'
-#' @details Add some details about how this thing works here.
-#' ++You must 'setstep' beforehand
-#' ++Nutrient thresholds do not require a time threshold, but met and wq do
-#' ++Recommended nutrient thresholds are determined by NCCR (say something about DIN)
+#' @details This function creates tabular summary of events when a user-specified threshold is exceeded.
+#'
+#' Before using this function, the user must apply \code{\link[SWMPr]{setstep}} to normalize the \code{datetimestamp} time step.
+#'
+#' For MET and WQ data, the user must specify \code{time_threshold}. This argument is the minimum duration that an event must last in order to be counted. For example, if \code{time_threshold = 2} and \code{param = "do_mgl"}, \code{parameter_threshold = 2}, \code{threshold_type = "<"} then dissolved oxygen must be lower than 2 mg/L for more than two hours or the event will not be summarized in the final table. For NUT parameters, all exceedances are included in the tabular summary.
 #'
 #' @author Julie Padilla
 #'
+#' @concept analyze
+#'
 #' @return A data frame of threshold exceedances by parameter
+#'
+#' @references
+#' United States Environmental Protection Agency (USEPA). 2012. "National Coastal Condition Report IV."
+#' http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.646.1973&rep=rep1&type=pdf
 #'
 #' @examples
 #' \dontrun{
 #' ## change the type argument if plotting discrete and continuous data
 #' wq <- apacpwq
 #' nut <- apacpnut
+#'
+#' ##add a set step piece to this
 #'
 #' wq_pars<- threshold_identification(dat_wq, param = c('do_mgl', 'ph', 'temp')
 #'                           , parameter_threshold = c('2', '5', '30')

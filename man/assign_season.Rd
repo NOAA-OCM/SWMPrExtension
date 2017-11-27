@@ -4,29 +4,28 @@
 \alias{assign_season}
 \title{Assign seasons to SWMP sampling data}
 \usage{
-assign_season(data, season = NULL, season_names = NULL,
-  season_start = NULL, abb = FALSE)
+assign_season(data, season_grps = NULL, season_names = NULL,
+  season_start = NULL, abb = TRUE)
 }
 \arguments{
 \item{data}{a vector of POSIXct dates}
 
-\item{season}{A list of seasons. Months (1-12) are assigned to different groups based on user preference. Defaults to 12 months, starting with January. Must assign a minimum of two seasons}
+\item{season_grps}{A list of seasons. Months (1-12) are assigned to different groups based on user preference. Defaults to 12 months, starting with January. Must assign a minimum of two seasons}
 
 \item{season_names}{A string vector of season names. The number of season names must match the length of the \code{season} list. A minimum of two seasons must be assigned (e.g., 'Wet', 'Dry'). Defaults to 12 months, starting with January. The number of season names must match the number of seasons}
 
 \item{season_start}{defaults to 12 months, starting with January}
 
-\item{abb}{logical, should abbreviations for month names be used? Defaults to \code{FALSE}}
+\item{abb}{logical, should abbreviations for month names be used? Defaults to \code{TRUE}}
 }
 \value{
-Returns a vector of ordered 
-season factors.
+Returns a vector of ordered season factors.
 }
 \description{
-Assign seasons to SWMPr sampling data on a monthly basis or user-defined basis
+Assign seasons to SWMPr sampling data on a monthly basis or user-defined seasonal basis
 }
 \details{
-A helper function used by several data analyses to assign seasons to sampling data and to order the seasons. This function also allows the user to designate which season should be first.
+A helper function used by multiple data analyses to assign seasons to sampling data and to order the seasons. To assist with plotting, the seasons are assigned as factors. Seasons are assigned by first grouping the months into a \code{list} of \code{season_grps} and then specifying one name for each grouping using \code{season_names}. If \code{season_grps} is specified than \code{season_names} must also be defined. If neither argument is specified than the season assignments will default to monthly values. Using the \code{season_start} argument, the user can designate which season should be the first \code{factor} level. This assignment affects plot order for most functions. If \code{season_start} is not specified, then it will default to the first season in the list (January for monthly seasons and the first season in \code{season_names} for user-defined seasons).
 }
 \examples{
 \dontrun{
@@ -42,14 +41,20 @@ levels(seas)
 seas <- assign_season(dat$datetimestamp, season_start = 'March')
 levels(seas)
 
-seas <- assign_season(dat$datetimestamp, 
+seas <- assign_season(dat$datetimestamp,
 season = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12)),
 season_names = c('Winter', 'Spring', 'Summer', 'Fall'), season_start = 'Spring')
 levels(seas)
 
-seas <- assign_season(dat$datetimestamp, season = list(c(10:12, 1:3), c(4:9)), 
+seas <- assign_season(dat$datetimestamp, season = list(c(10:12, 1:3), c(4:9)),
 season_names = c('Wet', 'Dry'))
 levels(seas)
 }
 
+}
+\author{
+Julie Padilla
+}
+\concept{
+analyze
 }

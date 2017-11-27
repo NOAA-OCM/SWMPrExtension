@@ -15,36 +15,14 @@ reserve_locs(incl = c("contig", "AK", "HI", "PR"), subset_reserve = NULL)
 Returns a \code{dataframe} for internal use with \code{res_national_map}
 }
 \description{
-Create a dataframe of selected NERRS locations
+Create a dataframe of selected NERRS locations for plotting with \code{res_national_map}
 }
 \details{
-Generate a dataframe of selected reserve locations
-}
-\examples{
-\dontrun{
-
-##Just the national map
-res_national_map()
-
-##National map highlighting states with NERRS
-nerr_states <- c('01', '02', '06', '10', '12', '13', '15'
-, '23', '24', '25', '27', '28', '33', '34', '36', '37', '39'
-, '41', '44', '45', '48', '51', '53', '55', '72')
-
-res_national_map(highlight_states = nerr_states)
-
-##National map highlighting west coast states and NERRS
-nerr_states_west <- c('02', '06', '41', '53')
-
-nerrs_codes <- c('pdb', 'sos', 'sfb', 'elk', 'tjr', 'kac')
-
-res_national_map(highlight_states = nerr_states_west, highlight_reserve = 'nerrs_codes')
-}
-
+A helper function used to generate a dataframe of selected reserve locations for use with \code{res_national_map}
 }
 \author{
 Bob Rudis, Julie Padilla
 }
 \concept{
-mapping
+analyze
 }

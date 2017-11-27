@@ -42,7 +42,9 @@ A \code{\link[ggplot2]{ggplot}} object
 Visualize water quality exceedances
 }
 \details{
-Visualize exceedances of user-specified water quality thresholds.
+This function vizualizes exceedances of numeric criteria. Suggested numeric criteria for several parameters (dissolved oxygen, dissolved inorganic phosphorus, dissolved inorganic nitrogen, and chlorophyll-a) can be found in the USEPA National Coastal Condition Report (2012).
+
+If the parameter of interest does not have numeric criteria, then \code{threshold_percentile_plot}
 }
 \examples{
 \dontrun{

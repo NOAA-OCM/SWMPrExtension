@@ -2,26 +2,30 @@
 #'
 #' Cumulative bar plot over a historic range
 #'
-#' @param swmpr_in input swmpe object
+#' @param swmpr_in input swmpr object
 #' @param param chr string of variable to plot
 #' @param hist_rng numeric vector, if historic range is not specified then the min/max values of the data set will be used.
 #' @param rng_avg logical, should a longterm average be included on the plot? Defaults to \code{FALSE}
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
-#' @param convert logical, convert from metric to US units? Defaults to \code{FALSE}
+#' @param converted logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.
+#' @param hist_avg logical, should a historical average be included? Defaults to \code{TRUE}.
+#' @param season_facet logical, should plot be faceted by season? Defaults to \code{FALSE}.
 #' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
 #' @param plot logical, should a plot be returned? Defaults to \code{TRUE}
-#' @param ... additional arguments passed to other methods. See \code{\link{assign_season}} and \code{\link{y_labeler}}.
-#'
-#' @concept analyze
+#' @param ... additional arguments passed to other methods. See \code{\link{assign_season}}
 #'
 #' @import ggplot2 dplyr scales rlang
 #'
+#' @importFrom grDevices colorRampPalette
 #' @importFrom magrittr "%>%"
 #' @importFrom lubridate  year
+#' @importFrom RColorBrewer brewer.pal
 #'
 #' @export
 #'
-#' @details Calculated annual bar plot
+#' @details This function uses barplots to summarize parameters that are best viewed on a cumulative basis (e.g., precipitation).
+#'
+#' There are two ways to make interannual comparisons: on an aggregate basis and on a seasonal basis. If the argument \code{season_facet = F} then parameter totals from each season will be added together to compose one, multi-color bar.If \code{season_facet = T} then parameter totals from each season separated into multiple plots for easier intra-season comparison across years.
 #'
 #' @author Julie Padilla
 #'
@@ -29,7 +33,7 @@
 #'
 #' @return A \code{\link[ggplot2]{ggplot}} object
 #'
-#' @seealso \code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}
+#' @seealso \code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}, \code{\link{y_labeler}}
 #'
 #' @examples
 #' \dontrun{
@@ -37,21 +41,25 @@
 #' dat <- qaqc(apaebmet, qaqc_keep = c('0', '3', '5'))
 #'
 #' x <- seasonal_barplot(dat, param = 'totprcp'
-#'                       , season = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
+#'                       , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
 #'                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
+#'                       , hist_avg = T
 #'                       , convert = T)
 #'
-#' x
-#'
 #' y <- seasonal_barplot(dat, param = 'totprcp'
-#'                       , season = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
+#'                       , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
 #'                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
 #'                       , convert = T
 #'                       , plot = F)
 #'
-#' y
+#' x <- seasonal_barplot(dat, param = 'totprcp'
+#'                       , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
+#'                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
+#'                       , season_facet = T
+#'                       , hist_avg = T
+#'                       , convert = T)
 #' }
-
+#"
 seasonal_barplot <- function(swmpr_in, ...) UseMethod('seasonal_barplot')
 
 #' @rdname seasonal_barplot
@@ -67,13 +75,16 @@ seasonal_barplot.swmpr <- function(swmpr_in
                                , hist_rng = NULL
                                , rng_avg = FALSE
                                , log_trans = FALSE
-                               , convert = FALSE
+                               , converted = FALSE
+                               , hist_avg = TRUE
+                               , season_facet = FALSE
                                , plot_title = FALSE
                                , plot = TRUE
                                , ...) {
 
   dat <- swmpr_in
   parm <- sym(param)
+  conv <- converted
 
   seas <- sym('season')
   res <- sym('result')
@@ -81,7 +92,6 @@ seasonal_barplot.swmpr <- function(swmpr_in
   avg <- sym('mean')
 
   rng <- hist_rng
-  var_nm <- 'Avg Precip.'
 
   # attributes
   parameters <- attr(dat, 'parameters')
@@ -105,7 +115,7 @@ seasonal_barplot.swmpr <- function(swmpr_in
 
   #determine y axis transformation and y axis label
   y_trans <- ifelse(log_trans, 'log10', 'identity')
-  y_label <- y_labeler(param = param)# y_label <- y_labeler(param = param, ...)
+  y_label <- y_labeler(param = param, converted = conv)
 
   #determine if QAQC has been conducted
   if(attr(dat, 'qaqc_cols'))
@@ -118,34 +128,35 @@ seasonal_barplot.swmpr <- function(swmpr_in
   dat_hist$year <- factor(lubridate::year(dat_hist$datetimestamp))
 
   # Assign the seasons and order them
-  dat_hist$season <- assign_season(dat_hist$datetimestamp, abb = T, ...)
+  dat_hist$season <- assign_season(dat_hist$datetimestamp, ...)
+
+  # assign colors to a color ramp (may need interpolation)
+  cols <- colorRampPalette(RColorBrewer::brewer.pal(9, 'Blues'))
+  cols <- cols(length(unique(dat_hist$season)) + 1) # add one in order to skip over the lightest color in the palette
+  cols <- cols[2:length(cols)]
 
   dat_hist <- dat_hist %>%
     dplyr::group_by(!! yr, !! seas) %>%
     dplyr::summarise(result = sum(!! parm, na.rm = T))
 
-  if(convert){
-    dat_hist$result <- dat_hist$result / 25.4
-  }
-
   if(plot){
-    seas_col <- c('#1F4E79', '#4374A0', '#5B9BD5', '#97B9E0') %>% rev #will need to adjust color scheme
-    yr_mx <- dat_hist %>% group_by(year) %>% summarise(max_val = sum(.data$result, na.rm = T))
-    mx <- ceiling(max(yr_mx$max_val) / 10) * 10
+    seas_col <- cols
 
-    lab_parm <- paste(var_nm, ' (', rng[[1]], '-', rng[[2]], ')', sep = '')
+    if(season_facet) {
+      yr_mx <- dat_hist %>% group_by(!! yr, !! seas) %>% summarise(max_val = sum(!! res, na.rm = T))
+    } else {
+      yr_mx <- dat_hist %>% group_by(!! yr) %>% summarise(max_val = sum(!! res, na.rm = T))
+    }
+
+    mx <- ceiling(max(yr_mx$max_val) / 10) * 10 * 1.1
+    brk_pts <- ifelse(mx < 50, 5, ifelse(mx < 100, 10, ifelse(mx < 1000, 100, 200)))
 
     # Add data
     bar_seas <- ggplot(data = dat_hist, aes_(x = yr, y = res, fill = seas)) +
       geom_bar(stat = "identity") +
-      scale_y_continuous(expand = c(0, 0), limits = c(0, mx), breaks = seq(0 , mx, 5)) +
+      scale_y_continuous(expand = c(0, 0), limits = c(0, mx), breaks = seq(0 , mx, brk_pts)) +
       scale_fill_manual(values = seas_col) +
       labs(x = NULL, y = eval(y_label))
-
-    bar_seas <- bar_seas +
-      geom_hline(aes(yintercept = mean(dat_hist$result), linetype = factor(lab_parm))
-                 , color = '#D9D9D9', lwd = 1.5, show.legend = T) +
-      scale_linetype_manual(values = 'solid')
 
     # Add themes
     bar_seas <- bar_seas +
@@ -176,6 +187,41 @@ seasonal_barplot.swmpr <- function(swmpr_in
         ggtitle(ttl) +
         theme(plot.title = element_text(hjust = 0.5))
     }
+
+    # facet wrap if specified
+    if(season_facet) {
+      bar_seas <-
+        bar_seas +
+        facet_wrap(~ .data$season, ncol = 1)
+
+      seas_means <- dat_hist %>%
+        group_by(.data$season) %>%
+        summarise(mean = mean(.data$result, na.rm = T))
+
+      dat_hist <- merge(dat_hist, seas_means)
+    }
+
+    # historical range average if specified
+    if(hist_avg) {
+      var_nm <- ifelse(season_facet, 'Seasonal Average', 'Average')
+
+      lab_parm <- paste(var_nm, ' (', rng[[1]], '-', rng[[2]], ')', sep = '')
+
+      if(season_facet) {
+        bar_seas <- bar_seas +
+          geom_hline(aes(yintercept = dat_hist$mean, linetype = factor(lab_parm))
+                     , color = '#767171', lwd = 1.5, show.legend = T) +
+          scale_linetype_manual(values = 'solid')
+      } else {
+        bar_seas <- bar_seas +
+          geom_hline(aes(yintercept = mean(dat_hist$result), linetype = factor(lab_parm))
+                     , color = '#767171', lwd = 1.5, show.legend = T) +
+          scale_linetype_manual(values = 'solid')
+      }
+
+    }
+
+
 
     return(bar_seas)
 

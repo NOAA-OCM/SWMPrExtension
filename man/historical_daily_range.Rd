@@ -9,7 +9,8 @@ historical_daily_range(swmpr_in, ...)
 
 \method{historical_daily_range}{swmpr}(swmpr_in, param = NULL,
   hist_rng = NULL, target_yr = NULL, criteria = NULL, log_trans = FALSE,
-  plot_title = FALSE, plot = TRUE, ...)
+  converted = FALSE, criteria_lab = "WQ Threshold", plot_title = FALSE,
+  plot = TRUE, ...)
 }
 \arguments{
 \item{swmpr_in}{input swmp object}
@@ -26,6 +27,10 @@ historical_daily_range(swmpr_in, ...)
 
 \item{log_trans}{logical, should y-axis be log? Defaults to \code{FALSE}}
 
+\item{converted}{logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.}
+
+\item{criteria_lab}{chr, label for the threshold criteria defined in \code{criteria}. Defaults to "WQ Threshold"}
+
 \item{plot_title}{logical, should the station name be included as the plot title? Defaults to \code{FALSE}}
 
 \item{plot}{logical, should a plot be returned? Defaults to \code{TRUE}}
@@ -34,11 +39,12 @@ historical_daily_range(swmpr_in, ...)
 A \code{\link[ggplot2]{ggplot}} object
 }
 \description{
-Daily averages and variability. Looking at variability within a year, with historical context
+Compare daily averages for a target year to historical highs and lows
 }
 \details{
-Comparison of analysis year statistical summaries to the long term monthly averages and variability.
-To put it another way, this analysis is looking at monthly averages in context of comparison to period variability.
+This function compares the average daily minimums/maximums and absolute minimums/maximums from a historical range to the average daily value from a target year. If \code{hist_rng} is not specified then the minimum and maximum years within the data set will be used. If \code{target_yr} is not specified then only the results for the \code{hist_rng} will be returned.
+
+The user also has the option to add a threshold line using the \code{criteria} argument. Typically, this value is a water quality threshold, which is why \code{criteria_lab} defaults to \code{'WQ Threshold'}. Howver, the user has the option to specify any other type of threshold they wish. when doing so, the value for \code{criteria_lab} should be changed accordingly.
 }
 \examples{
 \dontrun{
@@ -57,14 +63,12 @@ x <- x + labs(x = NULL, y = "Dissolved Oxygen (mg/L)")
 }
 }
 \seealso{
-\code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}
+\code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}, \code{\link{y_labeler}}
 }
 \author{
 Julie Padilla
 }
 \concept{
-analyze
-
 analyze
 
 analyze

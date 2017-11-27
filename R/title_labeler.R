@@ -8,7 +8,16 @@
 #'
 #' @details A helper function used internally by several plotting functions to generate plot titles.
 #'
+#' @author Julie Padilla
+#'
+#' @concept miscellaneous
+#'
 #' @return Returns character vector
+#'
+#' @examples
+#' \dontrun{
+#' ttl <- title_labeler('elkapwq')
+#' }
 #'
 title_labeler <- function(nerr_site_id) {
 
@@ -23,8 +32,6 @@ title_labeler <- function(nerr_site_id) {
   ttl <- trimws(ttl)
 
   ttl <- paste(ttl, ' (', abbrev, ')', sep = '')
-
-  # ttl <- 'fake title'
 
   return(ttl)
 }

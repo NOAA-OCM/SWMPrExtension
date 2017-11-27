@@ -1,14 +1,13 @@
-#' Seasonal Kendall Analysis for Monthly data
+#' Seasonal Kendall Analysis for Seasonal Data
 #'
-#' Seasonal trends
+#' Non-parametric test for monotonic seasonal trends
 #'
 #' @param swmpr_in input swmpr object
 #' @param param chr string of variable to plot
+#' @param envStats_summary logical, should the standard \code{EnvStats::kendallSeasonalTrendTest} be returned? Defaults to \code{FALSE}. See Details for more information.
 #' @param stat_lab chr, label for the summary statistic defined in \code{FUN}. Defaults to "Average"
-#' @param FUN function used to aggregate monthly SWMP data
+#' @param FUN function used to aggregate seasonal SWMP data
 #' @param ... additional arguments passed to other methods. See \code{\link{assign_season}}
-#'
-#' @concept analyze
 #'
 #' @import ggplot2 dplyr scales rlang
 #'
@@ -16,17 +15,20 @@
 #' @importFrom lubridate  year floor_date
 #' @importFrom magrittr "%>%"
 #' @importFrom tidyr gather
-#' @importFrom stats median
 #'
 #' @export
 #'
-#' @details Seasonal Kendall
+#' @details This function performs a seasonal kendall test on seasonally aggregated values using \code{\link[EnvStats]{kendallSeasonalTrendTest}}.
+#'
+#' If \code{EnvStats_summary = T} then the detailed output summary from \code{\link[EnvStats]{kendallSeasonalTrendTest}} will be returned. If \code{EnvStats_summary = F} then an abbreviated summary will be returned in a \code{data.frame}. The abbreviated summary contains the station name, the type of statistic used to summarize the data on a seasonal basis (specified by \code{stat_lab}), and the following results from \code{\link[EnvStats]{kendallSeasonalTrendTest}}: tau, slope, p-value for the chi-square test, and the p-value for the trend test.
 #'
 #' @author Julie Padilla
 #'
-#' @return A \code{data.frame} object
+#' @concept analyze
 #'
-#' @seealso \code{\link[ggplot2]{ggplot}}, \code{\link[EnvStats]{kendallSeasonalTrendTest}}
+#' @return A \code{data.frame} object or a summary from \code{EnvStats::kendallSeasonalTrendTest}
+#'
+#' @seealso \code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}, \code{\link{y_labeler}}, \code{\link[EnvStats]{kendallSeasonalTrendTest}}
 #'
 #' @examples
 #' \dontrun{
@@ -36,19 +38,20 @@
 #' dat_wq <- qaqc(dat_wq, qaqc_keep = c(0, 3, 5))
 #' }
 
-sk_monthly <- function(swmpr_in, ...) UseMethod('sk_monthly')
+sk_seasonal <- function(swmpr_in, ...) UseMethod('sk_seasonal')
 
-#' @rdname sk_monthly
+#' @rdname sk_seasonal
 #'
 #' @concept analyze
 #'
 #' @export
 #'
-#' @method sk_monthly swmpr
+#' @method sk_seasonal swmpr
 #'
 #'
-sk_monthly.swmpr <- function(swmpr_in
+sk_seasonal.swmpr <- function(swmpr_in
                              , param = NULL
+                             , envStats_summary = FALSE
                              , stat_lab = 'Average'
                              , FUN = function(x) mean(x, na.rm = T)
                              , ...) {
@@ -70,10 +73,6 @@ sk_monthly.swmpr <- function(swmpr_in
   # determine that variable name exists
   if(!any(param %in% parameters))
     stop('Param argument must name input column')
-
-  # determine y axis transformation and y axis label
-  y_trans <- ifelse(log_trans, 'log10', 'identity')
-  y_label <- y_labeler(param = param)
 
   # determine if QAQC has been conducted
   if(attr(dat, 'qaqc_cols'))
@@ -97,12 +96,15 @@ sk_monthly.swmpr <- function(swmpr_in
 
   ### these could be put into an lapply and then combined after -----
   # perform seasonal kendall
-  sk_result <- kendallSeasonalTrendTest
+  sk_result <- kendallSeasonalTrendTest(result ~ season + year, data = sk_data)
 
   # extract results and return
-  sk_tbl <- sk_tidy(sk_result, stat = stat_lab)
-  ### ---------------------------------------------------------------
-  # Could also add logic that would directly return the original sk object?
+  sk_tbl <- sk_tidy(sk_result, station = station, param = param, stat = stat_lab)
 
-  return(sk_tbl)
+  if(envStats_summary) {
+    return(sk_result)
+  } else {
+    return(sk_tbl)
+  }
+
 }

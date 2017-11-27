@@ -8,11 +8,11 @@
 #' @param target_yr numeric, the target year that should be compared against the historic range. If target year is not specified then dot will not be plotted
 #' @param criteria numeric, a numeric criteria that will be plotted as a horizontal line
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
+#' @param converted logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.
+#' @param criteria_lab chr, label for the threshold criteria defined in \code{criteria}. Defaults to "WQ Threshold"
 #' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
 #' @param plot logical, should a plot be returned? Defaults to \code{TRUE}
 #' @param ... additional arguments passed to other methods. See \code{\link{assign_season}} and \code{\link{y_labeler}}.
-#'
-#' @concept analyze
 #'
 #' @import ggplot2 dplyr scales rlang
 #'
@@ -21,8 +21,9 @@
 #'
 #' @export
 #'
-#' @details Comparison of analysis year statistical summaries to the long term monthly averages and variability.
-#' To put it another way, this analysis is looking at monthly averages in context of comparison to period variability.
+#' @details This function summarizes average daily values and average daily minimums/maximums across user-defined seasons for a target year (\code{target_yr}) and for a historical range (\code{hist_rng}). If \code{hist_rng} is not specified then the minimum and maximum years within the data set will be used. If \code{target_yr} is not specified then only the results for the \code{hist_rng} will be returned.
+#'
+#' The user also has the option to add a threshold hold line using the \code{criteria} argument. Typically, this value is a water quality threshold, which is why \code{criteria_lab} defaults to \code{'WQ Threshold'}. Howver, the user has the option to specify any other type of threshold they wish. when doing so, the value for \code{criteria_lab} should be changed accordingly.
 #'
 #' @author Julie Padilla
 #'
@@ -30,7 +31,7 @@
 #'
 #' @return A \code{\link[ggplot2]{ggplot}} object
 #'
-#' @seealso \code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}
+#' @seealso \code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}, \code{\link{y_labeler}}
 #'
 #' @examples
 #' \dontrun{
@@ -65,12 +66,15 @@ historical_range.swmpr <- function(swmpr_in
                                    , target_yr = NULL
                                    , criteria = NULL
                                    , log_trans = FALSE
+                                   , converted = FALSE
+                                   , criteria_lab = 'WQ Threshold'
                                    , plot_title = FALSE
                                    , plot = TRUE
                                    , ...) {
 
   dat <- swmpr_in
   parm <- sym(param)
+  conv <- converted
 
   seas <- sym('season')
   dt <- sym('date')
@@ -101,11 +105,11 @@ historical_range.swmpr <- function(swmpr_in
 
   #determine target year (if there is one)
   if(is.null(target_yr))
-    warning('No target year provided. Only historic range will be plotted.')
+    warning('No target year provided. Only historic range will be returned.')
 
   #determine y axis transformation and y axis label
   y_trans <- ifelse(log_trans, 'log10', 'identity')
-  y_label <- y_labeler(param = param)#, ...)
+  y_label <- y_labeler(param = param, converted = conv)
 
   #determine if QAQC has been conducted
   if(attr(dat, 'qaqc_cols'))
@@ -212,7 +216,7 @@ historical_range.swmpr <- function(swmpr_in
     if(!is.null(criteria)) {
 
       plt <- plt +
-        geom_hline(aes(yintercept = criteria, linetype = factor('WQ Threshold'))
+        geom_hline(aes(yintercept = criteria, linetype = factor(criteria_lab))
                        , color = 'red', show.legend = T) +
         scale_linetype_manual('', values = c('longdash'))
 
