@@ -8,6 +8,8 @@
 #' @param rng_avg logical, should a longterm average be included on the plot? Defaults to \code{FALSE}
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
 #' @param converted logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.
+#' @param hist_avg logical, should a historical average be included? Defaults to \code{TRUE}.
+#' @param season_facet logical, should plot be faceted by season? Defaults to \code{FALSE}.
 #' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
 #' @param plot logical, should a plot be returned? Defaults to \code{TRUE}
 #' @param ... additional arguments passed to other methods. See \code{\link{assign_season}}
@@ -63,6 +65,8 @@ seasonal_barplot.swmpr <- function(swmpr_in
                                , rng_avg = FALSE
                                , log_trans = FALSE
                                , converted = FALSE
+                               , hist_avg = TRUE
+                               , season_facet = FALSE
                                , plot_title = FALSE
                                , plot = TRUE
                                , ...) {
@@ -77,7 +81,8 @@ seasonal_barplot.swmpr <- function(swmpr_in
   avg <- sym('mean')
 
   rng <- hist_rng
-  var_nm <- 'Avg Precip.'
+
+  cols <- c('#1F4E79', '#4374A0', '#5B9BD5', '#97B9E0') %>% rev #will need to adjust color scheme
 
   # attributes
   parameters <- attr(dat, 'parameters')
@@ -121,11 +126,9 @@ seasonal_barplot.swmpr <- function(swmpr_in
     dplyr::summarise(result = sum(!! parm, na.rm = T))
 
   if(plot){
-    seas_col <- c('#1F4E79', '#4374A0', '#5B9BD5', '#97B9E0') %>% rev #will need to adjust color scheme
+    seas_col <- cols
     yr_mx <- dat_hist %>% group_by(year) %>% summarise(max_val = sum(.data$result, na.rm = T))
     mx <- ceiling(max(yr_mx$max_val) / 10) * 10
-
-    lab_parm <- paste(var_nm, ' (', rng[[1]], '-', rng[[2]], ')', sep = '')
 
     # Add data
     bar_seas <- ggplot(data = dat_hist, aes_(x = yr, y = res, fill = seas)) +
@@ -133,11 +136,6 @@ seasonal_barplot.swmpr <- function(swmpr_in
       scale_y_continuous(expand = c(0, 0), limits = c(0, mx), breaks = seq(0 , mx, 5)) +
       scale_fill_manual(values = seas_col) +
       labs(x = NULL, y = eval(y_label))
-
-    bar_seas <- bar_seas +
-      geom_hline(aes(yintercept = mean(dat_hist$result), linetype = factor(lab_parm))
-                 , color = '#D9D9D9', lwd = 1.5, show.legend = T) +
-      scale_linetype_manual(values = 'solid')
 
     # Add themes
     bar_seas <- bar_seas +
@@ -168,6 +166,42 @@ seasonal_barplot.swmpr <- function(swmpr_in
         ggtitle(ttl) +
         theme(plot.title = element_text(hjust = 0.5))
     }
+
+    # facet wrap if specified
+    if(season_facet) {
+      bar_seas <-
+        bar_seas +
+        facet_wrap(~ season, ncol = 1)
+
+      seas_means <- dat_hist %>%
+        group_by(season) %>%
+        summarise(mean = mean(result, na.rm = T))
+
+      dat_hist <- merge(dat_hist, seas_means)
+    }
+
+    # return(seas_means)
+    # historica range average if specified
+    if(hist_avg) {
+      var_nm <- ifelse(season_facet, 'Seasonal Average', 'Average')
+
+      lab_parm <- paste(var_nm, ' (', rng[[1]], '-', rng[[2]], ')', sep = '')
+
+      if(season_facet) {
+        bar_seas <- bar_seas +
+          geom_hline(aes(yintercept = dat_hist$mean, linetype = factor(lab_parm))
+                     , color = '#D9D9D9', lwd = 1.5, show.legend = T) +
+          scale_linetype_manual(values = 'solid')
+      } else {
+        bar_seas <- bar_seas +
+          geom_hline(aes(yintercept = mean(dat_hist$result), linetype = factor(lab_parm))
+                     , color = '#D9D9D9', lwd = 1.5, show.legend = T) +
+          scale_linetype_manual(values = 'solid')
+      }
+
+    }
+
+
 
     return(bar_seas)
 

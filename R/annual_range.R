@@ -136,7 +136,7 @@ annual_range.swmpr <- function(swmpr_in
               , max = max(!! maxi, na.rm = T))
 
   # ensure all factor levels are accounted for, even if there is no data
-  dat_month <- tidyr::complete(dat_month, .data$season)
+  dat_month <- tidyr::complete(dat_month, !! seas)
 
   if(plot){
     # Set the plot range
