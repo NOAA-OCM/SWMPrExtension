@@ -16,6 +16,7 @@
 #'
 #' @import ggplot2 dplyr scales rlang
 #'
+#' @importFrom grDevices colorRampPalette
 #' @importFrom magrittr "%>%"
 #' @importFrom lubridate  year
 #'
@@ -89,8 +90,6 @@ seasonal_barplot.swmpr <- function(swmpr_in
 
   rng <- hist_rng
 
-  cols <- c('#1F4E79', '#4374A0', '#5B9BD5', '#97B9E0') %>% rev #will need to adjust color scheme
-
   # attributes
   parameters <- attr(dat, 'parameters')
   station <- attr(dat, 'station')
@@ -128,19 +127,32 @@ seasonal_barplot.swmpr <- function(swmpr_in
   # Assign the seasons and order them
   dat_hist$season <- assign_season(dat_hist$datetimestamp, abb = T, ...)
 
+  # assign colors to a color ramp (may need interpolation)
+  cols <- colorRampPalette(brewer.pal(9, 'Blues'))
+  cols <- cols(length(unique(dat_hist$season)) + 1) #
+  cols <- cols[2:length(cols)]
+
   dat_hist <- dat_hist %>%
     dplyr::group_by(!! yr, !! seas) %>%
     dplyr::summarise(result = sum(!! parm, na.rm = T))
 
   if(plot){
     seas_col <- cols
-    yr_mx <- dat_hist %>% group_by(year) %>% summarise(max_val = sum(.data$result, na.rm = T))
-    mx <- ceiling(max(yr_mx$max_val) / 10) * 10
 
+    if(season_facet) {
+      yr_mx <- dat_hist %>% group_by(year, season) %>% summarise(max_val = sum(.data$result, na.rm = T))
+    } else {
+      yr_mx <- dat_hist %>% group_by(year) %>% summarise(max_val = sum(.data$result, na.rm = T))
+    }
+
+    mx <- ceiling(max(yr_mx$max_val) / 10) * 10 * 1.1
+    brk_pts <- ifelse(mx < 50, 5, ifelse(mx < 100, 10, ifelse(mx < 1000, 100, 200)))
+
+    # return(mx)
     # Add data
     bar_seas <- ggplot(data = dat_hist, aes_(x = yr, y = res, fill = seas)) +
       geom_bar(stat = "identity") +
-      scale_y_continuous(expand = c(0, 0), limits = c(0, mx), breaks = seq(0 , mx, 5)) +
+      scale_y_continuous(expand = c(0, 0), limits = c(0, mx), breaks = seq(0 , mx, brk_pts)) +
       scale_fill_manual(values = seas_col) +
       labs(x = NULL, y = eval(y_label))
 
@@ -197,12 +209,12 @@ seasonal_barplot.swmpr <- function(swmpr_in
       if(season_facet) {
         bar_seas <- bar_seas +
           geom_hline(aes(yintercept = dat_hist$mean, linetype = factor(lab_parm))
-                     , color = '#D9D9D9', lwd = 1.5, show.legend = T) +
+                     , color = '#767171', lwd = 1.5, show.legend = T) +
           scale_linetype_manual(values = 'solid')
       } else {
         bar_seas <- bar_seas +
           geom_hline(aes(yintercept = mean(dat_hist$result), linetype = factor(lab_parm))
-                     , color = '#D9D9D9', lwd = 1.5, show.legend = T) +
+                     , color = '#767171', lwd = 1.5, show.legend = T) +
           scale_linetype_manual(values = 'solid')
       }
 
