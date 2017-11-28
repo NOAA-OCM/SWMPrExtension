@@ -1,14 +1,17 @@
-#' Reserve National Map
+#' Reserve National Map with Seasonal Kendall Results
 #'
-#' Create a base map for NERRS reserves in ggplot
+#' Create a base map for NERRS reserves in ggplot with seasonal kendall results
 #'
 #' @param incl chr vector to include AK, HI , and PR (case sensitive)
 #' @param highlight_states chr vector of state FIPS codes
-#' @param highlight_reserves chr vector of 3 letter reserve codes
+#' @param sk_reserves chr vector of 3 letter reserve codes that have seasonal kendall results
+#' @param sk_results chr vector of seasonal kendall results. Results can be 'inc', 'dec', 'insig', or 'insuff' which stand for 'increasing trend', 'decreasing trend', 'statistically insignificant trend', or 'insufficient data to detect trend'
+#' @param sk_fill_colors chr vector of colors used to fill seasonal kendall result markers
 #' @param agg_county logical, should counties be aggregated tot he state-level? Defaults to \code{TRUE}
 #'
 #' @import ggplot2
 #'
+#' @importFrom dplyr left_join
 #' @importFrom ggthemes theme_map
 #' @importFrom maptools elide spRbind unionSpatialPolygons
 #' @importFrom rgdal readOGR
@@ -46,15 +49,22 @@
 #' ##National map highlighting west coast states and NERRS (including AK)
 #' nerr_states_west <- c('02', '06', '41', '53')
 #'
-#' nerrs_codes <- c('pdb', 'sos', 'sfb', 'elk', 'tjr', 'kac')
+#' nerrs_codes <- c('pdb', 'sos', 'sfb', 'elk', 'tjr')
+#' nerrs_sk_results <- c('inc', 'inc', 'dec', 'insig', 'insuff')
 #'
-#' res_national_map(highlight_states = nerr_states_west, highlight_reserve = nerrs_codes)
+#' national_sk_map(highlight_states = nerr_states_west,
+#' highlight_reserve = nerrs_codes, sk_results = nerrs_sk_results)
 #' }
 #'
-res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
+national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
                         , highlight_states = NULL
-                        , highlight_reserves = NULL
+                        , sk_reserves = NULL
+                        , sk_results = NULL
+                        , sk_fill_colors = c('orange', 'skyblue', 'gray40', 'gray20')
                         , agg_county = T) {
+
+  if(length(sk_reserves) != length(sk_results))
+    stop('A seasonal kendall result is required for each reserve specified in sk_reserve')
 
   get_US_county_2010_shape <- function() {
     dir <- tempdir()
@@ -64,7 +74,6 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   }
 
   us <- get_US_county_2010_shape()
-  # loc <- get('sampling_stations')
 
   # convert it to Albers equal area
   us_aea <- sp::spTransform(us, sp::CRS("+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs"))
@@ -113,10 +122,13 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   map <- ggplot2::fortify(us_aea_mod, region = "GEO_ID")
 
   # Prep reserve locations for plotting
+  df_loc <- data.frame(NERR.Site.ID = sk_reserves, sk_res = sk_results, stringsAsFactors = F)
+
   reserve_locations <- reserve_locs(incl = incl)
+  reserve_locations <- reserve_locations[reserve_locations$NERR.Site.ID %in% sk_reserves, ]
+  reserve_locations <- dplyr::left_join(reserve_locations, df_loc)
 
   # plot it----
-
   # highlight some states
   gg <- ggplot()
   gg <- gg + coord_equal()
@@ -137,18 +149,49 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
       scale_fill_manual(values = c('#f8f8f8', '#cccccc'))
   }
 
-  # add reserve locations
-  # return(reserve_locations)
-  gg <- gg +
-    geom_point(data = reserve_locations, aes_string(x = 'Longitude', y = 'Latitude')
-               , fill = '#444e65', shape = 21, size = 1)
+  # add reserves with increasing trend
+  if('inc' %in% sk_results) {
 
-  # add highlighted reserves, if specified
-  if(!is.null(highlight_reserves)) {
-    highlight_locations <- reserve_locs(incl = incl, subset_reserve =  highlight_reserves)
+    df <- reserve_locations[reserve_locations$sk_res == 'inc', ]
 
-    gg <- gg + geom_point(data = highlight_locations, aes_string(x = 'Longitude', y = 'Latitude')
-                          , fill = 'yellow', shape = 21, size = 2)
+    gg <-
+      gg +
+      geom_point(data = df
+                 , aes_string(x = 'Longitude', y = 'Latitude'), shape = 24, fill = sk_fill_colors[1], size = 5)
+  }
+
+  # add reserves with decreasing trend
+  if('inc' %in% sk_results) {
+
+    df <- reserve_locations[reserve_locations$sk_res == 'dec', ]
+
+    gg <-
+      gg +
+      geom_point(data = df
+                 , aes_string(x = 'Longitude', y = 'Latitude'), shape = 25, fill = sk_fill_colors[2], size = 5)
+  }
+
+  # add reserves with insignificant trend
+  if('inc' %in% sk_results) {
+
+    df <- reserve_locations[reserve_locations$sk_res == 'insig', ]
+
+    gg <-
+      gg +
+      geom_point(data = df
+                 , aes_string(x = 'Longitude', y = 'Latitude'), shape = 21, fill = sk_fill_colors[3], size = 4)
+  }
+
+  # add reserves with insufficient data for trend
+  if('inc' %in% sk_results) {
+
+    df <- reserve_locations[reserve_locations$sk_res == 'insuff', ]
+
+    gg <-
+      gg +
+      geom_point(data = df
+                 , aes_string(x = 'Longitude', y = 'Latitude')
+                 , shape = 4, color = sk_fill_colors[4], size = 3, stroke = 2)
   }
 
   return(gg)
