@@ -60,7 +60,7 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
                         , highlight_states = NULL
                         , sk_reserves = NULL
                         , sk_results = NULL
-                        , sk_fill_colors = c('orange', 'skyblue', 'gray40', 'gray20')
+                        , sk_fill_colors = c('#247BA0', '#A3DFFF', '#595959', '#595959')
                         , agg_county = T) {
 
   if(length(sk_reserves) != length(sk_results))
@@ -146,7 +146,7 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
     gg <- gg + geom_map(data = map, map = map
                         , aes_string('long', 'lat', map_id = 'id', fill = 'flag')
                         , color = '#999999', size = 0.15, show.legend = F) +
-      scale_fill_manual(values = c('#f8f8f8', '#cccccc'))
+      scale_fill_manual(values = c('#f8f8f8', '#BBBBBB'))
   }
 
   # add reserves with increasing trend
@@ -157,7 +157,8 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
     gg <-
       gg +
       geom_point(data = df
-                 , aes_string(x = 'Longitude', y = 'Latitude'), shape = 24, fill = sk_fill_colors[1], size = 5)
+                 , aes_string(x = 'Longitude', y = 'Latitude'), shape = 24
+                 , color = sk_fill_colors[1] , fill = sk_fill_colors[1], size = 5)
   }
 
   # add reserves with decreasing trend
@@ -168,7 +169,8 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
     gg <-
       gg +
       geom_point(data = df
-                 , aes_string(x = 'Longitude', y = 'Latitude'), shape = 25, fill = sk_fill_colors[2], size = 5)
+                 , aes_string(x = 'Longitude', y = 'Latitude'), shape = 25
+                 , color = sk_fill_colors[2] , fill = sk_fill_colors[2], size = 5)
   }
 
   # add reserves with insignificant trend
@@ -179,7 +181,8 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
     gg <-
       gg +
       geom_point(data = df
-                 , aes_string(x = 'Longitude', y = 'Latitude'), shape = 21, fill = sk_fill_colors[3], size = 4)
+                 , aes_string(x = 'Longitude', y = 'Latitude'), shape = 21
+                 , color = sk_fill_colors[3] , fill = sk_fill_colors[3], size = 4)
   }
 
   # add reserves with insufficient data for trend
@@ -190,8 +193,8 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
     gg <-
       gg +
       geom_point(data = df
-                 , aes_string(x = 'Longitude', y = 'Latitude')
-                 , shape = 4, color = sk_fill_colors[4], size = 3, stroke = 2)
+                 , aes_string(x = 'Longitude', y = 'Latitude'), shape = 4
+                 , color = sk_fill_colors[4], size = 3, stroke = 2)
   }
 
   return(gg)
