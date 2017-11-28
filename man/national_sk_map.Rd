@@ -6,7 +6,7 @@
 \usage{
 national_sk_map(incl = c("contig", "AK", "HI", "PR"),
   highlight_states = NULL, sk_reserves = NULL, sk_results = NULL,
-  sk_fill_colors = c("orange", "skyblue", "gray40", "gray20"),
+  sk_fill_colors = c("#247BA0", "#A3DFFF", "#595959", "#595959"),
   agg_county = T)
 }
 \arguments{
