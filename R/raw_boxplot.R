@@ -17,7 +17,7 @@
 #'
 #' @export
 #'
-#' @details This function produces boxplots of raw, unaggregated data by user-specified season for an annual time series for year of interest
+#' @details This function produces boxplots of raw, unaggregated data by user-specified season for year of interest
 #'
 #' @author Julie Padilla
 #'
@@ -98,6 +98,9 @@ raw_boxplot.swmpr <- function(swmpr_in
   bp_fill <- paste(rng, ' ', data_type, sep = '')
 
   seas <- sym('season')
+
+  # ensure all factor levels are accounted for, even if there is no data
+  dat <- tidyr::complete(dat, !! seas)
 
   plt <- ggplot(data = dat, aes_(x = seas, y = parm, fill = factor(bp_fill))) +
     geom_boxplot(outlier.size = 0.5) +

@@ -8,6 +8,7 @@
 #' @param parameter_threshold vector of numerical thresholds to evaluate parameters against
 #' @param threshold_type vector of logical operators ('<', '>', '<=', '>=', '==', '!=')
 #' @param time_threshold The amount of time an event must last to be counted (in hours)
+#' @param converted logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.
 #' @param pal Select a palette for boxplot fill colors. See \code{\link[ggplot2]{scale_fill_brewer}} for more details.
 #' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
 #' @param plot logical, should a plot be returned? Defaults to \code{TRUE}
@@ -92,6 +93,7 @@ threshold_summary.swmpr <- function(swmpr_in
                                     , parameter_threshold = NULL
                                     , threshold_type = NULL
                                     , time_threshold = NULL
+                                    , converted = F
                                     , pal = 'Set3'
                                     , plot_title = FALSE
                                     , plot = TRUE
@@ -100,6 +102,7 @@ threshold_summary.swmpr <- function(swmpr_in
   dat <- swmpr_in
   parm <- sym(param)
   grp <- sym(summary_type)
+  conv <- converted
 
   seas <- sym('season')
   yr <- sym('year')
@@ -120,6 +123,9 @@ threshold_summary.swmpr <- function(swmpr_in
   #determine if QAQC has been conducted
   if(attr(dat, 'qaqc_cols'))
     warning('QAQC columns present. QAQC not performed before analysis.')
+
+  # Assign label for y axis
+  y_label <- y_count_labeler(param = param, threshold_type = threshold_type, time_threshold = time_threshold, converted = conv)
 
   dat_threshold <- threshold_identification(dat
                                             , param = param
@@ -192,7 +198,7 @@ threshold_summary.swmpr <- function(swmpr_in
       geom_bar(stat = 'identity', position = 'dodge') +
       scale_x_continuous(limits = c(min(dat_grp$x_lab), max(dat_grp$x_lab))
                          , breaks = brks, labels = brk_labs) +
-      labs(x = '', y = 'Count of Events')
+      labs(x = '', y = y_label)
 
     plt <-
       plt +

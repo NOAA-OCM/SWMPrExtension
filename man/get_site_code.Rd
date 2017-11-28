@@ -13,7 +13,7 @@ get_site_code(data.file)
 Returns 3-letter, reserve site code as chr
 }
 \description{
-Identify the 3- letter NERRS reserve code from metadata in the data file
+Identify the 3-letter NERRS reserve code from metadata in the data file
 }
 \details{
 This function returns the 3-letter reserve code associated with the data in the user-specified data file
