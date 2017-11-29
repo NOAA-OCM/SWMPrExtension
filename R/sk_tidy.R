@@ -2,11 +2,11 @@
 #'
 #' Tidy results from \code{\link[EnvStats]{kendallSeasonalTrendTest}}
 #'
-#' @param data a XXX object produced
+#' @param data a \code{htest} object produced by \code{\link[EnvStats]{kendallSeasonalTrendTest}}
 #' @param station chr string sampling station
 #' @param param chr string of variable to plot
 #' @param stat chr, label to be used for statistic used to group data
-#' @param pval num, significance level
+#' @param alpha num, significance level. Defaults to 0.05
 #'
 #' @export
 #'
@@ -23,7 +23,7 @@
 #' data(elksmwq)
 #' }
 #'
-sk_tidy <- function(data, station, param, stat, pval) {
+sk_tidy <- function(data, station, param, stat, alpha = 0.05) {
   # have a check that verifies the data type as whatever kendallSeasonalTrend returns
   dat <- data
   parm <- param
@@ -39,15 +39,9 @@ sk_tidy <- function(data, station, param, stat, pval) {
   results$sig.chi <- NA
   results$sig.trend <- NA
 
-  results[results$pval.chisq > pval, ]$sig.chi <- 'insig'
-  results[results$pval.chisq < pval, ]$sig.chi <- 'sig'
+  results$sig.chi <- ifelse(results[6] < alpha, 'sig', 'insig')
 
-
-  results[results$pval.trend > pval, ]$sig.chi <- 'insig'
-
-  results[results$pval.trend < pval & results$trend > 0, ]$sig.chi <- 'inc'
-  results[results$pval.trend < pval & results$trend < 0, ]$sig.chi <- 'dec'
-  results[results$pval.trend < pval & results$trend == 0, ]$sig.chi <- 'zero slope'
+  results$sig.trend <- ifelse(results[7] > alpha, 'insig', ifelse(results[5] > 0, 'inc', 'dec'))
 
   return(results)
 }

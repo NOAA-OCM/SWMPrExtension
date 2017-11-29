@@ -4,10 +4,10 @@
 \alias{sk_tidy}
 \title{Tidy Seasonal Kendall Results}
 \usage{
-sk_tidy(data, station, param, stat, pval)
+sk_tidy(data, station, param, stat, alpha = 0.05)
 }
 \arguments{
-\item{data}{a XXX object produced}
+\item{data}{a \code{htest} object produced by \code{\link[EnvStats]{kendallSeasonalTrendTest}}}
 
 \item{station}{chr string sampling station}
 
@@ -15,7 +15,7 @@ sk_tidy(data, station, param, stat, pval)
 
 \item{stat}{chr, label to be used for statistic used to group data}
 
-\item{pval}{num, significance level}
+\item{alpha}{num, significance level. Defaults to 0.05}
 }
 \value{
 a \code{data.frame} of results from \code{\link[EnvStats]{kendallSeasonalTrendTest}}

@@ -7,7 +7,7 @@
 \usage{
 sk_seasonal(swmpr_in, ...)
 
-\method{sk_seasonal}{swmpr}(swmpr_in, param = NULL,
+\method{sk_seasonal}{swmpr}(swmpr_in, param = NULL, alpha = 0.05,
   envStats_summary = FALSE, stat_lab = "Average", FUN = function(x)
   mean(x, na.rm = T), ...)
 }
@@ -17,6 +17,8 @@ sk_seasonal(swmpr_in, ...)
 \item{...}{additional arguments passed to other methods. See \code{\link{assign_season}}}
 
 \item{param}{chr string of variable to plot}
+
+\item{alpha}{num, alpha value to use to significance test. Defaults to 0.05.}
 
 \item{envStats_summary}{logical, should the standard \code{EnvStats::kendallSeasonalTrendTest} be returned? Defaults to \code{FALSE}. See Details for more information.}
 
@@ -41,6 +43,8 @@ If \code{EnvStats_summary = T} then the detailed output summary from \code{\link
 dat_wq <- elksmwq
 dat_wq <- subset(dat_wq, subset = c('2007-01-01 0:00', '2017-01-01 0:00'))
 dat_wq <- qaqc(dat_wq, qaqc_keep = c(0, 3, 5))
+
+x <- sk_seasonal(dat_wq, param = 'temp')
 }
 }
 \seealso{
