@@ -1,4 +1,6 @@
 ## Test environments
+* ubuntu 14.04 (on travis-ci), R 3.4.1
+* OS X (on travis-ci), R 3.4.1
 * win-builder [http://win-builder.r-project.org/](http://win-builder.r-project.org/) (devel and release)
 
 ## R CMD check results
