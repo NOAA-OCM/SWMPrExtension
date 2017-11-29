@@ -27,6 +27,17 @@
 #'
 #' @seealso \code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}, \code{\link{y_labeler}}
 #'
+#' @examples
+#' \dontrun{
+#' ## get data, prep
+#' data(elksmwq)
+#' dat <- elksmwq
+#'
+#' dat <- qaqc(elksmwq, qaqc_keep = c('0', '3', '5'))
+#' raw_boxplot(dat, param = 'do_mgl')
+#'
+#' }
+#'
 raw_boxplot <- function(swmpr_in, ...) UseMethod('raw_boxplot')
 
 #' @rdname raw_boxplot

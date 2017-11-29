@@ -37,6 +37,18 @@ Boxplots of raw data by user-defined season for a target year
 \details{
 This function produces boxplots of raw, unaggregated data by user-specified season for year of interest
 }
+\examples{
+\dontrun{
+## get data, prep
+data(elksmwq)
+dat <- elksmwq
+
+dat <- qaqc(elksmwq, qaqc_keep = c('0', '3', '5'))
+raw_boxplot(dat, param = 'do_mgl')
+
+}
+
+}
 \seealso{
 \code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}, \code{\link{y_labeler}}
 }

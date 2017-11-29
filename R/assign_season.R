@@ -22,24 +22,27 @@
 #'
 #' @examples
 #' \dontrun{
-#' data(apacpwq)
-#' dat <- apacpwq
+#' data(elksmwq)
+#' dat <- elksmwq
 #'
-#' seas <- assign_season(dat$datetimestamp)
+#' seas <- assign_season(dat$datetimestamp, abb = FALSE)
 #' levels(seas)
 #'
 #' seas <- assign_season(dat$datetimestamp, abb = TRUE)
 #' levels(seas)
 #'
-#' seas <- assign_season(dat$datetimestamp, season_start = 'March')
+#' seas <- assign_season(dat$datetimestamp, season_start = 'Mar')
+#' levels(seas)
+#'
+#' seas <- assign_season(dat$datetimestamp, abb = FALSE, season_start = 'March')
 #' levels(seas)
 #'
 #' seas <- assign_season(dat$datetimestamp,
-#' season = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12)),
+#' season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12)),
 #' season_names = c('Winter', 'Spring', 'Summer', 'Fall'), season_start = 'Spring')
 #' levels(seas)
 #'
-#' seas <- assign_season(dat$datetimestamp, season = list(c(10:12, 1:3), c(4:9)),
+#' seas <- assign_season(dat$datetimestamp, season_grps = list(c(10:12, 1:3), c(4:9)),
 #' season_names = c('Wet', 'Dry'))
 #' levels(seas)
 #' }

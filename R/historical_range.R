@@ -36,10 +36,9 @@
 #' @examples
 #' \dontrun{
 ## get data, prep
-#' data(apacpwq)
-#' dat <- apacpwq
+#' data(elksmwq)
 #'
-#' dat <- qaqc(apacpwq, qaqc_keep = c('0', '3', '5'))
+#' dat <- qaqc(elksmwq, qaqc_keep = c('0', '3', '5'))
 #' # with criteria
 #' y <- historical_range(dat, param = 'do_mgl', target_yr = 2013, criteria = 2, abb = T)
 #'

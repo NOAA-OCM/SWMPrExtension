@@ -55,18 +55,29 @@ x <- seasonal_barplot(dat, param = 'totprcp'
                       , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
                       , hist_avg = T
-                      , convert = T)
+                      , convert = F)
 
+# return a plot instead of a figure
 y <- seasonal_barplot(dat, param = 'totprcp'
                       , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
-                      , convert = T
+                      , convert = F
                       , plot = F)
 
+## divide plot into seasonal facets
 x <- seasonal_barplot(dat, param = 'totprcp'
                       , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
                       , season_facet = T
+                      , hist_avg = T
+                      , convert = F)
+
+## convert from mm to in
+dat$totprcp <- dat$totprcp / 25.4
+
+x <- seasonal_barplot(dat, param = 'totprcp'
+                      , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
+                      , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
                       , hist_avg = T
                       , convert = T)
 }

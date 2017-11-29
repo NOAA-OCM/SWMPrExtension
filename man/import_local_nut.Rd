@@ -30,23 +30,6 @@ Zip download request through CDMO: \url{http://cdmo.baruch.sc.edu/aqs/zips.cfm}
 
 Example dataset: \url{https://s3.amazonaws.com/swmpexdata/zip_ex.zip}
 }
-\examples{
-
-\dontrun{
-## this is the path for csv example files, decompressed
-path <- 'C:/this/is/my/data/path'
-
-## import, do not include file extension
-import_local(path, 'apaebmet')
-
-## this is the path for csv example files, zipped folder
-path <- 'C:/this/is/my/data/path.zip'
-
-## import, do not include file extension
-import_local(path, 'apaebmet')
-}
-
-}
 \seealso{
 \code{\link{all_params}}, \code{\link{all_params_dtrng}}, \code{\link{rem_reps}}, \code{\link{single_param}}
 }

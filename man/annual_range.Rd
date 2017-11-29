@@ -45,10 +45,11 @@ The user also has the option to add a threshold hold line using the \code{criter
 }
 \examples{
 \dontrun{
-data(apacpwq)
-dat <- apacpwq
+## get data, prep
+data(elksmwq)
+dat <- elksmwq
 
-dat <- qaqc(apacpwq, qaqc_keep = c('0', '3', '5'))
+dat <- qaqc(elksmwq, qaqc_keep = c('0', '3', '5'))
 do_plt <- annual_range(dat, param = 'do_mgl', target_yr = 2012)
 do_plt <- annual_range(dat, param = 'do_mgl', target_yr = 2012, criteria = 2)
 }

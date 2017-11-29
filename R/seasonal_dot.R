@@ -64,7 +64,11 @@
 #' dat_nut <- qaqc(dat_nut, qaqc_keep = c(0, 3, 5))
 #'
 #' x <-
-#'   seasonal_dot(dat_nut, param = 'chla_n',
+#'   seasonal_dot(dat_nut
+#'                , param = 'chla_n'
+#'                , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
+#'                , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
+#'                , season_start = 'Spring'
 #'                , lm_trend = F
 #'                , lm_lab = F
 #'                , plot_title = T)
@@ -114,10 +118,12 @@ seasonal_dot.swmpr <- function(swmpr_in
   parameters <- attr(dat, 'parameters')
   station <- attr(dat, 'station')
 
+
+  # return()
   #TESTS
   #determine type WQ, MET, NUT
   #determine log scale transformation
-  if(substr(station, 6, nchar(station)) == 'nut')
+  if(substr(station, 6, nchar(station)) == 'nut' && !('season_names' %in% names(list(...))))
     warning('Nutrient data detected. Consider specifying seasons > 1 month.')
 
   #determine that variable name exists

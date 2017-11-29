@@ -35,11 +35,11 @@
 #'
 #' @examples
 #' \dontrun{
-## get data, prep
-#' data(apacpwq)
-#' dat <- apacpwq
+#' ## get data, prep
+#' data(elksmwq)
+#' dat <- elksmwq
 #'
-#' dat <- qaqc(apacpwq, qaqc_keep = c('0', '3', '5'))
+#' dat <- qaqc(elksmwq, qaqc_keep = c('0', '3', '5'))
 #' do_plt <- annual_range(dat, param = 'do_mgl', target_yr = 2012)
 #' do_plt <- annual_range(dat, param = 'do_mgl', target_yr = 2012, criteria = 2)
 #' }
@@ -176,13 +176,14 @@ annual_range.swmpr <- function(swmpr_in
 
     # Add criteria line if specified
     if(!is.null(criteria)) {
+      # return(plt)
 
       plt <- plt +
         geom_hline(aes(yintercept = criteria, color = factor(criteria_lab)
                        , linetype = factor(criteria_lab))
                    , show.legend = T) +
-        scale_color_manual('', values = c(criteria_lab = 'red')) +
-        scale_linetype_manual('', values = c(criteria_lab = 'longdash'))
+        scale_color_manual('', values = c('red')) +
+        scale_linetype_manual('', values = c('longdash'))
     }
 
     # add plot title if specified

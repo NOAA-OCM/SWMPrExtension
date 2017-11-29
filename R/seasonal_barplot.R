@@ -44,18 +44,29 @@
 #'                       , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
 #'                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
 #'                       , hist_avg = T
-#'                       , convert = T)
+#'                       , convert = F)
 #'
+#' # return a plot instead of a figure
 #' y <- seasonal_barplot(dat, param = 'totprcp'
 #'                       , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
 #'                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
-#'                       , convert = T
+#'                       , convert = F
 #'                       , plot = F)
 #'
+#' ## divide plot into seasonal facets
 #' x <- seasonal_barplot(dat, param = 'totprcp'
 #'                       , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
 #'                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
 #'                       , season_facet = T
+#'                       , hist_avg = T
+#'                       , convert = F)
+#'
+#' ## convert from mm to in
+#' dat$totprcp <- dat$totprcp / 25.4
+#'
+#' x <- seasonal_barplot(dat, param = 'totprcp'
+#'                       , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
+#'                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
 #'                       , hist_avg = T
 #'                       , convert = T)
 #' }
@@ -190,9 +201,12 @@ seasonal_barplot.swmpr <- function(swmpr_in
 
     # facet wrap if specified
     if(season_facet) {
+
+      # return(dat_hist)
+
       bar_seas <-
         bar_seas +
-        facet_wrap(~ .data$season, ncol = 1)
+        facet_wrap('season', ncol = 1)
 
       seas_means <- dat_hist %>%
         group_by(.data$season) %>%

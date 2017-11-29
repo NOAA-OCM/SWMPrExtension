@@ -141,14 +141,14 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   # return(reserve_locations)
   gg <- gg +
     geom_point(data = reserve_locations, aes_string(x = 'Longitude', y = 'Latitude')
-               , fill = '#444e65', shape = 21, size = 1)
+               , fill = '#444e65', shape = 21, size = 2)
 
   # add highlighted reserves, if specified
   if(!is.null(highlight_reserves)) {
     highlight_locations <- reserve_locs(incl = incl, subset_reserve =  highlight_reserves)
 
     gg <- gg + geom_point(data = highlight_locations, aes_string(x = 'Longitude', y = 'Latitude')
-                          , fill = 'yellow', shape = 21, size = 2)
+                          , fill = 'yellow', shape = 21, size = 3)
   }
 
   return(gg)
