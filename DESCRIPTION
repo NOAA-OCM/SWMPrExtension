@@ -1,7 +1,7 @@
 Package: SWMPrExtension
 Type: Package
 Title: Additional functions for retrieving, organizing, and analyzing estuary monitoring data
-Version: 0.1.10
+Version: 0.1.11
 Author: Julie Padilla [aut, cre]
 Maintainer: Julie Padilla <jpadilla@limno.com>
 Description: Additional tools for retrieving, organizing, and analyzing environmental
@@ -13,7 +13,9 @@ BugReports: https://github.com/padilla410/SWMPrExtension/issues
 License: CC0
 Encoding: UTF-8
 LazyData: true
-Depends: R (>= 2.10)
+Depends:
+    R (>= 3.2.0),
+	SWMPr
 Imports: SWMPr,
     broom,
     dplyr,
