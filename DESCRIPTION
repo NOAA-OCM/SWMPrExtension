@@ -1,6 +1,6 @@
 Package: SWMPrExtension
 Type: Package
-Title: Additional functions for retrieving, organizing, and analyzing estuary monitoring data
+Title: Additional Functions for Retrieving, Organizing, and Analyzing Estuary Monitoring Data
 Version: 0.1.12.9000
 Author: Julie Padilla [aut, cre]
 Maintainer: Julie Padilla <jpadilla@limno.com>
