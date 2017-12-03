@@ -19,7 +19,7 @@
 #' @seealso \code{\link{set_date_break_labs}}, \code{\link[ggplot2]{scale_x_datetime}}
 #'
 set_date_breaks <- function(rng) {
-  if(length(unique(rng)) > 2) {
+  if(length(unique(rng)) == 2) {
     brks <- ifelse(diff(rng) > 3, '1 year', '4 months')
   } else {
     brks <- ifelse(length(unique(rng)) > 1, '2 months', '1 month')
@@ -48,7 +48,7 @@ set_date_breaks <- function(rng) {
 ##' @seealso \code{\link{set_date_breaks}}, \code{\link[ggplot2]{scale_x_datetime}}
 #'
 set_date_break_labs <- function(rng) {
-  if(length(unique(rng)) > 2) {
+  if(length(unique(rng)) == 2) {
     lab_brks <- ifelse(diff(rng) > 3, '%Y', '%b-%y')
   } else {
     lab_brks <- ifelse(length(unique(rng)) > 1, '%b-%y', '%b')
