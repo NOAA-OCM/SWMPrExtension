@@ -16,7 +16,7 @@ LazyData: true
 Depends:
     R (>= 3.2.0),
 	SWMPr
-Imports: SWMPr,
+Imports:
     broom,
     dplyr,
 	EnvStats,
