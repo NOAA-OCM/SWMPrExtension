@@ -10,7 +10,7 @@ threshold_percentile_plot(swmpr_in, ...)
 \method{threshold_percentile_plot}{swmpr}(swmpr_in, param = NULL,
   hist_rng = NULL, target_yr = NULL, percentiles = c(0.05, 0.95),
   by_month = TRUE, log_trans = FALSE, converted = FALSE,
-  plot_title = FALSE, plot = TRUE, ...)
+  plot_title = FALSE, ...)
 }
 \arguments{
 \item{swmpr_in}{input swmp object}
@@ -32,8 +32,6 @@ threshold_percentile_plot(swmpr_in, ...)
 \item{converted}{logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.}
 
 \item{plot_title}{logical, should the station name be included as the plot title? Defaults to \code{FALSE}}
-
-\item{plot}{logical, should a plot be returned? Defaults to \code{TRUE}}
 }
 \value{
 A \code{\link[ggplot2]{ggplot}} object

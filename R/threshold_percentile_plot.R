@@ -11,7 +11,6 @@
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
 #' @param converted logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.
 #' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
-#' @param plot logical, should a plot be returned? Defaults to \code{TRUE}
 #' @param ... additional arguments passed to other methods (not used for this function).
 #'
 #' @import ggplot2 dplyr rlang
@@ -89,7 +88,6 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
                                          , log_trans = FALSE
                                          , converted = FALSE
                                          , plot_title = FALSE
-                                         , plot = TRUE
                                          , ...){
   dat <- swmpr_in
   parm <- sym(param)
@@ -181,17 +179,46 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
   plt <- ggplot(dat_subset, aes_(x = dt, y = parm, color = lab_dat)) +
     geom_line(lwd = 1)
 
+  # return(bar_plt)
   if(length(percentiles) > 1) {
+
+    p_hi <- sym('perc_hi')
+    p_lo <- sym('perc_lo')
+
     plt <-
       plt +
-      geom_line(data = bar_plt, aes(x = .data$datetimestamp, y = .data$perc_hi, color = lab_perc), lwd = 1) +
-      geom_line(data = bar_plt, aes(x = .data$datetimestamp, y = .data$perc_lo, color = lab_perc), lwd = 1)
+
+      ##this does not work
+      # geom_line(data = bar_plt
+      #           , aes(x = .data$datetimestamp, y = .data$perc_hi, color = lab_perc)
+      #           , lwd = 1, inherit.aes = F) +
+      # geom_line(data = bar_plt
+      #           , aes(x = .data$datetimestamp, y = .data$perc_lo, color = lab_perc)
+      #           , lwd = 1, inherit.aes = F)
+
+      ##this works
+    # geom_line(data = bar_plt
+    #           , aes(x = datetimestamp, y = perc_hi, color = lab_perc)
+    #           , lwd = 1) +
+    #   geom_line(data = bar_plt
+    #             , aes(x = datetimestamp, y = perc_lo, color = lab_perc)
+    #             , lwd = 1)
+
+    geom_line(data = bar_plt
+              , aes_(x = dt, y = p_hi, color = lab_perc)
+              , lwd = 1) +
+      geom_line(data = bar_plt
+                , aes_(x = dt, y = p_lo, color = lab_perc)
+                , lwd = 1)
 
   } else {
     plt <-
       plt +
-      geom_line(data = bar_plt, aes(x = .data$datetimestamp, y = .data$perc_hi, color = lab_perc), lwd = 1)
+      geom_line(data = bar_plt, aes(x = .data$datetimestamp, y = .data$perc_hi, color = lab_perc)
+                , lwd = 1
+                , inherit.aes = F)
   }
+
 
   if(data_type == 'nut') {
     plt <-
