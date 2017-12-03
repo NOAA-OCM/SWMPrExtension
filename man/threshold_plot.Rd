@@ -27,7 +27,7 @@ threshold_plot(swmpr_in, ...)
 
 \item{threshold_cols}{chr vector of color values for categories created by \code{thresholds}.}
 
-\item{crit_threshold}{logical, should the critical threshold be highlighted with a bold, dashed line? Defaults to \code{FALSE}}
+\item{crit_threshold}{num, value at which the critical threshold line should be plotted. Typically the same value used to establish the 'Poor' threshold.}
 
 \item{log_trans}{logical, should y-axis be log? Defaults to \code{FALSE}}
 

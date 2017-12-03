@@ -9,7 +9,7 @@
 #' @param threshold_labs chr vector of labels for categories created by \code{thresholds}.
 #' @param threshold_cols chr vector of color values for categories created by \code{thresholds}.
 #' @param monthly_smooth logical, calculate a monthly average? Defaults to \code{FALSE}
-#' @param crit_threshold logical, should the critical threshold be highlighted with a bold, dashed line? Defaults to \code{FALSE}
+#' @param crit_threshold num, value at which the critical threshold line should be plotted. Typically the same value used to establish the 'Poor' threshold.
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
 #' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
 #' @param ... additional arguments passed to other methods.#' @param ... additional arguments passed to other methods. See \code{\link{y_labeler}}.
@@ -108,7 +108,7 @@ threshold_plot.swmpr <- function(swmpr_in
                                  , thresholds = NULL
                                  , threshold_labs = c('Good', 'Fair', 'Poor')
                                  , threshold_cols = c('#ABD9E9', '#FFFFCC', '#FEC596')
-                                 , crit_threshold = F
+                                 , crit_threshold = NULL
                                  , log_trans = FALSE
                                  , monthly_smooth = FALSE
                                  , plot_title = FALSE
@@ -142,7 +142,7 @@ threshold_plot.swmpr <- function(swmpr_in
 
   #determine if a reasonable number of thresholds and labels have been specified
   if(length(thresholds) + 1 != length(threshold_labs))
-    stop('length(thresholds) must be one greater than length(threshold_labs).')
+    stop('length(threshold_labs) must be one greater than length(thresholds).')
 
   #determine y axis transformation, y axis label
   y_trans <- ifelse(log_trans, 'log10', 'identity')
@@ -208,7 +208,7 @@ threshold_plot.swmpr <- function(swmpr_in
     theme(legend.position = 'top'
           , legend.direction = 'horizontal')
 
-  # add background colors
+  # add background labels
   plt <-
     plt +
     annotate("text", x = max(dat$datetimestamp), y = mx
@@ -242,13 +242,13 @@ threshold_plot.swmpr <- function(swmpr_in
       scale_fill_manual('', values = c(ts_col))
   }
 
-  # if(crit_threshold) {
-  #   #Add the line for emphasis
-  #   plt <-
-  #     plt +
-  #     geom_hline(yintercept = thresholds[1], linetype = 'longdash', color = 'orange', lwd = 2)
-  #
-  # }
+  if(!is.null(crit_threshold)) {
+    #Add the line for emphasis
+    plt <-
+      plt +
+      geom_hline(yintercept = crit_threshold, linetype = 'longdash', color = 'orange', lwd = 2)
+
+  }
 
   if(monthly_smooth && data_type != 'nut') {
 
@@ -265,9 +265,11 @@ threshold_plot.swmpr <- function(swmpr_in
       plt +
       geom_line(data = df_smooth, aes_(x = dt, y = avg, color = lab_smooth, linetype = lab_smooth), lwd = 1) +
       scale_color_manual('', values = c(ts_col, smooth_col)) +
-      scale_linetype_manual('', values = c(ts_col, smooth_col))
+      scale_linetype_manual('', values = c(ts_ln, smooth_ln))
 
   }
+
+  return(plt)
 
   # add plot title if specified
   if(plot_title) {
