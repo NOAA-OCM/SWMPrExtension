@@ -92,7 +92,7 @@ annual_range.swmpr <- function(swmpr_in
 
   #determine historical range exists, if not default to min/max of the range
   if(is.null(rng)) {
-    warning('No target year specified. Entire time series will be used.')
+    warning('No target year specified. Maximum year in data set will be used.')
     rng <- max(lubridate::year(dat$datetimestamp))
   }
 

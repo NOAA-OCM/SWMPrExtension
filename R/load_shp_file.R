@@ -18,7 +18,7 @@
 #'
 #' @concept reporting
 #'
-#' @return Returns a character string of the shapefile for the reserve boundary
+#' @return Returns a \code{sp} object for use with \code{res_sk_map} and \code{res_local_map}
 #'
 load_shp_file <- function(path, dissolve_boundaries = T){
 

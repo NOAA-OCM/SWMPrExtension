@@ -33,8 +33,6 @@
 #' @examples
 #' \dontrun{
 #'
-#' ##Just the national map
-#'
 #' ## a compact reserve
 #' ### set plotting parameters
 #' stations <-

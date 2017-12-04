@@ -7,9 +7,9 @@
 \usage{
 seasonal_dot(swmpr_in, ...)
 
-\method{seasonal_dot}{swmpr}(swmpr_in, param = NULL, rng = NULL,
-  lm_trend = FALSE, lm_lab = FALSE, log_trans = FALSE,
-  converted = FALSE, plot_title = FALSE, plot = TRUE, ...)
+\method{seasonal_dot}{swmpr}(swmpr_in, param = NULL, lm_trend = FALSE,
+  lm_lab = FALSE, log_trans = FALSE, converted = FALSE,
+  plot_title = FALSE, plot = TRUE, ...)
 }
 \arguments{
 \item{swmpr_in}{input swmpr object}
@@ -17,8 +17,6 @@ seasonal_dot(swmpr_in, ...)
 \item{...}{additional arguments passed to other methods. See \code{\link{assign_season}} and \code{\link{y_labeler}}.}
 
 \item{param}{chr string of variable to plot}
-
-\item{rng}{numeric vector, if historic range is not specified then the min/max values of the data set will be used.}
 
 \item{lm_trend}{logical, add linear trend line?}
 

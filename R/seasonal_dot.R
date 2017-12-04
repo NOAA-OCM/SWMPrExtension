@@ -4,7 +4,6 @@
 #'
 #' @param swmpr_in input swmpr object
 #' @param param chr string of variable to plot
-#' @param rng numeric vector, if historic range is not specified then the min/max values of the data set will be used.
 #' @param lm_trend logical, add linear trend line?
 #' @param lm_lab logical, add significance label? Statisically significant results will appear in bold.
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
@@ -98,7 +97,6 @@ seasonal_dot <- function(swmpr_in, ...) UseMethod('seasonal_dot')
 #'
 seasonal_dot.swmpr <- function(swmpr_in
                                , param = NULL
-                               , rng = NULL
                                , lm_trend = FALSE
                                , lm_lab = FALSE
                                , log_trans = FALSE

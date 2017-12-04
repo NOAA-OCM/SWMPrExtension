@@ -35,8 +35,6 @@ To display seasonal trends, the user must specify \code{c('inc', 'dec', 'insig')
 \examples{
 \dontrun{
 
-##Just the national map
-
 ## a compact reserve
 ### set plotting parameters
 stations <-

@@ -12,7 +12,7 @@ load_shp_file(path, dissolve_boundaries = T)
 \item{dissolve_boundaries}{logical, should reserve boundaries be dissolved? Defaults to \code{TRUE}}
 }
 \value{
-Returns a character string of the shapefile for the reserve boundary
+Returns a \code{sp} object for use with \code{res_sk_map} and \code{res_local_map}
 }
 \description{
 Load and format shapefile for use with res_local_map
