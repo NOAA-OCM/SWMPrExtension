@@ -2,7 +2,7 @@
 #'
 #' Compare seasonal averages/mins/maxes for a target year to historical seasonal averages/mins/maxes
 #'
-#' @param swmpr_in input swmpe object
+#' @param swmpr_in input swmpr object
 #' @param param chr string of variable to plot
 #' @param hist_rng numeric vector, if historic range is not specified then the min/max values of the data set will be used.
 #' @param target_yr numeric, the target year that should be compared against the historic range. If target year is not specified then dot will not be plotted
@@ -40,10 +40,10 @@
 #'
 #' dat <- qaqc(elksmwq, qaqc_keep = c('0', '3', '5'))
 #' # with criteria
-#' y <- historical_range(dat, param = 'do_mgl', target_yr = 2013, criteria = 2, abb = T)
+#' y <- historical_range(dat, param = 'do_mgl', target_yr = 2013, criteria = 2)
 #'
 #' # w/o criteria
-#' x <- historical_range(dat, param = 'do_mgl', target_yr = 2013, abb = T)
+#' x <- historical_range(dat, param = 'do_mgl', target_yr = 2013)
 #'
 #' # add a y label
 #' x <- x + labs(x = NULL, y = "Dissolved Oxygen (mg/L)")
@@ -208,7 +208,7 @@ historical_range.swmpr <- function(swmpr_in
     plt <-
       plt +
       theme(legend.key.size = unit(7, 'pt')) +
-      theme(legend.text = element_text(size = 8)) +
+      theme(legend.text = element_text(size = 7)) +
       theme(legend.spacing.x = unit(-6, 'pt'))
 
     # Add criteria line if specified

@@ -13,7 +13,7 @@ historical_range(swmpr_in, ...)
   plot = TRUE, ...)
 }
 \arguments{
-\item{swmpr_in}{input swmpe object}
+\item{swmpr_in}{input swmpr object}
 
 \item{...}{additional arguments passed to other methods. See \code{\link{assign_season}} and \code{\link{y_labeler}}.}
 
@@ -52,10 +52,10 @@ data(elksmwq)
 
 dat <- qaqc(elksmwq, qaqc_keep = c('0', '3', '5'))
 # with criteria
-y <- historical_range(dat, param = 'do_mgl', target_yr = 2013, criteria = 2, abb = T)
+y <- historical_range(dat, param = 'do_mgl', target_yr = 2013, criteria = 2)
 
 # w/o criteria
-x <- historical_range(dat, param = 'do_mgl', target_yr = 2013, abb = T)
+x <- historical_range(dat, param = 'do_mgl', target_yr = 2013)
 
 # add a y label
 x <- x + labs(x = NULL, y = "Dissolved Oxygen (mg/L)")
