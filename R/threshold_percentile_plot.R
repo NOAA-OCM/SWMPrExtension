@@ -175,9 +175,13 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
   lab_tgt <- ifelse(is.null(target_yr), lab_yr, paste('(', target_yr, ')', sep = ''))
   lab_dat <- paste('Obs Data ', lab_tgt, sep = '')
 
+  brks <- set_date_breaks(hist_rng)
+  lab_brks <- set_date_break_labs(hist_rng)
+
   # plot ----
   plt <- ggplot(dat_subset, aes_(x = dt, y = parm, color = lab_dat)) +
-    geom_line(lwd = 1)
+    geom_line(lwd = 1) +
+    scale_x_datetime(date_breaks = brks, date_labels = lab_brks)
 
   # return(bar_plt)
   if(length(percentiles) > 1) {
@@ -187,24 +191,7 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
 
     plt <-
       plt +
-
-      ##this does not work
-      # geom_line(data = bar_plt
-      #           , aes(x = .data$datetimestamp, y = .data$perc_hi, color = lab_perc)
-      #           , lwd = 1, inherit.aes = F) +
-      # geom_line(data = bar_plt
-      #           , aes(x = .data$datetimestamp, y = .data$perc_lo, color = lab_perc)
-      #           , lwd = 1, inherit.aes = F)
-
-      ##this works
-    # geom_line(data = bar_plt
-    #           , aes(x = datetimestamp, y = perc_hi, color = lab_perc)
-    #           , lwd = 1) +
-    #   geom_line(data = bar_plt
-    #             , aes(x = datetimestamp, y = perc_lo, color = lab_perc)
-    #             , lwd = 1)
-
-    geom_line(data = bar_plt
+      geom_line(data = bar_plt
               , aes_(x = dt, y = p_hi, color = lab_perc)
               , lwd = 1) +
       geom_line(data = bar_plt
