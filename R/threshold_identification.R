@@ -34,30 +34,35 @@
 #'
 #' @examples
 #' \dontrun{
-#' ## change the type argument if plotting discrete and continuous data
 #' wq <- apacpwq
-#' nut <- apacpnut
 #'
-#' ##add a set step piece to this
+#' dat_wq <- qaqc(wq, qaqc_keep = c(0, 3, 5))
+#' dat_wq <- setstep(dat_wq)
 #'
 #' wq_pars<- threshold_identification(dat_wq, param = c('do_mgl', 'ph', 'temp')
-#'                           , parameter_threshold = c('2', '5', '30')
+#'                           , parameter_threshold = c(2, 5, 30)
 #'                           , threshold_type = c('<', '<', '>'), time_threshold = 2)
+#'
 #' wq_par<- threshold_identification(dat_wq, param = c('do_mgl')
-#'                           , parameter_threshold = c('2')
+#'                           , parameter_threshold = c(2)
 #'                           , threshold_type = c('<'), time_threshold = 2)
 #'
 #'
+#' ## time_threshold and setstep are not necessary for monthly parameters
+#' nut <- apacpnut
+#'
+#' dat_nut <- qaqc(nut, qaqc_keep = c(0, 3, 5))
+#'
 #' nut_pars <- threshold_identification(dat_nut, param = c('chla_n', 'po4f')
-#'                           , parameter_threshold = c('10', '0.01')
+#'                           , parameter_threshold = c(10, 0.01)
 #'                           , threshold_type = c('>', '>'))
 #'
 #' nut_par <- threshold_identification(dat_nut, param = c('chla_n')
-#'                           , parameter_threshold = c('10')
+#'                           , parameter_threshold = c(10)
 #'                           , threshold_type = c('>'))
 #'
 #' nut_err <- threshold_identification(dat_nut, param = c('chla_n')
-#'                           , parameter_threshold = c('30')
+#'                           , parameter_threshold = c(30)
 #'                           , threshold_type = c('>'))
 #'
 #' }
@@ -194,16 +199,15 @@ threshold_identification.swmpr <- function(swmpr_in, param, parameter_threshold,
 
       out <- bind_rows(x, .id = 'parameter')
 
-      # return(dat)
-
     } else {
       out <- generate_nut_flags(dat, df_statements[1, 2])
 
       out$parameter <- param
       out <- out[ , c(4, 1:3)]
     }
-    out <- out[complete.cases(out) == TRUE, ]
+
     out <- out[out$flags == TRUE, ]
+    out <- out[rowSums(is.na(out)) != ncol(out), ]
 
     if(is.data.frame(out) && nrow(out) == 0)
       stop('No results were returned using the user-specified thresholds. Set new thresholds and re-run.')

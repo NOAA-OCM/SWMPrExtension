@@ -48,7 +48,7 @@ y_count_labeler <- function(param, parameter_threshold, threshold_type, time_thr
                , 'Maximum Wind Speed ', 'Maximum Time of Wind Speed Measurement ', 'Wind Direction ', 'Wind Direction Standard Deviation '
                , 'Photosynthetically Active Radiation ', 'Precipitiation ', 'Total Solar Radiation ')
 
-  nut_lab <- c('Orthophosphate ', 'Ammonium ', 'Nitrite ', 'Nitrate  ', 'Nitrite + Nitrate  ', 'Chlorophyll-a'
+  nut_lab <- c('Orthophosphate ', 'Ammonium ', 'Nitrite ', 'Nitrate  ', 'Nitrite + Nitrate  ', 'Chlorophyll-a '
                , 'Dissolved Inorganic Nitrogen ', 'Dissolved Inorganic Phosphorus ')
 
   wq_units <- c('deg C', ' mS/cm', ' psu', ' %', ' mg/L', ' m', ' m', ' m', ' m', ' su', ' NTU', 'ug/L')

@@ -2,7 +2,7 @@
 #'
 #' Summary plots for threshold identification analysis
 #'
-#' @param swmpr_in input swmp object
+#' @param swmpr_in input swmpr object
 #' @param param chr string of variable to plot (one only)
 #' @param summary_type Choose from \code{month}, \code{season}, or \code{year} aggregation
 #' @param parameter_threshold vector of numerical thresholds to evaluate parameters against
@@ -56,24 +56,23 @@
 #'
 #' ## Nutrient examples
 #' dat_nut <- qaqc(apacpnut, qaqc_keep = c(0, 3, 5))
-#' dat_nut <- setstep(dat_nut, timestep = 'weeks')
 #'
 #' x <-
 #'   threshold_summary(dat_nut, param = 'chla_n',
 #'   parameter_threshold = 10,
-#'   threshold_type = '>', time_threshold = 2, summary_type = 'month',
+#'   threshold_type = '>', summary_type = 'month',
 #'   plot_title = T)
 #'
 #' y <-
-#'   threshold_summary(dat_wq, param = 'chla_n', parameter_threshold = 10,
-#'   threshold_type = '>', time_threshold = 2, summary_type = 'season',
+#'   threshold_summary(dat_nut, param = 'chla_n', parameter_threshold = 10,
+#'   threshold_type = '>', summary_type = 'season',
 #'   season = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12)),
 #'   season_names = c('Winter', 'Spring', 'Summer', 'Fall'),
 #'   season_start = 'Winter', plot_title = T)
 #'
 #'  z <-
 #'    threshold_summary(dat_nut, param = 'chla_n', parameter_threshold = 10,
-#'    threshold_type = '>', time_threshold = 2, summary_type = 'year',
+#'    threshold_type = '>', summary_type = 'year',
 #'    plot_title = T, plot = T)
 #' }
 
@@ -125,20 +124,19 @@ threshold_summary.swmpr <- function(swmpr_in
     warning('QAQC columns present. QAQC not performed before analysis.')
 
   # Assign label for y axis
-  y_label <- y_count_labeler(param = param, threshold_type = threshold_type, time_threshold = time_threshold, converted = conv)
+  y_label <- y_count_labeler(param = param, parameter_threshold = parameter_threshold, threshold_type = threshold_type, time_threshold = time_threshold, converted = conv)
 
   dat_threshold <- threshold_identification(dat
                                             , param = param
                                             , parameter_threshold = parameter_threshold
                                             , threshold_type = threshold_type
-                                            , time_threshold = time_threshold, ...)
+                                            , time_threshold = time_threshold)
   dat_threshold$month <- lubridate::month(dat_threshold$starttime)
   dat_threshold$year <- lubridate::year(dat_threshold$starttime)
 
+
   # Assign the seasons and order them
-  # if(summary_type == 'season') {
   dat_threshold$season <- assign_season(dat_threshold$starttime, abb = T, ...)
-  # }
 
   summary <- dat_threshold %>%
     group_by(!! yr, !! grp, !! seas) %>%
@@ -194,10 +192,9 @@ threshold_summary.swmpr <- function(swmpr_in
     brk_labs <- seq(from = mn_yr, to = mx_yr, by = 1)
 
     plt <-
-      ggplot(dat_grp, aes(x = .data$x_lab, y = .data$count, fill = .data$grp_join)) +
+      ggplot(dat_grp, aes_string(x = 'x_lab', y = 'count', fill = 'grp_join')) +
       geom_bar(stat = 'identity', position = 'dodge') +
-      scale_x_continuous(limits = c(min(dat_grp$x_lab), max(dat_grp$x_lab))
-                         , breaks = brks, labels = brk_labs) +
+      scale_x_continuous(breaks = brks, labels = brk_labs) +
       labs(x = '', y = y_label)
 
     plt <-
@@ -221,7 +218,10 @@ threshold_summary.swmpr <- function(swmpr_in
 
 
     if(summary_type == 'year') {
-      plt <- plt + scale_fill_manual('', values = rep('gray30', 10)) +
+
+      yrs <- length(unique(brks))
+
+      plt <- plt + scale_fill_manual('', values = rep('gray30', yrs)) +
         guides(fill = F)
     } else {
       plt <- plt + scale_fill_brewer('', palette = pal)

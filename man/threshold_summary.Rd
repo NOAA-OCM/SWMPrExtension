@@ -13,7 +13,7 @@ threshold_summary(swmpr_in, ...)
   pal = "Set3", plot_title = FALSE, plot = TRUE, ...)
 }
 \arguments{
-\item{swmpr_in}{input swmp object}
+\item{swmpr_in}{input swmpr object}
 
 \item{...}{additional arguments passed to other methods.}
 
@@ -67,24 +67,23 @@ y <-
 
 ## Nutrient examples
 dat_nut <- qaqc(apacpnut, qaqc_keep = c(0, 3, 5))
-dat_nut <- setstep(dat_nut, timestep = 'weeks')
 
 x <-
   threshold_summary(dat_nut, param = 'chla_n',
   parameter_threshold = 10,
-  threshold_type = '>', time_threshold = 2, summary_type = 'month',
+  threshold_type = '>', summary_type = 'month',
   plot_title = T)
 
 y <-
-  threshold_summary(dat_wq, param = 'chla_n', parameter_threshold = 10,
-  threshold_type = '>', time_threshold = 2, summary_type = 'season',
+  threshold_summary(dat_nut, param = 'chla_n', parameter_threshold = 10,
+  threshold_type = '>', summary_type = 'season',
   season = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12)),
   season_names = c('Winter', 'Spring', 'Summer', 'Fall'),
   season_start = 'Winter', plot_title = T)
 
  z <-
    threshold_summary(dat_nut, param = 'chla_n', parameter_threshold = 10,
-   threshold_type = '>', time_threshold = 2, summary_type = 'year',
+   threshold_type = '>', summary_type = 'year',
    plot_title = T, plot = T)
 }
 }
