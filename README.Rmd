@@ -59,6 +59,7 @@ SWMPrExtension adds several functions to existing concepts in SWMPr and introduc
 <tr><td><code>historical_range.swmpr</code></td><td>Compare a user-specified year against historical data on a monthly/seasonal basis.</td></tr>
 <tr><td><code>national_sk_map</code></td><td>Create a base map for NERRS reserves in ggplot with seasonal kendall results</td></tr>
 <tr><td><code>raw_boxplot.swmpr</code></td><td>Generate a monthly/seasonal boxplots of raw data for a target year</td></tr>
+<tr><td><code>res_custom_map</code></td><td>Create a stylized reserve-level map of custom station locations for use with the reserve level reporting template</td></tr>
 <tr><td><code>res_local_map</code></td><td>Create a stylized reserve-level map for use with the reserve level reporting template</td></tr>
 <tr><td><code>res_national_map</code></td><td>Create a base map for NERRS reserves in ggplot</td></tr>
 <tr><td><code>res_sk_map</code></td><td>Create a stylized reserve-level map of seasonal kendall results for use with the reserve level reporting template</td></tr>
@@ -66,7 +67,7 @@ SWMPrExtension adds several functions to existing concepts in SWMPr and introduc
 <tr><td><code>seasonal_barplot.swmpr</code></td><td>Generate monthly/seasonal barplot for parameters that are better viewed in on a cumulative basis (e.g. precipitation).</td></tr>
 <tr><td><code>seasonal_boxplot.swmpr</code></td><td>Generate monthly/seasonal boxplots for daily average statistics (min/average/max) across a user-specified time period.Includes the option to calculate a median value for a target year and include a line for a water quality threshold.</td></tr>
 <tr><td><code>seasonal_dot.swmpr</code></td><td>Plot average/min/max seasonal values faceted by season</td></tr>
-<tr><td><code>sk_seasonal</code></td><td>Non-parametric test for monotonic seasonal trends</td></tr>
+<tr><td><code>sk_seasonal.swmpr</code></td><td>Non-parametric test for monotonic seasonal trends</td></tr>
 <tr><td><code>threshold_identification.swmpr</code></td><td>Identify dates and times that a user-specified water quality threshold is exceeded. For continuous monitoring data, the user can also specify the length of time the threshold must be exceeded for the event to be included (e.g. DO must be < 2 mg/L for at least 2 hours).</td></tr>
 <tr><td><code>threshold_percentile_plot.swmpr</code></td><td>Compare raw data against user-specified percentiles calculated from historical data. User has the option to calculate percentiles on a monthly basis.</td></tr>
 <tr><td><code>threshold_plot.swmpr</code></td><td>Compare raw data against user-specified water quality thresholds</td></tr>
