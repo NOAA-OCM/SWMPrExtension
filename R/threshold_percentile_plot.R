@@ -146,7 +146,7 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
   } else {
     bars <- dat_subset %>%
       group_by(!! grp) %>%
-      summarise(perc_hi = quantile(!! parm, probs = percentiles))
+      summarise(perc_hi = quantile(!! parm, probs = percentiles, na.rm = T))
   }
 
   if(!is.null(target_yr)){
