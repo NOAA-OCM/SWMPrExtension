@@ -51,19 +51,19 @@ dat_wq <- subset(dat_wq, subset = '2007-01-01 0:00', operator = '>=')
 
 x <-
   threshold_percentile_plot(dat_wq, param = 'do_mgl'
-  , hist_rng = c(2007, 2016), by_month = F)
+  , hist_rng = c(2007, 2014), by_month = F)
 
 y <-
-  threshold_percentile_plot(dat_wq, param = 'do_mgl'
-  , hist_rng = c(2007, 2016), target_yr = 2016, by_month = F)
+  threshold_percentile_plot(dat_wq, param = 'do_mgl', percentiles = c(0.95)
+  , hist_rng = c(2007, 2014), target_yr = 2014, by_month = F)
 
 x2 <-
   threshold_percentile_plot(dat_wq, param = 'do_mgl'
-  , hist_rng = c(2007, 2016), by_month = F)
+  , hist_rng = c(2007, 2014), by_month = T)
 
 y2 <-
   threshold_percentile_plot(dat_wq, param = 'do_mgl'
-  , hist_rng = c(2007, 2016), target_yr = 2016, by_month = F)
+  , hist_rng = c(2007, 2014), target_yr = 2014, by_month = T)
 
 
 dat_nut <- qaqc(elksmnut, qaqc_keep = c(0, 3, 5))
@@ -72,11 +72,11 @@ dat_nut <- rem_reps(dat_nut)
 
 x <-
   threshold_percentile_plot(dat_nut, param = 'chla_n'
-  , hist_rng = c(2007, 2016), by_month = F)
+  , hist_rng = c(2007, 2014), by_month = F)
 
 y <-
   threshold_percentile_plot(dat_nut, param = 'chla_n'
-  , hist_rng = c(2007, 2016), target_yr = 2016, by_month = F)
+  , hist_rng = c(2007, 2014), target_yr = 2016, by_month = F)
 }
 
 }

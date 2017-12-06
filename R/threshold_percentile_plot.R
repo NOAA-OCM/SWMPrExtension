@@ -41,19 +41,19 @@
 #'
 #' x <-
 #'   threshold_percentile_plot(dat_wq, param = 'do_mgl'
-#'   , hist_rng = c(2007, 2016), by_month = F)
+#'   , hist_rng = c(2007, 2014), by_month = F)
 #'
 #' y <-
-#'   threshold_percentile_plot(dat_wq, param = 'do_mgl'
-#'   , hist_rng = c(2007, 2016), target_yr = 2016, by_month = F)
+#'   threshold_percentile_plot(dat_wq, param = 'do_mgl', percentiles = c(0.95)
+#'   , hist_rng = c(2007, 2014), target_yr = 2014, by_month = F)
 #'
 #' x2 <-
 #'   threshold_percentile_plot(dat_wq, param = 'do_mgl'
-#'   , hist_rng = c(2007, 2016), by_month = F)
+#'   , hist_rng = c(2007, 2014), by_month = T)
 #'
 #' y2 <-
 #'   threshold_percentile_plot(dat_wq, param = 'do_mgl'
-#'   , hist_rng = c(2007, 2016), target_yr = 2016, by_month = F)
+#'   , hist_rng = c(2007, 2014), target_yr = 2014, by_month = T)
 #'
 #'
 #' dat_nut <- qaqc(elksmnut, qaqc_keep = c(0, 3, 5))
@@ -62,11 +62,11 @@
 #'
 #' x <-
 #'   threshold_percentile_plot(dat_nut, param = 'chla_n'
-#'   , hist_rng = c(2007, 2016), by_month = F)
+#'   , hist_rng = c(2007, 2014), by_month = F)
 #'
 #' y <-
 #'   threshold_percentile_plot(dat_nut, param = 'chla_n'
-#'   , hist_rng = c(2007, 2016), target_yr = 2016, by_month = F)
+#'   , hist_rng = c(2007, 2014), target_yr = 2016, by_month = F)
 #' }
 #'
 threshold_percentile_plot <- function(swmpr_in, ...) UseMethod('threshold_percentile_plot')
@@ -175,15 +175,15 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
   lab_tgt <- ifelse(is.null(target_yr), lab_yr, paste('(', target_yr, ')', sep = ''))
   lab_dat <- paste('Obs Data ', lab_tgt, sep = '')
 
-  brks <- set_date_breaks(hist_rng)
-  lab_brks <- set_date_break_labs(hist_rng)
+
+  brks <- ifelse(is.null(target_yr), set_date_breaks(hist_rng), set_date_breaks(target_yr))
+  lab_brks <- ifelse(is.null(target_yr), set_date_break_labs(hist_rng), set_date_break_labs(target_yr))
 
   # plot ----
   plt <- ggplot(dat_subset, aes_(x = dt, y = parm, color = lab_dat)) +
     geom_line(lwd = 1) +
     scale_x_datetime(date_breaks = brks, date_labels = lab_brks)
 
-  # return(bar_plt)
   if(length(percentiles) > 1) {
 
     p_hi <- sym('perc_hi')
@@ -199,9 +199,11 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
                 , lwd = 1)
 
   } else {
+    p_hi <- sym('perc_hi')
+
     plt <-
       plt +
-      geom_line(data = bar_plt, aes(x = .data$datetimestamp, y = .data$perc_hi, color = lab_perc)
+      geom_line(data = bar_plt, aes_(x = dt, y = p_hi, color = lab_perc)
                 , lwd = 1
                 , inherit.aes = F)
   }
