@@ -103,7 +103,7 @@ raw_boxplot.swmpr <- function(swmpr_in
   dat$season <- assign_season(dat$datetimestamp, abb = T, ...)
 
   mx <- max(dat[, parm_index], na.rm = T)
-  mx <- ceiling(mx)
+  mx <- max(pretty(mx))
   mn <- ifelse(log_trans == TRUE, 0.1, 0)
 
   bp_fill <- paste(rng, ' ', data_type, sep = '')
@@ -115,12 +115,29 @@ raw_boxplot.swmpr <- function(swmpr_in
 
   plt <- ggplot(data = dat, aes_(x = seas, y = parm, fill = factor(bp_fill))) +
     geom_boxplot(outlier.size = 0.5) +
-    scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma) +
+    # scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma) +
     scale_fill_manual(name = '', values = c('skyblue1')) +
     labs(x = NULL, y = eval(y_label)) +
     theme_bw() +
     theme(legend.position = 'top'
           , legend.direction = 'horizontal')
+
+  # add a log transformed access if log_trans = T
+  if(!log_trans) {
+
+    plt <- plt + scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma)
+
+  } else {
+
+    mx_log <- 10^(ceiling(log10(mx)))
+
+    mag_lo <- nchar(mn) - 2
+    mag_hi <- nchar(mx_log) - 1
+
+    brks <- 10^(-mag_lo:mag_hi)
+
+    plt <- plt + scale_y_continuous(limits = c(mn, mx_log), breaks = brks, trans = y_trans, labels = scales::comma)
+  }
 
 
   if(!is.null(criteria)) {

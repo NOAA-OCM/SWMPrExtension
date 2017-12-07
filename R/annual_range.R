@@ -158,10 +158,28 @@ annual_range.swmpr <- function(swmpr_in
       geom_ribbon(aes_(x = seas, ymax = maxi, ymin = mini, group = 1, fill = lab_rng_mx, alpha = lab_rng_mx)) +
       geom_line(lwd = 1, color = 'steelblue3') +
       geom_point(aes_(fill = lab_ln, shape = lab_ln), color = 'black', size = 2) +
-      scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = comma) +
+      # scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = comma) +
       labs(x = NULL, y = eval(y_label)) +
       theme_bw() +
       theme(legend.position = 'top', legend.direction = 'horizontal')
+
+    # add a log transformed access if log_trans = T
+    if(!log_trans) {
+
+      plt <- plt + scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma)
+
+    } else {
+
+      mx_log <- 10^(ceiling(log10(mx)))
+
+      mag_lo <- nchar(mn) - 2
+      mag_hi <- nchar(mx_log) - 1
+
+      brks <- 10^(-mag_lo:mag_hi)
+
+      plt <- plt + scale_y_continuous(limits = c(mn, mx_log), breaks = brks, trans = y_trans, labels = scales::comma)
+    }
+
 
     plt <-
       plt +

@@ -156,12 +156,30 @@ seasonal_boxplot.swmpr <- function(swmpr_in
 
     plt <- ggplot(data = dat_hist, aes_(x = seas, y = res, fill = lab_bp_fill)) +
       geom_boxplot(outlier.size = 0.5) +
-      scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma) +
+      # scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma) +
       scale_fill_manual(name = '', values = c('#D9D9D9')) +
       labs(x = NULL, y = eval(y_label)) +
       theme_bw() +
       theme(legend.position = 'top'
             , legend.direction = 'horizontal')
+
+    # add a log transformed access if log_trans = T
+    if(!log_trans) {
+
+      plt <- plt + scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma)
+
+    } else {
+
+      mx_log <- 10^(ceiling(log10(mx)))
+
+      mag_lo <- nchar(mn) - 2
+      mag_hi <- nchar(mx_log) - 1
+
+      brks <- 10^(-mag_lo:mag_hi)
+
+      plt <- plt + scale_y_continuous(limits = c(mn, mx_log), breaks = brks, trans = y_trans, labels = scales::comma)
+    }
+
 
     # Adjust theme
     plt <-

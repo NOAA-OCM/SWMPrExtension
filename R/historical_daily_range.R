@@ -42,10 +42,10 @@
 #'
 #' dat <- qaqc(apacpwq, qaqc_keep = c('0', '3', '5'))
 #' # with criteria
-#' y <- historical_daily_range(dat, param = 'do_mgl', target_yr = 2013, criteria = 2, abb = T)
+#' y <- historical_daily_range(dat, param = 'do_mgl', target_yr = 2013, criteria = 2)
 #'
 #' # w/o criteria
-#' x <- historical_daily_range(dat, param = 'do_mgl', target_yr = 2013, abb = T)
+#' x <- historical_daily_range(dat, param = 'do_mgl', target_yr = 2013)
 #'
 #' # add a y label
 #' x <- x + labs(x = NULL, y = "Dissolved Oxygen (mg/L)")
@@ -180,10 +180,28 @@ historical_daily_range.swmpr <- function(swmpr_in
       geom_ribbon(data = dat_hist_avg, aes_(x = jd, ymin = mini, ymax = maxi, fill = lab_hist_avg_rng)) +
       geom_line(aes(color = lab_yr_ln), lwd = 1.5) +
       scale_x_continuous(breaks = brks, labels = brk_labs) +
-      scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = comma) +
+      # scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = comma) +
       labs(x = NULL, y = eval(y_label)) +
       theme_bw() +
       theme(legend.position = 'top', legend.direction = 'horizontal')
+
+    # add a log transformed access if log_trans = T
+    if(!log_trans) {
+
+      plt <- plt + scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma)
+
+    } else {
+
+      mx_log <- 10^(ceiling(log10(mx)))
+
+      mag_lo <- nchar(mn) - 2
+      mag_hi <- nchar(mx_log) - 1
+
+      brks <- 10^(-mag_lo:mag_hi)
+
+      plt <- plt + scale_y_continuous(limits = c(mn, mx_log), breaks = brks, trans = y_trans, labels = scales::comma)
+    }
+
 
     # Adjust scale
     plt <-

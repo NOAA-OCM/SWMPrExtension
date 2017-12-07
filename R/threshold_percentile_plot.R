@@ -175,14 +175,45 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
   lab_tgt <- ifelse(is.null(target_yr), lab_yr, paste('(', target_yr, ')', sep = ''))
   lab_dat <- paste('Obs Data ', lab_tgt, sep = '')
 
-
   brks <- ifelse(is.null(target_yr), set_date_breaks(hist_rng), set_date_breaks(target_yr))
   lab_brks <- ifelse(is.null(target_yr), set_date_break_labs(hist_rng), set_date_break_labs(target_yr))
 
+  mx <- max(dat_subset[ , 2], na.rm = T)
+  mx <- ceiling(mx)
+  mn <- ifelse(log_trans, 0.1, 0)
+
+  # return(y_trans)
+  # y_trans_inv <- ifelse(log_trans, function(x) 10 ^ x, 'identity')
+  # numticks <- ifelse(log_trans, 4, 5)
+
   # plot ----
+
+  ##this works
+  # plt <- ggplot(dat_subset, aes_(x = dt, y = parm, color = lab_dat)) +
+  #   geom_line(lwd = 1) +
+  #   scale_x_datetime(date_breaks = brks, date_labels = lab_brks) +
+  #   scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma)
+
   plt <- ggplot(dat_subset, aes_(x = dt, y = parm, color = lab_dat)) +
     geom_line(lwd = 1) +
     scale_x_datetime(date_breaks = brks, date_labels = lab_brks)
+
+  # add a log transformed access if log_trans = T
+  if(!log_trans) {
+
+    plt <- plt + scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma)
+
+  } else {
+
+    mx_log <- 10^(ceiling(log10(mx)))
+
+    mag_lo <- nchar (mn) - 2
+    mag_hi <- nchar(mx_log) - 1
+
+    brks <- 10^(-mag_lo:mag_hi)
+
+    plt <- plt + scale_y_continuous(limits = c(mn, mx_log), breaks = brks, trans = y_trans, labels = scales::comma)
+  }
 
   if(length(percentiles) > 1) {
 

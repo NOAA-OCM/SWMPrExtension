@@ -174,10 +174,27 @@ historical_range.swmpr <- function(swmpr_in
                 , linetype = 'solid', lwd = 1) +
       geom_line(color = 'steelblue3', lwd = 1) +
       geom_point(aes_(fill = lab_yr_ln, shape = lab_yr_ln), size = 2) +
-      scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = comma) +
+      # scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = comma) +
       labs(x = NULL, y = eval(y_label)) +
       theme_bw() +
       theme(legend.position = 'top', legend.direction = 'horizontal')
+
+    # add a log transformed access if log_trans = T
+    if(!log_trans) {
+
+      plt <- plt + scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma)
+
+    } else {
+
+      mx_log <- 10^(ceiling(log10(mx)))
+
+      mag_lo <- nchar(mn) - 2
+      mag_hi <- nchar(mx_log) - 1
+
+      brks <- 10^(-mag_lo:mag_hi)
+
+      plt <- plt + scale_y_continuous(limits = c(mn, mx_log), breaks = brks, trans = y_trans, labels = scales::comma)
+    }
 
     # Adjust scale
     plt <-

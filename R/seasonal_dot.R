@@ -116,8 +116,6 @@ seasonal_dot.swmpr <- function(swmpr_in
   parameters <- attr(dat, 'parameters')
   station <- attr(dat, 'station')
 
-
-  # return()
   #TESTS
   #determine type WQ, MET, NUT
   #determine log scale transformation
@@ -160,7 +158,10 @@ seasonal_dot.swmpr <- function(swmpr_in
 
     labs_legend <- factor(paste0(agg_lab, c('Minimum', 'Average', 'Maximum'), sep = ''))
     brks <- range(plt_data$year)
-    y_lims <- c(0, max(plt_data[ , c(3:5)]) * 1.2)
+
+    mx <- max(plt_data[ , c(3:5)]) *1.2 #max(dat_hist$result, na.rm = T)
+    mx <- ceiling(mx)
+    mn <- ifelse(log_trans == TRUE, 0.1, 0)
 
     plt <-
       ggplot(data = plt_data, aes_string(x = 'year', y = 'min', color = labs_legend[1])) +
@@ -170,9 +171,26 @@ seasonal_dot.swmpr <- function(swmpr_in
       geom_point() +
       scale_color_manual('', values = c('black', 'red', 'blue')) +
       scale_x_continuous(breaks = seq(from = brks[1], to = brks[2], by = 1)) +
-      scale_y_continuous(limits = y_lims) +
       facet_wrap(~ season) +
       labs(x = NULL, y = eval(y_label))
+
+    # add a log transformed access if log_trans = T
+    if(!log_trans) {
+
+      plt <- plt + scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma)
+
+    } else {
+
+      mx_log <- 10^(ceiling(log10(mx)))
+
+      mag_lo <- nchar(mn) - 2
+      mag_hi <- nchar(mx_log) - 1
+
+      brks <- 10^(-mag_lo:mag_hi)
+
+      plt <- plt + scale_y_continuous(limits = c(mn, mx_log), breaks = brks, trans = y_trans, labels = scales::comma)
+    }
+
 
     # Adjust theme
     plt <-
@@ -213,13 +231,13 @@ seasonal_dot.swmpr <- function(swmpr_in
 
       plt <-
         plt +
-        annotate("text", x = 2017, y = y_lims[2]
+        annotate("text", x = brks[2], y = mx
                  , label = p_labs$max, fontface = ifelse(p_labs$max == 'p < 0.05', 2, 1)
                  , hjust = 1, color = 'red') +
-        annotate("text", x = 2017, y = y_lims[2] * 0.9
+        annotate("text", x = brks[2], y = mx * 0.9
                  , label = p_labs$mean, fontface = ifelse(p_labs$mean == 'p < 0.05', 2, 1)
                  , hjust = 1, color = 'black') +
-        annotate("text", x = 2017, y = y_lims[2] * 0.8
+        annotate("text", x = brks[2], y = mx * 0.8
                  , label = p_labs$min, fontface = ifelse(p_labs$min == 'p < 0.05', 2, 1)
                  , hjust = 1, color = 'blue')
 
