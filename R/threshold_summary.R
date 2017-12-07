@@ -200,7 +200,7 @@ threshold_summary.swmpr <- function(swmpr_in
     plt <-
       plt +
       theme_bw() +
-      guides(fill = guide_legend(override.aes = list(linetype = 'blank'), order = 1)) +
+      guides(fill = guide_legend(override.aes = list(linetype = 'blank'), order = 1, nrow = 2, byrow = T)) +
       theme(panel.grid.minor.y = element_blank()
             , panel.grid.major.y = element_line(linetype = 'dashed')) +
       theme(panel.grid.minor.x = element_blank()) +
