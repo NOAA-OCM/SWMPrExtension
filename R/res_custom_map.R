@@ -88,6 +88,7 @@ res_custom_map <- function(stations, x_loc, y_loc, bbox, shp, station_labs = T, 
   if(is.null(station_col)) {
     station_col <- 'black'
   }
+
   # generate location labels
   loc <- data.frame(abbrev = stations, Latitude = y_loc, Longitude = -1 * x_loc, color = station_col, stringsAsFactors = F)
 
