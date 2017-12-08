@@ -8,9 +8,9 @@
 seasonal_barplot(swmpr_in, ...)
 
 \method{seasonal_barplot}{swmpr}(swmpr_in, param = NULL, hist_rng = NULL,
-  rng_avg = FALSE, log_trans = FALSE, converted = FALSE,
-  hist_avg = TRUE, bar_position = "stack", season_facet = FALSE,
-  plot_title = FALSE, plot = TRUE, ...)
+  log_trans = FALSE, converted = FALSE, hist_avg = TRUE,
+  bar_position = "stack", season_facet = FALSE, plot_title = FALSE,
+  plot = TRUE, ...)
 }
 \arguments{
 \item{swmpr_in}{input swmpr object}
@@ -20,8 +20,6 @@ seasonal_barplot(swmpr_in, ...)
 \item{param}{chr string of variable to plot}
 
 \item{hist_rng}{numeric vector, if historic range is not specified then the min/max values of the data set will be used.}
-
-\item{rng_avg}{logical, should a longterm average be included on the plot? Defaults to \code{FALSE}}
 
 \item{log_trans}{logical, should y-axis be log? Defaults to \code{FALSE}}
 
@@ -57,13 +55,13 @@ x <- seasonal_barplot(dat, param = 'totprcp'
                       , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
                       , hist_avg = T
-                      , convert = F)
+                      , converted = F)
 
 # return a plot instead of a figure
 y <- seasonal_barplot(dat, param = 'totprcp'
                       , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
-                      , convert = F
+                      , converted = F
                       , plot = F)
 
 ## divide plot into seasonal facets
@@ -72,7 +70,7 @@ x <- seasonal_barplot(dat, param = 'totprcp'
                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
                       , season_facet = T
                       , hist_avg = T
-                      , convert = F)
+                      , converted = F)
 
 ## convert from mm to in
 dat$totprcp <- dat$totprcp / 25.4
@@ -81,7 +79,8 @@ x <- seasonal_barplot(dat, param = 'totprcp'
                       , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
                       , hist_avg = T
-                      , convert = T)
+                      , converted
+                       = T)
 }
 }
 \seealso{

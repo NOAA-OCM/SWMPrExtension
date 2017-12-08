@@ -5,7 +5,6 @@
 #' @param swmpr_in input swmpr object
 #' @param param chr string of variable to plot
 #' @param hist_rng numeric vector, if historic range is not specified then the min/max values of the data set will be used.
-#' @param rng_avg logical, should a longterm average be included on the plot? Defaults to \code{FALSE}
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
 #' @param converted logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.
 #' @param hist_avg logical, should a historical average be included? Defaults to \code{TRUE}.
@@ -45,13 +44,13 @@
 #'                       , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
 #'                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
 #'                       , hist_avg = T
-#'                       , convert = F)
+#'                       , converted = F)
 #'
 #' # return a plot instead of a figure
 #' y <- seasonal_barplot(dat, param = 'totprcp'
 #'                       , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
 #'                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
-#'                       , convert = F
+#'                       , converted = F
 #'                       , plot = F)
 #'
 #' ## divide plot into seasonal facets
@@ -60,7 +59,7 @@
 #'                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
 #'                       , season_facet = T
 #'                       , hist_avg = T
-#'                       , convert = F)
+#'                       , converted = F)
 #'
 #' ## convert from mm to in
 #' dat$totprcp <- dat$totprcp / 25.4
@@ -69,7 +68,8 @@
 #'                       , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
 #'                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
 #'                       , hist_avg = T
-#'                       , convert = T)
+#'                       , converted
+#'                        = T)
 #' }
 #"
 seasonal_barplot <- function(swmpr_in, ...) UseMethod('seasonal_barplot')
@@ -85,7 +85,6 @@ seasonal_barplot <- function(swmpr_in, ...) UseMethod('seasonal_barplot')
 seasonal_barplot.swmpr <- function(swmpr_in
                                , param = NULL
                                , hist_rng = NULL
-                               , rng_avg = FALSE
                                , log_trans = FALSE
                                , converted = FALSE
                                , hist_avg = TRUE
@@ -233,7 +232,7 @@ seasonal_barplot.swmpr <- function(swmpr_in
       } else {
 
         avg <- dat_hist %>% group_by(year) %>%
-          summarise(sum = sum(result, na.rm = T)) %>%
+          summarise(sum = sum(.data$result, na.rm = T)) %>%
           summarise(avg = mean(sum, na.rm = T))
 
         bar_seas <- bar_seas +
