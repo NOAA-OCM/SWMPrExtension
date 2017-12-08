@@ -177,7 +177,7 @@ threshold_identification.swmpr <- function(swmpr_in, param, parameter_threshold,
       dplyr::filter(.data$thr_violation == TRUE, .data$duration > thr)
 
     if(is.data.frame(out) && nrow(out) == 0)
-      stop('No results were returned using the user-specified thresholds. Set new thresholds and re-run.')
+      warning('No results were returned using the user-specified thresholds. Set new thresholds and re-run.')
 
     out <- left_join(out, df_statements, by = 'parameter')
 
@@ -210,7 +210,7 @@ threshold_identification.swmpr <- function(swmpr_in, param, parameter_threshold,
     out <- out[rowSums(is.na(out)) != ncol(out), ]
 
     if(is.data.frame(out) && nrow(out) == 0)
-      stop('No results were returned using the user-specified thresholds. Set new thresholds and re-run.')
+      warning('No results were returned using the user-specified thresholds. Set new thresholds and re-run.')
 
     out <- out[, !(names(out) %in% param)]
     out <- left_join(out, df_statements)
