@@ -9,6 +9,7 @@
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
 #' @param converted logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.
 #' @param hist_avg logical, should a historical average be included? Defaults to \code{TRUE}.
+#' @param bar_position chr string, options available are \code{stack} or \code{dodge}. Defaults to \code{stack}
 #' @param season_facet logical, should plot be faceted by season? Defaults to \code{FALSE}.
 #' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
 #' @param plot logical, should a plot be returned? Defaults to \code{TRUE}
@@ -88,6 +89,7 @@ seasonal_barplot.swmpr <- function(swmpr_in
                                , log_trans = FALSE
                                , converted = FALSE
                                , hist_avg = TRUE
+                               , bar_position = 'stack'
                                , season_facet = FALSE
                                , plot_title = FALSE
                                , plot = TRUE
@@ -164,7 +166,7 @@ seasonal_barplot.swmpr <- function(swmpr_in
 
     # Add data
     bar_seas <- ggplot(data = dat_hist, aes_(x = yr, y = res, fill = seas)) +
-      geom_bar(stat = "identity") +
+      geom_bar(stat = "identity", position = bar_position) +
       scale_y_continuous(expand = c(0, 0), limits = c(0, mx), breaks = seq(0 , mx, brk_pts)) +
       scale_fill_manual(values = seas_col) +
       labs(x = NULL, y = eval(y_label))
@@ -222,7 +224,7 @@ seasonal_barplot.swmpr <- function(swmpr_in
       lab_parm <- paste(var_nm, ' (', rng[[1]], '-', rng[[2]], ')', sep = '')
 
       if(season_facet) {
-        return(dat_hist)
+        # return(dat_hist)
         bar_seas <- bar_seas +
           geom_hline(aes(yintercept = dat_hist$mean, linetype = factor(lab_parm))
                      , color = '#767171', lwd = 1.5, show.legend = T) +

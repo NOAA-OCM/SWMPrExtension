@@ -9,8 +9,8 @@ seasonal_barplot(swmpr_in, ...)
 
 \method{seasonal_barplot}{swmpr}(swmpr_in, param = NULL, hist_rng = NULL,
   rng_avg = FALSE, log_trans = FALSE, converted = FALSE,
-  hist_avg = TRUE, season_facet = FALSE, plot_title = FALSE,
-  plot = TRUE, ...)
+  hist_avg = TRUE, bar_position = "stack", season_facet = FALSE,
+  plot_title = FALSE, plot = TRUE, ...)
 }
 \arguments{
 \item{swmpr_in}{input swmpr object}
@@ -28,6 +28,8 @@ seasonal_barplot(swmpr_in, ...)
 \item{converted}{logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.}
 
 \item{hist_avg}{logical, should a historical average be included? Defaults to \code{TRUE}.}
+
+\item{bar_position}{chr string, options available are \code{stack} or \code{dodge}. Defaults to \code{stack}}
 
 \item{season_facet}{logical, should plot be faceted by season? Defaults to \code{FALSE}.}
 
