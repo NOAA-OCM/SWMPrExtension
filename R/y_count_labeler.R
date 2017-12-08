@@ -72,17 +72,17 @@ y_count_labeler <- function(param, parameter_threshold, threshold_type, time_thr
     names(converted_units) <- converted_param
 
     if(!is.null(time_threshold)) {
-      lab <- paste(gen_lab, all_labs[[param]], st, ' ', converted_units[[param]], ' for longer than ', st_time, ' hours', sep = '')
+      lab <- paste(gen_lab, all_labs[[param]], '\n', st, ' ', converted_units[[param]], ' for longer than ', st_time, ' hours', sep = '')
     } else {
-      lab <- paste(gen_lab, all_labs[[param]], st, ' ', converted_units[[param]], sep = '')
+      lab <- paste(gen_lab, all_labs[[param]], '\n', st, ' ', converted_units[[param]], sep = '')
     }
 
   } else {
 
     if(!is.null(time_threshold)) {
-      lab <- paste(gen_lab, all_labs[[param]], st, ' ', all_units[[param]], ' for longer than ', st_time, ' hours', sep = '')
+      lab <- paste(gen_lab, all_labs[[param]], '\n', st, ' ', all_units[[param]], ' for longer than ', st_time, ' hours', sep = '')
     } else {
-      lab <- paste(gen_lab, all_labs[[param]], st, ' ', all_units[[param]], sep = '')
+      lab <- paste(gen_lab, all_labs[[param]], '\n', st, ' ', all_units[[param]], sep = '')
     }
 
   }
