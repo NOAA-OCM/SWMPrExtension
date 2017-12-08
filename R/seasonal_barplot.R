@@ -222,13 +222,20 @@ seasonal_barplot.swmpr <- function(swmpr_in
       lab_parm <- paste(var_nm, ' (', rng[[1]], '-', rng[[2]], ')', sep = '')
 
       if(season_facet) {
+        return(dat_hist)
         bar_seas <- bar_seas +
           geom_hline(aes(yintercept = dat_hist$mean, linetype = factor(lab_parm))
                      , color = '#767171', lwd = 1.5, show.legend = T) +
           scale_linetype_manual(values = 'solid')
+
       } else {
+
+        avg <- dat_hist %>% group_by(year) %>%
+          summarise(sum = sum(result, na.rm = T)) %>%
+          summarise(avg = mean(sum, na.rm = T))
+
         bar_seas <- bar_seas +
-          geom_hline(aes(yintercept = mean(dat_hist$result), linetype = factor(lab_parm))
+          geom_hline(aes(yintercept = avg[[1]], linetype = factor(lab_parm))#mean(dat_hist$result), linetype = factor(lab_parm))
                      , color = '#767171', lwd = 1.5, show.legend = T) +
           scale_linetype_manual(values = 'solid')
       }
