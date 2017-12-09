@@ -215,8 +215,6 @@ threshold_identification.swmpr <- function(swmpr_in, param, parameter_threshold,
     out <- out[, !(names(out) %in% param)]
     out <- left_join(out, df_statements)
 
-    return(out)
-
     if(nrow(out) > 0) {
       out$duration <- NA
       out$endtime <- NA
