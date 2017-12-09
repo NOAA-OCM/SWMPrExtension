@@ -1,17 +1,19 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head><title>R: What the Package Does (Title Case)</title>
+<head><title>R: Additional Functions for Retrieving, Organizing, and Analyzing
+Estuary Monitoring Data</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="R.css" />
 </head><body>
-<h1> What the Package Does (Title Case)
+<h1> Additional Functions for Retrieving, Organizing, and Analyzing
+Estuary Monitoring Data
 <img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]" />
 </h1>
 <hr/>
 <div style="text-align: center;">
 <a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
 <a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;SWMPrExtension&rsquo; version 0.1.0</h2>
+</div><h2>Documentation for package &lsquo;SWMPrExtension&rsquo; version 0.2.11.9000</h2>
 
 <ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
 </ul>
@@ -20,8 +22,20 @@
 
 
 <table width="100%">
+<tr><td style="width: 25%;"><a href="annual_range.html">annual_range</a></td>
+<td>Annual Range Timeseries</td></tr>
+<tr><td style="width: 25%;"><a href="annual_range.html">annual_range.swmpr</a></td>
+<td>Annual Range Timeseries</td></tr>
 <tr><td style="width: 25%;"><a href="assign_season.html">assign_season</a></td>
 <td>Assign seasons to SWMP sampling data</td></tr>
+<tr><td style="width: 25%;"><a href="cbm_spatial.html">cbm_spatial</a></td>
+<td>Spatial Data from Chesapeake Bay - Maryland</td></tr>
+<tr><td style="width: 25%;"><a href="elknmnut.html">elknmnut</a></td>
+<td>Nutrient Data from Elkhorn Slough - North Marsh Station</td></tr>
+<tr><td style="width: 25%;"><a href="elksmwq.html">elksmwq</a></td>
+<td>Water Quality Data from Elkhorn Slough - South Marsh Station</td></tr>
+<tr><td style="width: 25%;"><a href="elk_spatial.html">elk_spatial</a></td>
+<td>Spatial Data from Elkhorn Slough</td></tr>
 <tr><td style="width: 25%;"><a href="get_reserve.html">get_reserve</a></td>
 <td>Identify NERRS reserve from metadata</td></tr>
 <tr><td style="width: 25%;"><a href="get_shp_name.html">get_shp_name</a></td>
@@ -31,14 +45,86 @@
 <tr><td style="width: 25%;"><a href="get_site_code.html">get_site_code</a></td>
 <td>Return NERRS reserve site code based on data in the data file</td></tr>
 <tr><td style="width: 25%;"><a href="get_site_coordinates.html">get_site_coordinates</a></td>
-<td>Identify NERRS reserve from metadata</td></tr>
+<td>Identify NERRS sampling locations from metadata</td></tr>
+<tr><td style="width: 25%;"><a href="historical_daily_range.html">historical_daily_range</a></td>
+<td>Historical Daily Range Timeseries</td></tr>
+<tr><td style="width: 25%;"><a href="historical_daily_range.html">historical_daily_range.swmpr</a></td>
+<td>Historical Daily Range Timeseries</td></tr>
+<tr><td style="width: 25%;"><a href="historical_range.html">historical_range</a></td>
+<td>Historical Monthly/Seasonal Range Timeseries</td></tr>
+<tr><td style="width: 25%;"><a href="historical_range.html">historical_range.swmpr</a></td>
+<td>Historical Monthly/Seasonal Range Timeseries</td></tr>
+<tr><td style="width: 25%;"><a href="import_local_nut.html">import_local_nut</a></td>
+<td>Import local CDMO data</td></tr>
+<tr><td style="width: 25%;"><a href="lm_p_labs.html">lm_p_labs</a></td>
+<td>P-Value labels for Plotting</td></tr>
+<tr><td style="width: 25%;"><a href="load_shp_file.html">load_shp_file</a></td>
+<td>Load and format shapefile for reserve level map</td></tr>
+<tr><td style="width: 25%;"><a href="national_sk_map.html">national_sk_map</a></td>
+<td>Reserve National Map with Seasonal Kendall Results</td></tr>
 <tr><td style="width: 25%;"><a href="raw_boxplot.html">raw_boxplot</a></td>
 <td>Seasonal boxplots of raw data</td></tr>
 <tr><td style="width: 25%;"><a href="raw_boxplot.html">raw_boxplot.swmpr</a></td>
 <td>Seasonal boxplots of raw data</td></tr>
+<tr><td style="width: 25%;"><a href="reserve_locs.html">reserve_locs</a></td>
+<td>Reserve National Map</td></tr>
+<tr><td style="width: 25%;"><a href="res_custom_map.html">res_custom_map</a></td>
+<td>Local Reserve Map for Custom Stations</td></tr>
+<tr><td style="width: 25%;"><a href="res_custom_sk_map.html">res_custom_sk_map</a></td>
+<td>Local Reserve Map With Seasonal Kendall Results for Custom Stations</td></tr>
+<tr><td style="width: 25%;"><a href="res_local_map.html">res_local_map</a></td>
+<td>Local Reserve Map</td></tr>
+<tr><td style="width: 25%;"><a href="res_national_map.html">res_national_map</a></td>
+<td>Reserve National Map</td></tr>
+<tr><td style="width: 25%;"><a href="res_sk_map.html">res_sk_map</a></td>
+<td>Local Reserve Map With Seasonal Kendall Results</td></tr>
+<tr><td style="width: 25%;"><a href="sampling_stations.html">sampling_stations</a></td>
+<td>Detailed of NERRS site data</td></tr>
+<tr><td style="width: 25%;"><a href="seasonal_barplot.html">seasonal_barplot</a></td>
+<td>Cumulative Bar Plot</td></tr>
+<tr><td style="width: 25%;"><a href="seasonal_barplot.html">seasonal_barplot.swmpr</a></td>
+<td>Cumulative Bar Plot</td></tr>
 <tr><td style="width: 25%;"><a href="seasonal_boxplot.html">seasonal_boxplot</a></td>
 <td>Seasonal boxplots</td></tr>
 <tr><td style="width: 25%;"><a href="seasonal_boxplot.html">seasonal_boxplot.swmpr</a></td>
 <td>Seasonal boxplots</td></tr>
+<tr><td style="width: 25%;"><a href="seasonal_dot.html">seasonal_dot</a></td>
+<td>Seasonal Dot Plot</td></tr>
+<tr><td style="width: 25%;"><a href="seasonal_dot.html">seasonal_dot.swmpr</a></td>
+<td>Seasonal Dot Plot</td></tr>
+<tr><td style="width: 25%;"><a href="set_date_breaks.html">set_date_breaks</a></td>
+<td>Set reasonable date breaks</td></tr>
+<tr><td style="width: 25%;"><a href="set_date_break_labs.html">set_date_break_labs</a></td>
+<td>Set reasonable date breaks labels</td></tr>
+<tr><td style="width: 25%;"><a href="sk_seasonal.html">sk_seasonal</a></td>
+<td>Seasonal Kendall Analysis for Seasonal Data</td></tr>
+<tr><td style="width: 25%;"><a href="sk_seasonal.html">sk_seasonal.swmpr</a></td>
+<td>Seasonal Kendall Analysis for Seasonal Data</td></tr>
+<tr><td style="width: 25%;"><a href="sk_tidy.html">sk_tidy</a></td>
+<td>Tidy Seasonal Kendall Results</td></tr>
+<tr><td style="width: 25%;"><a href="std_param_check.html">std_param_check</a></td>
+<td>Standard Parameter Check</td></tr>
+<tr><td style="width: 25%;"><a href="threshold_identification.html">threshold_identification</a></td>
+<td>Tabulate Threshold Exceedances</td></tr>
+<tr><td style="width: 25%;"><a href="threshold_identification.html">threshold_identification.swmpr</a></td>
+<td>Tabulate Threshold Exceedances</td></tr>
+<tr><td style="width: 25%;"><a href="threshold_percentile_plot.html">threshold_percentile_plot</a></td>
+<td>Threshold Percentile Plot</td></tr>
+<tr><td style="width: 25%;"><a href="threshold_percentile_plot.html">threshold_percentile_plot.swmpr</a></td>
+<td>Threshold Percentile Plot</td></tr>
+<tr><td style="width: 25%;"><a href="threshold_plot.html">threshold_plot</a></td>
+<td>Water Quality Threshold Plot</td></tr>
+<tr><td style="width: 25%;"><a href="threshold_plot.html">threshold_plot.swmpr</a></td>
+<td>Water Quality Threshold Plot</td></tr>
+<tr><td style="width: 25%;"><a href="threshold_summary.html">threshold_summary</a></td>
+<td>Summary Plots for Threshold Identification</td></tr>
+<tr><td style="width: 25%;"><a href="threshold_summary.html">threshold_summary.swmpr</a></td>
+<td>Summary Plots for Threshold Identification</td></tr>
+<tr><td style="width: 25%;"><a href="title_labeler.html">title_labeler</a></td>
+<td>Generate Plot Title Based on NERR Site ID</td></tr>
+<tr><td style="width: 25%;"><a href="y_count_labeler.html">y_count_labeler</a></td>
+<td>Generate y-axis Label Based on SWMP Parameter Abbreviation</td></tr>
+<tr><td style="width: 25%;"><a href="y_labeler.html">y_labeler</a></td>
+<td>Generate y-axis Label Based on SWMP Parameter Abbreviation</td></tr>
 </table>
 </body></html>

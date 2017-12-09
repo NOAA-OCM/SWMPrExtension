@@ -99,11 +99,12 @@ seasonal_boxplot.swmpr <- function(swmpr_in
   # attributes
   parameters <- attr(dat, 'parameters')
   station <- attr(dat, 'station')
+  data_type <- substr(station, 6, nchar(station))
 
   #TESTS
   #determine type WQ, MET, NUT
   #determine log scale transformation
-  if(substr(station, 6, nchar(station)) == 'nut')
+  if(data_type == 'nut')
     warning('Nutrient data detected. Consider specifying seasons > 1 month.')
 
   #determine historical range exists, if not default to min/max of the range
@@ -117,7 +118,7 @@ seasonal_boxplot.swmpr <- function(swmpr_in
     stop('Param argument must name input column')
 
   #determine target year (if there is one)
-  if(!is.null(target_yr))
+  if(is.null(target_yr))
     warning('No target year provided')
 
   #determine y axis transformation and y axis label
@@ -148,15 +149,16 @@ seasonal_boxplot.swmpr <- function(swmpr_in
     summarise(result = FUN(!! parm))
 
   if(plot) {
+
     mx <- max(dat_hist$result, na.rm = T)
     mx <- ceiling(mx)
     mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), 0)
 
-    lab_bp_fill <- lab_bp_fill <- paste('Daily ', stat_lab, 's (', rng[[1]], '-', rng[[2]], ')', sep = '') # need to add in flex for 'min', 'max'
+    lab_bp_fill <- ifelse(data_type == 'nut', paste('Monthly Sample (', rng[[1]], '-', rng[[2]], ')', sep = '')
+                      , paste('Daily ', stat_lab, 's (', rng[[1]], '-', rng[[2]], ')', sep = ''))
 
     plt <- ggplot(data = dat_hist, aes_(x = seas, y = res, fill = lab_bp_fill)) +
       geom_boxplot(outlier.size = 0.5) +
-      # scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma) +
       scale_fill_manual(name = '', values = c('#D9D9D9')) +
       labs(x = NULL, y = eval(y_label)) +
       theme_bw() +
@@ -180,24 +182,6 @@ seasonal_boxplot.swmpr <- function(swmpr_in
       plt <- plt + scale_y_continuous(limits = c(mn, mx_log), breaks = brks, trans = y_trans, labels = scales::comma)
     }
 
-
-    # Adjust theme
-    plt <-
-      plt +
-      theme(panel.grid.major = element_blank(),
-            panel.grid.minor = element_blank(),
-            strip.background = element_blank(),
-            panel.border = element_rect(color = 'black')) +
-      theme(axis.title.y = element_text(margin = unit(c(0, 8, 0, 0), 'pt'), angle = 90)) +
-      theme(text = element_text(size = 16))
-
-    # Adjust legend keys and spacing
-    plt <-
-      plt +
-      theme(legend.key.size = unit(7, 'pt')) +
-      theme(legend.text = element_text(size = 8)) +
-      theme(legend.spacing.x = unit(-6, 'pt'))
-
     # Add target year dots if specified
     if(!is.null(target_yr)) {
       dat_yr <- dat %>% dplyr::filter(lubridate::year(.data$date) == target_yr)
@@ -208,7 +192,8 @@ seasonal_boxplot.swmpr <- function(swmpr_in
         dplyr::group_by(!! seas) %>%
         dplyr::summarise(med = stats::median(.data$result, na.rm = T))
 
-      pt_fill <- paste('Median Daily ', stat_lab, ' (', target_yr, ')', sep = '')
+      pt_fill <- ifelse(data_type == 'nut', paste('Monthly Sample (', target_yr, ')', sep = '')
+                        , paste('Median Daily ', stat_lab, ' (', target_yr, ')', sep = ''))
 
       plt <- plt +
         geom_point(data = dat_yr, aes_(x = seas, y = medi, shape = factor(pt_fill)), fill = '#65BCFF', size = 2) +
@@ -238,6 +223,21 @@ seasonal_boxplot.swmpr <- function(swmpr_in
         ggtitle(ttl) +
         theme(plot.title = element_text(hjust = 0.5))
     }
+
+    # Adjust theme
+    plt <-
+      plt +
+      theme(strip.background = element_blank(),
+            panel.border = element_rect(color = 'black')) +
+      theme(axis.title.y = element_text(margin = unit(c(0, 8, 0, 0), 'pt'), angle = 90)) +
+      theme(text = element_text(size = 16))
+
+    # Adjust legend keys and spacing
+    plt <-
+      plt +
+      theme(legend.key.size = unit(7, 'pt')) +
+      theme(legend.text = element_text(size = 7)) +
+      theme(legend.spacing.x = unit(-6, 'pt'))
 
     return(plt)
   } else {

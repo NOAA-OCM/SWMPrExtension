@@ -1,9 +1,50 @@
+annual_range            Annual Range Timeseries
 assign_season           Assign seasons to SWMP sampling data
+cbm_spatial             Spatial Data from Chesapeake Bay - Maryland
+elk_spatial             Spatial Data from Elkhorn Slough
+elknmnut                Nutrient Data from Elkhorn Slough - North Marsh
+                        Station
+elksmwq                 Water Quality Data from Elkhorn Slough - South
+                        Marsh Station
 get_reserve             Identify NERRS reserve from metadata
 get_shp_name            Identify shapefile for NERRS reserve
 get_site_code           Return NERRS reserve site code based on data in
                         the data file
-get_site_coordinates    Identify NERRS reserve from metadata
+get_site_coordinates    Identify NERRS sampling locations from metadata
 get_sites               Identify NERRS reserve stations from metadata
+historical_daily_range
+                        Historical Daily Range Timeseries
+historical_range        Historical Monthly/Seasonal Range Timeseries
+import_local_nut        Import local CDMO data
+lm_p_labs               P-Value labels for Plotting
+load_shp_file           Load and format shapefile for reserve level map
+national_sk_map         Reserve National Map with Seasonal Kendall
+                        Results
 raw_boxplot             Seasonal boxplots of raw data
+res_custom_map          Local Reserve Map for Custom Stations
+res_custom_sk_map       Local Reserve Map With Seasonal Kendall Results
+                        for Custom Stations
+res_local_map           Local Reserve Map
+res_national_map        Reserve National Map
+res_sk_map              Local Reserve Map With Seasonal Kendall Results
+reserve_locs            Reserve National Map
+sampling_stations       Detailed of NERRS site data
+seasonal_barplot        Cumulative Bar Plot
 seasonal_boxplot        Seasonal boxplots
+seasonal_dot            Seasonal Dot Plot
+set_date_break_labs     Set reasonable date breaks labels
+set_date_breaks         Set reasonable date breaks
+sk_seasonal             Seasonal Kendall Analysis for Seasonal Data
+sk_tidy                 Tidy Seasonal Kendall Results
+std_param_check         Standard Parameter Check
+threshold_identification
+                        Tabulate Threshold Exceedances
+threshold_percentile_plot
+                        Threshold Percentile Plot
+threshold_plot          Water Quality Threshold Plot
+threshold_summary       Summary Plots for Threshold Identification
+title_labeler           Generate Plot Title Based on NERR Site ID
+y_count_labeler         Generate y-axis Label Based on SWMP Parameter
+                        Abbreviation
+y_labeler               Generate y-axis Label Based on SWMP Parameter
+                        Abbreviation

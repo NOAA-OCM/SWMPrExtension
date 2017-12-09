@@ -1,10 +1,8 @@
-#' Seasonal boxplots of raw data
-#'
 #' Boxplots of raw data by user-defined season for a target year
 #'
 #' @param swmpr_in input swmp object
 #' @param param chr string of variable to plot
-#' @param target_yr numeric, if target year is not specified then dot will not be plotted. If target year is not specified the most recent year in the \code{swmpr_in} will be used.
+#' @param target_yr numeric, if target year is not specified then all data in the data frame will be used.
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
 #' @param converted logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.
 #' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
@@ -70,8 +68,9 @@ raw_boxplot.swmpr <- function(swmpr_in
   #CHECKS
   #determine historical range exists, if not default to min/max of the range
   if(is.null(rng)) {
-    warning('No target year specified. Maximum year in data set will be used.')
-    rng <- max(lubridate::year(dat$datetimestamp))
+    warning('No target year specified. Entire data set will be used.')
+    rng <- c(min(lubridate::year(dat$datetimestamp)), max(lubridate::year(dat$datetimestamp)))
+    rng <- unique(rng)
   }
 
   #determine that variable name exists
@@ -99,6 +98,10 @@ raw_boxplot.swmpr <- function(swmpr_in
   y_trans <- ifelse(log_trans, 'log10', 'identity')
   y_label <- y_labeler(param = param, converted = conv)
 
+
+  if(!is.null(target_yr))
+    dat <- dat %>% dplyr::filter(year(datetimestamp) == target_yr)
+
   # Assign the seasons and order them
   dat$season <- assign_season(dat$datetimestamp, abb = T, ...)
 
@@ -106,7 +109,7 @@ raw_boxplot.swmpr <- function(swmpr_in
   mx <- max(pretty(mx))
   mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), 0)
 
-  bp_fill <- paste(rng, ' ', data_type, sep = '')
+  bp_fill <- ifelse(length(unique(rng)) == 1, paste(rng, ' ', data_type, sep = ''), paste(rng[1], '-', rng[2], ' ', data_type, sep = ''))
 
   seas <- sym('season')
 
@@ -115,7 +118,6 @@ raw_boxplot.swmpr <- function(swmpr_in
 
   plt <- ggplot(data = dat, aes_(x = seas, y = parm, fill = factor(bp_fill))) +
     geom_boxplot(outlier.size = 0.5) +
-    # scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma) +
     scale_fill_manual(name = '', values = c('skyblue1')) +
     labs(x = NULL, y = eval(y_label)) +
     theme_bw() +
@@ -163,6 +165,21 @@ raw_boxplot.swmpr <- function(swmpr_in
       ggtitle(ttl) +
       theme(plot.title = element_text(hjust = 0.5))
   }
+
+  # Adjust theme
+  plt <-
+    plt +
+    theme(strip.background = element_blank(),
+          panel.border = element_rect(color = 'black')) +
+    theme(axis.title.y = element_text(margin = unit(c(0, 8, 0, 0), 'pt'), angle = 90)) +
+    theme(text = element_text(size = 16))
+
+  # Adjust legend keys and spacing
+  plt <-
+    plt +
+    theme(legend.key.size = unit(7, 'pt')) +
+    theme(legend.text = element_text(size = 7)) +
+    theme(legend.spacing.x = unit(-6, 'pt'))
 
   return(plt)
 }

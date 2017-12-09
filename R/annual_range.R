@@ -83,11 +83,12 @@ annual_range.swmpr <- function(swmpr_in
   # attributes
   parameters <- attr(dat, 'parameters')
   station <- attr(dat, 'station')
+  data_type <- substr(station, 6, nchar(station))
 
   #TESTS
   #determine type WQ, MET, NUT
   #determine log scale transformation
-  if(substr(station, 6, nchar(station)) == 'nut')
+  if(data_type == 'nut')
     warning('Nutrient data detected. Consider specifying seasons > 1 month. See `?assign_season` for details.')
 
   #determine historical range exists, if not default to min/max of the range
@@ -149,20 +150,27 @@ annual_range.swmpr <- function(swmpr_in
 
     mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), 0)
 
-    lab_ln <- paste(target_yr, ' Daily Average', sep = '')
-    lab_rng_avg <- paste(target_yr, ' Avg Daily Range', sep = '')
-    lab_rng_mx <- paste(target_yr, ' Daily Range', sep = '')
+    lab_ln <- ifelse(data_type == 'nut', paste('Monthly Sample (', target_yr, ')', sep = ''), paste('Daily Average (', target_yr, ')', sep = ''))
 
     plt <-
       ggplot(data = dat_month, aes_(x = seas, y = avg, group = 1)) +
-      geom_ribbon(aes_(x = seas, ymax = maxi_avg, ymin = mini_avg, fill = lab_rng_avg, alpha = lab_rng_avg)) +
-      geom_ribbon(aes_(x = seas, ymax = maxi, ymin = mini, group = 1, fill = lab_rng_mx, alpha = lab_rng_mx)) +
+      # geom_ribbon(aes_(x = seas, ymax = maxi_avg, ymin = mini_avg, fill = lab_rng_avg, alpha = lab_rng_avg)) +
+      # geom_ribbon(aes_(x = seas, ymax = maxi, ymin = mini, group = 1, fill = lab_rng_mx, alpha = lab_rng_mx)) +
       geom_line(lwd = 1, color = 'steelblue3') +
       geom_point(aes_(fill = lab_ln, shape = lab_ln), color = 'black', size = 2) +
-      # scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = comma) +
       labs(x = NULL, y = eval(y_label)) +
       theme_bw() +
       theme(legend.position = 'top', legend.direction = 'horizontal')
+
+    if(data_type != 'nut') {
+      lab_rng_avg <- paste('Avg Daily Range (', target_yr, ')', sep = '')
+      lab_rng_mx <- paste('Daily Range (', target_yr, ')', sep = '')
+
+      plt <-
+        plt +
+        geom_ribbon(aes_(x = seas, ymax = maxi_avg, ymin = mini_avg, fill = lab_rng_avg, alpha = lab_rng_avg)) +
+        geom_ribbon(aes_(x = seas, ymax = maxi, ymin = mini, group = 1, fill = lab_rng_mx, alpha = lab_rng_mx))
+    }
 
     # add a log transformed access if log_trans = T
     if(!log_trans) {
@@ -220,6 +228,21 @@ annual_range.swmpr <- function(swmpr_in
       guides(alpha = guide_legend(override.aes = list(fill = 'steelblue3', linetype = 0), order = 2)
              , shape = guide_legend(override.aes = list(fill = 'steelblue3', linetype = 0), order = 1)
              , 'WQ Threshold' = guide_legend(order = 3))
+
+    # Adjust theme
+    plt <-
+      plt +
+      theme(strip.background = element_blank(),
+            panel.border = element_rect(color = 'black')) +
+      theme(axis.title.y = element_text(margin = unit(c(0, 8, 0, 0), 'pt'), angle = 90)) +
+      theme(text = element_text(size = 16))
+
+    # Adjust legend keys and spacing
+    plt <-
+      plt +
+      theme(legend.key.size = unit(7, 'pt')) +
+      theme(legend.text = element_text(size = 7)) +
+      theme(legend.spacing.x = unit(-6, 'pt'))
 
     return(plt)
 

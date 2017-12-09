@@ -1,15 +1,25 @@
 Package: SWMPrExtension
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Title: Additional Functions for Retrieving, Organizing, and Analyzing
+        Estuary Monitoring Data
+Version: 0.2.11.9000
+Author: Julie Padilla [aut, cre]
+Maintainer: Julie Padilla <jpadilla@limno.com>
+Description: Additional tools for retrieving, organizing, and analyzing environmental
+    data from the System Wide Monitoring Program of the National Estuarine
+    Research Reserve System <http://cdmo.baruch.sc.edu/>. These tools 
+    address common challenges associated with continuous time series data 
+    for environmental decision making, and are intended for use in annual reporting activities.
+BugReports: https://github.com/padilla410/SWMPrExtension/issues
 License: CC0
 Encoding: UTF-8
 LazyData: true
-Imports: SWMPr, dplyr, ggplot2, lubridate, scales, stringr, magrittr,
-        rlang
+Depends: R (>= 3.2.0), SWMPr
+Imports: broom, dplyr, EnvStats, ggplot2, ggthemes, grDevices, leaflet,
+        lubridate, magrittr, maptools, methods, tidyr, scales,
+        RColorBrewer, rgdal, rgeos, rlang, stringr, sp
+Authors@R: person(given = "Julie", family = "Padilla",
+    role = c("aut", "cre"),
+	email = "jpadilla@limno.com")
 RoxygenNote: 6.0.1
-Built: R 3.4.1; ; 2017-09-19 17:14:05 UTC; windows
+Built: R 3.4.1; ; 2017-12-09 19:02:27 UTC; windows
