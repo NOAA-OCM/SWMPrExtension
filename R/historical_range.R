@@ -155,7 +155,7 @@ historical_range.swmpr <- function(swmpr_in
     mx <- mx <- ifelse(max(dat_yr[ , c(2:4)], na.rm = T) > max(dat_hist[ , c(2:4)], na.rm = T)
                        , max(dat_yr[ , c(2:4)], na.rm = T), max(dat_hist[ , c(2:4)], na.rm = T))
     mx <- ceiling(mx)
-    mn <- ifelse(log_trans == TRUE, 0.1, 0)
+    mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), 0)
 
     # Make some labels
     lab_hist_rng <- paste(rng[[1]], '-', rng[[2]], ' Daily Avg Range', sep = '')

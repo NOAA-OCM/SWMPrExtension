@@ -164,7 +164,7 @@ historical_daily_range.swmpr <- function(swmpr_in
     # Set the plot range
     mx <- max(dat_hist_obs$max, na.rm = T)
     mx <- ceiling(mx)
-    mn <- ifelse(log_trans == TRUE, 0.1, 0)
+    mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), 0)
     brks <- c(1, 32, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335) #jdays associated with the first of every month
     brk_labs <- month.abb
 

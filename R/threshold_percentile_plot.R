@@ -180,7 +180,7 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
 
   mx <- max(dat_subset[ , 2], na.rm = T)
   mx <- ceiling(mx)
-  mn <- ifelse(log_trans, 0.1, 0)
+  mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), 0)
 
   # return(y_trans)
   # y_trans_inv <- ifelse(log_trans, function(x) 10 ^ x, 'identity')

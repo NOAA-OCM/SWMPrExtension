@@ -104,7 +104,7 @@ raw_boxplot.swmpr <- function(swmpr_in
 
   mx <- max(dat[, parm_index], na.rm = T)
   mx <- max(pretty(mx))
-  mn <- ifelse(log_trans == TRUE, 0.1, 0)
+  mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), 0)
 
   bp_fill <- paste(rng, ' ', data_type, sep = '')
 

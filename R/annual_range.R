@@ -146,7 +146,8 @@ annual_range.swmpr <- function(swmpr_in
     # Set the plot range
     mx <- max(dat_day$max, na.rm = T)
     mx <- ceiling(mx)
-    mn <- ifelse(log_trans == TRUE, 0.1, 0)
+
+    mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), 0)
 
     lab_ln <- paste(target_yr, ' Daily Average', sep = '')
     lab_rng_avg <- paste(target_yr, ' Avg Daily Range', sep = '')

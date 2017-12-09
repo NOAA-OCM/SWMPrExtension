@@ -150,7 +150,7 @@ seasonal_boxplot.swmpr <- function(swmpr_in
   if(plot) {
     mx <- max(dat_hist$result, na.rm = T)
     mx <- ceiling(mx)
-    mn <- ifelse(log_trans == TRUE, 0.1, 0)
+    mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), 0)
 
     lab_bp_fill <- lab_bp_fill <- paste('Daily ', stat_lab, 's (', rng[[1]], '-', rng[[2]], ')', sep = '') # need to add in flex for 'min', 'max'
 

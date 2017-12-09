@@ -161,7 +161,7 @@ seasonal_dot.swmpr <- function(swmpr_in
 
     mx <- max(plt_data[ , c(3:5)]) *1.2 #max(dat_hist$result, na.rm = T)
     mx <- ceiling(mx)
-    mn <- ifelse(log_trans == TRUE, 0.1, 0)
+    mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), 0)
 
     plt <-
       ggplot(data = plt_data, aes_string(x = 'year', y = 'min', color = labs_legend[1])) +
