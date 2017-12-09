@@ -214,13 +214,19 @@ threshold_identification.swmpr <- function(swmpr_in, param, parameter_threshold,
 
     out <- out[, !(names(out) %in% param)]
     out <- left_join(out, df_statements)
-    out$duration <- NA
-    out$endtime <- NA
-    out <- select(out, .data$parameter, .data$datetimestamp
-                  , .data$endtime, .data$duration, .data$flags
-                  , .data$statement)
 
-    names(out)[c(2, 5)] <-c('starttime', 'thr_violation')
+    return(out)
+
+    if(nrow(out) > 0) {
+      out$duration <- NA
+      out$endtime <- NA
+      out <- select(out, .data$parameter, .data$datetimestamp
+                    , .data$endtime, .data$duration, .data$flags
+                    , .data$statement)
+
+      names(out)[c(2, 5)] <-c('starttime', 'thr_violation')
+    }
+
 
   }
 

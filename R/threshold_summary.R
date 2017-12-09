@@ -217,7 +217,7 @@ threshold_summary.swmpr <- function(swmpr_in
             , axis.title.y = element_text(margin = unit(c(0, 8, 0, 0), 'pt'), angle = 90))
 
     plt <- plt +
-      theme(text = element_text(size = 16))
+      theme(text = element_text(size = 14))
 
     plt <- plt +
       theme(legend.key.size = unit(7, 'pt')) +

@@ -46,7 +46,7 @@ y_labeler <- function(param, converted = F) {
                  , quote(expression(paste('Photosynthetically Active Radiation (mmol/ '~m^2, ')'))), 'Precipitiation (mm)', quote(expression(paste('Total Solar Radiation (W/ '~m^2, ')'))))
 
     nut_lab <- c('Orthophosphate (mg/L)', 'Ammonium (mg/L)', 'Nitrite (mg/L)', 'Nitrate  (mg/L)', 'Nitrite + Nitrate  (mg/L)', quote(expression(paste('Chlorophyll-a (', ~mu, 'g/L)')))
-                 , 'Dissolved Inorganic Nitrogen (mg/L)', 'Dissolved Inorganic Phosphorus (mg/L)')
+                 , 'Diss. Inorganic Nitrogen (mg/L)', 'Diss. Inorganic Phosphorus (mg/L)')
 
     # Combine together for lookup
     all_params <- c(wq_params, met_params, nut_params)
