@@ -183,8 +183,10 @@ seasonal_barplot.swmpr <- function(swmpr_in
             , axis.title.y = element_text(margin = unit(c(0, 8, 0, 0), 'pt'), angle = 90))
 
     # Formatting text
+    ## conditional based on parameter
+    sz <- ifelse(param == 'totpar', 12, 16)
     bar_seas <- bar_seas +
-      theme(text = element_text(size = 16))
+      theme(text = element_text(size = sz))
 
     bar_seas <- bar_seas +
       theme(legend.key.size = unit(7, 'pt')) +

@@ -43,7 +43,7 @@ y_labeler <- function(param, converted = F) {
 
     met_lab <- c(quote(expression(paste('Air Temperature (', ~degree, 'C)'))), 'Relative Humidity (%)', 'Barometric Pressure (mb)', 'Wind Speed (m/s)'
                  , 'Maximum Wind Speed (m/s)', 'Maximum Time of Wind Speed Measurement (hh:mm)', 'Wind Direction', 'Wind Direction Standard Deviation (sd)'
-                 , quote(expression(paste('Photosynthetically Active \nRadiation (mmol/'~m^2, ')'))), 'Precipitiation (mm)', quote(expression(paste('Total Solar Radiation (W/ '~m^2, ')'))))
+                 , quote(expression(paste('Photosynthetically Active Radiation (mmol/', ~m^2, ')'))), 'Precipitiation (mm)', quote(expression(paste('Total Solar Radiation (W/ '~m^2, ')'))))
 
     nut_lab <- c('Orthophosphate (mg/L)', 'Ammonium (mg/L)', 'Nitrite (mg/L)', 'Nitrate  (mg/L)', 'Nitrite + Nitrate  (mg/L)', quote(expression(paste('Chlorophyll-a (', ~mu, 'g/L)')))
                  , 'Diss. Inorganic Nitrogen (mg/L)', 'Diss. Inorganic Phosphorus (mg/L)')
