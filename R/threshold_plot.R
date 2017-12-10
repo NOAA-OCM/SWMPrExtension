@@ -270,8 +270,6 @@ threshold_plot.swmpr <- function(swmpr_in
 
   }
 
-  return(plt)
-
   # add plot title if specified
   if(plot_title) {
     ttl <- title_labeler(nerr_site_id = station)
