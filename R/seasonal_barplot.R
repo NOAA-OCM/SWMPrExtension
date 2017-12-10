@@ -161,8 +161,9 @@ seasonal_barplot.swmpr <- function(swmpr_in
     }
 
     mx <- ceiling(max(yr_mx$max_val) / 10) * 10 * 1.1
-    brk_pts <- ifelse(mx < 50, 5, ifelse(mx < 100, 10, ifelse(mx < 1000, 100, 200)))
+    brk_pts <- ifelse(mx < 50, 5, ifelse(mx < 100, 10, ifelse(mx < 1000, 100, ifelse(mx < 1000000, 200, 1000000))))
 
+    # return(mx)
     # Add data
     bar_seas <- ggplot(data = dat_hist, aes_(x = yr, y = res, fill = seas)) +
       geom_bar(stat = "identity", position = bar_position) +
