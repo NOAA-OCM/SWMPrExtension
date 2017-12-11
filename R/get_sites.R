@@ -25,19 +25,21 @@ get_sites <- function(data.file, type = c('wq', 'nut', 'met'), active = TRUE, pr
 
   if (active == TRUE){
     res_data <- res_data[res_data$NERR.Site.ID == get_site_code(data.file) & res_data$Status == 'Active', ]
+
   }else{
     res_data <- res_data[res_data$NERR.Site.ID == get_site_code(data.file), ]
   }
 
   if (primary == TRUE){
-    res_data <- res_data[res_data$NERR.Site.ID == get_site_code(data.file) & res_data$isSWMP == 'Active', ]
+    res_data <- res_data[res_data$NERR.Site.ID == get_site_code(data.file) & res_data$isSWMP == 'P', ]
+
   }else{
     res_data <- res_data[res_data$NERR.Site.ID == get_site_code(data.file), ]
   }
 
 
   sites <- unique(grep(paste(type, collapse = '|')
-                       , res_data$station_code, value = TRUE))
+                       , res_data$Station.Code, value = TRUE))
 
   return(sites)
 }
