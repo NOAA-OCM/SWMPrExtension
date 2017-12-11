@@ -5,6 +5,7 @@
 #' @param data.file location of data
 #' @param type chr string of data station type (\code{'wq'}, \code{'nut'}, or \code{'met'})
 #' @param active logical. Should inactive stations be excluded?
+#' @param primary logical. Should non-primary stations be excludes? Defaults to
 #'
 #' @importFrom SWMPr site_codes
 #'
@@ -20,13 +21,20 @@
 #'
 get_sites <- function(data.file, type = c('wq', 'nut', 'met'), active = TRUE){
 
+  res_data <- get('sampling_stations')
+
   if (active == TRUE){
-    res_data <- SWMPr::site_codes()
-    res_data <- res_data[res_data$nerr_site_id == get_site_code(data.file) & res_data$status == 'Active', ]
+    res_data <- res_data[res_data$NERR.Site.ID == get_site_code(data.file) & res_data$Status == 'Active', ]
   }else{
-    res_data <- SWMPr::site_codes()
-    res_data <- res_data[res_data$nerr_site_id == get_site_code(data.file), ]
+    res_data <- res_data[res_data$NERR.Site.ID == get_site_code(data.file), ]
   }
+
+  if (primary == TRUE){
+    res_data <- res_data[res_data$NERR.Site.ID == get_site_code(data.file) & res_data$isSWMP == 'Active', ]
+  }else{
+    res_data <- res_data[res_data$NERR.Site.ID == get_site_code(data.file), ]
+  }
+
 
   sites <- unique(grep(paste(type, collapse = '|')
                        , res_data$station_code, value = TRUE))
