@@ -4,8 +4,8 @@
 #'
 #' @param data.file location of data
 #' @param type chr string of data station type (\code{'wq'}, \code{'nut'}, or \code{'met'})
-#' @param active logical. Should inactive stations be excluded?
-#' @param primary logical. Should non-primary stations be excludes? Defaults to
+#' @param active logical. Should inactive stations be excluded? Defaults to \code{TRUE}
+#' @param primary logical. Should non-primary stations be excludes? Defaults to \code{TRUE}
 #'
 #' @importFrom SWMPr site_codes
 #'
@@ -19,7 +19,7 @@
 #'
 #' @return Returns a character vector of reserve stations
 #'
-get_sites <- function(data.file, type = c('wq', 'nut', 'met'), active = TRUE){
+get_sites <- function(data.file, type = c('wq', 'nut', 'met'), active = TRUE, primary = T){
 
   res_data <- get('sampling_stations')
 

@@ -4,16 +4,17 @@
 \alias{get_sites}
 \title{Identify NERRS reserve stations from metadata}
 \usage{
-get_sites(data.file, type = c("wq", "nut", "met"), active = TRUE)
+get_sites(data.file, type = c("wq", "nut", "met"), active = TRUE,
+  primary = T)
 }
 \arguments{
 \item{data.file}{location of data}
 
 \item{type}{chr string of data station type (\code{'wq'}, \code{'nut'}, or \code{'met'})}
 
-\item{active}{logical. Should inactive stations be excluded?}
+\item{active}{logical. Should inactive stations be excluded? Defaults to \code{TRUE}}
 
-\item{primary}{logical. Should non-primary stations be excludes? Defaults to}
+\item{primary}{logical. Should non-primary stations be excludes? Defaults to \code{TRUE}}
 }
 \value{
 Returns a character vector of reserve stations
