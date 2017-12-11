@@ -3,7 +3,7 @@
 \name{raw_boxplot}
 \alias{raw_boxplot}
 \alias{raw_boxplot.swmpr}
-\title{Seasonal boxplots of raw data}
+\title{Boxplots of raw data by user-defined season for a target year}
 \usage{
 raw_boxplot(swmpr_in, ...)
 
@@ -18,7 +18,7 @@ raw_boxplot(swmpr_in, ...)
 
 \item{param}{chr string of variable to plot}
 
-\item{target_yr}{numeric, if target year is not specified then dot will not be plotted. If target year is not specified the most recent year in the \code{swmpr_in} will be used.}
+\item{target_yr}{numeric, if target year is not specified then all data in the data frame will be used.}
 
 \item{criteria}{numeric, a numeric criteria that will be plotted as a horizontal line}
 

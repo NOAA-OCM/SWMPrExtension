@@ -12,6 +12,8 @@ get_sites(data.file, type = c("wq", "nut", "met"), active = TRUE)
 \item{type}{chr string of data station type (\code{'wq'}, \code{'nut'}, or \code{'met'})}
 
 \item{active}{logical. Should inactive stations be excluded?}
+
+\item{primary}{logical. Should non-primary stations be excludes? Defaults to}
 }
 \value{
 Returns a character vector of reserve stations
