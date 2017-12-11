@@ -19,7 +19,7 @@
 #'
 #' @return Returns a character vector of reserve stations
 #'
-get_sites <- function(data.file, type = c('wq', 'nut', 'met'), active = TRUE, primary = T){
+get_sites <- function(data.file, type = c('wq', 'nut', 'met'), active = TRUE, primary = TRUE){
 
   res_data <- get('sampling_stations')
 
