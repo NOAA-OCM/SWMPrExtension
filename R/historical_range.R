@@ -117,7 +117,7 @@ historical_range.swmpr <- function(swmpr_in
 
   # Filter to historic range
   dat <- dat %>% dplyr::filter(lubridate::year(.data$datetimestamp) >= rng[[1]]
-                                    & lubridate::year(.data$datetimestamp) <= rng[[2]])
+                               & lubridate::year(.data$datetimestamp) <= rng[[2]])
 
   # Assign date for determining daily stat value
   dat$date <- lubridate::floor_date(dat$datetimestamp, unit = 'days')
@@ -186,7 +186,7 @@ historical_range.swmpr <- function(swmpr_in
   if(plot){
     # Set the plot range
     mx <- ifelse(max(dat_yr[ , c(2:4)], na.rm = T) > max(dat_hist[ , c(2:4)], na.rm = T)
-                       , max(dat_yr[ , c(2:4)], na.rm = T), max(dat_hist[ , c(2:4)], na.rm = T))
+                 , max(dat_yr[ , c(2:4)], na.rm = T), max(dat_hist[ , c(2:4)], na.rm = T))
     mx <- ceiling(mx)
     mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), 0)
 
@@ -239,13 +239,13 @@ historical_range.swmpr <- function(swmpr_in
              , shape = guide_legend(override.aes = list(fill = 'steelblue3'), order = 1)
              , color = guide_legend(override.aes = list(color = 'gray40'), order = 2))
 
-      # Adjust theme
-      plt <-
-        plt +
-        theme(strip.background = element_blank(),
+    # Adjust theme
+    plt <-
+      plt +
+      theme(strip.background = element_blank(),
             panel.border = element_rect(color = 'black')) +
-        theme(axis.title.y = element_text(margin = unit(c(0, 8, 0, 0), 'pt'), angle = 90)) +
-        theme(text = element_text(size = 16))
+      theme(axis.title.y = element_text(margin = unit(c(0, 8, 0, 0), 'pt'), angle = 90)) +
+      theme(text = element_text(size = 16))
 
     # Adjust legend keys and spacing
     plt <-
@@ -259,7 +259,7 @@ historical_range.swmpr <- function(swmpr_in
 
       plt <- plt +
         geom_hline(aes(yintercept = criteria, linetype = factor(criteria_lab))
-                       , color = 'red', show.legend = T) +
+                   , color = 'red', show.legend = T) +
         scale_linetype_manual('', values = c('longdash'))
 
       plt <-

@@ -155,7 +155,7 @@ historical_daily_range.swmpr <- function(swmpr_in
   dat_yr <- dat_all %>% dplyr::filter(lubridate::year(date) == target_yr)
 
   # account for missing julian days
-  if(length(dat_yr[1, ] < 365)) {
+  if(length(dat_yr[1, ] < 365)){
     jday_fill <- data.frame(julian_day = c(1:365))
     dat_yr <- suppressMessages(dplyr::left_join(jday_fill, dat_yr))
   }
@@ -169,9 +169,9 @@ historical_daily_range.swmpr <- function(swmpr_in
     brk_labs <- month.abb
 
     # Make some labels
-    lab_hist_avg_rng <- paste(rng[[1]], '-', rng[[2]], ' Daily Avg Range', sep = '')
-    lab_hist_obs_rng <- paste(rng[[1]], '-', rng[[2]], ' Daily Range', sep = '')
-    lab_yr_ln <- paste(target_yr, ' Daily Avg', sep = '')
+    lab_hist_avg_rng <- paste('Daily Avg Range (', rng[[1]], '-', rng[[2]], ')', sep = '')
+    lab_hist_obs_rng <- paste('Daily Avg Range (', rng[[1]], '-', rng[[2]], ')', sep = '')
+    lab_yr_ln <- paste('Daily Avg (', target_yr, ')', sep = '')
 
     # Make plot
     plt <-
@@ -222,7 +222,7 @@ historical_daily_range.swmpr <- function(swmpr_in
     plt <-
       plt +
       theme(legend.key.size = unit(7, 'pt')) +
-      theme(legend.text = element_text(size = 8)) +
+      theme(legend.text = element_text(size = 9)) +
       theme(legend.spacing.x = unit(-6, 'pt'))
 
     # Add criteria line if specified

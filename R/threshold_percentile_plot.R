@@ -56,7 +56,7 @@
 #'   , hist_rng = c(2007, 2014), target_yr = 2014, by_month = T)
 #'
 #'
-#' dat_nut <- qaqc(elksmnut, qaqc_keep = c(0, 3, 5))
+#' dat_nut <- qaqc(elknmnut, qaqc_keep = c(0, 3, 5))
 #' dat_nut <- subset(dat_nut, subset = '2007-01-01 0:00', operator = '>=')
 #' dat_nut <- rem_reps(dat_nut)
 #'
@@ -243,8 +243,18 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
   if(data_type == 'nut') {
     plt <-
       plt +
-      geom_point(aes(fill = lab_dat), size = 2, shape = 21) +
+      geom_point(aes(fill = lab_dat), color = 'black', size = 2, shape = 21) +
       scale_fill_manual('', values = c(fill_ln))
+  }
+
+  # add plot title if specified
+  if(plot_title) {
+    ttl <- title_labeler(nerr_site_id = station)
+
+    plt <-
+      plt +
+      ggtitle(ttl) +
+      theme(plot.title = element_text(hjust = 0.5))
   }
 
   plt <-
@@ -272,7 +282,7 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
   plt <-
     plt +
     theme(legend.key.size = unit(7, 'pt')) +
-    theme(legend.text = element_text(size = 8)) +
+    theme(legend.text = element_text(size = 9)) +
     theme(legend.spacing.x = unit(-6, 'pt'))
 
   plt <-

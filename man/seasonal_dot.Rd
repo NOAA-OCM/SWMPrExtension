@@ -66,7 +66,7 @@ x <-
                , lm_lab = T
                , plot_title = T)
 
-dat_nut <- elksmnut
+dat_nut <- elknmnut
 dat_nut <- subset(dat_nut, subset = c('2007-01-01 0:00', '2017-01-01 0:00'))
 dat_nut <- qaqc(dat_nut, qaqc_keep = c(0, 3, 5))
 

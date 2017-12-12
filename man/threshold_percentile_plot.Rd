@@ -66,7 +66,7 @@ y2 <-
   , hist_rng = c(2007, 2014), target_yr = 2014, by_month = T)
 
 
-dat_nut <- qaqc(elksmnut, qaqc_keep = c(0, 3, 5))
+dat_nut <- qaqc(elknmnut, qaqc_keep = c(0, 3, 5))
 dat_nut <- subset(dat_nut, subset = '2007-01-01 0:00', operator = '>=')
 dat_nut <- rem_reps(dat_nut)
 

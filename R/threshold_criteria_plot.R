@@ -1,4 +1,4 @@
-#' Water Quality Threshold Plot
+#' Water Quality Threshold Plot For Parameters With Criteria
 #'
 #' Visualize water quality exceedances
 #'
@@ -42,7 +42,7 @@
 #'
 #' ## Due to the volume of instantaneous data, these plots are a bit slow
 #' x <-
-#'   threshold_plot(dat_wq, param = 'do_mgl'
+#'   threshold_criteria_plot(dat_wq, param = 'do_mgl'
 #'                  , thresholds = c(2, 5)
 #'                  , threshold_labs = c('Poor', 'Fair', 'Good')
 #'                  , monthly_smooth = T
@@ -50,14 +50,14 @@
 #'
 #'
 #' y <-
-#'   threshold_plot(dat_wq, param = 'do_mgl'
+#'   threshold_criteria_plot(dat_wq, param = 'do_mgl'
 #'                  , rng = 2012
 #'                  , thresholds = c(2, 5)
 #'                  , threshold_labs = c('Poor', 'Fair', 'Good')
 #'                  , threshold_cols = c('#FEC596', '#FFFFCC', '#ABD9E9'))
 #'
 #' z <-
-#'   threshold_plot(dat_wq, param = 'do_mgl'
+#'   threshold_criteria_plot(dat_wq, param = 'do_mgl'
 #'                  , rng = 2012
 #'                  , thresholds = c(2, 5)
 #'                  , threshold_labs = c('Poor', 'Fair', 'Good')
@@ -72,37 +72,37 @@
 #' dat_nut <- rem_reps(dat_nut)
 #'
 #' x <-
-#'   threshold_plot(dat_nut, param = 'chla_n'
+#'   threshold_criteria_plot(dat_nut, param = 'chla_n'
 #'                  , thresholds = c(2, 5)
 #'                  , threshold_labs = c('Good', 'Fair', 'Poor'))
 #'
 #'
 #' y <-
-#'   threshold_plot(dat_nut, param = 'chla_n'
+#'   threshold_criteria_plot(dat_nut, param = 'chla_n'
 #'                  , rng = 2012
 #'                  , thresholds = c(2, 5)
 #'                  , threshold_labs = c('Good', 'Fair', 'Poor'))
 #'
 #' ## Nutrient plots are not capable of accidentally displaying any kind of smooth
 #' z <-
-#'   threshold_plot(dat_nut, param = 'chla_n'
+#'   threshold_criteria_plot(dat_nut, param = 'chla_n'
 #'                  , rng = 2012
 #'                  , thresholds = c(2, 5)
 #'                  , threshold_labs = c('Good', 'Fair', 'Poor')
 #'                  , monthly_smooth = T)
 #' }
 
-threshold_plot <- function(swmpr_in, ...) UseMethod('threshold_plot')
+threshold_criteria_plot <- function(swmpr_in, ...) UseMethod('threshold_criteria_plot')
 
-#' @rdname threshold_plot
+#' @rdname threshold_criteria_plot
 #'
 #' @concept analyze
 #'
 #' @export
 #'
-#' @method threshold_plot swmpr
+#' @method threshold_criteria_plot swmpr
 #'
-threshold_plot.swmpr <- function(swmpr_in
+threshold_criteria_plot.swmpr <- function(swmpr_in
                                  , param = NULL
                                  , rng = NULL
                                  , thresholds = NULL
@@ -176,7 +176,7 @@ threshold_plot.swmpr <- function(swmpr_in
   mx <- ifelse(max(thresholds) > mx, 1.1 * max(thresholds), mx)
 
   mx <- ifelse(data_type == 'nut' && param != 'chla_n', ceiling(mx/0.1) * 0.1, ceiling(mx))
-  mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), 0)
+  mn <- ifelse(log_trans, ifelse(data_type == 'nut', 0.001, 0.1), 0)
 
   # set legend label and time series line type
   lab_dat <- ifelse(length(unique(rng)) > 1, paste(rng[[1]], '-', rng[[2]], ' Data', sep = ''), paste(rng[[1]], ' Data', sep = ''))
