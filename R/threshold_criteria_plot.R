@@ -233,7 +233,7 @@ threshold_criteria_plot.swmpr <- function(swmpr_in
   plt <-
     plt +
     theme(legend.key.size = unit(7, 'pt')) +
-    theme(legend.text = element_text(size = 8)) +
+    theme(legend.text = element_text(size = 9)) +
     theme(legend.spacing.x = unit(-6, 'pt'))
 
   if(data_type == 'nut') {

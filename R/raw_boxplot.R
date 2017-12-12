@@ -100,7 +100,7 @@ raw_boxplot.swmpr <- function(swmpr_in
 
 
   if(!is.null(target_yr))
-    dat <- dat %>% dplyr::filter(year(datetimestamp) == target_yr)
+    dat <- dat %>% dplyr::filter(year(.data$datetimestamp) == target_yr)
 
   # Assign the seasons and order them
   dat$season <- assign_season(dat$datetimestamp, abb = T, ...)

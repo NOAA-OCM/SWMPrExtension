@@ -46,7 +46,7 @@
 #'                       , hist_avg = T
 #'                       , converted = F)
 #'
-#' # return a plot instead of a figure
+#' # return a table instead of a figure
 #' y <- seasonal_barplot(dat, param = 'totprcp'
 #'                       , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
 #'                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
@@ -190,7 +190,7 @@ seasonal_barplot.swmpr <- function(swmpr_in
 
     bar_seas <- bar_seas +
       theme(legend.key.size = unit(7, 'pt')) +
-      theme(legend.text = element_text(size = 8)) +
+      theme(legend.text = element_text(size = 9)) +
       theme(legend.spacing.x = unit(-5, 'pt'))
 
     # add plot title if specified

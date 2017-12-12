@@ -145,9 +145,9 @@ historical_range.swmpr <- function(swmpr_in
                        , max = mean(!! maxi, na.rm = T))
 
     # Make some labels
-    lab_hist_rng <- paste('Daily Rng (', rng[[1]], '-', rng[[2]], ')', sep = '')
+    lab_hist_rng <- paste('Daily Range (', rng[[1]], '-', rng[[2]], ')', sep = '')
     lab_hist_ln <- paste('Daily Avg (', rng[[1]], '-', rng[[2]], ')', sep = '')
-    lab_yr_rng <- paste('Daily Avg Rng (', target_yr, ')', sep = '')
+    lab_yr_rng <- paste('Daily Avg Range (', target_yr, ')', sep = '')
     lab_yr_ln <- paste('Daily Avg (', target_yr, ')', sep = '')
 
   } else {
@@ -248,10 +248,11 @@ historical_range.swmpr <- function(swmpr_in
       theme(text = element_text(size = 16))
 
     # Adjust legend keys and spacing
+    sz <- ifelse(!is.null(criteria), 7, 6)
     plt <-
       plt +
       theme(legend.key.size = unit(7, 'pt')) +
-      theme(legend.text = element_text(size = 6)) +
+      theme(legend.text = element_text(size = sz)) +
       theme(legend.spacing.x = unit(-6, 'pt'))
 
     # Add criteria line if specified
