@@ -150,7 +150,7 @@ annual_range.swmpr <- function(swmpr_in
 
     mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), 0)
 
-    lab_ln <- ifelse(data_type == 'nut', paste('Monthly Sample (', target_yr, ')', sep = ''), paste('Daily Average (', target_yr, ')', sep = ''))
+    lab_ln <- ifelse(data_type == 'nut', paste('Monthly Sample \n(', target_yr, ')', sep = ''), paste('Daily Average \n(', target_yr, ')', sep = ''))
 
     plt <-
       ggplot(data = dat_month, aes_(x = seas, y = avg, group = 1)) +
@@ -163,8 +163,8 @@ annual_range.swmpr <- function(swmpr_in
       theme(legend.position = 'top', legend.direction = 'horizontal')
 
     if(data_type != 'nut') {
-      lab_rng_avg <- paste('Avg Daily Range (', target_yr, ')', sep = '')
-      lab_rng_mx <- paste('Daily Range (', target_yr, ')', sep = '')
+      lab_rng_avg <- paste('Avg Daily Range \n(', target_yr, ')', sep = '')
+      lab_rng_mx <- paste('Daily Range \n(', target_yr, ')', sep = '')
 
       plt <-
         plt +
@@ -240,8 +240,10 @@ annual_range.swmpr <- function(swmpr_in
     # Adjust legend keys and spacing
     plt <-
       plt +
-      theme(legend.key.size = unit(7, 'pt')) +
-      theme(legend.text = element_text(size = 9)) +
+      theme(legend.key.height = unit(0.1, 'cm')
+            , legend.key.width = unit(0.5, 'cm')) +
+      theme(legend.text = element_text(size = 10)
+            , legend.text.align = 0.5) +
       theme(legend.spacing.x = unit(-6, 'pt'))
 
     return(plt)

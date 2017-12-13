@@ -179,7 +179,7 @@ threshold_criteria_plot.swmpr <- function(swmpr_in
   mn <- ifelse(log_trans, ifelse(data_type == 'nut', 0.001, 0.1), 0)
 
   # set legend label and time series line type
-  lab_dat <- ifelse(length(unique(rng)) > 1, paste(rng[[1]], '-', rng[[2]], ' Data', sep = ''), paste(rng[[1]], ' Data', sep = ''))
+  lab_dat <- ifelse(length(unique(rng)) > 1, paste('Data \n(', rng[[1]], '-', rng[[2]], ')', sep = ''), paste('Data \n(', rng[[1]], ')', sep = ''))
   ts_ln <- 'solid'
 
   plt <-
@@ -232,8 +232,10 @@ threshold_criteria_plot.swmpr <- function(swmpr_in
   # Adjust legend keys and spacing
   plt <-
     plt +
-    theme(legend.key.size = unit(7, 'pt')) +
-    theme(legend.text = element_text(size = 9)) +
+    theme(legend.key.height = unit(0.1, 'cm')
+          , legend.key.width = unit(0.5, 'cm')) +
+    theme(legend.text = element_text(size = 10)
+          , legend.text.align = 0.5) +
     theme(legend.spacing.x = unit(-6, 'pt'))
 
   if(data_type == 'nut') {

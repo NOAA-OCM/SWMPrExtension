@@ -145,10 +145,10 @@ historical_range.swmpr <- function(swmpr_in
                        , max = mean(!! maxi, na.rm = T))
 
     # Make some labels
-    lab_hist_rng <- paste('Daily Range (', rng[[1]], '-', rng[[2]], ')', sep = '')
-    lab_hist_ln <- paste('Daily Avg (', rng[[1]], '-', rng[[2]], ')', sep = '')
-    lab_yr_rng <- paste('Daily Avg Range (', target_yr, ')', sep = '')
-    lab_yr_ln <- paste('Daily Avg (', target_yr, ')', sep = '')
+    lab_hist_rng <- paste('Daily Range \n(', rng[[1]], '-', rng[[2]], ')', sep = '')
+    lab_hist_ln <- paste('Daily Avg \n(', rng[[1]], '-', rng[[2]], ')', sep = '')
+    lab_yr_rng <- paste('Daily Avg Range \n(', target_yr, ')', sep = '')
+    lab_yr_ln <- paste('Daily Avg \n(', target_yr, ')', sep = '')
 
   } else {
     dat_hist <- dat_all %>%
@@ -248,11 +248,13 @@ historical_range.swmpr <- function(swmpr_in
       theme(text = element_text(size = 16))
 
     # Adjust legend keys and spacing
-    sz <- ifelse(!is.null(criteria), 7, 6)
+    sz <- ifelse(!is.null(criteria), 9, 10)
     plt <-
       plt +
-      theme(legend.key.size = unit(7, 'pt')) +
-      theme(legend.text = element_text(size = sz)) +
+      theme(legend.key.height = unit(0.1, 'cm')
+            , legend.key.width = unit(0.5, 'cm')) +
+      theme(legend.text = element_text(size = sz)
+            , legend.text.align = 0.5) +
       theme(legend.spacing.x = unit(-6, 'pt'))
 
     # Add criteria line if specified

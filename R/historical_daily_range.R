@@ -169,9 +169,9 @@ historical_daily_range.swmpr <- function(swmpr_in
     brk_labs <- month.abb
 
     # Make some labels
-    lab_hist_avg_rng <- paste('Daily Avg Range (', rng[[1]], '-', rng[[2]], ')', sep = '')
-    lab_hist_obs_rng <- paste('Daily Avg Range (', rng[[1]], '-', rng[[2]], ')', sep = '')
-    lab_yr_ln <- paste('Daily Avg (', target_yr, ')', sep = '')
+    lab_hist_avg_rng <- paste('Daily Avg Range \n(', rng[[1]], '-', rng[[2]], ')', sep = '')
+    lab_hist_obs_rng <- paste('Daily Avg Range \n(', rng[[1]], '-', rng[[2]], ')', sep = '')
+    lab_yr_ln <- paste('Daily Avg \n(', target_yr, ')', sep = '')
 
     # Make plot
     plt <-
@@ -221,8 +221,10 @@ historical_daily_range.swmpr <- function(swmpr_in
     # Adjust legend keys and spacing
     plt <-
       plt +
-      theme(legend.key.size = unit(7, 'pt')) +
-      theme(legend.text = element_text(size = 9)) +
+      theme(legend.key.height = unit(0.1, 'cm')
+            , legend.key.width = unit(0.5, 'cm')) +
+      theme(legend.text = element_text(size = 10)
+            , legend.text.align = 0.5) +
       theme(legend.spacing.x = unit(-6, 'pt'))
 
     # Add criteria line if specified

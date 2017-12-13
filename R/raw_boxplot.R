@@ -82,9 +82,9 @@ raw_boxplot.swmpr <- function(swmpr_in
   #determine data type
   if(substr(station, 6, nchar(station)) == 'nut') {
     warning('Nutrient data detected. Consider specifying seasons > 1 month.')
-    data_type = 'Data'
+    lab_data = 'Data'
   } else {
-    data_type = 'Instantaneous Data'
+    lab_data = 'Instantaneous Data'
   }
 
   #determine if QAQC has been conducted
@@ -109,7 +109,7 @@ raw_boxplot.swmpr <- function(swmpr_in
   mx <- max(pretty(mx))
   mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), 0)
 
-  bp_fill <- ifelse(length(unique(rng)) == 1, paste(rng, ' ', data_type, sep = ''), paste(rng[1], '-', rng[2], ' ', data_type, sep = ''))
+  bp_fill <- ifelse(length(unique(rng)) == 1, paste(lab_data, '\n(', rng, ')', sep = ''), paste(lab_data, '\n(', rng[1], '-', rng[2], ')', sep = ''))
 
   seas <- sym('season')
 
@@ -177,8 +177,10 @@ raw_boxplot.swmpr <- function(swmpr_in
   # Adjust legend keys and spacing
   plt <-
     plt +
-    theme(legend.key.size = unit(7, 'pt')) +
-    theme(legend.text = element_text(size = 9)) +
+    theme(legend.key.height = unit(0.1, 'cm')
+          , legend.key.width = unit(0.5, 'cm')) +
+    theme(legend.text = element_text(size = 10)
+          , legend.text.align = 0.5) +
     theme(legend.spacing.x = unit(-6, 'pt'))
 
   return(plt)

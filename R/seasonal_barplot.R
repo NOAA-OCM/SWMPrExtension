@@ -189,8 +189,10 @@ seasonal_barplot.swmpr <- function(swmpr_in
       theme(text = element_text(size = sz))
 
     bar_seas <- bar_seas +
-      theme(legend.key.size = unit(7, 'pt')) +
-      theme(legend.text = element_text(size = 9)) +
+      theme(legend.key.height = unit(0.1, 'cm')
+            , legend.key.width = unit(0.5, 'cm')) +
+      theme(legend.text = element_text(size = 10)
+            , legend.text.align = 0.5) +
       theme(legend.spacing.x = unit(-5, 'pt'))
 
     # add plot title if specified

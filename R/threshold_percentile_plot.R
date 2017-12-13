@@ -168,11 +168,11 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
   # set a few labels and colors ----
   col_ln <- ifelse(length(unique(dat_subset$year)) > 1, 'gray80', 'steelblue3')
   fill_ln <- ifelse(length(unique(dat_subset$year)) > 1, 'gray80', 'steelblue3')
-  lab_perc <- ifelse(length(percentiles) > 1, paste(min(percentiles) * 100, 'th and ', max(percentiles) * 100, 'th percentiles ', sep = '')
+  lab_perc <- ifelse(length(percentiles) > 1, paste(min(percentiles) * 100, 'th and ', max(percentiles) * 100, 'th percentiles', sep = '')
                      , paste(percentiles * 100, 'th percentile', sep = ''))
-  lab_yr <- ifelse(length(hist_rng) > 1, paste('(', min(hist_rng), '-', max(hist_rng), ')', sep = ''), paste('(', hist_rng, ')', sep = ''))
+  lab_yr <- ifelse(length(hist_rng) > 1, paste('\n(', min(hist_rng), '-', max(hist_rng), ')', sep = ''), paste('\n(', hist_rng, ')', sep = ''))
   lab_perc <- paste(lab_perc, lab_yr, sep = '')
-  lab_tgt <- ifelse(is.null(target_yr), lab_yr, paste('(', target_yr, ')', sep = ''))
+  lab_tgt <- ifelse(is.null(target_yr), lab_yr, paste('\n(', target_yr, ')', sep = ''))
   lab_dat <- paste('Obs Data ', lab_tgt, sep = '')
 
   brks <- ifelse(is.null(target_yr), set_date_breaks(hist_rng), set_date_breaks(target_yr))
@@ -281,8 +281,10 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
   # Adjust legend keys and spacing
   plt <-
     plt +
-    theme(legend.key.size = unit(7, 'pt')) +
-    theme(legend.text = element_text(size = 9)) +
+    theme(legend.key.height = unit(0.1, 'cm')
+          , legend.key.width = unit(0.5, 'cm')) +
+    theme(legend.text = element_text(size = 10)
+          , legend.text.align = 0.5) +
     theme(legend.spacing.x = unit(-6, 'pt'))
 
   plt <-

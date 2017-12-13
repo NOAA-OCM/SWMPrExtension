@@ -154,8 +154,8 @@ seasonal_boxplot.swmpr <- function(swmpr_in
     mx <- ceiling(mx)
     mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), 0)
 
-    lab_bp_fill <- ifelse(data_type == 'nut', paste('Monthly Sample (', rng[[1]], '-', rng[[2]], ')', sep = '')
-                      , paste('Daily ', stat_lab, 's (', rng[[1]], '-', rng[[2]], ')', sep = ''))
+    lab_bp_fill <- ifelse(data_type == 'nut', paste('Monthly Sample \n(', rng[[1]], '-', rng[[2]], ')', sep = '')
+                      , paste('Daily ', stat_lab, 's \n(', rng[[1]], '-', rng[[2]], ')', sep = ''))
 
     plt <- ggplot(data = dat_hist, aes_(x = seas, y = res, fill = lab_bp_fill)) +
       geom_boxplot(outlier.size = 0.5) +
@@ -235,8 +235,10 @@ seasonal_boxplot.swmpr <- function(swmpr_in
     # Adjust legend keys and spacing
     plt <-
       plt +
-      theme(legend.key.size = unit(7, 'pt')) +
-      theme(legend.text = element_text(size = 9)) +
+      theme(legend.key.height = unit(0.1, 'cm')
+            , legend.key.width = unit(0.5, 'cm')) +
+      theme(legend.text = element_text(size = 10)
+            , legend.text.align = 0.5) +
       theme(legend.spacing.x = unit(-6, 'pt'))
 
     return(plt)
