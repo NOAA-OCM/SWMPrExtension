@@ -4,7 +4,7 @@
 #'
 #' @param nerr_site_id chr string of the reserve to make, first three characters used by NERRS
 #' @param stations chr string of the reserve stations to include in the map
-#' @param sk_result vector of values denoting direction and significance of seasonal kendall results. Result should be c('inc', 'dec', 'insig') for sig. negative, no sig. results, and sig. positive result
+#' @param sk_result vector of values denoting direction and significance of seasonal kendall results. Result should be \code{c('inc', 'dec', 'insig', 'insuff')} for significant positive, significant negative, no significant results, and insufficient data to calculate result.
 #' @param bbox a bounding box associated with the reserve. Must be in the format of c(X1, Y1, X2, Y2)
 #' @param shp SpatialPolygons object
 #' @param station_labs logical, should stations be labeled? Defaults to \code{TRUE}

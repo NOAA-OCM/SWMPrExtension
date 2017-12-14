@@ -73,10 +73,10 @@ labs <- c('ap', 'cw', 'nm', 'sm', 'vm')
 pos <- 'bottomleft'
 
 ### plot
-res_local_map('elk', stations = stns, bbox = bounding_cbm_1,
+res_local_map('cbm', stations = stns, bbox = bounding_cbm_1,
 lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
 
-res_local_map('elk', stations = stns, bbox = bounding_cbm_2,
+res_local_map('cbm', stations = stns, bbox = bounding_cbm_2,
 lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
 
 }

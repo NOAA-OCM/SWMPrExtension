@@ -5,18 +5,22 @@
 \title{Local Reserve Map With Seasonal Kendall Results}
 \usage{
 res_sk_map(nerr_site_id, stations, sk_result = NULL, bbox, shp,
-  scale_pos = "bottomleft")
+  station_labs = T, lab_loc = NULL, scale_pos = "bottomleft")
 }
 \arguments{
 \item{nerr_site_id}{chr string of the reserve to make, first three characters used by NERRS}
 
 \item{stations}{chr string of the reserve stations to include in the map}
 
-\item{sk_result}{vector of values denoting direction and significance of seasonal kendall results. Result should be c('inc', 'dec', 'insig') for sig. negative, no sig. results, and sig. positive result}
+\item{sk_result}{vector of values denoting direction and significance of seasonal kendall results. Result should be \code{c('inc', 'dec', 'insig', 'insuff')} for significant positive, significant negative, no significant results, and insufficient data to calculate result.}
 
 \item{bbox}{a bounding box associated with the reserve. Must be in the format of c(X1, Y1, X2, Y2)}
 
 \item{shp}{SpatialPolygons object}
+
+\item{station_labs}{logical, should stations be labeled? Defaults to \code{TRUE}}
+
+\item{lab_loc}{chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.}
 
 \item{scale_pos}{scale_pos where should the scale be placed? Options are 'topleft', 'topright', 'bottomleft', or 'bottomright'. Defaults to 'bottomleft'}
 }
