@@ -112,6 +112,7 @@ res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, stat
   if('inc' %in% sk_result){inc_icons <- grep('inc', sk_result)}
   if('dec' %in% sk_result){dec_icons <- grep('dec', sk_result)}
   if('insig' %in% sk_result){insig_icons <- grep('insig', sk_result)}
+  if('insuff' %in% sk_result){insuff_icons <- grep('insuff', sk_result)}
 
   # Plot map
   m <- leaflet(loc, options = leafletOptions(zoomControl = FALSE), width = 500, height = 500) %>%
@@ -184,8 +185,25 @@ res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, stat
     icon_img <- makeIcon(iconUrl = ico_loc
                          , iconWidth = 28 #40
                          , iconHeight = 14
-                         , iconAnchorX = 20
+                         , iconAnchorX = 14 #20
                          , iconAnchorY = 7)
+
+    # plot custom icon
+    m <- m %>%
+      addMarkers(lng = ~Longitude[insig_icons] * -1, lat = ~Latitude[insig_icons]
+                 , icon = icon_img)
+  }
+
+  if(exists('insuff_icons')){
+    # create file path for icon image
+    ico_loc <- system.file('extdata', 'x_insuff.png', package = 'SWMPrExtension')
+
+    # make icon
+    icon_img <- makeIcon(iconUrl = ico_loc
+                         , iconWidth = 25 #40
+                         , iconHeight = 25
+                         , iconAnchorX = 12.5
+                         , iconAnchorY = 12.5)
 
     # plot custom icon
     m <- m %>%
