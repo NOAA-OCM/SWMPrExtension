@@ -38,7 +38,7 @@ y_labeler <- function(param, converted = F) {
 
     # Parameter labels
     wq_lab <- c(quote(expression(paste('Water Temperature (', ~degree, 'C)'))), 'Specific Conductivity (mS/cm)', 'Salinity (psu)', 'Dissolved Oxygen Saturation (%)'
-                , 'Dissolved Oxygen (mg/L)', 'Sonde Depth (m)', 'Depth, Corrected for Barometric Pressure (m)', 'Sonde Depth (m)'
+                , 'Dissolved Oxygen (mg/L)', 'Sonde Depth (m)', 'Depth, Corrected for Barometric Pressure (m)', 'Level (m)'
                 , 'Level, corrected for Barometric Pressure (m)', 'pH (su)', 'Turbidity (NTU)', quote(expression(paste('Chlorophyll Fluorescence (', ~mu, 'g/L)'))))
 
     met_lab <- c(quote(expression(paste('Air Temperature (', ~degree, 'C)'))), 'Relative Humidity (%)', 'Barometric Pressure (mb)', 'Wind Speed (m/s)'
