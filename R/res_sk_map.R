@@ -147,7 +147,8 @@ res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, stat
 
     # make icon
     icon_img <- makeIcon(iconUrl = ico_loc
-                     , iconWidth = 25#30
+                     , iconWidth = 25
+                     #30
                      , iconHeight = 30
                      , iconAnchorX = 15
                      , iconAnchorY = 15)
@@ -164,7 +165,7 @@ res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, stat
 
     # make icon
     icon_img <- makeIcon(iconUrl = ico_loc
-                         , iconWidth = 25#30
+                         , iconWidth = 25 #30
                          , iconHeight = 30
                          , iconAnchorX = 15
                          , iconAnchorY = 15)
