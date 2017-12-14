@@ -142,6 +142,7 @@ res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, stat
   }
 
 
+
   if(exists('inc_icons')){
     # create file path for icon image
     ico_loc <- system.file('extdata', 'arrow_inc.png', package = 'SWMPrExtension')
