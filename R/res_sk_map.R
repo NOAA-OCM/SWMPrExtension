@@ -7,6 +7,8 @@
 #' @param sk_result vector of values denoting direction and significance of seasonal kendall results. Result should be c('inc', 'dec', 'insig') for sig. negative, no sig. results, and sig. positive result
 #' @param bbox a bounding box associated with the reserve. Must be in the format of c(X1, Y1, X2, Y2)
 #' @param shp SpatialPolygons object
+#' @param station_labs logical, should stations be labeled? Defaults to \code{TRUE}
+#' @param lab_loc chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.
 #' @param scale_pos scale_pos where should the scale be placed? Options are 'topleft', 'topright', 'bottomleft', or 'bottomright'. Defaults to 'bottomleft'
 #'
 #' @import leaflet
@@ -72,7 +74,7 @@
 #'
 #' }
 #'
-res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, scale_pos = 'bottomleft') {
+res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, station_labs = T, lab_loc = NULL, scale_pos = 'bottomleft') {
 
   # check that a shape file exists
   if(class(shp) != 'SpatialPolygons')
@@ -82,9 +84,9 @@ res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, scal
   if(length(stations) != length(sk_result))
     stop('Incorrect number of seasonal kendall results specified.')
 
-  # # check that length(lab_loc) = length(stations)
-  # if(!is.null(station_labs) && length(lab_loc) != length(stations))
-  #   stop('Incorrect number of label location identifiers specified. R or L designation must be made for each station.' )
+  # check that length(lab_loc) = length(stations)
+  if(!is.null(station_labs) && length(lab_loc) != length(stations))
+    stop('Incorrect number of label location identifiers specified. R or L designation must be made for each station.' )
 
   # check that the bb has the right dimensions
   if(is.null(bbox))
@@ -97,14 +99,14 @@ res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, scal
   loc <- loc[(loc$Station.Code %in% stations), ]
   loc$abbrev <- substr(loc$Station.Code, start = 4, stop = 5)
 
-  # # Determine if r and l labs exist
-  # if(!is.null(lab_loc)){
-  #   left_labs <- grep('L', lab_loc)
-  #   right_labs <- grep('R', lab_loc)
-  # } else {
-  #   #default to left labels
-  #   left_labs <- rep('L', length(stations))
-  # }
+  # Determine if r and l labs exist
+  if(!is.null(lab_loc)){
+    left_labs <- grep('L', lab_loc)
+    right_labs <- grep('R', lab_loc)
+  } else {
+    #default to left labels
+    left_labs <- rep('L', length(stations))
+  }
 
   # Determine the types of results
   if('inc' %in% sk_result){inc_icons <- grep('inc', sk_result)}
@@ -116,13 +118,36 @@ res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, scal
     addProviderTiles(leaflet::providers$Esri.WorldGrayCanvas) %>%  # Add default OpenStreetMap map tiles, CartoDB.Positron
     addPolygons(data = shp, weight = 2, color = '#B3B300', fillColor = 'yellow')
 
+  if(length(left_labs) > 0){
+    m <- m %>%
+      addLabelOnlyMarkers(lng = ~Longitude[left_labs] * -1, lat = ~Latitude[left_labs]
+                          , label = loc$abbrev[left_labs]
+                          , labelOptions = labelOptions(noHide = station_labs
+                                                        , direction = c('left')
+                                                        , opacity = 1
+                                                        , textsize = '12px'
+                                                        , offset = c(12, -15)))
+  }
+
+  if(length(right_labs) > 0){
+    m <- m %>%
+      addLabelOnlyMarkers(lng = ~Longitude[right_labs] * -1, lat = ~Latitude[right_labs]
+                          , label = loc$abbrev[right_labs]
+                          , labelOptions = labelOptions(noHide = station_labs
+                                                        , direction = c('right')
+                                                        , opacity = 1
+                                                        , textsize = '12px'
+                                                        , offset = c(12, -15))) #default offset is c(12, -15)
+  }
+
+
   if(exists('inc_icons')){
     # create file path for icon image
     ico_loc <- system.file('extdata', 'arrow_inc.png', package = 'SWMPrExtension')
 
     # make icon
     icon_img <- makeIcon(iconUrl = ico_loc
-                     , iconWidth = 30
+                     , iconWidth = 25#30
                      , iconHeight = 30
                      , iconAnchorX = 15
                      , iconAnchorY = 15)
@@ -139,7 +164,7 @@ res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, scal
 
     # make icon
     icon_img <- makeIcon(iconUrl = ico_loc
-                         , iconWidth = 30
+                         , iconWidth = 25#30
                          , iconHeight = 30
                          , iconAnchorX = 15
                          , iconAnchorY = 15)
@@ -156,7 +181,7 @@ res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, scal
 
     # make icon
     icon_img <- makeIcon(iconUrl = ico_loc
-                         , iconWidth = 40
+                         , iconWidth = 28 #40
                          , iconHeight = 14
                          , iconAnchorX = 20
                          , iconAnchorY = 7)
@@ -166,6 +191,8 @@ res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, scal
       addMarkers(lng = ~Longitude[insig_icons] * -1, lat = ~Latitude[insig_icons]
                  , icon = icon_img)
   }
+
+
 
   m <- m %>%
     addScaleBar(position = scale_pos) %>%
