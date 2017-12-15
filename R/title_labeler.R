@@ -31,7 +31,8 @@ title_labeler <- function(nerr_site_id) {
 
   ttl <- trimws(ttl)
 
-  ttl <- paste(ttl, ' (', abbrev, ')', sep = '')
+  ttl <- paste(ttl, ' (', toupper(abbrev)
+               , ')', sep = '')
 
   return(ttl)
 }

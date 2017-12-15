@@ -99,7 +99,7 @@ res_local_map <- function(nerr_site_id, stations, bbox, shp, station_labs = T, l
   # generate location labels
   loc <- get('sampling_stations')
   loc <- loc[(loc$Station.Code %in% stations), ]
-  loc$abbrev <- substr(loc$Station.Code, start = 4, stop = 5)
+  loc$abbrev <- toupper(substr(loc$Station.Code, start = 4, stop = 5))
 
   # Determine if r and l labs exist
   if(!is.null(lab_loc)){
@@ -121,7 +121,7 @@ res_local_map <- function(nerr_site_id, stations, bbox, shp, station_labs = T, l
                        , weight = 0, fillOpacity = 1
                        , color = loc$color[left_labs]
                        , label = loc$abbrev[left_labs]
-                       , labelOptions = labelOptions(noHide = station_labs, direction = c('left'), opacity = 1, textsize = '12px'))
+                       , labelOptions = labelOptions(noHide = station_labs, direction = c('left'), opacity = 1, textsize = '16px'))
   }
 
   if(length(right_labs) > 0){
@@ -130,7 +130,7 @@ res_local_map <- function(nerr_site_id, stations, bbox, shp, station_labs = T, l
                        , weight = 0, fillOpacity = 1
                        , color = loc$color[right_labs]
                        , label = loc$abbrev[right_labs]
-                       , labelOptions = labelOptions(noHide = station_labs, direction = c('right'), opacity = 1, textsize = '12px'))
+                       , labelOptions = labelOptions(noHide = station_labs, direction = c('right'), opacity = 1, textsize = '16px'))
   }
 
   m <- m %>%

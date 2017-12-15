@@ -97,8 +97,9 @@ res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, stat
   #This loc stuff should be abstracted out
   loc <- get('sampling_stations')
   loc <- loc[(loc$Station.Code %in% stations), ]
-  loc$abbrev <- substr(loc$Station.Code, start = 4, stop = 5)
+  loc$abbrev <- toupper(substr(loc$Station.Code, start = 4, stop = 5))
 
+  # return(loc$abbrev)
   # Determine if r and l labs exist
   if(!is.null(lab_loc)){
     left_labs <- grep('L', lab_loc)
@@ -126,7 +127,7 @@ res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, stat
                           , labelOptions = labelOptions(noHide = station_labs
                                                         , direction = c('left')
                                                         , opacity = 1
-                                                        , textsize = '12px'
+                                                        , textsize = '16px'
                                                         , offset = c(12, -15)))
   }
 
@@ -137,7 +138,7 @@ res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, stat
                           , labelOptions = labelOptions(noHide = station_labs
                                                         , direction = c('right')
                                                         , opacity = 1
-                                                        , textsize = '12px'
+                                                        , textsize = '16px'
                                                         , offset = c(12, -15))) #default offset is c(12, -15)
   }
 
@@ -149,9 +150,8 @@ res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, stat
 
     # make icon
     icon_img <- makeIcon(iconUrl = ico_loc
-                     , iconWidth = 25
-                     #30
-                     , iconHeight = 30
+                     , iconWidth = 30
+                     , iconHeight = 40
                      , iconAnchorX = 15
                      , iconAnchorY = 15)
 
@@ -167,8 +167,8 @@ res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, stat
 
     # make icon
     icon_img <- makeIcon(iconUrl = ico_loc
-                         , iconWidth = 25 #30
-                         , iconHeight = 30
+                         , iconWidth = 30
+                         , iconHeight = 40
                          , iconAnchorX = 15
                          , iconAnchorY = 15)
 
@@ -184,9 +184,9 @@ res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, stat
 
     # make icon
     icon_img <- makeIcon(iconUrl = ico_loc
-                         , iconWidth = 28 #40
-                         , iconHeight = 14
-                         , iconAnchorX = 14 #20
+                         , iconWidth = 30 #40
+                         , iconHeight = 15
+                         , iconAnchorX = 15 #20
                          , iconAnchorY = 7)
 
     # plot custom icon
