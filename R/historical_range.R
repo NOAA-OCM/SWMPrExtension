@@ -159,9 +159,9 @@ historical_range.swmpr <- function(swmpr_in
 
     # Make some labels
     lab_hist_rng <- paste('Seasonal Range \n(', rng[[1]], '-', rng[[2]], ')', sep = '')
-    lab_hist_ln <- paste('Seasonal Avg (', rng[[1]], '-', rng[[2]], ')', sep = '')
+    lab_hist_ln <- paste('Seasonal Avg \n(', rng[[1]], '-', rng[[2]], ')', sep = '')
     lab_yr_rng <- paste('Seasonal Range \n(', target_yr, ')', sep = '')
-    lab_yr_ln <- paste('Seasonal Avg (', target_yr, ')', sep = '')
+    lab_yr_ln <- paste('Seasonal Avg \n(', target_yr, ')', sep = '')
 
   }
 

@@ -255,7 +255,7 @@ threshold_criteria_plot.swmpr <- function(swmpr_in
 
   if(monthly_smooth && data_type != 'nut') {
 
-    lab_smooth <- ifelse(length(unique(rng)) > 1, paste(rng[[1]], '-', rng[[2]], ' Monthly Average', sep = ''), paste(rng[[1]], ' Monthly Average', sep = ''))
+    lab_smooth <- ifelse(length(unique(rng)) > 1, paste('Monthly Average \n(', rng[[1]], '-', rng[[2]], ')', sep = ''), paste('Monthly Average \n(', rng[[1]], ')', sep = ''))
 
     df_smooth <- dat %>%
       group_by(year = lubridate::year(!! dt), month = lubridate::month(!! dt)) %>%

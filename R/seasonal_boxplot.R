@@ -193,7 +193,8 @@ seasonal_boxplot.swmpr <- function(swmpr_in
         dplyr::summarise(med = stats::median(.data$result, na.rm = T))
 
       pt_fill <- ifelse(data_type == 'nut', paste('Monthly Sample (', target_yr, ')', sep = '')
-                        , paste('Median Daily ', stat_lab, ' (', target_yr, ')', sep = ''))
+                        , paste('Median Daily ', stat_lab, ' \n
+                                (', target_yr, ')', sep = ''))
 
       plt <- plt +
         geom_point(data = dat_yr, aes_(x = seas, y = medi, shape = factor(pt_fill)), fill = '#65BCFF', size = 2) +
