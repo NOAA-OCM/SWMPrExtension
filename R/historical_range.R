@@ -145,7 +145,7 @@ historical_range.swmpr <- function(swmpr_in
                        , max = mean(!! maxi, na.rm = T))
 
     # Make some labels
-    lab_hist_rng <- paste('Daily Range \n(', rng[[1]], '-', rng[[2]], ')', sep = '')
+    lab_hist_rng <- paste('Daily Avg Range \n(', rng[[1]], '-', rng[[2]], ')', sep = '')
     lab_hist_ln <- paste('Daily Avg \n(', rng[[1]], '-', rng[[2]], ')', sep = '')
     lab_yr_rng <- paste('Daily Avg Range \n(', target_yr, ')', sep = '')
     lab_yr_ln <- paste('Daily Avg \n(', target_yr, ')', sep = '')
@@ -158,9 +158,9 @@ historical_range.swmpr <- function(swmpr_in
                        , max = max(!! maxi, na.rm = T))
 
     # Make some labels
-    lab_hist_rng <- paste('Seasonal Rng (', rng[[1]], '-', rng[[2]], ')', sep = '')
+    lab_hist_rng <- paste('Seasonal Range \n(', rng[[1]], '-', rng[[2]], ')', sep = '')
     lab_hist_ln <- paste('Seasonal Avg (', rng[[1]], '-', rng[[2]], ')', sep = '')
-    lab_yr_rng <- paste('Seasonal Rng (', target_yr, ')', sep = '')
+    lab_yr_rng <- paste('Seasonal Range \n(', target_yr, ')', sep = '')
     lab_yr_ln <- paste('Seasonal Avg (', target_yr, ')', sep = '')
 
   }
@@ -205,7 +205,7 @@ historical_range.swmpr <- function(swmpr_in
       geom_point(aes_(fill = lab_yr_ln, shape = lab_yr_ln), size = 2) +
       labs(x = NULL, y = eval(y_label)) +
       theme_bw() +
-      theme(legend.position = 'top')#, legend.direction = 'horizontal')
+      theme(legend.position = 'top')
 
     # add a log transformed access if log_trans = T
     if(!log_trans) {
