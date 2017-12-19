@@ -22,6 +22,10 @@
 #' @seealso \code{lm}
 #'
 lm_p_labs <- function(dat_in) {
+
+  # remove seasons with out results
+  dat_in <- dat_in[complete.cases(dat_in), ]
+
   lm_results <- dat_in %>%
     group_by(.data$season) %>%
     do(reg_min = lm(.data$min ~ .data$year, data = .data)
@@ -39,7 +43,13 @@ lm_p_labs <- function(dat_in) {
   lm_mean_tidy$lab <- ifelse(lm_mean_tidy$p.value < 0.05, 'p < 0.05', 'p > 0.05')
   lm_max_tidy$lab <- ifelse(lm_max_tidy$p.value < 0.05, 'p < 0.05', 'p > 0.05')
 
-  df_lab <- data.frame(min = lm_min_tidy$lab, mean = lm_mean_tidy$lab, max = lm_max_tidy$lab, stringsAsFactors = F)
+  df_lab <- data.frame(season = lm_min_tidy$season, min = lm_min_tidy$lab, mean = lm_mean_tidy$lab, max = lm_max_tidy$lab, stringsAsFactors = F)
+
+  # reinsert missing levels
+  df_lab <- tidyr::complete(df_lab, season)#!! seas)
+
+  # replace NA values with blank text
+  df_lab[is.na(df_lab)] <- ''
 
   return(df_lab)
 }

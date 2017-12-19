@@ -18,7 +18,7 @@
 #'
 #' @importFrom lubridate  year floor_date
 #' @importFrom magrittr "%>%"
-#' @importFrom tidyr gather
+#' @importFrom tidyr complete gather
 #' @importFrom stats median
 #'
 #' @export
@@ -152,6 +152,9 @@ seasonal_dot.swmpr <- function(swmpr_in
               , mean = mean(!! parm, na.rm = T)
               , max = max(!! parm, na.rm = T)
               )
+
+  # ensure all factor levels are accounted for, even if there is no data
+  plt_data <- tidyr::complete(plt_data, !! seas)
 
   if(plot) {
     agg_lab <- ifelse(length(levels(plt_data$season)) == 12, 'Monthly ', 'Seasonal ')
