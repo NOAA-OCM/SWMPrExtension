@@ -56,7 +56,7 @@ SWMPrExtension adds several functions to existing concepts in SWMPr and introduc
 <tr><td><code>sk_seasonal.swmpr</code></td><td>Non-parametric test for monotonic seasonal trends</td></tr>
 <tr><td><code>threshold_identification.swmpr</code></td><td>Identify dates and times that a user-specified water quality threshold is exceeded. For continuous monitoring data, the user can also specify the length of time the threshold must be exceeded for the event to be included (e.g. DO must be < 2 mg/L for at least 2 hours).</td></tr>
 <tr><td><code>threshold_percentile_plot.swmpr</code></td><td>Compare raw data against user-specified percentiles calculated from historical data. User has the option to calculate percentiles on a monthly basis.</td></tr>
-<tr><td><code>threshold_plot.swmpr</code></td><td>Compare raw data against user-specified water quality thresholds</td></tr>
+<tr><td><code>threshold_criteria_plot.swmpr</code></td><td>Compare raw data against user-specified water quality thresholds</td></tr>
 <tr><td><code>threshold_summary.swmpr</code></td><td>Summarize the results from <code>threshold_identification</code> in either a plot or tabular format. Results can be aggregated on a monthly, seasonal, or annual basis.</td></tr>
 </table>
 
