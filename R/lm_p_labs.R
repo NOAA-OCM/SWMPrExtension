@@ -10,6 +10,7 @@
 #' @importFrom magrittr "%>%"
 #' @importFrom rlang .data
 #' @importFrom stats lm
+#' @importFrom tidyr complete
 #'
 #' @export
 #'
@@ -46,7 +47,7 @@ lm_p_labs <- function(dat_in) {
   df_lab <- data.frame(season = lm_min_tidy$season, min = lm_min_tidy$lab, mean = lm_mean_tidy$lab, max = lm_max_tidy$lab, stringsAsFactors = F)
 
   # reinsert missing levels
-  df_lab <- tidyr::complete(df_lab, season)#!! seas)
+  df_lab <- tidyr::complete(df_lab, .data$season)
 
   # replace NA values with blank text
   df_lab[is.na(df_lab)] <- ''
