@@ -1,11 +1,18 @@
 annual_range            Annual Range Timeseries
 assign_season           Assign seasons to SWMP sampling data
 cbm_spatial             Spatial Data from Chesapeake Bay - Maryland
+create_sk_flextable_list
+                        Create a List of Flextable Objects
 elk_spatial             Spatial Data from Elkhorn Slough
 elknmnut                Nutrient Data from Elkhorn Slough - North Marsh
                         Station
 elksmwq                 Water Quality Data from Elkhorn Slough - South
                         Marsh Station
+ft_col_names            Convert Parameter Abbreviations
+generate_results_table
+                        Filter Reformatted Seasonal Kendall Results
+generate_station_table
+                        Filter Reformatted Seasonal Kendall Results
 get_reserve             Identify NERRS reserve from metadata
 get_shp_name            Identify shapefile for NERRS reserve
 get_site_code           Return NERRS reserve site code based on data in
@@ -20,7 +27,8 @@ lm_p_labs               P-Value labels for Plotting
 load_shp_file           Load and format shapefile for reserve level map
 national_sk_map         Reserve National Map with Seasonal Kendall
                         Results
-raw_boxplot             Seasonal boxplots of raw data
+raw_boxplot             Boxplots of raw data by user-defined season for
+                        a target year
 res_custom_map          Local Reserve Map for Custom Stations
 res_custom_sk_map       Local Reserve Map With Seasonal Kendall Results
                         for Custom Stations
@@ -37,11 +45,13 @@ set_date_breaks         Set reasonable date breaks
 sk_seasonal             Seasonal Kendall Analysis for Seasonal Data
 sk_tidy                 Tidy Seasonal Kendall Results
 std_param_check         Standard Parameter Check
+threshold_criteria_plot
+                        Water Quality Threshold Plot For Parameters
+                        With Criteria
 threshold_identification
                         Tabulate Threshold Exceedances
 threshold_percentile_plot
                         Threshold Percentile Plot
-threshold_plot          Water Quality Threshold Plot
 threshold_summary       Summary Plots for Threshold Identification
 title_labeler           Generate Plot Title Based on NERR Site ID
 y_count_labeler         Generate y-axis Label Based on SWMP Parameter

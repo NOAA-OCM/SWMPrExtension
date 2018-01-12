@@ -2,7 +2,7 @@ Package: SWMPrExtension
 Type: Package
 Title: Additional Functions for Retrieving, Organizing, and Analyzing
         Estuary Monitoring Data
-Version: 0.2.11.9000
+Version: 0.3.2.9000
 Author: Julie Padilla [aut, cre]
 Maintainer: Julie Padilla <jpadilla@limno.com>
 Description: Additional tools for retrieving, organizing, and analyzing environmental
@@ -15,11 +15,12 @@ License: CC0
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.2.0), SWMPr
-Imports: broom, dplyr, EnvStats, ggplot2, ggthemes, grDevices, leaflet,
-        lubridate, magrittr, maptools, methods, tidyr, scales,
-        RColorBrewer, rgdal, rgeos, rlang, stringr, sp
+Imports: broom, dplyr, EnvStats, flextable, ggplot2, ggthemes,
+        grDevices, leaflet, lubridate, magrittr, maptools, methods,
+        officer, tidyr, scales, RColorBrewer, rgdal, rgeos, rlang,
+        stringr, sp
 Authors@R: person(given = "Julie", family = "Padilla",
     role = c("aut", "cre"),
 	email = "jpadilla@limno.com")
 RoxygenNote: 6.0.1
-Built: R 3.4.1; ; 2017-12-09 19:02:27 UTC; windows
+Built: R 3.4.1; ; 2018-01-12 21:44:58 UTC; windows

@@ -15,6 +15,23 @@ Version: 2.3.0
 Hash: b451c32265e854c71dd8698ada91fc42
 Requires: ggplot2, nortest
 
+Package: R.methodsS3
+Source: CRAN
+Version: 1.7.1
+Hash: 99f841ba1614c005e6672c5fb01b352a
+
+Package: R.oo
+Source: CRAN
+Version: 1.21.0
+Hash: d155101c5eb87d728d43e23c6902f4d5
+Requires: R.methodsS3
+
+Package: R.utils
+Source: CRAN
+Version: 2.6.0
+Hash: 7d46f5c3a914a82db092e1404d6ae624
+Requires: R.methodsS3, R.oo
+
 Package: R6
 Source: CRAN
 Version: 2.2.2
@@ -164,6 +181,12 @@ Version: 0.10.1
 Hash: 54d95f4ec6d0300100413ed0127d89ae
 Requires: stringr
 
+Package: flextable
+Source: CRAN
+Version: 0.4.2
+Hash: 3c1a1fbb425d0af0fc53a923d1d9e2e1
+Requires: R6, gdtools, htmltools, knitr, officer, rmarkdown, stringr
+
 Package: forcats
 Source: CRAN
 Version: 0.2.0
@@ -174,6 +197,12 @@ Package: formatR
 Source: CRAN
 Version: 1.5
 Hash: 258cf79a8dbeedf1c981cdb53837d2af
+
+Package: gdtools
+Source: CRAN
+Version: 0.1.6
+Hash: fb3abfe705137725ea8e301d733d3899
+Requires: Rcpp, withr
 
 Package: geosphere
 Source: CRAN
@@ -367,6 +396,13 @@ Version: 0.9-22
 Hash: f0e7a7c5b6cb93fbfee3f4cdc962c8fb
 Requires: gsw, testthat
 
+Package: officer
+Source: CRAN
+Version: 0.2.1
+Hash: 53c16aa7744ba0dbf8200820117b143e
+Requires: R.utils, R6, Rcpp, base64enc, digest, htmltools, magrittr,
+    uuid, xml2, zip
+
 Package: openair
 Source: CRAN
 Version: 2.1-5
@@ -551,6 +587,11 @@ Version: 0.2.0
 Hash: f6ef011a82d0718e198d30639ea42044
 Requires: Rcpp, glue, purrr, rlang
 
+Package: uuid
+Source: CRAN
+Version: 0.1-2
+Hash: 69acbbcf4dcff3a258f94de540214001
+
 Package: viridis
 Source: CRAN
 Version: 0.4.0
@@ -587,6 +628,11 @@ Package: yaml
 Source: CRAN
 Version: 2.1.14
 Hash: c81230c3a7d9ba20607ad6b4331173d1
+
+Package: zip
+Source: CRAN
+Version: 1.0.0
+Hash: eeef8cf88fb0a89636fe26c134eaef32
 
 Package: zoo
 Source: CRAN
