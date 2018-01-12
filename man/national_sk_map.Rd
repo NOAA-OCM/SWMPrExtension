@@ -7,7 +7,8 @@
 national_sk_map(incl = c("contig", "AK", "HI", "PR"),
   highlight_states = NULL, sk_reserves = NULL, sk_results = NULL,
   sk_fill_colors = c("#247BA0", "#A3DFFF", "#595959", "#595959"),
-  agg_county = T)
+  agg_county = T, color_border = "#5b5b5b", fill_highlight = "#f8f8f8",
+  fill_states = "b7b7b7")
 }
 \arguments{
 \item{incl}{chr vector to include AK, HI , and PR (case sensitive)}
@@ -21,6 +22,12 @@ national_sk_map(incl = c("contig", "AK", "HI", "PR"),
 \item{sk_fill_colors}{chr vector of colors used to fill seasonal kendall result markers}
 
 \item{agg_county}{logical, should counties be aggregated tot he state-level? Defaults to \code{TRUE}}
+
+\item{color_border}{chr, assign color for the boundaries between states}
+
+\item{color_highlight}{chr, assign color for the states listed in \code{highlight_states}}
+
+\item{color}{chr, assign color of states that are not listed in \code{highlight_states}}
 }
 \value{
 Returns a \code{\link[ggplot2]{ggplot}} object

@@ -5,7 +5,9 @@
 \title{Reserve National Map}
 \usage{
 res_national_map(incl = c("contig", "AK", "HI", "PR"),
-  highlight_states = NULL, highlight_reserves = NULL, agg_county = T)
+  highlight_states = NULL, highlight_reserves = NULL, agg_county = T,
+  color_border = "#5b5b5b", fill_highlight = "#f8f8f8",
+  fill_states = "b7b7b7")
 }
 \arguments{
 \item{incl}{chr vector to include AK, HI , and PR (case sensitive)}
@@ -15,6 +17,12 @@ res_national_map(incl = c("contig", "AK", "HI", "PR"),
 \item{highlight_reserves}{chr vector of 3 letter reserve codes}
 
 \item{agg_county}{logical, should counties be aggregated tot he state-level? Defaults to \code{TRUE}}
+
+\item{color_border}{chr, assign color for the boundaries between states}
+
+\item{fill_highlight}{chr, assign fill color for the states listed in \code{highlight_states}}
+
+\item{fill_states}{chr, assign fill color of states that are not listed in \code{highlight_states}}
 }
 \value{
 Returns a \code{\link[ggplot2]{ggplot}} object

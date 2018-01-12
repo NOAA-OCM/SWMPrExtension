@@ -6,6 +6,9 @@
 #' @param highlight_states chr vector of state FIPS codes
 #' @param highlight_reserves chr vector of 3 letter reserve codes
 #' @param agg_county logical, should counties be aggregated tot he state-level? Defaults to \code{TRUE}
+#' @param color_border chr, assign color for the boundaries between states
+#' @param fill_highlight chr, assign fill color for the states listed in \code{highlight_states}
+#' @param fill_states chr, assign fill color of states that are not listed in \code{highlight_states}
 #'
 #' @import ggplot2
 #'
@@ -54,7 +57,10 @@
 res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
                         , highlight_states = NULL
                         , highlight_reserves = NULL
-                        , agg_county = T) {
+                        , agg_county = T
+                        , color_border = '#5b5b5b'
+                        , fill_highlight = '#f8f8f8'
+                        , fill_states = 'b7b7b7') {
 
   get_US_county_2010_shape <- function() {
     dir <- tempdir()
@@ -126,15 +132,15 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   if(is.null(highlight_states)) {
     gg <- gg + geom_map(data = map, map = map
                         , aes_string('long', 'lat', map_id = 'id')
-                        , fill = '#f8f8f8', color = '#999999'
+                        , fill = fill_states, color = color_border
                         , size = 0.15, show.legend = F)
   } else {
     map$flag <- ifelse(map$id %in% highlight_states, TRUE, FALSE)
 
     gg <- gg + geom_map(data = map, map = map
                         , aes_string('long', 'lat', map_id = 'id', fill = 'flag')
-                        , color = '#999999', size = 0.15, show.legend = F) +
-      scale_fill_manual(values = c('#f8f8f8', '#cccccc'))
+                        , color = color_border, size = 0.15, show.legend = F) +
+      scale_fill_manual(values = c(fill_states, fill_highlight))
   }
 
   # add reserve locations
