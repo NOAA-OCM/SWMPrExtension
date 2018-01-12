@@ -20,7 +20,8 @@ lm_p_labs               P-Value labels for Plotting
 load_shp_file           Load and format shapefile for reserve level map
 national_sk_map         Reserve National Map with Seasonal Kendall
                         Results
-raw_boxplot             Seasonal boxplots of raw data
+raw_boxplot             Boxplots of raw data by user-defined season for
+                        a target year
 res_custom_map          Local Reserve Map for Custom Stations
 res_custom_sk_map       Local Reserve Map With Seasonal Kendall Results
                         for Custom Stations
@@ -37,11 +38,13 @@ set_date_breaks         Set reasonable date breaks
 sk_seasonal             Seasonal Kendall Analysis for Seasonal Data
 sk_tidy                 Tidy Seasonal Kendall Results
 std_param_check         Standard Parameter Check
+threshold_criteria_plot
+                        Water Quality Threshold Plot For Parameters
+                        With Criteria
 threshold_identification
                         Tabulate Threshold Exceedances
 threshold_percentile_plot
                         Threshold Percentile Plot
-threshold_plot          Water Quality Threshold Plot
 threshold_summary       Summary Plots for Threshold Identification
 title_labeler           Generate Plot Title Based on NERR Site ID
 y_count_labeler         Generate y-axis Label Based on SWMP Parameter

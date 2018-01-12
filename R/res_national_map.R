@@ -58,9 +58,9 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
                         , highlight_states = NULL
                         , highlight_reserves = NULL
                         , agg_county = T
-                        , color_border = '#5b5b5b'
-                        , fill_highlight = '#f8f8f8'
-                        , fill_states = 'b7b7b7') {
+                        , color_border = '#433F3F'
+                        , fill_highlight = '#B7B7B7'
+                        , fill_states = '#F3F3F3') {
 
   get_US_county_2010_shape <- function() {
     dir <- tempdir()
