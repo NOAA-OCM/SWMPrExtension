@@ -8,9 +8,6 @@
 #' @param sk_results chr vector of seasonal kendall results. Results can be 'inc', 'dec', 'insig', or 'insuff' which stand for 'increasing trend', 'decreasing trend', 'statistically insignificant trend', or 'insufficient data to detect trend'
 #' @param sk_fill_colors chr vector of colors used to fill seasonal kendall result markers
 #' @param agg_county logical, should counties be aggregated tot he state-level? Defaults to \code{TRUE}
-#' @param color_border chr, assign color for the boundaries between states
-#' @param color_highlight chr, assign color for the states listed in \code{highlight_states}
-#' @param color chr, assign color of states that are not listed in \code{highlight_states}
 #'
 #' @import ggplot2
 #'
@@ -64,10 +61,7 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
                         , sk_reserves = NULL
                         , sk_results = NULL
                         , sk_fill_colors = c('#247BA0', '#A3DFFF', '#595959', '#595959')
-                        , agg_county = T
-                        , color_border = '#5b5b5b'
-                        , fill_highlight = '#f8f8f8'
-                        , fill_states = 'b7b7b7') {
+                        , agg_county = T) {
 
   if(length(sk_reserves) != length(sk_results))
     stop('A seasonal kendall result is required for each reserve specified in sk_reserve')
@@ -144,15 +138,15 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   if(is.null(highlight_states)) {
     gg <- gg + geom_map(data = map, map = map
                         , aes_string('long', 'lat', map_id = 'id')
-                        , fill = fill_states, color = fill_highlight
+                        , fill = '#f8f8f8', color = '#999999'
                         , size = 0.15, show.legend = F)
   } else {
     map$flag <- ifelse(map$id %in% highlight_states, TRUE, FALSE)
 
     gg <- gg + geom_map(data = map, map = map
                         , aes_string('long', 'lat', map_id = 'id', fill = 'flag')
-                        , color = color_border, size = 0.15, show.legend = F) +
-      scale_fill_manual(values = c(fill_states, fill_highlight))
+                        , color = '#999999', size = 0.15, show.legend = F) +
+      scale_fill_manual(values = c('#f8f8f8', '#BBBBBB'))
   }
 
   # add reserves with increasing trend
