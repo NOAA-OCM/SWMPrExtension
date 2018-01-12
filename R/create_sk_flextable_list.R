@@ -11,7 +11,9 @@
 #' @param ht_head num, specify the cell height of the table body rows
 #' @param ht_body num, specify the cell height of the table header row
 #'
-#' @import flextable
+#' @importFrom flextable flextable style align border width height
+#' @importFrom stats formula
+#' @importFrom officer fp_border fp_cell fp_par fp_text
 #'
 #' @export
 #'
@@ -24,19 +26,18 @@
 #' @return Returns a list of \code{\link[flextable]{flextable}} objects
 #'
 
-res_sk_flextable_list <- function(sk_result, stations, param
+create_sk_flextable_list <- function(sk_result, stations, param
                                      , font_sz_stn = 6, font_sz_result = 12, font_sz_head = 6
                                      , ht_head = 0.28, ht_body = 0.202) {
   # flag: specify stations
   # flag: specify parameters
-  if(is)
 
   tbl_station <- generate_station_table(sk_result, stations)
   tbl_result <- generate_results_table(sk_result, stations, param)
 
   # STATIONS TBL ----
   # make flextable object
-  ft_header <- flextable(data = tbl_station)
+  ft_header <- flextable::flextable(data = tbl_station)
 
   # change column names to words
   header_col_names <- ft_header$header$dataset
@@ -112,7 +113,7 @@ res_sk_flextable_list <- function(sk_result, stations, param
   ft_header <- width(ft_header, j = ~ loc_id, width = 0.55)
   ft_header <- width(ft_header, j = ~ loc_name, width = 1.1)
   ft_header <- height(ft_header, height = ht_head, part = 'head')
-  ft_header <- height(ft_header, height = ht_body, part = 'body') # 3/16"
+  ft_header <- height(ft_header, height = ht_body, part = 'body')
 
   ls_ft <- list(ft_header, ft_body)
 

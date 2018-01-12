@@ -9,7 +9,7 @@ generate_station_table(sk_result, stations)
 \arguments{
 \item{sk_result}{a \code{data.frame} of reformatted seasonal kendall results from \code{\link{sk_seasonal}}.}
 
-\item{stations}{}
+\item{stations}{chr, vector of stations listed in \code{sk_result} that should be displayed in the NERRS reserve level report}
 }
 \value{
 Returns a \code{data.frame} of user-specified results to be displayed
@@ -18,7 +18,7 @@ Returns a \code{data.frame} of user-specified results to be displayed
 Filters a \code{dataframe} of user-specified results for display in the NERRS reserve level report
 }
 \details{
-Used internally by \code{\link{create_flextable_list}} to create a \code{data.frame} of user specified parameters to be displayed
+Used internally by \code{\link{create_sk_flextable_list}} to create a \code{data.frame} of user specified parameters to be displayed
 }
 \author{
 Julie Padilla

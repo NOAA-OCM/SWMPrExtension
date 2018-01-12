@@ -9,10 +9,11 @@
 #' @import dplyr
 #'
 #' @importFrom magrittr "%>%"
+#' @importFrom rlang .data
 #'
 #' @export
 #'
-#' @details Used internally by \code{\link{create_flextable_list}} to create a \code{data.frame} of user specified parameters to be displayed
+#' @details Used internally by \code{\link{create_sk_flextable_list}} to create a \code{data.frame} of user specified parameters to be displayed
 #'
 #' @author Julie Padilla
 #'
@@ -23,7 +24,7 @@
 
 generate_results_table <- function(sk_result, stations, param) {
 
-  sk_result <- sk_result %>% filter(station %in% stations)
+  sk_result <- sk_result %>% filter(.data$station %in% stations)
 
   sk_result <- sk_result %>% select(param)
 

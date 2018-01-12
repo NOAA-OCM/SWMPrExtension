@@ -2,11 +2,11 @@
 #'
 #' Convert \code{SWMPr} parameter abbreviations into formats appropriate for use with NERRS reserve level template \code{\link[flextable]{flextable}}
 #'
-#' @param chr, vector of parameter abbreviations
+#' @param param chr, vector of parameter abbreviations
 #'
 #' @export
 #'
-#' @details Used internally by \code{\link{create_flextable_list}} to label \code{\link[flextable]{flextable}} columns
+#' @details Used internally by \code{\link{create_sk_flextable_list}} to label \code{\link[flextable]{flextable}} columns
 #'
 #' @author Julie Padilla
 #'

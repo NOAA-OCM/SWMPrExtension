@@ -7,7 +7,7 @@
 ft_col_names(param)
 }
 \arguments{
-\item{chr, }{vector of parameter abbreviations}
+\item{param}{chr, vector of parameter abbreviations}
 }
 \value{
 Returns a \code{data.frame} of user-specified results to be displayed
@@ -16,7 +16,7 @@ Returns a \code{data.frame} of user-specified results to be displayed
 Convert \code{SWMPr} parameter abbreviations into formats appropriate for use with NERRS reserve level template \code{\link[flextable]{flextable}}
 }
 \details{
-Used internally by \code{\link{create_flextable_list}} to label \code{\link[flextable]{flextable}} columns
+Used internally by \code{\link{create_sk_flextable_list}} to label \code{\link[flextable]{flextable}} columns
 }
 \author{
 Julie Padilla
