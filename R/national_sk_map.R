@@ -65,9 +65,9 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
                         , sk_results = NULL
                         , sk_fill_colors = c('#247BA0', '#A3DFFF', '#595959', '#595959')
                         , agg_county = T
-                        , color_border = '#433F3F'
-                        , fill_highlight = '#B7B7B7'
-                        , fill_states = '#F3F3F3') {
+                        , color_border = '#5b5b5b'
+                        , fill_highlight = '#f8f8f8'
+                        , fill_states = 'b7b7b7') {
 
   if(length(sk_reserves) != length(sk_results))
     stop('A seasonal kendall result is required for each reserve specified in sk_reserve')

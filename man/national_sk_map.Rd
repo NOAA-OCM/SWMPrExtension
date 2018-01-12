@@ -7,8 +7,8 @@
 national_sk_map(incl = c("contig", "AK", "HI", "PR"),
   highlight_states = NULL, sk_reserves = NULL, sk_results = NULL,
   sk_fill_colors = c("#247BA0", "#A3DFFF", "#595959", "#595959"),
-  agg_county = T, color_border = "#433F3F", fill_highlight = "#B7B7B7",
-  fill_states = "#F3F3F3")
+  agg_county = T, color_border = "#5b5b5b", fill_highlight = "#f8f8f8",
+  fill_states = "b7b7b7")
 }
 \arguments{
 \item{incl}{chr vector to include AK, HI , and PR (case sensitive)}
