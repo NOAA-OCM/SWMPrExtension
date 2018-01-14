@@ -15,7 +15,7 @@ historical_daily_range(swmpr_in, ...)
 \arguments{
 \item{swmpr_in}{input swmp object}
 
-\item{...}{additional arguments passed to other methods (not used for this function).}
+\item{...}{not used}
 
 \item{param}{chr string of variable to plot}
 
@@ -63,7 +63,7 @@ x <- x + labs(x = NULL, y = "Dissolved Oxygen (mg/L)")
 }
 }
 \seealso{
-\code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}, \code{\link{y_labeler}}
+\code{\link[ggplot2]{ggplot}}, \code{\link{y_labeler}}
 }
 \author{
 Julie Padilla
