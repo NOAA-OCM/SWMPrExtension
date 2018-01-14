@@ -53,15 +53,6 @@
 #'   season_start = 'Winter',
 #'   plot_title = T)
 #'
-#' ## An example using a two-tone plot
-#' x <-
-#'   threshold_plot(dat_wq, param = 'do_mgl',
-#'                  thresholds = c(2, 5),  # two values must be specified
-#'                  threshold_labs = c('Poor', NA, 'Good'),
-#'                  monthly_smooth = T,
-#'                  threshold_cols = c('lightpink', 'olivedrab1', 'olivedrab1'))
-#'
-#'
 #' ## Nutrient examples
 #' dat_nut <- qaqc(apacpnut, qaqc_keep = c(0, 3, 5))
 #'
