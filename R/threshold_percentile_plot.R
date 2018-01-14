@@ -247,16 +247,6 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
       scale_fill_manual('', values = c(fill_ln))
   }
 
-  # add plot title if specified
-  if(plot_title) {
-    ttl <- title_labeler(nerr_site_id = station)
-
-    plt <-
-      plt +
-      ggtitle(ttl) +
-      theme(plot.title = element_text(hjust = 0.5))
-  }
-
   plt <-
     plt +
     scale_color_manual('', values = c('red', col_ln)) +
@@ -292,6 +282,15 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
     guides(fill = guide_legend(order = 1)
            , color = guide_legend(order = 2, reverse = T))
 
+  # add plot title if specified
+  if(plot_title) {
+    ttl <- title_labeler(nerr_site_id = station)
+
+    plt <-
+      plt +
+      ggtitle(ttl) +
+      theme(plot.title = element_text(hjust = 0.5))
+  }
 
   return(plt)
 
