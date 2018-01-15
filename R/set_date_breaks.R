@@ -4,8 +4,6 @@
 #'
 #' @param rng date range years
 #'
-#' @import ggplot2 dplyr scales rlang
-#'
 #' @export
 #'
 #' @details A Helper function for easier date label setting
@@ -34,8 +32,6 @@ set_date_breaks <- function(rng) {
 #' @param rng date range years
 #'
 #' @concept analyze
-#'
-#' @import ggplot2 dplyr scales rlang
 #'
 #' @export
 #'

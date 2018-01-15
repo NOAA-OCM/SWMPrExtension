@@ -14,11 +14,14 @@
 #'
 #' @concept analyze
 #'
-#' @import ggplot2 dplyr scales rlang
+#' @import ggplot2
 #'
+#' @importFrom dplyr filter group_by summarise
 #' @importFrom lubridate  year floor_date
 #' @importFrom magrittr "%>%"
 #' @importFrom tidyr complete gather
+#' @importFrom rlang .data
+#' @importFrom scales comma
 #' @importFrom stats median
 #'
 #' @export

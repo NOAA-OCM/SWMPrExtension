@@ -6,8 +6,7 @@
 #' @param stations chr, vector of station names included in \code{sk_result} that will be displayed in the NERRS reserve level report
 #' @param param chr, vector of parameters included in \code{sk_result} that will be displayed in the NERRS reserve level report
 #'
-#' @import dplyr
-#'
+#' @importFrom dplyr filter select
 #' @importFrom magrittr "%>%"
 #' @importFrom rlang .data
 #'

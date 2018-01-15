@@ -14,10 +14,12 @@
 #' @param plot logical, should a plot be returned? Defaults to \code{TRUE}
 #' @param ... not used
 #'
-#' @import ggplot2 dplyr rlang
+#' @import ggplot2
 #'
+#' @importFrom dplyr filter group_by select summarise
 #' @importFrom magrittr "%>%"
 #' @importFrom lubridate  year floor_date yday
+#' @importFrom rlang .data
 #' @importFrom scales comma
 #'
 #' @export

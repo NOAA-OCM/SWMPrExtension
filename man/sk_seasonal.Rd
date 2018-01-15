@@ -48,7 +48,7 @@ x <- sk_seasonal(dat_wq, param = 'temp')
 }
 }
 \seealso{
-\code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}, \code{\link{y_labeler}}, \code{\link[EnvStats]{kendallSeasonalTrendTest}}
+\code{\link{assign_season}}, \code{\link{y_labeler}}, \code{\link[EnvStats]{kendallSeasonalTrendTest}}
 }
 \author{
 Julie Padilla

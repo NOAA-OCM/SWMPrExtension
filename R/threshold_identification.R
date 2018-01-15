@@ -9,8 +9,7 @@
 #' @param threshold_type vector of logical operators ('<', '>', '<=', '>=', '==', '!=')
 #' @param time_threshold The amount of time an event must last to be counted (in hours)
 #'
-#' @import dplyr rlang
-#'
+#' @importFrom dplyr filter left_join mutate select
 #' @importFrom magrittr "%>%"
 #' @importFrom stats complete.cases
 #'
@@ -149,7 +148,7 @@ threshold_identification.swmpr <- function(swmpr_in, param, parameter_threshold,
     if(length(param) > 1){
       ls <- list(rep(dat, length(param)))
 
-      x <- mapply(generate_flags, ls, statements) #%>% unlist
+      x <- mapply(generate_flags, ls, statements)
       y <- apply(x, 2, rle)
       z <- lapply(y, rel_tbl, y = dat$datetimestamp, tstep = ts)
 
@@ -194,7 +193,7 @@ threshold_identification.swmpr <- function(swmpr_in, param, parameter_threshold,
     if(length(param) > 1){
       ls <- list(rep(dat, length(param)))
 
-      x <- mapply(generate_nut_flags, ls, statements, SIMPLIFY = F) #%>% unlist(.)
+      x <- mapply(generate_nut_flags, ls, statements, SIMPLIFY = F)
       names(x) <- param
 
       out <- bind_rows(x, .id = 'parameter')

@@ -7,6 +7,7 @@
 #' @import dplyr
 #'
 #' @importFrom broom tidy
+#' @importFrom dplyr do filter group_by
 #' @importFrom magrittr "%>%"
 #' @importFrom rlang .data
 #' @importFrom stats lm

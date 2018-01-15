@@ -14,10 +14,13 @@
 #' @param plot logical, should a plot be returned? Defaults to \code{TRUE}
 #' @param ... additional arguments passed to other methods. See \code{\link{assign_season}} and \code{\link{y_labeler}}.
 #'
-#' @import ggplot2 dplyr scales rlang
+#' @import ggplot2
 #'
+#' @importFrom dplyr filter group_by select summarise
 #' @importFrom magrittr "%>%"
 #' @importFrom lubridate  year floor_date
+#' @importFrom rlang .data
+#' @importFrom scales comma
 #'
 #' @export
 #'

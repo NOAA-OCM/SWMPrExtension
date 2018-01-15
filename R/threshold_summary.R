@@ -15,10 +15,12 @@
 #' @param ... additional arguments passed to other methods.
 #'
 #'
-#' @import ggplot2 dplyr rlang
+#' @import ggplot2
 #'
+#' @importFrom dplyr group_by left_join summarise
 #' @importFrom magrittr "%>%"
 #' @importFrom lubridate  month year
+#' @importFrom rlang .data
 #' @importFrom scales comma
 #'
 #' @export

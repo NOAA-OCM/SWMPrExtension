@@ -10,8 +10,7 @@
 #' @param FUN function used to aggregate seasonal SWMP data
 #' @param ... additional arguments passed to other methods. See \code{\link{assign_season}}
 #'
-#' @import ggplot2 dplyr scales rlang
-#'
+#' @importFrom dplyr filter group_by summarise
 #' @importFrom EnvStats kendallSeasonalTrendTest
 #' @importFrom lubridate  year floor_date
 #' @importFrom magrittr "%>%"
@@ -29,7 +28,7 @@
 #'
 #' @return A \code{data.frame} object or a summary from \code{EnvStats::kendallSeasonalTrendTest}
 #'
-#' @seealso \code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}, \code{\link{y_labeler}}, \code{\link[EnvStats]{kendallSeasonalTrendTest}}
+#' @seealso \code{\link{assign_season}}, \code{\link{y_labeler}}, \code{\link[EnvStats]{kendallSeasonalTrendTest}}
 #'
 #' @examples
 #' \dontrun{

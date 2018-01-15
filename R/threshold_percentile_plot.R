@@ -15,6 +15,7 @@
 #'
 #' @import ggplot2 dplyr rlang
 #'
+#' @importFrom dplyr filter group_by left_join summarise
 #' @importFrom magrittr "%>%"
 #' @importFrom lubridate  ymd_hms month year
 #' @importFrom scales comma

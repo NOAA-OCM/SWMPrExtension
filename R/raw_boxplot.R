@@ -9,9 +9,12 @@
 #' @param criteria numeric, a numeric criteria that will be plotted as a horizontal line
 #' @param ... additional arguments passed to other methods. See \code{\link{assign_season}} and \code{\link{y_labeler}}.
 #'
-#' @import ggplot2 dplyr scales rlang
+#' @import ggplot2
 #'
+#' @importFrom dplyr filter
 #' @importFrom magrittr "%>%"
+#' @importFrom rlang .data
+#' @importFrom scales comma
 #'
 #' @export
 #'
