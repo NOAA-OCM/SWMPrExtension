@@ -175,6 +175,7 @@ threshold_identification.swmpr <- function(swmpr_in, param, parameter_threshold,
     out <- out %>%
       dplyr::filter(.data$thr_violation == TRUE, .data$duration > thr)
 
+    # Check to see if data.frame has results
     if(is.data.frame(out) && nrow(out) == 0)
       warning('No results were returned using the user-specified thresholds. Set new thresholds and re-run.')
 
@@ -222,13 +223,15 @@ threshold_identification.swmpr <- function(swmpr_in, param, parameter_threshold,
                     , .data$statement)
 
       names(out)[c(2, 5)] <-c('starttime', 'thr_violation')
+
+      out$station <- ifelse(nrow(out) > 0, station, character())
+      out <- out[ , c(7, 1:6)]
     }
 
 
   }
 
-  out$station <- station
-  out <- out[ , c(7, 1:6)]
+
 
   return(out)
 }
