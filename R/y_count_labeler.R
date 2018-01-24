@@ -80,7 +80,7 @@ y_count_labeler <- function(param, parameter_threshold, threshold_type, time_thr
   } else {
 
     if(!is.null(time_threshold)) {
-      lab <- paste(gen_lab, '\n', all_labs[[param]], st, ' ', all_units[[param]], ' for longer than ', st_time, ' hours', sep = '')
+      lab <- paste(gen_lab, '\n', all_labs[[param]], st, ' ', all_units[[param]], ' for > ', st_time, ' hours', sep = '')
     } else {
       lab <- paste(gen_lab, '\n', all_labs[[param]], st, ' ', all_units[[param]], sep = '')
     }
