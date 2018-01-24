@@ -105,9 +105,9 @@ create_sk_flextable_list <- function(sk_result, stations, param
   }
 
   # final formatting
-  ft_body <- width(ft_body, width = 0.6)
-  ft_body <- height(ft_body, height = ht_head, part = 'head')
-  ft_body <- height(ft_body, height = ht_body, part = 'body')
+  ft <- width(ft, width = 0.6)
+  ft <- height(ft, height = ht_head, part = 'head')
+  ft <- height(ft, height = ht_body, part = 'body')
 
 
   ft_header <- width(ft_header, j = ~ loc_id, width = 0.55)
@@ -115,7 +115,7 @@ create_sk_flextable_list <- function(sk_result, stations, param
   ft_header <- height(ft_header, height = ht_head, part = 'head')
   ft_header <- height(ft_header, height = ht_body, part = 'body')
 
-  ls_ft <- list(ft_header, ft_body)
+  ls_ft <- list(ft_header, ft)
 
   return(ls_ft)
 
