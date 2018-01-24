@@ -94,7 +94,7 @@ res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, stat
   if(length(bbox) != 4)
     stop('Incorrect number of elements specified for bbox. Specify a bounding box (bbox) in the form of c(X1, Y1, X2, Y2)')
 
-  #This loc stuff should be abstracted out
+  # generate location labels
   loc <- get('sampling_stations')
   loc <- loc[(loc$Station.Code %in% stations), ]
   loc$abbrev <- toupper(substr(loc$Station.Code, start = 4, stop = 5))
