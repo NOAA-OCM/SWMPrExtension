@@ -49,19 +49,19 @@ dat_wq <- subset(dat_wq, subset = c('2007-01-01 0:00', '2017-01-01 0:00'))
 dat_wq <- qaqc(dat_wq, qaqc_keep = c(0, 3, 5))
 
 x <-
-  seasonal_dot(dat_wq, param = 'do_mgl',
+  seasonal_dot(dat_wq, param = 'do_mgl'
                , lm_trend = F
                , lm_lab = F
                , plot_title = T)
 
 x <-
-  seasonal_dot(dat_wq, param = 'do_mgl',
+  seasonal_dot(dat_wq, param = 'do_mgl'
                , lm_trend = T
                , lm_lab = F
                , plot_title = T)
 
 x <-
-  seasonal_dot(dat_wq, param = 'do_mgl',
+  seasonal_dot(dat_wq, param = 'do_mgl'
                , lm_trend = T
                , lm_lab = T
                , plot_title = T)
@@ -81,13 +81,13 @@ x <-
                , plot_title = T)
 
 x <-
-  seasonal_dot(dat_nut, param = 'chla_n',
+  seasonal_dot(dat_nut, param = 'chla_n'
                , lm_trend = T
                , lm_lab = F
                , plot_title = T)
 
 x <-
-  seasonal_dot(dat_nut, param = 'chla_n',
+  seasonal_dot(dat_nut, param = 'chla_n'
                , lm_trend = T
                , lm_lab = T
                , plot_title = T)

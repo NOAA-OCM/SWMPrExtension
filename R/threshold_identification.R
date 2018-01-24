@@ -227,5 +227,8 @@ threshold_identification.swmpr <- function(swmpr_in, param, parameter_threshold,
 
   }
 
+  out$station <- station
+  out <- out[ , c(7, 1:6)]
+
   return(out)
 }

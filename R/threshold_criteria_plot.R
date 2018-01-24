@@ -168,11 +168,11 @@ threshold_criteria_plot.swmpr <- function(swmpr_in
   #determine plotting color palette based on range
   ts_col <- ifelse(length(unique(rng)) > 1, '#B3B3B3', '#4F94CD') #check with colorcop
   smooth_col <- ifelse(length(unique(rng)) > 1, '#7F7F7F', '#36648B') #check with colorcop
-  smooth_ln <- ifelse(length(unique(rng)) > 2, 'solid', 'dashed')
+  smooth_ln <- ifelse(length(unique(rng)) > 1, 'solid', 'dashed')
 
   brks <- set_date_breaks(rng)
   lab_brks <- set_date_break_labs(rng)
-# return(brks)
+
   # set y axis range
   mx <- max(dat[, grep(param, colnames(dat))], na.rm = T)
   mx <- ifelse(max(thresholds) > mx, 1.1 * max(thresholds), mx)
