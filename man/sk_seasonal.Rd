@@ -8,8 +8,8 @@
 sk_seasonal(swmpr_in, ...)
 
 \method{sk_seasonal}{swmpr}(swmpr_in, param = NULL, alpha = 0.05,
-  envStats_summary = FALSE, stat_lab = "Average", FUN = function(x)
-  mean(x, na.rm = T), ...)
+  data_min = 5, envStats_summary = FALSE, stat_lab = "Average",
+  FUN = function(x) mean(x, na.rm = T), ...)
 }
 \arguments{
 \item{swmpr_in}{input swmpr object}
@@ -19,6 +19,8 @@ sk_seasonal(swmpr_in, ...)
 \item{param}{chr string of variable to plot}
 
 \item{alpha}{num, alpha value to use to significance test. Defaults to 0.05.}
+
+\item{data_min}{num, the minimum number of observations required to perform the analysis. Defaults to 5}
 
 \item{envStats_summary}{logical, should the standard \code{EnvStats::kendallSeasonalTrendTest} be returned? Defaults to \code{FALSE}. See Details for more information.}
 

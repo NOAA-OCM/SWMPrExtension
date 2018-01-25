@@ -24,7 +24,7 @@
 #' }
 #'
 sk_tidy <- function(data, station, param, stat, alpha = 0.05) {
-  # have a check that verifies the data type as whatever kendallSeasonalTrend returns
+
   dat <- data
   parm <- param
 

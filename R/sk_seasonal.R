@@ -5,6 +5,7 @@
 #' @param swmpr_in input swmpr object
 #' @param param chr string of variable to plot
 #' @param alpha num, alpha value to use to significance test. Defaults to 0.05.
+#' @param data_min num, the minimum number of observations required to perform the analysis. Defaults to 5
 #' @param envStats_summary logical, should the standard \code{EnvStats::kendallSeasonalTrendTest} be returned? Defaults to \code{FALSE}. See Details for more information.
 #' @param stat_lab chr, label for the summary statistic defined in \code{FUN}. Defaults to "Average"
 #' @param FUN function used to aggregate seasonal SWMP data
@@ -54,6 +55,7 @@ sk_seasonal <- function(swmpr_in, ...) UseMethod('sk_seasonal')
 sk_seasonal.swmpr <- function(swmpr_in
                              , param = NULL
                              , alpha = 0.05
+                             , data_min = 5
                              , envStats_summary = FALSE
                              , stat_lab = 'Average'
                              , FUN = function(x) mean(x, na.rm = T)
@@ -97,12 +99,27 @@ sk_seasonal.swmpr <- function(swmpr_in
     group_by(!! yr, !! seas) %>%
     summarise(result = FUN(!! parm))
 
-  ### these could be put into an lapply and then combined after -----
-  # perform seasonal kendall
-  sk_result <- kendallSeasonalTrendTest(result ~ season + year, data = sk_data)
+  data_check <- sk_data %>% group_by(!! seas) %>% summarise(count = n())
 
-  # extract results and return
-  sk_tbl <- sk_tidy(sk_result, station = station, param = param, stat = stat_lab)
+  # return(data_check)
+
+  if(min(data_check$count < data_min)) {
+    warning(paste('Fewer than', data_min, 'data points available for at least one season. Seasonal kendall will not be performed.'))
+
+
+    # Create a dummy table with "insuff" as the pval
+    sk_tbl <- data.frame(matrix(vector(), 0, 9))
+    sk_tbl[1, ] <- c(station, stat_lab, param, rep(NA, 4), 'insuff', 'insuff')
+    names(sk_tbl) <- c('station', 'type', 'parameter', 'tau', 'slope', 'pval.chisq', 'pval.trend', 'sig.chi', 'sig.trend')
+
+  } else {
+    ### these could be put into an lapply and then combined after -----
+    # perform seasonal kendall
+    sk_result <- kendallSeasonalTrendTest(result ~ season + year, data = sk_data)
+
+    # extract results and return
+    sk_tbl <- sk_tidy(sk_result, station = station, param = param, stat = stat_lab)
+  }
 
   if(envStats_summary) {
     return(sk_result)

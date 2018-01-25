@@ -165,7 +165,7 @@ seasonal_dot.swmpr <- function(swmpr_in
     labs_legend <- factor(paste0(agg_lab, c('Minimum', 'Average', 'Maximum'), sep = ''))
     brks <- range(plt_data$year)
 
-    mx <- max(plt_data[ , c(3:5)], na.rm = T) *1.2 #max(dat_hist$result, na.rm = T)
+    mx <- max(plt_data[ , c(3:5)], na.rm = T) *1.2
     mx <- ceiling(mx)
     mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), 0)
 
@@ -234,8 +234,6 @@ seasonal_dot.swmpr <- function(swmpr_in
     if(lm_lab) {
 
       p_labs <- lm_p_labs(plt_data)
-
-      # return(mx)
 
       plt <-
         plt +
