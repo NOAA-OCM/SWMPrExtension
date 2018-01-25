@@ -84,9 +84,6 @@ res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, stat
   if(length(stations) != length(sk_result))
     stop('Incorrect number of seasonal kendall results specified.')
 
-  # check that length(lab_loc) = length(stations)
-  if(!is.null(station_labs) && length(lab_loc) != length(stations))
-    stop('Incorrect number of label location identifiers specified. R or L designation must be made for each station.' )
 
   # check that the bb has the right dimensions
   if(is.null(bbox))
@@ -99,7 +96,6 @@ res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, stat
   loc <- loc[(loc$Station.Code %in% stations), ]
   loc$abbrev <- toupper(substr(loc$Station.Code, start = 4, stop = 5))
 
-  # return(loc$abbrev)
   # Determine if r and l labs exist
   if(!is.null(lab_loc)){
     left_labs <- grep('L', lab_loc)
@@ -109,12 +105,14 @@ res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, stat
     left_labs <- rep('L', length(stations))
   }
 
+
   # Determine the types of results
   if('inc' %in% sk_result){inc_icons <- grep('inc', sk_result)}
   if('dec' %in% sk_result){dec_icons <- grep('dec', sk_result)}
   if('insig' %in% sk_result){insig_icons <- grep('insig', sk_result)}
   if('insuff' %in% sk_result){insuff_icons <- grep('insuff', sk_result)}
 
+  return(dec_icons)
   # Plot map
   m <- leaflet(loc, options = leafletOptions(zoomControl = FALSE), width = 500, height = 500) %>%
     addProviderTiles(leaflet::providers$Esri.WorldGrayCanvas) %>%  # Add default OpenStreetMap map tiles, CartoDB.Positron
@@ -208,7 +206,7 @@ res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, stat
 
     # plot custom icon
     m <- m %>%
-      addMarkers(lng = ~Longitude[insig_icons] * -1, lat = ~Latitude[insig_icons]
+      addMarkers(lng = ~Longitude[insuff_icons] * -1, lat = ~Latitude[insuff_icons]
                  , icon = icon_img)
   }
 
