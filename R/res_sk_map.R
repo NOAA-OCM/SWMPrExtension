@@ -112,7 +112,6 @@ res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, stat
   if('insig' %in% sk_result){insig_icons <- grep('insig', sk_result)}
   if('insuff' %in% sk_result){insuff_icons <- grep('insuff', sk_result)}
 
-  return(dec_icons)
   # Plot map
   m <- leaflet(loc, options = leafletOptions(zoomControl = FALSE), width = 500, height = 500) %>%
     addProviderTiles(leaflet::providers$Esri.WorldGrayCanvas) %>%  # Add default OpenStreetMap map tiles, CartoDB.Positron
