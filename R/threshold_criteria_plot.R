@@ -4,7 +4,7 @@
 #'
 #' @param swmpr_in input swmpr object
 #' @param param chr string of variable to plot, also includes the calculated parameter dissolved inorganic nitrogen ('din'). See details for more information.
-#' @param rng numeric vector, if range is not specified then the entire data set will be used.
+#' @param rng num, years to include in the plot. This variable can either be one year (e.g., \code{rng = 2012}), or two years (e.g. \code{rng = c(2012, 2016)}) , If range is not specified then the entire data set will be used.
 #' @param thresholds numeric vector, numeric criteria that will be plotted in the background
 #' @param threshold_labs chr vector of labels for categories created by \code{thresholds}.
 #' @param threshold_cols chr vector of color values for categories created by \code{thresholds}.
@@ -134,6 +134,14 @@ threshold_criteria_plot.swmpr <- function(swmpr_in
     rng <- c(min(lubridate::year(dat$datetimestamp), na.rm = T), max(lubridate::year(dat$datetimestamp), na.rm = T))
   }
 
+  # determine if target year is present within the data. If not reset it
+  if(!is.null(rng) && length(rng) == 1) {
+    if(!(rng %in% unique(year(dat$datetimestamp)))) {
+      warning('User-specified range is not present in the data set. rng argument will be set to max year in the data set')
+      rng <- max(year(dat$datetimestamp))
+    }
+  }
+
   #determine that variable name exists
   if(!any(param %in% parameters | param != 'din'))
     stop('Param argument must name input column')
@@ -156,13 +164,23 @@ threshold_criteria_plot.swmpr <- function(swmpr_in
                           , lubridate::year(.data$datetimestamp) >= min(rng))
   }
 
-  if(param == 'din') {
-    dat$din <- dat$no2f + dat$no3f + dat$nh4f
+  # reset the range based on the data available in the data set
+  if(length(rng) > 1){
+    rng_reset <- c(min(year(dat$datetimestamp)), max(year(dat$datetimestamp)))
+
+    if(!identical(rng_reset, rng)) {
+      warning('User specified range is different than the range of the available data. Range will be reset to reflect the data.')
+      rng <- rng_reset
+    }
   }
 
-  if(param == 'dip') {
-    dat$din <- dat$po4f
-  }
+  # if(param == 'din') {
+  #   dat$din <- dat$no2f + dat$no3f + dat$nh4f
+  # }
+  #
+  # if(param == 'dip') {
+  #   dat$din <- dat$po4f
+  # }
 
   # plot prep
   #determine plotting color palette based on range

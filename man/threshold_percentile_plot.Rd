@@ -17,13 +17,13 @@ threshold_percentile_plot(swmpr_in, ...)
 
 \item{...}{additional arguments passed to other methods (not used for this function).}
 
-\item{param}{chr string of variable to plot}
+\item{param}{chr, variable to plot}
 
-\item{hist_rng}{numeric vector of year(s) used to calculate percentiles, if range is not specified then the min/max values of the data set will be used.}
+\item{hist_rng}{num, years to include in the plot. This variable can either be one year (e.g., \code{hist_rng = 2012}), or two years (e.g. \code{hist_rng = c(2012, 2016)}) , If range is not specified then the entire data set will be used.}
 
-\item{target_yr}{numeric, year of interest for plotting. If not, specified, the entire data set will be plotted.}
+\item{target_yr}{num, year of interest for plotting. If not, specified, the entire data set will be plotted.}
 
-\item{percentiles}{numeric vector of percentiles to calculate (maximum: 2). Defaults to 5th and 95th percentiles.}
+\item{percentiles}{num, percentiles to calculate (maximum: 2). Defaults to 5th and 95th percentiles.}
 
 \item{by_month}{logical. should percentiles be calculated on a monthly basis? Defaults to \code{FALSE}}
 

@@ -116,6 +116,14 @@ seasonal_boxplot.swmpr <- function(swmpr_in
     rng <- c(min(lubridate::year(dat$datetimestamp)), max(lubridate::year(dat$datetimestamp)))
   }
 
+  # determine if target year is present within the data
+  if(!is.null(target_yr)) {
+    if(!(target_yr %in% unique(year(dat$datetimestamp)))) {
+      warning('User-specified target year is not present in the data set. target_yr argument will be set to max year in the data set')
+      target_yr <- max(year(dat$datetimestamp))
+    }
+  }
+
   #determine that variable name exists
   if(!any(param %in% parameters))
     stop('Param argument must name input column')
@@ -150,6 +158,14 @@ seasonal_boxplot.swmpr <- function(swmpr_in
   dat_hist <- dat_hist %>%
     group_by(!! seas, !! dt) %>%
     summarise(result = FUN(!! parm))
+
+  # reset the range based on the data available in the data set
+  rng_reset <- c(min(year(dat_hist$date)), max(year(dat_hist$date)))
+
+  if(!identical(rng_reset, rng)) {
+    warning('User specified range is different than the range of the available data. Range will be reset to reflect the data.')
+    rng <- rng_reset
+  }
 
   if(plot) {
 

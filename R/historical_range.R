@@ -110,6 +110,14 @@ historical_range.swmpr <- function(swmpr_in
   if(is.null(target_yr))
     warning('No target year provided. Only historic range will be returned.')
 
+  # determine if target year is present within the data. If not reset it
+  if(!is.null(target_yr)) {
+    if(!(target_yr %in% unique(year(dat$datetimestamp)))) {
+      warning('User-specified target year is not present in the data set. target_yr argument will be set to max year in the data set')
+      target_yr <- max(year(dat$datetimestamp))
+    }
+  }
+
   #determine y axis transformation and y axis label
   y_trans <- ifelse(log_trans, 'log10', 'identity')
   y_label <- y_labeler(param = param, converted = conv)
@@ -135,6 +143,14 @@ historical_range.swmpr <- function(swmpr_in
     dplyr::summarise(mean = mean(!! parm, na.rm = TRUE)
                      , min = min(!! parm, na.rm = TRUE)
                      , max = max(!! parm, na.rm = TRUE))
+
+  # reset the range based on the data available in the data set
+  rng_reset <- c(min(year(dat_all$date)), max(year(dat_all$date)))
+
+  if(!identical(rng_reset, rng)) {
+    warning('User specified range is different than the range of the available data. Range will be reset to reflect the data.')
+    rng <- rng_reset
+  }
 
   # Assign seasons
   dat_all$season <- assign_season(dat_all$date, ...)
@@ -183,6 +199,7 @@ historical_range.swmpr <- function(swmpr_in
                        , min = min(!!  mini, na.rm = T)
                        , max = max(!! maxi, na.rm = T))
   }
+
 
 
 

@@ -20,7 +20,7 @@ threshold_criteria_plot(swmpr_in, ...)
 
 \item{param}{chr string of variable to plot, also includes the calculated parameter dissolved inorganic nitrogen ('din'). See details for more information.}
 
-\item{rng}{numeric vector, if range is not specified then the entire data set will be used.}
+\item{rng}{num, years to include in the plot. This variable can either be one year (e.g., \code{rng = 2012}), or two years (e.g. \code{rng = c(2012, 2016)}) , If range is not specified then the entire data set will be used.}
 
 \item{thresholds}{numeric vector, numeric criteria that will be plotted in the background}
 

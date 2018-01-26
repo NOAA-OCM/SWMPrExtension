@@ -81,8 +81,6 @@ annual_range.swmpr <- function(swmpr_in
   mini_avg <- sym('min_avg')
   maxi_avg <- sym('max_avg')
 
-  rng <- target_yr
-
   # attributes
   parameters <- attr(dat, 'parameters')
   station <- attr(dat, 'station')
@@ -94,19 +92,23 @@ annual_range.swmpr <- function(swmpr_in
   if(data_type == 'nut')
     warning('Nutrient data detected. Consider specifying seasons > 1 month. See `?assign_season` for details.')
 
-  #determine historical range exists, if not default to min/max of the range
-  if(is.null(rng)) {
+  #determine target year exists, if not default to min/max of the range
+  if(is.null(target_yr)) {
     warning('No target year specified. Maximum year in data set will be used.')
-    rng <- max(lubridate::year(dat$datetimestamp))
+    target_yr <- max(lubridate::year(dat$datetimestamp))
+  }
+
+  # determine if target year is present within the data. If not reset it
+  if(!is.null(target_yr)) {
+    if(!(target_yr %in% unique(year(dat$datetimestamp)))) {
+      warning('User-specified target year is not present in the data set. target_yr argument will be set to max year in the data set')
+      target_yr <- max(year(dat$datetimestamp))
+    }
   }
 
   #determine that variable name exists
   if(!any(param %in% parameters))
     stop('Param argument must name input column')
-
-  #determine target year (if there is one)
-  if(is.null(target_yr))
-    stop('No target year provided')
 
   #determine y axis transformation and y axis label
   y_trans <- ifelse(log_trans, 'log10', 'identity')
@@ -119,7 +121,7 @@ annual_range.swmpr <- function(swmpr_in
   # Filter data to target year
 
   # Assign the seasons and order them
-  dat <- dat %>% filter(lubridate::year(.data$datetimestamp) == rng)
+  dat <- dat %>% filter(lubridate::year(.data$datetimestamp) == target_yr)
   dat$season <- assign_season(dat$datetimestamp, abb = T, ...)
 
     # Assign date for determining daily stat value

@@ -3,10 +3,10 @@
 #' Observed data compared against user-defined percentiles
 #'
 #' @param swmpr_in input swmp object
-#' @param param chr string of variable to plot
-#' @param hist_rng numeric vector of year(s) used to calculate percentiles, if range is not specified then the min/max values of the data set will be used.
-#' @param target_yr numeric, year of interest for plotting. If not, specified, the entire data set will be plotted.
-#' @param percentiles numeric vector of percentiles to calculate (maximum: 2). Defaults to 5th and 95th percentiles.
+#' @param param chr, variable to plot
+#' @param hist_rng num, years to include in the plot. This variable can either be one year (e.g., \code{hist_rng = 2012}), or two years (e.g. \code{hist_rng = c(2012, 2016)}) , If range is not specified then the entire data set will be used.
+#' @param target_yr num, year of interest for plotting. If not, specified, the entire data set will be plotted.
+#' @param percentiles num, percentiles to calculate (maximum: 2). Defaults to 5th and 95th percentiles.
 #' @param by_month logical. should percentiles be calculated on a monthly basis? Defaults to \code{FALSE}
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
 #' @param converted logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.
@@ -107,8 +107,16 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
   #TESTS
   #determine range exists, if not default to min/max of the range
   if(is.null(hist_rng)) {
-    warning('No range specified. Minimum and maximum year in data set will be used.')
+    warning('No historical range specified. Minimum and maximum year in data set will be used.')
     hist_rng <- c(min(lubridate::year(dat$datetimestamp), na.rm = T), max(lubridate::year(dat$datetimestamp), na.rm = T))
+  }
+
+  # determine if target year is present within the data. If not reset it
+  if(!is.null(target_yr)) {
+    if(!(target_yr %in% unique(year(dat$datetimestamp)))) {
+      warning('User-specified target year is not present in the data set. target_yr argument will be set to max year in the data set')
+      target_yr <- max(year(dat$datetimestamp))
+    }
   }
 
   #determine that variable name exists
@@ -127,6 +135,14 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
   if(!is.null(hist_rng)) {
     dat <- dat %>% filter(lubridate::year(.data$datetimestamp) <= max(hist_rng)
                           , lubridate::year(.data$datetimestamp) >= min(hist_rng))
+  }
+
+  # reset the range based on the data available in the data set
+  rng_reset <- c(min(year(dat$datetimestamp)), max(year(dat$datetimestamp)))
+
+  if(!identical(rng_reset, hist_rng)) {
+    warning('User specified range is different than the range of the available data. Range will be reset to reflect the data.')
+    hist_rng <- rng_reset
   }
 
   dat_subset <- dat[ , c('datetimestamp', param)]
