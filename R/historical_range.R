@@ -200,7 +200,7 @@ historical_range.swmpr <- function(swmpr_in
 
   # ensure all factor levels are accounted for, even if there is no data
   dat_yr <- tidyr::complete(dat_yr, !! seas)
-  dat_hist <- tidyr::complete(dat_hist_avg, !! seas)
+  dat_hist <- tidyr::complete(dat_hist, !! seas)
 
   if(plot){
     # Set the plot range
