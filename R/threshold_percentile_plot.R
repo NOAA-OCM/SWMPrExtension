@@ -107,13 +107,13 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
   #TESTS
   #determine range exists, if not default to min/max of the range
   #determine historical range exists and that it is reasonable, if not default to min/max of the range
-  if(is.null(rng)) {
+  if(is.null(hist_rng)) {
     warning('No historical range specified. Entire time series will be used.')
-    rng <- c(min(lubridate::year(dat$datetimestamp)), max(lubridate::year(dat$datetimestamp)))
+    hist_rng <- c(min(lubridate::year(dat$datetimestamp)), max(lubridate::year(dat$datetimestamp)))
   } else {
-    if(min(rng) < min(lubridate::year(dat$datetimestamp)) | max(rng) > max(lubridate::year(dat$datetimestamp))) {
+    if(min(hist_rng) < min(lubridate::year(dat$datetimestamp)) | max(hist_rng) > max(lubridate::year(dat$datetimestamp))) {
       warning('Specified range is greater than the range of the dataset. Max/min  range of the dataset will be used.')
-      rng <- c(min(lubridate::year(dat$datetimestamp)), max(lubridate::year(dat$datetimestamp)))
+      hist_rng <- c(min(lubridate::year(dat$datetimestamp)), max(lubridate::year(dat$datetimestamp)))
     }
   }
 

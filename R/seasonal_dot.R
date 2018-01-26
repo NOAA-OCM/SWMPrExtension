@@ -232,21 +232,23 @@ seasonal_dot.swmpr <- function(swmpr_in
 
     # add regression p-values if specified
     if(lm_lab) {
+      if(nrow(plt_data) > 0) {
+        p_labs <- lm_p_labs(plt_data)
 
-      p_labs <- lm_p_labs(plt_data)
-
-      plt <-
-        plt +
-        annotate("text", x = brks[2], y = mx
-                 , label = p_labs$max, fontface = ifelse(p_labs$max == 'p < 0.05', 2, 1)
-                 , hjust = 1, color = 'red') +
-        annotate("text", x = brks[2], y = mx * 0.9
-                 , label = p_labs$mean, fontface = ifelse(p_labs$mean == 'p < 0.05', 2, 1)
-                 , hjust = 1, color = 'black') +
-        annotate("text", x = brks[2], y = mx * 0.8
-                 , label = p_labs$min, fontface = ifelse(p_labs$min == 'p < 0.05', 2, 1)
-                 , hjust = 1, color = 'blue')
-
+        plt <-
+          plt +
+          annotate("text", x = brks[2], y = mx
+                   , label = p_labs$max, fontface = ifelse(p_labs$max == 'p < 0.05', 2, 1)
+                   , hjust = 1, color = 'red') +
+          annotate("text", x = brks[2], y = mx * 0.9
+                   , label = p_labs$mean, fontface = ifelse(p_labs$mean == 'p < 0.05', 2, 1)
+                   , hjust = 1, color = 'black') +
+          annotate("text", x = brks[2], y = mx * 0.8
+                   , label = p_labs$min, fontface = ifelse(p_labs$min == 'p < 0.05', 2, 1)
+                   , hjust = 1, color = 'blue')
+      } else {
+        warning('Insufficient data to calculate linear regression p-values')
+      }
     }
 
     # add plot title if specified
