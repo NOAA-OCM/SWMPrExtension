@@ -110,10 +110,15 @@ seasonal_boxplot.swmpr <- function(swmpr_in
   if(data_type == 'nut')
     warning('Nutrient data detected. Consider specifying seasons > 1 month.')
 
-  #determine historical range exists, if not default to min/max of the range
+  #determine historical range exists and that it is reasonable, if not default to min/max of the range
   if(is.null(rng)) {
-    warning('No historical range specified. Minimum and maximum year in data set will be used.')
+    warning('No historical range specified. Entire time series will be used.')
     rng <- c(min(lubridate::year(dat$datetimestamp)), max(lubridate::year(dat$datetimestamp)))
+  } else {
+    if(min(rng) < min(lubridate::year(dat$datetimestamp)) | max(rng) > max(lubridate::year(dat$datetimestamp))) {
+      warning('Specified range is greater than the range of the dataset. Max/min  range of the dataset will be used.')
+      rng <- c(min(lubridate::year(dat$datetimestamp)), max(lubridate::year(dat$datetimestamp)))
+    }
   }
 
   # determine if target year is present within the data
@@ -158,14 +163,6 @@ seasonal_boxplot.swmpr <- function(swmpr_in
   dat_hist <- dat_hist %>%
     group_by(!! seas, !! dt) %>%
     summarise(result = FUN(!! parm))
-
-  # reset the range based on the data available in the data set
-  rng_reset <- c(min(year(dat_hist$date)), max(year(dat_hist$date)))
-
-  if(!identical(rng_reset, rng)) {
-    warning('User specified range is different than the range of the available data. Range will be reset to reflect the data.')
-    rng <- rng_reset
-  }
 
   if(plot) {
 

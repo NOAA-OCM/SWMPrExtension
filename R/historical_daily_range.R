@@ -102,7 +102,6 @@ historical_daily_range.swmpr <- function(swmpr_in
       warning('Specified range is greater than the range of the dataset. Max/min  range of the dataset will be used.')
       rng <- c(min(lubridate::year(dat$datetimestamp)), max(lubridate::year(dat$datetimestamp)))
     }
-
   }
 
   #determine that variable name exists
@@ -112,6 +111,14 @@ historical_daily_range.swmpr <- function(swmpr_in
   #determine target year (if there is one)
   if(is.null(target_yr))
     warning('No target year provided. Only historic range will be plotted.')
+
+  # determine if target year is present within the data. If not reset it
+  if(!is.null(target_yr)) {
+    if(!(target_yr %in% unique(year(dat$datetimestamp)))) {
+      warning('User-specified target year is not present in the data set. target_yr argument will be set to max year in the data set')
+      target_yr <- max(year(dat$datetimestamp))
+    }
+  }
 
   #determine y axis transformation and y axis label
   y_trans <- ifelse(log_trans, 'log10', 'identity')

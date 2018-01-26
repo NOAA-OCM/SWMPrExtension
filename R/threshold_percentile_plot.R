@@ -106,9 +106,15 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
 
   #TESTS
   #determine range exists, if not default to min/max of the range
-  if(is.null(hist_rng)) {
-    warning('No historical range specified. Minimum and maximum year in data set will be used.')
-    hist_rng <- c(min(lubridate::year(dat$datetimestamp), na.rm = T), max(lubridate::year(dat$datetimestamp), na.rm = T))
+  #determine historical range exists and that it is reasonable, if not default to min/max of the range
+  if(is.null(rng)) {
+    warning('No historical range specified. Entire time series will be used.')
+    rng <- c(min(lubridate::year(dat$datetimestamp)), max(lubridate::year(dat$datetimestamp)))
+  } else {
+    if(min(rng) < min(lubridate::year(dat$datetimestamp)) | max(rng) > max(lubridate::year(dat$datetimestamp))) {
+      warning('Specified range is greater than the range of the dataset. Max/min  range of the dataset will be used.')
+      rng <- c(min(lubridate::year(dat$datetimestamp)), max(lubridate::year(dat$datetimestamp)))
+    }
   }
 
   # determine if target year is present within the data. If not reset it
@@ -135,14 +141,6 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
   if(!is.null(hist_rng)) {
     dat <- dat %>% filter(lubridate::year(.data$datetimestamp) <= max(hist_rng)
                           , lubridate::year(.data$datetimestamp) >= min(hist_rng))
-  }
-
-  # reset the range based on the data available in the data set
-  rng_reset <- c(min(year(dat$datetimestamp)), max(year(dat$datetimestamp)))
-
-  if(!identical(rng_reset, hist_rng)) {
-    warning('User specified range is different than the range of the available data. Range will be reset to reflect the data.')
-    hist_rng <- rng_reset
   }
 
   dat_subset <- dat[ , c('datetimestamp', param)]

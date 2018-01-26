@@ -118,10 +118,15 @@ seasonal_barplot.swmpr <- function(swmpr_in
   if(substr(station, 6, nchar(station)) != 'met')
     stop('Currently, function only works with MET data.')
 
-  #determine historical range exists, if not default to min/max of the range
+  #determine historical range exists and that it is reasonable, if not default to min/max of the range
   if(is.null(rng)) {
-    warning('No historical range specified. Minimum and maximum year in data set will be used.')
+    warning('No historical range specified. Entire time series will be used.')
     rng <- c(min(lubridate::year(dat$datetimestamp)), max(lubridate::year(dat$datetimestamp)))
+  } else {
+    if(min(rng) < min(lubridate::year(dat$datetimestamp)) | max(rng) > max(lubridate::year(dat$datetimestamp))) {
+      warning('Specified range is greater than the range of the dataset. Max/min  range of the dataset will be used.')
+      rng <- c(min(lubridate::year(dat$datetimestamp)), max(lubridate::year(dat$datetimestamp)))
+    }
   }
 
   #determine that variable name exists
