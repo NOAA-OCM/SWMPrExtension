@@ -92,17 +92,21 @@ annual_range.swmpr <- function(swmpr_in
   if(data_type == 'nut')
     warning('Nutrient data detected. Consider specifying seasons > 1 month. See `?assign_season` for details.')
 
+
+
   #determine target year exists, if not default to min/max of the range
+  x <- dat[ , c('datetimestamp', param)] %>% .[complete.cases(.), ]
+
   if(is.null(target_yr)) {
     warning('No target year specified. Maximum year in data set will be used.')
-    target_yr <- max(lubridate::year(dat$datetimestamp))
+    target_yr <- max(lubridate::year(x$datetimestamp))
   }
 
-  # determine if target year is present within the data. If not reset it
+  # determine if target year is present within the data
   if(!is.null(target_yr)) {
-    if(!(target_yr %in% unique(year(dat$datetimestamp)))) {
+    if(!(target_yr %in% unique(year(x$datetimestamp)))) {
       warning('User-specified target year is not present in the data set. target_yr argument will be set to max year in the data set')
-      target_yr <- max(year(dat$datetimestamp))
+      target_yr <- max(year(x$datetimestamp))
     }
   }
 

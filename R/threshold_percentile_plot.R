@@ -105,23 +105,24 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
   data_type <- substr(station, 6, nchar(station))
 
   #TESTS
-  #determine range exists, if not default to min/max of the range
   #determine historical range exists and that it is reasonable, if not default to min/max of the range
+  x <- dat[ , c('datetimestamp', param)] %>% .[complete.cases(.), ]
+
   if(is.null(hist_rng)) {
     warning('No historical range specified. Entire time series will be used.')
-    hist_rng <- c(min(lubridate::year(dat$datetimestamp)), max(lubridate::year(dat$datetimestamp)))
+    hist_rng <- c(min(lubridate::year(x$datetimestamp)), max(lubridate::year(x$datetimestamp)))
   } else {
-    if(min(hist_rng) < min(lubridate::year(dat$datetimestamp)) | max(hist_rng) > max(lubridate::year(dat$datetimestamp))) {
+    if(min(hist_rng) < min(lubridate::year(x$datetimestamp)) | max(hist_rng) > max(lubridate::year(x$datetimestamp))) {
       warning('Specified range is greater than the range of the dataset. Max/min  range of the dataset will be used.')
-      hist_rng <- c(min(lubridate::year(dat$datetimestamp)), max(lubridate::year(dat$datetimestamp)))
+      hist_rng <- c(min(lubridate::year(x$datetimestamp)), max(lubridate::year(x$datetimestamp)))
     }
   }
 
-  # determine if target year is present within the data. If not reset it
+  # determine if target year is present within the data
   if(!is.null(target_yr)) {
-    if(!(target_yr %in% unique(year(dat$datetimestamp)))) {
+    if(!(target_yr %in% unique(year(x$datetimestamp)))) {
       warning('User-specified target year is not present in the data set. target_yr argument will be set to max year in the data set')
-      target_yr <- max(year(dat$datetimestamp))
+      target_yr <- max(year(x$datetimestamp))
     }
   }
 

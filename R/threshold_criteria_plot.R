@@ -129,27 +129,22 @@ threshold_criteria_plot.swmpr <- function(swmpr_in
 
   #TESTS
   #determine historical range exists and that it is reasonable, if not default to min/max of the range
+  x <- dat[ , c('datetimestamp', param)] %>% .[complete.cases(.), ]
+
   if(is.null(rng)) {
     warning('No historical range specified. Entire time series will be used.')
-    rng <- c(min(lubridate::year(dat$datetimestamp)), max(lubridate::year(dat$datetimestamp)))
-  } else {
-    if(min(rng) < min(lubridate::year(dat$datetimestamp)) | max(rng) > max(lubridate::year(dat$datetimestamp))) {
+    rng <- c(min(lubridate::year(x$datetimestamp)), max(lubridate::year(x$datetimestamp)))
+  } else if (length(rng) > 1) {
+    if(min(rng) < min(lubridate::year(x$datetimestamp)) | max(rng) > max(lubridate::year(x$datetimestamp))) {
       warning('Specified range is greater than the range of the dataset. Max/min  range of the dataset will be used.')
-      rng <- c(min(lubridate::year(dat$datetimestamp)), max(lubridate::year(dat$datetimestamp)))
+      rng <- c(min(lubridate::year(x$datetimestamp)), max(lubridate::year(x$datetimestamp)))
+    }
+  } else {
+    if(!(rng %in% unique(year(x$datetimestamp)))) {
+      warning('User-specified rng is not present in the data set. rng argument will be set to max year in the data set')
+      rng <- max(year(x$datetimestamp))
     }
   }
-
-  # determine if target year is present within the data. If not reset it
-  if(!is.null(rng) && length(rng) == 1) {
-    if(!(rng %in% unique(year(dat$datetimestamp)))) {
-      warning('User-specified range is not present in the data set. rng argument will be set to max year in the data set')
-      rng <- max(year(dat$datetimestamp))
-    }
-  }
-
-  #determine that variable name exists
-  if(!any(param %in% parameters | param != 'din'))
-    stop('Param argument must name input column')
 
   #determine if QAQC has been conducted
   if(attr(dat, 'qaqc_cols'))
@@ -168,14 +163,6 @@ threshold_criteria_plot.swmpr <- function(swmpr_in
     dat <- dat %>% filter(lubridate::year(.data$datetimestamp) <= max(rng)
                           , lubridate::year(.data$datetimestamp) >= min(rng))
   }
-
-  # if(param == 'din') {
-  #   dat$din <- dat$no2f + dat$no3f + dat$nh4f
-  # }
-  #
-  # if(param == 'dip') {
-  #   dat$din <- dat$po4f
-  # }
 
   # plot prep
   #determine plotting color palette based on range

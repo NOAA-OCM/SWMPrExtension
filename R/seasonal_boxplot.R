@@ -112,21 +112,23 @@ seasonal_boxplot.swmpr <- function(swmpr_in
     warning('Nutrient data detected. Consider specifying seasons > 1 month.')
 
   #determine historical range exists and that it is reasonable, if not default to min/max of the range
+  x <- dat[ , c('datetimestamp', param)] %>% .[complete.cases(.), ]
+
   if(is.null(rng)) {
     warning('No historical range specified. Entire time series will be used.')
-    rng <- c(min(lubridate::year(dat$datetimestamp)), max(lubridate::year(dat$datetimestamp)))
+    rng <- c(min(lubridate::year(x$datetimestamp)), max(lubridate::year(x$datetimestamp)))
   } else {
-    if(min(rng) < min(lubridate::year(dat$datetimestamp)) | max(rng) > max(lubridate::year(dat$datetimestamp))) {
+    if(min(rng) < min(lubridate::year(x$datetimestamp)) | max(rng) > max(lubridate::year(x$datetimestamp))) {
       warning('Specified range is greater than the range of the dataset. Max/min  range of the dataset will be used.')
-      rng <- c(min(lubridate::year(dat$datetimestamp)), max(lubridate::year(dat$datetimestamp)))
+      rng <- c(min(lubridate::year(x$datetimestamp)), max(lubridate::year(x$datetimestamp)))
     }
   }
 
   # determine if target year is present within the data
   if(!is.null(target_yr)) {
-    if(!(target_yr %in% unique(year(dat$datetimestamp)))) {
+    if(!(target_yr %in% unique(year(x$datetimestamp)))) {
       warning('User-specified target year is not present in the data set. target_yr argument will be set to max year in the data set')
-      target_yr <- max(year(dat$datetimestamp))
+      target_yr <- max(year(x$datetimestamp))
     }
   }
 
