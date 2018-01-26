@@ -110,6 +110,9 @@ res_local_map <- function(nerr_site_id, stations, bbox, shp, station_labs = T, l
     left_labs <- rep('L', length(stations))
   }
 
+  # order selected stations alphabetically
+  loc <- loc[order(loc$Station.Code), ]
+
   # Plot map
   m <- leaflet(loc, options = leafletOptions(zoomControl = FALSE), width = 500, height = 500) %>%
     addProviderTiles(leaflet::providers$Esri.WorldGrayCanvas) %>%  # Add default OpenStreetMap map tiles, CartoDB.Positron

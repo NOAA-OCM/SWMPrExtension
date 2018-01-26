@@ -105,6 +105,8 @@ res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, stat
     left_labs <- rep('L', length(stations))
   }
 
+  # order selected stations alphabetically
+  loc <- loc[order(loc$Station.Code), ]
 
   # Determine the types of results
   if('inc' %in% sk_result){inc_icons <- grep('inc', sk_result)}
