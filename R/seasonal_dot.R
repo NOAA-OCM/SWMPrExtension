@@ -232,9 +232,10 @@ seasonal_dot.swmpr <- function(swmpr_in
 
     # add regression p-values if specified
     if(lm_lab) {
-      if(nrow(plt_data) > 0) {
-        p_labs <- lm_p_labs(plt_data)
 
+      p_labs <- lm_p_labs(plt_data)
+
+      if(nrow(p_labs) > 0) {
         plt <-
           plt +
           annotate("text", x = brks[2], y = mx
