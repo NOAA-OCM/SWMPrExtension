@@ -62,18 +62,24 @@ raw_boxplot.swmpr <- function(swmpr_in
   parm <- sym(param)
   conv <- converted
 
-  rng <- target_yr
-
   # attributes
   parameters <- attr(dat, 'parameters')
   station <- attr(dat, 'station')
 
   #CHECKS
-  #determine historical range exists, if not default to min/max of the range
-  if(is.null(rng)) {
+  # determine if target year is present within the data
+  if(!is.null(target_yr)) {
+    if(!(target_yr %in% unique(year(dat$datetimestamp)))) {
+      warning('User-specified target year is not present in the data set. target_yr argument will be set to max year in the data set')
+      target_yr <- max(year(dat$datetimestamp))
+    }
+  }
+
+  # determine if target year is specified
+  if(is.null(target_yr)) {
     warning('No target year specified. Entire data set will be used.')
-    rng <- c(min(lubridate::year(dat$datetimestamp)), max(lubridate::year(dat$datetimestamp)))
-    rng <- unique(rng)
+    target_yr <- c(min(lubridate::year(dat$datetimestamp)), max(lubridate::year(dat$datetimestamp)))
+    target_yr <- unique(target_yr)
   }
 
   #determine that variable name exists
@@ -112,7 +118,7 @@ raw_boxplot.swmpr <- function(swmpr_in
   mx <- max(pretty(mx))
   mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), 0)
 
-  bp_fill <- ifelse(length(unique(rng)) == 1, paste(lab_data, '\n(', rng, ')', sep = ''), paste(lab_data, '\n(', rng[1], '-', rng[2], ')', sep = ''))
+  bp_fill <- ifelse(length(unique(target_yr)) == 1, paste(lab_data, '\n(', target_yr, ')', sep = ''), paste(lab_data, '\n(', target_yr[1], '-', target_yr[2], ')', sep = ''))
 
   seas <- sym('season')
 
