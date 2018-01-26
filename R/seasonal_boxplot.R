@@ -26,6 +26,7 @@
 #' @importFrom rlang .data
 #' @importFrom scales comma
 #' @importFrom stats median
+#' @importFrom tidyr complete
 #'
 #' @export
 #'
@@ -163,6 +164,9 @@ seasonal_boxplot.swmpr <- function(swmpr_in
   dat_hist <- dat_hist %>%
     group_by(!! seas, !! dt) %>%
     summarise(result = FUN(!! parm))
+
+  # ensure all factor levels are accounted for, even if there is no data
+  dat_hist <- tidyr::complete(dat_hist, !! seas)
 
   if(plot) {
 

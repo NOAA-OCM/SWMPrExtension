@@ -21,6 +21,7 @@
 #' @importFrom lubridate  year floor_date
 #' @importFrom rlang .data
 #' @importFrom scales comma
+#' @importFrom tidyr complete
 #'
 #' @export
 #'
@@ -96,10 +97,15 @@ historical_range.swmpr <- function(swmpr_in
   if(data_type == 'nut')
     warning('Nutrient data detected. Consider specifying seasons > 1 month. See `?assign_season` for details.')
 
-  #determine historical range exists, if not default to min/max of the range
+  #determine historical range exists and that it is reasonable, if not default to min/max of the range
   if(is.null(rng)) {
     warning('No historical range specified. Entire time series will be used.')
     rng <- c(min(lubridate::year(dat$datetimestamp)), max(lubridate::year(dat$datetimestamp)))
+  } else {
+    if(min(rng) < min(lubridate::year(dat$datetimestamp)) | max(rng) > max(lubridate::year(dat$datetimestamp))) {
+      warning('Specified range is greater than the range of the dataset. Max/min  range of the dataset will be used.')
+      rng <- c(min(lubridate::year(dat$datetimestamp)), max(lubridate::year(dat$datetimestamp)))
+    }
   }
 
   #determine that variable name exists
@@ -143,14 +149,6 @@ historical_range.swmpr <- function(swmpr_in
     dplyr::summarise(mean = mean(!! parm, na.rm = TRUE)
                      , min = min(!! parm, na.rm = TRUE)
                      , max = max(!! parm, na.rm = TRUE))
-
-  # reset the range based on the data available in the data set
-  rng_reset <- c(min(year(dat_all$date)), max(year(dat_all$date)))
-
-  if(!identical(rng_reset, rng)) {
-    warning('User specified range is different than the range of the available data. Range will be reset to reflect the data.')
-    rng <- rng_reset
-  }
 
   # Assign seasons
   dat_all$season <- assign_season(dat_all$date, ...)
@@ -200,8 +198,9 @@ historical_range.swmpr <- function(swmpr_in
                        , max = max(!! maxi, na.rm = T))
   }
 
-
-
+  # ensure all factor levels are accounted for, even if there is no data
+  dat_yr <- tidyr::complete(dat_yr, !! seas)
+  dat_hist <- tidyr::complete(dat_hist_avg, !! seas)
 
   if(plot){
     # Set the plot range

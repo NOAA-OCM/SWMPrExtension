@@ -21,6 +21,7 @@
 #' @importFrom lubridate  year floor_date yday
 #' @importFrom rlang .data
 #' @importFrom scales comma
+#' @importFrom tidyr complete
 #'
 #' @export
 #'
@@ -168,6 +169,11 @@ historical_daily_range.swmpr <- function(swmpr_in
     jday_fill <- data.frame(julian_day = c(1:365))
     dat_yr <- suppressMessages(dplyr::left_join(jday_fill, dat_yr))
   }
+
+  # ensure all factor levels are accounted for, even if there is no data
+  dat_yr <- tidyr::complete(dat_yr, !! seas)
+  dat_hist_avg <- tidyr::complete(dat_hist_avg, !! seas)
+  dat_hist_obs <- tidyr::complete(dat_hist_obs, !! seas)
 
   if(plot){
     # Set the plot range
