@@ -177,7 +177,7 @@ threshold_criteria_plot.swmpr <- function(swmpr_in
   mx <- max(dat[, grep(param, colnames(dat))], na.rm = T)
   mx <- ifelse(max(thresholds) > mx, 1.1 * max(thresholds), mx)
 
-  mx <- ifelse(data_type == 'nut' && param != 'chla_n', ceiling(mx/0.1) * 0.1, ceiling(mx))
+  mx <- ifelse(data_type == 'nut' && param != 'chla_n', ceiling(mx/0.01) * 0.01, ceiling(mx))
   mn <- ifelse(log_trans, ifelse(data_type == 'nut', 0.001, 0.1), 0)
 
   # set legend label and time series line type

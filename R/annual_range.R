@@ -155,7 +155,7 @@ annual_range.swmpr <- function(swmpr_in
   if(plot){
     # Set the plot range
     mx <- max(dat_day$max, na.rm = T)
-    mx <- ceiling(mx)
+    mx <- ifelse(data_type == 'nut' && param != 'chla_n', ceiling(mx/0.01) * 0.01, ceiling(mx))
 
     mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), 0)
 

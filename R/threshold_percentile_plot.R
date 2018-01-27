@@ -194,22 +194,11 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
   brks <- ifelse(is.null(target_yr), set_date_breaks(hist_rng), set_date_breaks(target_yr))
   lab_brks <- ifelse(is.null(target_yr), set_date_break_labs(hist_rng), set_date_break_labs(target_yr))
 
-  mx <- max(dat_subset[ , 2], na.rm = T)
-  mx <- ceiling(mx)
+  mx <- ifelse(max(dat_subset[ , 2], na.rm = T) > max(bars$perc_hi), max(dat_subset[ , 2], na.rm = T), max(bars$perc_hi))
+  mx <- ifelse(data_type == 'nut' && param != 'chla_n', ceiling(mx/0.01) * 0.01, ceiling(mx))
   mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), 0)
 
-  # return(y_trans)
-  # y_trans_inv <- ifelse(log_trans, function(x) 10 ^ x, 'identity')
-  # numticks <- ifelse(log_trans, 4, 5)
-
   # plot ----
-
-  ##this works
-  # plt <- ggplot(dat_subset, aes_(x = dt, y = parm, color = lab_dat)) +
-  #   geom_line(lwd = 1) +
-  #   scale_x_datetime(date_breaks = brks, date_labels = lab_brks) +
-  #   scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma)
-
   plt <- ggplot(dat_subset, aes_(x = dt, y = parm, color = lab_dat)) +
     geom_line(lwd = 1) +
     scale_x_datetime(date_breaks = brks, date_labels = lab_brks)
