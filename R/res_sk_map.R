@@ -84,7 +84,6 @@ res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, stat
   if(length(stations) != length(sk_result))
     stop('Incorrect number of seasonal kendall results specified.')
 
-
   # check that the bb has the right dimensions
   if(is.null(bbox))
     stop('Specify a bounding box (bbox) in the form of c(X1, Y1, X2, Y2)')
@@ -95,6 +94,7 @@ res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, stat
   loc <- get('sampling_stations')
   loc <- loc[(loc$Station.Code %in% stations), ]
   loc$abbrev <- toupper(substr(loc$Station.Code, start = 4, stop = 5))
+  loc$sk_result <- sk_result
 
   # Determine if r and l labs exist
   if(!is.null(lab_loc)){
@@ -109,10 +109,10 @@ res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, stat
   loc <- loc[order(loc$Station.Code), ]
 
   # Determine the types of results
-  if('inc' %in% sk_result){inc_icons <- grep('inc', sk_result)}
-  if('dec' %in% sk_result){dec_icons <- grep('dec', sk_result)}
-  if('insig' %in% sk_result){insig_icons <- grep('insig', sk_result)}
-  if('insuff' %in% sk_result){insuff_icons <- grep('insuff', sk_result)}
+  if('inc' %in% loc$sk_result){inc_icons <- grep('inc', loc$sk_result)}
+  if('dec' %in% loc$sk_result){dec_icons <- grep('dec', loc$sk_result)}
+  if('insig' %in% loc$sk_result){insig_icons <- grep('insig', loc$sk_result)}
+  if('insuff' %in% loc$sk_result){insuff_icons <- grep('insuff', loc$sk_result)}
 
   # Plot map
   m <- leaflet(loc, options = leafletOptions(zoomControl = FALSE), width = 500, height = 500) %>%
