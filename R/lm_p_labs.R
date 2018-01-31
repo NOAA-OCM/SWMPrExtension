@@ -28,7 +28,11 @@ lm_p_labs <- function(dat_in) {
   # remove seasons with out results
   dat_in <- dat_in[complete.cases(dat_in), ]
 
-  if(dat_in %>% group_by(.data$season) %>% summarise(count = n()) %>% .data[, 2] %>% max > 1) {
+  sample_check <- dat_in %>% group_by(.data$season) %>% summarise(count = n())
+  sample_check <- sample_check[, 2]
+
+  if(max(sample_check, na.rm = T) > 1) {
+  # if(dat_in %>% group_by(.data$season) %>% summarise(count = n()) %>% .data[, 2] %>% max(.data) > 1) {
     lm_results <- dat_in %>%
       group_by(.data$season) %>%
       do(reg_min = lm(.data$min ~ .data$year, data = .data)
