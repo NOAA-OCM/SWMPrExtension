@@ -95,7 +95,8 @@ annual_range.swmpr <- function(swmpr_in
 
 
   #determine target year exists, if not default to min/max of the range
-  x <- dat[ , c('datetimestamp', param)] %>% .data[complete.cases(.data), ]
+  x <- dat[ , c('datetimestamp', param)]
+  x <- x[complete.cases(x), ]
 
   if(is.null(target_yr)) {
     warning('No target year specified. Maximum year in data set will be used.')

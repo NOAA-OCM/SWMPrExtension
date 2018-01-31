@@ -98,7 +98,8 @@ historical_range.swmpr <- function(swmpr_in
     warning('Nutrient data detected. Consider specifying seasons > 1 month. See `?assign_season` for details.')
 
   #determine historical range exists and that it is reasonable, if not default to min/max of the range
-  x <- dat[ , c('datetimestamp', param)] %>% .data[complete.cases(.data), ]
+  x <- dat[ , c('datetimestamp', param)]
+  x <- x[complete.cases(x), ]
 
   if(is.null(rng)) {
     warning('No historical range specified. Entire time series will be used.')

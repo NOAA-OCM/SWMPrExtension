@@ -73,10 +73,7 @@ raw_boxplot.swmpr <- function(swmpr_in
       warning('User-specified target year is not present in the data set. target_yr argument will be set to max year in the data set')
       target_yr <- max(year(dat$datetimestamp))
     }
-  }
-
-  # determine if target year is specified
-  if(is.null(target_yr)) {
+  } else {
     warning('No target year specified. Entire data set will be used.')
     target_yr <- c(min(lubridate::year(dat$datetimestamp)), max(lubridate::year(dat$datetimestamp)))
     target_yr <- unique(target_yr)
