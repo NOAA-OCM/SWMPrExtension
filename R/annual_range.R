@@ -155,16 +155,17 @@ annual_range.swmpr <- function(swmpr_in
   if(plot){
     # Set the plot range
     mx <- max(dat_day$max, na.rm = T)
-    mx <- ifelse(data_type == 'nut' && param != 'chla_n', ceiling(mx/0.01) * 0.01, ceiling(mx))
+    mx <- max(pretty(mx))
 
-    mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), 0)
+    # assign a minimum of zero unles there are values < 0
+    mn <- min(dat_month$min, na.rm = T)
+    mn <- ifelse(mn < 0 , min(pretty(mn)), 0)
+    mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), mn)
 
     lab_ln <- ifelse(data_type == 'nut', paste('Monthly Sample \n(', target_yr, ')', sep = ''), paste('Daily Average \n(', target_yr, ')', sep = ''))
 
     plt <-
       ggplot(data = dat_month, aes_(x = seas, y = avg, group = 1)) +
-      # geom_ribbon(aes_(x = seas, ymax = maxi_avg, ymin = mini_avg, fill = lab_rng_avg, alpha = lab_rng_avg)) +
-      # geom_ribbon(aes_(x = seas, ymax = maxi, ymin = mini, group = 1, fill = lab_rng_mx, alpha = lab_rng_mx)) +
       geom_line(lwd = 1, color = 'steelblue3') +
       geom_point(aes_(fill = lab_ln, shape = lab_ln), color = 'black', size = 2) +
       labs(x = NULL, y = eval(y_label)) +
@@ -259,7 +260,7 @@ annual_range.swmpr <- function(swmpr_in
 
   } else {
     tbl <- dat_month
-    tbl$station <- attr(dat, 'station')
+    # tbl$station <- station
   }
 
 }

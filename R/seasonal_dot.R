@@ -118,6 +118,7 @@ seasonal_dot.swmpr <- function(swmpr_in
   # attributes
   parameters <- attr(dat, 'parameters')
   station <- attr(dat, 'station')
+  data_type <- substr(station, 6, nchar(station))
 
   #TESTS
   #determine type WQ, MET, NUT
@@ -165,9 +166,13 @@ seasonal_dot.swmpr <- function(swmpr_in
     labs_legend <- factor(paste0(agg_lab, c('Minimum', 'Average', 'Maximum'), sep = ''))
     brks <- range(plt_data$year)
 
-    mx <- max(plt_data[ , c(3:5)], na.rm = T) *1.2
+    mx <- max(plt_data[ , c(3:5)], na.rm = T) * 1.2
     mx <- ifelse(data_type == 'nut' && param != 'chla_n', ceiling(mx/0.01) * 0.01, ceiling(mx))
-    mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), 0)
+
+    # assign a minimum of zero unles there are values < 0
+    mn <- min(plt_data[ , c(3:5)], na.rm = T)
+    mn <- ifelse(mn < 0 , min(pretty(mn)), 0)
+    mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), mn)
 
     plt <-
       ggplot(data = plt_data, aes_string(x = 'year', y = 'min', color = labs_legend[1])) +

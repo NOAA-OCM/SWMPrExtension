@@ -116,7 +116,11 @@ raw_boxplot.swmpr <- function(swmpr_in
 
   mx <- max(dat[, parm_index], na.rm = T)
   mx <- max(pretty(mx))
-  mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), 0)
+
+  # assign a minimum of zero unles there are values < 0
+  mn <- min(dat[, parm_index], na.rm = T)
+  mn <- ifelse(mn < 0 , min(pretty(mn)), 0)
+  mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), mn)
 
   bp_fill <- ifelse(length(unique(target_yr)) == 1, paste(lab_data, '\n(', target_yr, ')', sep = ''), paste(lab_data, '\n(', target_yr[1], '-', target_yr[2], ')', sep = ''))
 

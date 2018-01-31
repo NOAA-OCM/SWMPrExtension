@@ -22,6 +22,7 @@
 get_sites <- function(data.file, type = c('wq', 'nut', 'met'), active = TRUE, primary = TRUE){
 
   res_data <- get('sampling_stations')
+  type <- paste0(type, '$', sep = '')
 
   if (active == TRUE){
     res_data <- res_data[res_data$NERR.Site.ID == get_site_code(data.file) & res_data$Status == 'Active', ]

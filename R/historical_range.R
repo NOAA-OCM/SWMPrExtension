@@ -116,6 +116,9 @@ historical_range.swmpr <- function(swmpr_in
       warning('User-specified target year is not present in the data set. target_yr argument will be set to max year in the data set')
       target_yr <- max(year(x$datetimestamp))
     }
+  } else {
+    warning('No target year specified. Maximum year in the data set will be used')
+    target_yr <- max(year(x$datetimestamp))
   }
 
   #determine that variable name exists
@@ -204,10 +207,13 @@ historical_range.swmpr <- function(swmpr_in
     # Set the plot range
     mx <- ifelse(max(dat_yr[ , c(2:4)], na.rm = T) > max(dat_hist[ , c(2:4)], na.rm = T)
                  , max(dat_yr[ , c(2:4)], na.rm = T), max(dat_hist[ , c(2:4)], na.rm = T))
-    mx <- ceiling(mx)
-    mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), 0)
+    mx <- max(pretty(mx))
 
-
+    # assign a minimum of zero unles there are values < 0
+    mn <- ifelse(min(dat_yr[ , c(2:4)], na.rm = T) < min(dat_hist[ , c(2:4)], na.rm = T)
+                 , min(dat_yr[ , c(2:4)], na.rm = T), min(dat_hist[ , c(2:4)], na.rm = T))
+    mn <- ifelse(mn < 0 , min(pretty(mn)), 0)
+    mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), mn)
 
     # Make plot
     plt <-
@@ -224,7 +230,7 @@ historical_range.swmpr <- function(swmpr_in
       theme_bw() +
       theme(legend.position = 'top')
 
-    # add a log transformed access if log_trans = T
+    # add a log transformed axis if log_trans = T
     if(!log_trans) {
 
       plt <- plt + scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma)
@@ -265,7 +271,7 @@ historical_range.swmpr <- function(swmpr_in
       theme(text = element_text(size = 16))
 
     # Adjust legend keys and spacing
-    sz <- ifelse(!is.null(criteria), 9, 10)
+    sz <- ifelse(!is.null(criteria), 8, 10)
     plt <-
       plt +
       theme(legend.key.height = unit(0.1, 'cm')
