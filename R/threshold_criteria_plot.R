@@ -129,7 +129,7 @@ threshold_criteria_plot.swmpr <- function(swmpr_in
 
   #TESTS
   #determine historical range exists and that it is reasonable, if not default to min/max of the range
-  x <- dat[ , c('datetimestamp', param)] %>% .[complete.cases(.), ]
+  x <- dat[ , c('datetimestamp', param)] %>% .data[complete.cases(.data), ]
 
   if(is.null(rng)) {
     warning('No historical range specified. Entire time series will be used.')
