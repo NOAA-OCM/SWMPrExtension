@@ -189,6 +189,11 @@ threshold_criteria_plot.swmpr <- function(swmpr_in
   lab_dat <- ifelse(length(unique(rng)) > 1, paste('Data \n(', rng[[1]], '-', rng[[2]], ')', sep = ''), paste('Data \n(', rng[[1]], ')', sep = ''))
   ts_ln <- 'solid'
 
+  # # determine if January exists
+  # if(month(min(dat$datetimestamp)) != 1) {
+  #   x
+  # }
+
   plt <-
     ggplot(data = dat, aes_(x = dt, y = parm)) +
     geom_rect(data = NULL, aes(xmin = as.POSIXct(-Inf, origin = "1960-01-01")
@@ -233,8 +238,8 @@ threshold_criteria_plot.swmpr <- function(swmpr_in
           panel.grid.minor = element_blank(),
           strip.background = element_blank(),
           panel.border = element_rect(color = 'black')) +
-    theme(axis.title.y = element_text(margin = unit(c(0, 8, 0, 0), 'pt'), angle = 90)) +
-    theme(text = element_text(size = 14))
+    theme(axis.title.y = element_text(margin = unit(c(0, 8, 0, 8), 'pt'), angle = 90)) + #bltr
+    theme(text = element_text(size = 16))
 
   # Adjust legend keys and spacing
   plt <-
