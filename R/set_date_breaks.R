@@ -45,8 +45,8 @@ set_date_breaks <- function(rng) {
 #'
 set_date_break_labs <- function(rng) {
   if(length(unique(rng)) == 2) {
-    lab_brks <- ifelse(diff(rng) > 3, '%Y', '%b-%y')
+    lab_brks <- ifelse(diff(rng) > 3, '%Y', '%m-%y')
   } else {
-    lab_brks <- ifelse(length(unique(rng)) > 1, '%b-%y', '%b')
+    lab_brks <- ifelse(length(unique(rng)) > 1, '%m-%y', '%b')
   }
 }
