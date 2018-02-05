@@ -209,6 +209,10 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
   }
   mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), mn)
 
+  # ensure all factor levels are accounted for, even if there is no data
+  seas <- sym('season')
+  dat_subset <- tidyr::complete(dat_subset, !! seas)
+
   # plot ----
   plt <- ggplot(dat_subset, aes_(x = dt, y = parm, color = lab_dat)) +
     geom_line(lwd = 1) +

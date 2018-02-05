@@ -121,9 +121,8 @@ raw_boxplot.swmpr <- function(swmpr_in
 
   bp_fill <- ifelse(length(unique(target_yr)) == 1, paste(lab_data, '\n(', target_yr, ')', sep = ''), paste(lab_data, '\n(', target_yr[1], '-', target_yr[2], ')', sep = ''))
 
-  seas <- sym('season')
-
   # ensure all factor levels are accounted for, even if there is no data
+  seas <- sym('season')
   dat <- tidyr::complete(dat, !! seas)
 
   plt <- ggplot(data = dat, aes_(x = seas, y = parm, fill = factor(bp_fill))) +
