@@ -185,10 +185,6 @@ threshold_criteria_plot.swmpr <- function(swmpr_in
   mn <- ifelse(mn < 0 , min(pretty(mn)), 0)
   mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), mn)
 
-  # ensure all factor levels are accounted for, even if there is no data
-  seas <- sym('season')
-  dat <- tidyr::complete(dat, !! seas)
-
   # set legend label and time series line type
   lab_dat <- ifelse(length(unique(rng)) > 1, paste('Data \n(', rng[[1]], '-', rng[[2]], ')', sep = ''), paste('Data \n(', rng[[1]], ')', sep = ''))
   ts_ln <- 'solid'
@@ -238,7 +234,7 @@ threshold_criteria_plot.swmpr <- function(swmpr_in
           strip.background = element_blank(),
           panel.border = element_rect(color = 'black')) +
     theme(axis.title.y = element_text(margin = unit(c(0, 8, 0, 0), 'pt'), angle = 90)) +
-    theme(text = element_text(size = 16))
+    theme(text = element_text(size = 14))
 
   # Adjust legend keys and spacing
   plt <-
