@@ -281,7 +281,8 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
           panel.grid.minor = element_blank(),
           strip.background = element_blank(),
           panel.border = element_rect(color = 'black')) +
-    theme(axis.title.y = element_text(margin = unit(c(0, 8, 0, 8), 'pt'), angle = 90)) + #bltr
+    theme(plot.margin = margin(5.5, 11, 11, 5.5, 'pt')) +
+    theme(axis.title.y = element_text(margin = margin(0, 8, 0, 0, 'pt'), angle = 90)) + #trbl
     theme(text = element_text(size = 16))
 
   # Adjust legend keys and spacing
