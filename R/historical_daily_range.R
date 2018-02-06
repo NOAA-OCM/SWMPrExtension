@@ -97,6 +97,7 @@ historical_daily_range.swmpr <- function(swmpr_in
   #determine historical range exists and that it is reasonable, if not default to min/max of the range
   x <- dat[ , c('datetimestamp', param)]
   x <- x[complete.cases(x), ]
+  # return(x)
 
   if(is.null(rng)) {
     warning('No historical range specified. Entire time series will be used.')
@@ -173,14 +174,15 @@ historical_daily_range.swmpr <- function(swmpr_in
     # Set the plot range
     mx <- max(dat_hist_obs$max, na.rm = T)
     mx <- ceiling(mx)
-    mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), 0)
+    # mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), 0)
 
     # assign a minimum of zero unles there are values < 0
-    mn <- ifelse(min(dat_hist_obs$min, na.rm = T) < min(dat_hist_min$min, na.rm = T)
-                 , min(dat_hist_obs$min, na.rm = T), min(dat_hist_min$min, na.rm = T))
+    mn <- ifelse(min(dat_hist_obs$min, na.rm = T) < min(dat_hist_avg$min, na.rm = T)
+                 , min(dat_hist_obs$min, na.rm = T), min(dat_hist_avg$min, na.rm = T))
     mn <- ifelse(mn < 0 , min(pretty(mn)), 0)
     mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), mn)
 
+    # return(mn)
     brks <- c(1, 32, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335) #jdays associated with the first of every month
     brk_labs <- month.abb
 

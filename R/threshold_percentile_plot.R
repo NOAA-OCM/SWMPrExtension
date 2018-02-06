@@ -207,7 +207,6 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
   }
   mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), mn)
 
-  return(mn)
   # plot ----
   plt <- ggplot(dat_subset, aes_(x = dt, y = parm, color = lab_dat)) +
     geom_line(lwd = 1) +
