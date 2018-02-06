@@ -174,6 +174,13 @@ historical_daily_range.swmpr <- function(swmpr_in
     mx <- max(dat_hist_obs$max, na.rm = T)
     mx <- ceiling(mx)
     mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), 0)
+
+    # assign a minimum of zero unles there are values < 0
+    mn <- ifelse(min(dat_hist_obs$min, na.rm = T) < min(dat_hist_min$min, na.rm = T)
+                 , min(dat_hist_obs$min, na.rm = T), min(dat_hist_min$min, na.rm = T))
+    mn <- ifelse(mn < 0 , min(pretty(mn)), 0)
+    mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), mn)
+
     brks <- c(1, 32, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335) #jdays associated with the first of every month
     brk_labs <- month.abb
 
@@ -186,6 +193,7 @@ historical_daily_range.swmpr <- function(swmpr_in
     plt <-
       ggplot(data = dat_yr, aes_(x = jd, y = avg, group = 1)) +
       geom_ribbon(data = dat_hist_obs, aes_(x = jd, ymin = mini, ymax = maxi, fill = lab_hist_obs_rng)) +
+      geom_ribbon(data = dat_hist_obs, aes_(x = jd, ymin = mini, ymax = maxi, fill = lab_hist_avg_rng)) +
       geom_ribbon(data = dat_hist_avg, aes_(x = jd, ymin = mini, ymax = maxi, fill = lab_hist_avg_rng)) +
       geom_line(aes(color = lab_yr_ln), lwd = 1.5) +
       scale_x_continuous(breaks = brks, labels = brk_labs) +

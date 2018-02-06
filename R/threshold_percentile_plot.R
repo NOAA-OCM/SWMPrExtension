@@ -198,17 +198,16 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
   mx <- ifelse(max(dat_subset[ , 2], na.rm = T) > max(bars$perc_hi), max(dat_subset[ , 2], na.rm = T), max(bars$perc_hi))
   mx <- ifelse(data_type == 'nut' && param != 'chla_n', ceiling(mx/0.01) * 0.01, ceiling(mx))
 
-  # return(bars)
-
   if(length(percentiles) > 1) {
     mn <- ifelse(min(dat_subset[ , 2], na.rm = T) < min(bars$perc_lo), min(dat_subset[ , 2], na.rm = T), min(bars$perc_lo))
-    mn <- ifelse(data_type == 'nut' && param != 'chla_n', ceiling(mn/0.01) * 0.01, ceiling(mn))
+    mn <- ifelse(data_type == 'nut' && param != 'chla_n', ceiling(mn/0.01) * 0.01, ifelse(mn < 0, floor(mn), ceiling(mn)))
   } else {
     mn <- ifelse(min(dat_subset[ , 2], na.rm = T) > min(bars$perc_hi), min(dat_subset[ , 2], na.rm = T), min(bars$perc_hi))
-    mn <- ifelse(data_type == 'nut' && param != 'chla_n', ceiling(mn/0.01) * 0.01, ceiling(mn))
+    mn <- ifelse(data_type == 'nut' && param != 'chla_n', ceiling(mn/0.01) * 0.01, ifelse(mn < 0, floor(mn), ceiling(mn)))
   }
   mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), mn)
 
+  return(mn)
   # plot ----
   plt <- ggplot(dat_subset, aes_(x = dt, y = parm, color = lab_dat)) +
     geom_line(lwd = 1) +
@@ -228,7 +227,8 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
 
     brks <- 10^(-mag_lo:mag_hi)
 
-    plt <- plt + scale_y_continuous(limits = c(mn, mx_log), breaks = brks, trans = y_trans, labels = scales::comma)
+    plt <- plt +
+      scale_y_continuous(limits = c(mn, mx_log), breaks = brks, trans = y_trans, labels = scales::comma)
   }
 
   if(length(percentiles) > 1) {
