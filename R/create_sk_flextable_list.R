@@ -47,7 +47,7 @@ create_sk_flextable_list <- function(sk_result, stations, param
   # format
   def_txt_hd <- fp_text(color = 'black', bold = T, font.size = font_sz_head)
   def_txt_bdy <- fp_text(color = 'black', bold = T, font.size = font_sz_stn)
-  def_par <- fp_par(text.align = "center")
+  def_par <- fp_par(text.align = 'center')
   def_cell <- fp_cell(background.color = "white", border = fp_border(color = '#444E65'))
 
   ft_header <- style(ft_header, pr_c = def_cell, pr_t = def_txt_hd, pr_p = def_par, part = 'head')
@@ -62,13 +62,12 @@ create_sk_flextable_list <- function(sk_result, stations, param
   ft_result$header$dataset <- data.frame(as.list(nms))
 
   # set styling elements
-  def_par <- fp_par(text.align = "center")
-  def_txt_hd <- fp_text(color = 'black', bold = T, font.size = font_sz_head)
-  def_cell_hd <- fp_cell(background.color = "white", border = fp_border(color = '#444E65')
+  def_par <- fp_par(text.align = 'center')
+  def_txt_hd <- fp_text(color = '#404040', bold = T, font.size = font_sz_head)
+  def_cell_hd <- fp_cell(background.color = 'white', border = fp_border(color = '#444E65')
                          , margin.top = 2, margin.bottom = 2)
   def_txt_bdy <- fp_text(color = '#444E65', font.size = font_sz_result)
-  def_cell_bdy <- fp_cell(background.color = "#D9D9D9"
-                          , border = fp_border(color = '#444E65'))
+  def_cell_bdy <- fp_cell(background.color = '#D9D9D9', border = fp_border(color = '#444E65'))
 
   # set alignment and border for all parts of the table
   ft <- align(ft_result, align = 'center', part = 'all')
@@ -80,7 +79,7 @@ create_sk_flextable_list <- function(sk_result, stations, param
   ft <- style(ft, pr_c = def_cell_bdy, pr_t = def_txt_bdy, part = 'body')
 
   # set custom styling based on SK results
-  ## will need to loop 2 times, one for each potential value
+  ## will need to loop 3 times, one for each potential value
   col_names <- names(tbl_result)
 
   # formatting for increasing trends
@@ -101,6 +100,17 @@ create_sk_flextable_list <- function(sk_result, stations, param
     ft <- style(ft, condition, result,
                 pr_t = fp_text(color="white", font.family = 'Wingdings 3', font.size = font_sz_result),
                 pr_c = fp_cell(background.color = '#A3DFFF', border = fp_border(color = '#444E65')))
+
+  }
+
+  # formatting for insufficient data for trends
+  for(i in 1:length(names(tbl_result))) {
+    condition <- formula(paste('~ ', col_names[[i]], ' == "i"', sep = ''))
+    result <- formula(paste('~ ', col_names[[i]], sep = ''))
+
+    ft <- style(ft, condition, result,
+                pr_t = fp_text(color='#A5A5A5', font.size = font_sz_result),
+                pr_c = fp_cell(background.color = 'white', border = fp_border(color = '#444E65')))
 
   }
 
