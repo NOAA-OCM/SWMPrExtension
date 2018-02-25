@@ -45,8 +45,8 @@ create_sk_flextable_list <- function(sk_result, stations, param
   ft_header$header$dataset <- header_col_names
 
   # format
-  def_txt_hd <- fp_text(color = 'black', bold = T, font.size = font_sz_head)
-  def_txt_bdy <- fp_text(color = 'black', bold = T, font.size = font_sz_stn)
+  def_txt_hd <- fp_text(color = '#404040', bold = T, font.size = font_sz_head)
+  def_txt_bdy <- fp_text(color = '#404040', bold = T, font.size = font_sz_stn)
   def_par <- fp_par(text.align = 'center')
   def_cell <- fp_cell(background.color = "white", border = fp_border(color = '#444E65'))
 
