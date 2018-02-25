@@ -105,7 +105,7 @@ create_sk_flextable_list <- function(sk_result, stations, param
 
   # formatting for insufficient data for trends
   for(i in 1:length(names(tbl_result))) {
-    condition <- formula(paste('~ ', col_names[[i]], ' == "i"', sep = ''))
+    condition <- formula(paste('~ ', col_names[[i]], ' == "x"', sep = ''))
     result <- formula(paste('~ ', col_names[[i]], sep = ''))
 
     ft <- style(ft, condition, result,
