@@ -25,12 +25,13 @@
 
 geographic_unique_stations <- function(nerr_site_id) {
 
+  loc <- get('sampling_stations')
+
   # check for valid nerr_site_ids
   if(!(nerr_site_id %in% loc$Station.Code))
     stop("Station does not appear to be a valid NERR sampling station. Inspect data(sampling_stations) for details.")
 
   # generate location labels
-  loc <- get('sampling_stations')
   loc <- loc[(loc$Station.Code %in% nerr_site_id), ]
   loc$abbrev <- substr(loc$Station.Code, start = 1, stop = 5)
 
