@@ -23,7 +23,7 @@ get_reserve <- function(data.file){
     stop('No data files present')
   }
 
-  res_data <- get(sampling_stations)
+  res_data <- get('sampling_stations')
 
   res_data <- res_data[res_data$NERR.Site.ID == get_site_code(data.file), ]
 
