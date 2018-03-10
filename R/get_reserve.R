@@ -23,11 +23,11 @@ get_reserve <- function(data.file){
     stop('No data files present')
   }
 
-  res_data <- SWMPr::site_codes()
+  res_data <- get(sampling_stations)
 
-  res_data <- res_data[res_data$nerr_site_id == get_site_code(data.file), ]
+  res_data <- res_data[res_data$NERR.Site.ID == get_site_code(data.file), ]
 
-  reserve <- as.character(res_data$reserve_name[1])
+  reserve <- as.character(res_data$Reserve.Name[1])
 
   return(reserve)
 }
