@@ -2,7 +2,7 @@
 #'
 #' Create a list of flextable objects to display Seasonal Kendall results in the NERRS reserve level template
 #'
-#' @param sk_result a \code{dataframe} of reformatted results from \code{\link{sk_seasonal}}
+#' @param sk_result a \code{data.frame} of reformatted results from \code{\link{sk_seasonal}}
 #' @param stations chr, vector of stations to be displayed
 #' @param param chr, vector of parameters to be displayed
 #' @param font_sz_stn int, specify the font size of displayed station names
@@ -29,8 +29,6 @@
 create_sk_flextable_list <- function(sk_result, stations, param
                                      , font_sz_stn = 6, font_sz_result = 12, font_sz_head = 6
                                      , ht_head = 0.28, ht_body = 0.202) {
-  # flag: specify stations
-  # flag: specify parameters
 
   tbl_station <- generate_station_table(sk_result, stations)
   tbl_result <- generate_results_table(sk_result, stations, param)

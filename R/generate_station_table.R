@@ -22,11 +22,12 @@
 generate_station_table <- function(sk_result, stations) {
   stns <- get('sampling_stations')
 
-  sk_res_nms <- sk_result %>% filter(.data$station %in% stations) %>% select(.data$station)
+  sk_res_nms <- stns[stns$Station.Code %in% stations, c('Station.Code', 'Station.Name')]
+  sk_res_nms <- sk_res_nms[order(sk_res_nms$Station.Code), ]
 
-  sk_res_nms <- data.frame(loc_id = toupper(substr(sk_res_nms$station, 4, 5))
-                           , loc_name = stns$Station.Name[stns$Station.Code %in% sk_res_nms$station]
-                           , stringsAsFactors = F)
+  sk_res_nms$Station.Code <- toupper(substr(sk_res_nms$Station.Code, 4, 5))
+
+  names(sk_res_nms) <- c('loc_id', 'loc_name')
 
   return(sk_res_nms)
 }

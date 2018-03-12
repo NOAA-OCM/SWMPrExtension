@@ -9,7 +9,7 @@ create_sk_flextable_list(sk_result, stations, param, font_sz_stn = 6,
   ht_body = 0.202)
 }
 \arguments{
-\item{sk_result}{a \code{dataframe} of reformatted results from \code{\link{sk_seasonal}}}
+\item{sk_result}{a \code{data.frame} of reformatted results from \code{\link{sk_seasonal}}}
 
 \item{stations}{chr, vector of stations to be displayed}
 

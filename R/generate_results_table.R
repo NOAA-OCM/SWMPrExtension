@@ -27,5 +27,7 @@ generate_results_table <- function(sk_result, stations, param) {
 
   sk_result <- sk_result %>% select(param)
 
+  sk_result <- sk_result[order(sk_result$station), ]
+
   return(sk_result)
 }
