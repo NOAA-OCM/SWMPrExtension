@@ -25,9 +25,9 @@ generate_results_table <- function(sk_result, stations, param) {
 
   sk_result <- sk_result %>% filter(.data$station %in% stations)
 
-  sk_result <- sk_result %>% select(param)
-
   sk_result <- sk_result[order(sk_result$station), ]
+
+  sk_result <- sk_result %>% select(param)
 
   return(sk_result)
 }
