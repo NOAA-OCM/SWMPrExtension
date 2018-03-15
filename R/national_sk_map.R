@@ -140,6 +140,30 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
       scale_fill_manual(values = c('#f8f8f8', '#BBBBBB'))
   }
 
+  # add reserves with insufficient data for trend
+  if('insuff' %in% sk_results) {
+
+    df <- reserve_locations[reserve_locations$sk_res == 'insuff', ]
+
+    gg <-
+      gg +
+      geom_point(data = df
+                 , aes_string(x = 'Longitude', y = 'Latitude'), shape = 4
+                 , color = sk_fill_colors[4], size = 3, stroke = 3)
+  }
+
+  # add reserves with insignificant trend
+  if('insig' %in% sk_results) {
+
+    df <- reserve_locations[reserve_locations$sk_res == 'insig', ]
+
+    gg <-
+      gg +
+      geom_point(data = df
+                 , aes_string(x = 'Longitude', y = 'Latitude'), shape = 45
+                 , color = sk_fill_colors[3], size = 4, stroke = 20)
+  }
+
   # add reserves with increasing trend
   if('inc' %in% sk_results) {
 
@@ -162,30 +186,6 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
       geom_point(data = df
                  , aes_string(x = 'Longitude', y = 'Latitude'), shape = 25
                  , color = sk_fill_colors[2] , fill = sk_fill_colors[2], size = 5)
-  }
-
-  # add reserves with insignificant trend
-  if('insig' %in% sk_results) {
-
-    df <- reserve_locations[reserve_locations$sk_res == 'insig', ]
-
-    gg <-
-      gg +
-      geom_point(data = df
-                 , aes_string(x = 'Longitude', y = 'Latitude'), shape = 45
-                 , color = sk_fill_colors[3], size = 4, stroke = 20)
-  }
-
-  # add reserves with insufficient data for trend
-  if('insuff' %in% sk_results) {
-
-    df <- reserve_locations[reserve_locations$sk_res == 'insuff', ]
-
-    gg <-
-      gg +
-      geom_point(data = df
-                 , aes_string(x = 'Longitude', y = 'Latitude'), shape = 4
-                 , color = sk_fill_colors[4], size = 3, stroke = 3)
   }
 
   return(gg)
