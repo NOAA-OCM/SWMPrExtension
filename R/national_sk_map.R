@@ -149,7 +149,7 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
       gg +
       geom_point(data = df
                  , aes_string(x = 'Longitude', y = 'Latitude'), shape = 4
-                 , color = sk_fill_colors[4], size = 3, stroke = 3)
+                 , color = sk_fill_colors[4], size = 3, stroke = 1.5)
   }
 
   # add reserves with insignificant trend
