@@ -6,7 +6,7 @@
 \usage{
 national_sk_map(incl = c("contig", "AK", "HI", "PR"),
   highlight_states = NULL, sk_reserves = NULL, sk_results = NULL,
-  sk_fill_colors = c("#247BA0", "#A3DFFF", "#595959", "#595959"),
+  sk_fill_colors = c("#247BA0", "#A3DFFF", "#444E65", "#595959"),
   agg_county = T)
 }
 \arguments{
@@ -35,24 +35,15 @@ This function was developed, in part, from a blog post by Bob Rudis.
 \examples{
 \dontrun{
 
-##Just the national map
-res_national_map()
-
-##National map highlighting states with NERRS
-nerr_states <- c('01', '02', '06', '10', '12', '13', '15'
-, '23', '24', '25', '27', '28', '33', '34', '36', '37', '39'
-, '41', '44', '45', '48', '51', '53', '55', '72')
-
-res_national_map(highlight_states = nerr_states)
 
 ##National map highlighting west coast states and NERRS (including AK)
 nerr_states_west <- c('02', '06', '41', '53')
 
-nerrs_codes <- c('pdb', 'sos', 'sfb', 'elk', 'tjr')
-nerrs_sk_results <- c('inc', 'inc', 'dec', 'insig', 'insuff')
+nerrs_codes <- c('pdb', 'sos', 'sfb', 'elk', 'tjr', 'kac')
+nerrs_sk_results <- c('inc', 'inc', 'dec', 'insig', 'insuff', 'dec')
 
 national_sk_map(highlight_states = nerr_states_west,
-highlight_reserve = nerrs_codes, sk_results = nerrs_sk_results)
+sk_reserve = nerrs_codes, sk_results = nerrs_sk_results)
 }
 
 }

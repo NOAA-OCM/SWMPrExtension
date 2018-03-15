@@ -36,31 +36,22 @@
 #' @examples
 #' \dontrun{
 #'
-#' ##Just the national map
-#' res_national_map()
-#'
-#' ##National map highlighting states with NERRS
-#' nerr_states <- c('01', '02', '06', '10', '12', '13', '15'
-#' , '23', '24', '25', '27', '28', '33', '34', '36', '37', '39'
-#' , '41', '44', '45', '48', '51', '53', '55', '72')
-#'
-#' res_national_map(highlight_states = nerr_states)
 #'
 #' ##National map highlighting west coast states and NERRS (including AK)
 #' nerr_states_west <- c('02', '06', '41', '53')
 #'
-#' nerrs_codes <- c('pdb', 'sos', 'sfb', 'elk', 'tjr')
-#' nerrs_sk_results <- c('inc', 'inc', 'dec', 'insig', 'insuff')
+#' nerrs_codes <- c('pdb', 'sos', 'sfb', 'elk', 'tjr', 'kac')
+#' nerrs_sk_results <- c('inc', 'inc', 'dec', 'insig', 'insuff', 'dec')
 #'
 #' national_sk_map(highlight_states = nerr_states_west,
-#' highlight_reserve = nerrs_codes, sk_results = nerrs_sk_results)
+#' sk_reserve = nerrs_codes, sk_results = nerrs_sk_results)
 #' }
 #'
 national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
                         , highlight_states = NULL
                         , sk_reserves = NULL
                         , sk_results = NULL
-                        , sk_fill_colors = c('#247BA0', '#A3DFFF', '#595959', '#595959')
+                        , sk_fill_colors = c('#247BA0', '#A3DFFF', '#444E65', '#595959')
                         , agg_county = T) {
 
   if(length(sk_reserves) != length(sk_results))
@@ -162,7 +153,7 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   }
 
   # add reserves with decreasing trend
-  if('inc' %in% sk_results) {
+  if('dec' %in% sk_results) {
 
     df <- reserve_locations[reserve_locations$sk_res == 'dec', ]
 
@@ -174,19 +165,19 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   }
 
   # add reserves with insignificant trend
-  if('inc' %in% sk_results) {
+  if('insig' %in% sk_results) {
 
     df <- reserve_locations[reserve_locations$sk_res == 'insig', ]
 
     gg <-
       gg +
       geom_point(data = df
-                 , aes_string(x = 'Longitude', y = 'Latitude'), shape = 21
-                 , color = sk_fill_colors[3] , fill = sk_fill_colors[3], size = 4)
+                 , aes_string(x = 'Longitude', y = 'Latitude'), shape = 45
+                 , color = sk_fill_colors[3], size = 4, stroke = 20)
   }
 
   # add reserves with insufficient data for trend
-  if('inc' %in% sk_results) {
+  if('insuff' %in% sk_results) {
 
     df <- reserve_locations[reserve_locations$sk_res == 'insuff', ]
 
@@ -194,7 +185,7 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
       gg +
       geom_point(data = df
                  , aes_string(x = 'Longitude', y = 'Latitude'), shape = 4
-                 , color = sk_fill_colors[4], size = 3, stroke = 2)
+                 , color = sk_fill_colors[4], size = 3, stroke = 3)
   }
 
   return(gg)
