@@ -28,7 +28,7 @@ create_sk_national_ft_results <- function(sk_result, param
                                           , font_sz_result = 12, font_sz_head = 8
                                           , ht_head = 0.375, ht_body = 0.2) {
 
-  tbl_result <- tbl[ , c(2:length(names(tbl)))]
+  tbl_result <- sk_result[ , c(2:length(names(sk_result)))]
 
   # RESULTS TBL ----
   # make flextable object for SK results

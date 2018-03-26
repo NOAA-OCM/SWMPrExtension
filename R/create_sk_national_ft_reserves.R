@@ -27,7 +27,7 @@ create_sk_national_ft_reserves <- function(sk_result
                                            , font_sz_stn = 8, font_sz_head = 8
                                            , ht_head = 0.75, ht_body = 0.2) {
 
-  tbl_station <- tbl[ , 1]
+  tbl_station <- sk_result[ , 1]
   # tbl_result <- tbl[ , c(2:length(names(tbl)))]
 
   # STATIONS TBL ----
