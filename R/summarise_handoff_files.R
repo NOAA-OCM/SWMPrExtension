@@ -44,6 +44,8 @@ summarise_handoff_files <- function(path, param, res_region = NULL) {
   # convert to tidy format
   x <- gather(x, key = .data$station, value = .data$trend, 4:length(names(x)))
 
+  names(x)[c(4:5)] <- c('station', 'trend')
+
   # remove results where trend is NA
   x <- x[!is.na(x$trend), ]
 
