@@ -21,9 +21,9 @@ create_sk_flextable_list(sk_result, stations, param, font_sz_stn = 6,
 
 \item{font_sz_head}{int, specify the font size of the table header row}
 
-\item{ht_head}{num, specify the cell height of the table body rows}
+\item{ht_head}{num, specify the cell height of the table body rows. Units for this parameter are in inches.}
 
-\item{ht_body}{num, specify the cell height of the table header row}
+\item{ht_body}{num, specify the cell height of the table header row. Units for this parameter are in inches.}
 }
 \value{
 Returns a list of \code{\link[flextable]{flextable}} objects
