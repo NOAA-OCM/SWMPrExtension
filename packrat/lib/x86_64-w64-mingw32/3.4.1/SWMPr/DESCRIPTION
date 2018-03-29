@@ -1,10 +1,10 @@
 Package: SWMPr
 Type: Package
 Title: Retrieving, Organizing, and Analyzing Estuary Monitoring Data
-Version: 2.2.0
-Date: 2016-11-07
-Author: Marcus W. Beck [aut, cre]
-Maintainer: Marcus W. Beck <mbafs2012@gmail.com>
+Version: 2.3.0
+Date: 2018-02-04
+Author: Marcus W. Beck [aut, cre], Kimberly Cressman [ctb]
+Maintainer: Marcus W. Beck <marcusb@sccwrp.org>
 Description: Tools for retrieving, organizing, and analyzing
     environmental data from the System Wide Monitoring Program of the
     National Estuarine Research Reserve System
@@ -18,14 +18,16 @@ Imports: data.table, httr, ggmap, gridExtra, maptools, oce, dplyr,
 LazyData: true
 Depends: R (>= 3.2.0), ggplot2, zoo
 Suggests: colorspace
-Authors@R: person(given = "Marcus W.", family = "Beck", role =
-    c("aut","cre"), email = "mbafs2012@gmail.com")
-RoxygenNote: 5.0.1
+Authors@R: c( person(given = "Marcus W.", family = "Beck", role =
+    c("aut","cre"), email = "marcusb@sccwrp.org"), person(given =
+    "Kimberly", family = "Cressman", role = c("ctb"), email =
+    "kimberly.cressman@dmr.ms.gov") )
+RoxygenNote: 6.0.1
 NeedsCompilation: no
-Packaged: 2016-11-07 23:28:50 UTC; MBeck
+Packaged: 2018-02-08 16:54:55 UTC; Marcus
 Repository: CRAN
-Date/Publication: 2016-11-08 00:41:23
-Built: R 3.4.1; ; 2017-09-14 20:14:13 UTC; windows
+Date/Publication: 2018-02-08 18:49:31 UTC
+Built: R 3.4.4; ; 2018-03-25 21:05:48 UTC; windows
 InstallAgent: packrat 0.4.8.1
 InstallSource: CRAN
-Hash: 55f3d66788a3772860cc6ba569fb3aca
+Hash: 0f8d5223cf31bad5d95f40832f5ed011

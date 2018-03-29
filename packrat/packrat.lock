@@ -55,8 +55,8 @@ Requires: png
 
 Package: SWMPr
 Source: CRAN
-Version: 2.2.0
-Hash: 55f3d66788a3772860cc6ba569fb3aca
+Version: 2.3.0
+Hash: 0f8d5223cf31bad5d95f40832f5ed011
 Requires: RColorBrewer, XML, data.table, dplyr, ggmap, ggplot2,
     gridExtra, httr, maptools, oce, openair, reshape2, tictoc, tidyr,
     zoo

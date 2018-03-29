@@ -9,6 +9,8 @@ apacpwq	apacpwq
 apadbwq	apadbwq
 apaebmet	apaebmet
 calckl	calckl
+cens_id	cens_id
+cens_id.swmpr	cens_id
 comb	comb
 comb.default	comb
 comb.swmpr	comb
@@ -39,6 +41,8 @@ parser	parser
 plot.swmpr	plot.swmpr
 plot_metab	plot_metab
 plot_metab.swmpr	plot_metab
+plot_quants	plot_quants
+plot_quants.swmpr	plot_quants
 plot_summary	plot_summary
 plot_summary.swmpr	plot_summary
 plot_wind	plot_wind

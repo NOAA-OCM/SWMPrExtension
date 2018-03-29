@@ -11,6 +11,7 @@ apadbwq                 Example water quality data for Apalachicola Bay
 apaebmet                Example weather data for Apalachicola Bay East
                         Bay station.
 calckl                  Calculate oxygen mass transfer coefficient
+cens_id                 Flag observations above/below detection limits
 comb                    Combine swmpr data
 decomp                  Simple trend decomposition
 decompTs                Decompose a time series
@@ -30,6 +31,8 @@ param_names             Get parameters of a given type
 parser                  Parse web results for swmpr
 plot.swmpr              Plot swmpr data
 plot_metab              Plot ecosystem metabolism for a swmpr object
+plot_quants             Create a plot of data for a single year
+                        overlaid on historical data.
 plot_summary            Plot graphical summaries of SWMP data
 plot_wind               Create a wind rose
 qaqc                    QAQC filtering for SWMP data
