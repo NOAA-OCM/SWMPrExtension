@@ -20,7 +20,7 @@ seasonal_dot(swmpr_in, ...)
 
 \item{lm_trend}{logical, add linear trend line?}
 
-\item{lm_lab}{logical, add significance label? Statisically significant results will appear in bold.}
+\item{lm_lab}{logical, add significance label? Statistically significant results will appear in bold.}
 
 \item{log_trans}{logical, should y-axis be log? Defaults to \code{FALSE}}
 

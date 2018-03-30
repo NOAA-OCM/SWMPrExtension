@@ -43,7 +43,7 @@ Returns a \code{\link[ggplot2]{ggplot}} object
 Observed data compared against user-defined water quality thresholds
 }
 \details{
-This function vizualizes exceedances of numeric criteria which are specified using \code{thresholds}. Suggested numeric criteria for several parameters (dissolved oxygen, dissolved inorganic phosphorus, dissolved inorganic nitrogen, and chlorophyll-a) can be found in the USEPA National Coastal Condition Report (2012).
+This function visualizes exceedances of numeric criteria which are specified using \code{thresholds}. Suggested numeric criteria for several parameters (dissolved oxygen, dissolved inorganic phosphorus, dissolved inorganic nitrogen, and chlorophyll-a) can be found in the USEPA National Coastal Condition Report (2012).
 
 If the parameter of interest does not have numeric criteria, then \code{threshold_percentile_plot} is recommended.
 }

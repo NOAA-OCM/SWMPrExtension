@@ -1,6 +1,6 @@
 #' Historical Monthly/Seasonal Range Timeseries
 #'
-#' Compare seasonal averages/mins/maxes for a target year to historical seasonal averages/mins/maxes
+#' Compare seasonal averages/minimums/maximums for a target year to historical seasonal averages/mins/maxes
 #'
 #' @param swmpr_in input swmpr object
 #' @param param chr string of variable to plot

@@ -5,7 +5,7 @@
 #' @param swmpr_in input swmpr object
 #' @param param chr string of variable to plot
 #' @param lm_trend logical, add linear trend line?
-#' @param lm_lab logical, add significance label? Statisically significant results will appear in bold.
+#' @param lm_lab logical, add significance label? Statistically significant results will appear in bold.
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
 #' @param converted logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.
 #' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
