@@ -23,7 +23,7 @@ Returns a character vector of reserve stations
 Identify the NERRS reserve sampling stations based on the metadata in the data file
 }
 \details{
-This function returns the sampling stations associated with the data in the user-specified data file
+This function is intended for internal use with the NERRS reserve level reporting scripts. It returns the sampling stations associated with the data in the user-specified data folder.
 }
 \author{
 Julie Padilla

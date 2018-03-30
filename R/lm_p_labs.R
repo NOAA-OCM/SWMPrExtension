@@ -15,13 +15,15 @@
 #'
 #' @export
 #'
-#' @details A helper function that returns a \code{data.frame} of p-value labels for use with the \code{seasonal_dot_plot}. P-values are taken from linear regression \code{lm}.
+#' @details A helper function that returns a \code{data.frame} of p-value labels for use with the \code{\link{seasonal_dot}}. P-values are taken from linear regression \code{lm}.
 #'
 #' @author Julie Padilla
 #'
-#' @return Returns \code{data.frame} for use with \code{seasonal_dot}
+#' @concept miscellaneous
 #'
-#' @seealso \code{lm}
+#' @return Returns \code{data.frame} for use with \code{\link{seasonal_dot}}
+#'
+#' @seealso \code{\link[stats]{lm}}
 #'
 lm_p_labs <- function(dat_in) {
 

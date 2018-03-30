@@ -20,7 +20,7 @@ national_sk_map(incl = c("contig", "AK", "HI", "PR"),
 
 \item{sk_fill_colors}{chr vector of colors used to fill seasonal kendall result markers}
 
-\item{agg_county}{logical, should counties be aggregated tot he state-level? Defaults to \code{TRUE}}
+\item{agg_county}{logical, should counties be aggregated to the state-level? Defaults to \code{TRUE}}
 }
 \value{
 Returns a \code{\link[ggplot2]{ggplot}} object
@@ -31,6 +31,8 @@ Create a base map for NERRS reserves in ggplot with seasonal kendall results
 \details{
 Create a base map of the US with options for including AK, HI, and PR. The user can choose which states and NERRS reserves to highlight.
 This function was developed, in part, from a blog post by Bob Rudis.
+
+To ensure the proper plotting of results, the order of the results vector for \code{sk_results} should match the order of the reserves vector for \code{sk_reserves}.
 }
 \examples{
 \dontrun{

@@ -16,11 +16,11 @@ Returns a \code{data.frame} of user-specified results to be displayed
 Convert \code{SWMPr} parameter abbreviations into formats appropriate for use with NERRS reserve level template \code{\link[flextable]{flextable}}
 }
 \details{
-Used internally by \code{\link{create_sk_flextable_list}} to label \code{\link[flextable]{flextable}} columns
+A helper function used internally by \code{\link{create_sk_flextable_list}} to label \code{\link[flextable]{flextable}} columns in the trend table for the reserve level report.
 }
 \author{
 Julie Padilla
 }
 \concept{
-Reporting
+reporting
 }

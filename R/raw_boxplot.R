@@ -1,6 +1,6 @@
 #' Boxplots of raw data by user-defined season for a target year
 #'
-#' @param swmpr_in input swmp object
+#' @param swmpr_in input swmpr object
 #' @param param chr string of variable to plot
 #' @param target_yr numeric, if target year is not specified then all data in the data frame will be used.
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}

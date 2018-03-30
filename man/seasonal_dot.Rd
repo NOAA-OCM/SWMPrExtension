@@ -14,7 +14,7 @@ seasonal_dot(swmpr_in, ...)
 \arguments{
 \item{swmpr_in}{input swmpr object}
 
-\item{...}{additional arguments passed to other methods. See \code{\link{assign_season}} and \code{\link{y_labeler}}.}
+\item{...}{additional arguments passed to other methods. See \code{\link{assign_season}}}
 
 \item{param}{chr string of variable to plot}
 
@@ -31,7 +31,7 @@ seasonal_dot(swmpr_in, ...)
 \item{plot}{logical, should a plot be returned? Defaults to \code{TRUE}}
 }
 \value{
-A \code{\link[ggplot2]{ggplot}} object
+Returns a \code{\link[ggplot2]{ggplot}} object
 }
 \description{
 Plot average/min/max seasonal values faceted by season

@@ -16,7 +16,7 @@ Returns a character string of the full reserve name
 Identify the NERRS reserve from metadata in the data file
 }
 \details{
-This function determines the name of the NERRS reserve associated with the data in the user-specified data file
+This function is intended for internal use with the NERRS reserve level reporting scripts. It determines the name of the full name of the NERRS reserve associated with the data in the user-specified data folder.
 }
 \author{
 Julie Padilla

@@ -24,5 +24,5 @@ Used internally by \code{\link{create_sk_flextable_list}} to create a \code{data
 Julie Padilla
 }
 \concept{
-Reporting
+reporting
 }

@@ -2,7 +2,7 @@
 #'
 #' Compare daily averages for a target year to historical highs and lows
 #'
-#' @param swmpr_in input swmp object
+#' @param swmpr_in input swmpr object
 #' @param param chr string of variable to plot
 #' @param hist_rng numeric vector, if historic range is not specified then the min/max values of the data set will be used.
 #' @param target_yr numeric, the target year that should be compared against the historic range. If target year is not specified then dot will not be plotted
@@ -25,15 +25,15 @@
 #'
 #' @export
 #'
-#' @details This function compares the average daily minimums/maximums and absolute minimums/maximums from a historical range to the average daily value from a target year. If \code{hist_rng} is not specified then the minimum and maximum years within the data set will be used. If \code{target_yr} is not specified then only the results for the \code{hist_rng} will be returned.
+#' @details This function compares the average daily minimums/maximums and absolute daily minimums/maximums from a historical range to the average daily value from a target year. If \code{hist_rng} is not specified then the minimum and maximum years within the data set will be used. If \code{target_yr} is not specified then only the results for the \code{hist_rng} will be returned.
 #'
-#' The user also has the option to add a threshold line using the \code{criteria} argument. Typically, this value is a water quality threshold, which is why \code{criteria_lab} defaults to \code{'WQ Threshold'}. Howver, the user has the option to specify any other type of threshold they wish. when doing so, the value for \code{criteria_lab} should be changed accordingly.
+#' The user also has the option to add a threshold line using the \code{criteria} argument. Typically, this value is a water quality threshold, which is why \code{criteria_lab} defaults to \code{'WQ Threshold'}. However, the user has the option to specify any other type of threshold they wish. when doing so, the value for \code{criteria_lab} should be changed accordingly.
 #'
 #' @author Julie Padilla
 #'
 #' @concept analyze
 #'
-#' @return A \code{\link[ggplot2]{ggplot}} object
+#' @return Returns a \code{\link[ggplot2]{ggplot}} object
 #'
 #' @seealso \code{\link[ggplot2]{ggplot}}, \code{\link{y_labeler}}
 #'
@@ -182,20 +182,19 @@ historical_daily_range.swmpr <- function(swmpr_in
     mn <- ifelse(mn < 0 , min(pretty(mn)), 0)
     mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), mn)
 
-    # return(mn)
     brks <- c(1, 32, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335) #jdays associated with the first of every month
     brk_labs <- month.abb
 
     # Make some labels
     lab_hist_avg_rng <- paste('Daily Avg Range \n(', rng[[1]], '-', rng[[2]], ')', sep = '')
-    lab_hist_obs_rng <- paste('Daily Avg Range \n(', rng[[1]], '-', rng[[2]], ')', sep = '')
+    lab_hist_obs_rng <- paste('Daily Range \n(', rng[[1]], '-', rng[[2]], ')', sep = '')
     lab_yr_ln <- paste('Daily Avg \n(', target_yr, ')', sep = '')
 
     # Make plot
     plt <-
       ggplot(data = dat_yr, aes_(x = jd, y = avg, group = 1)) +
+      # geom_ribbon(data = dat_hist_obs, aes_(x = jd, ymin = mini, ymax = maxi, fill = lab_hist_obs_rng)) +
       geom_ribbon(data = dat_hist_obs, aes_(x = jd, ymin = mini, ymax = maxi, fill = lab_hist_obs_rng)) +
-      geom_ribbon(data = dat_hist_obs, aes_(x = jd, ymin = mini, ymax = maxi, fill = lab_hist_avg_rng)) +
       geom_ribbon(data = dat_hist_avg, aes_(x = jd, ymin = mini, ymax = maxi, fill = lab_hist_avg_rng)) +
       geom_line(aes(color = lab_yr_ln), lwd = 1.5) +
       scale_x_continuous(breaks = brks, labels = brk_labs) +

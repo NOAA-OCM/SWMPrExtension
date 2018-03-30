@@ -11,7 +11,7 @@ threshold_identification(swmpr_in, ...)
   threshold_type, time_threshold = NULL, ...)
 }
 \arguments{
-\item{swmpr_in}{input data object}
+\item{swmpr_in}{input swmpr object}
 
 \item{...}{arguments passed to other methods}
 
@@ -24,7 +24,7 @@ threshold_identification(swmpr_in, ...)
 \item{time_threshold}{The amount of time an event must last to be counted (in hours)}
 }
 \value{
-A data frame of threshold exceedances by parameter
+Returns a data frame of threshold exceedances by parameter
 }
 \description{
 Tabulate user-specified threshold exceedances
@@ -34,7 +34,7 @@ This function creates tabular summary of events when a user-specified threshold 
 
 Before using this function, the user must apply \code{\link[SWMPr]{setstep}} to normalize the \code{datetimestamp} time step.
 
-For MET and WQ data, the user must specify \code{time_threshold}. This argument is the minimum duration that an event must last in order to be counted. For example, if \code{time_threshold = 2} and \code{param = "do_mgl"}, \code{parameter_threshold = 2}, \code{threshold_type = "<"} then dissolved oxygen must be lower than 2 mg/L for more than two hours or the event will not be summarized in the final table. For NUT parameters, all exceedances are included in the tabular summary.
+For MET and WQ data, the user must specify \code{time_threshold}. This argument is the minimum duration that an event must last in order to be counted. For example, if \code{time_threshold = 2}, \code{param = "do_mgl"}, \code{parameter_threshold = 2}, and \code{threshold_type = "<"} then dissolved oxygen must be lower than 2 mg/L for more than two hours or the event will not be summarized in the final table. For NUT parameters, all exceedances are included in the tabular summary.
 }
 \examples{
 \dontrun{

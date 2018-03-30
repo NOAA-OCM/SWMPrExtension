@@ -12,7 +12,7 @@
 #' @param criteria_lab chr, label for the threshold criteria defined in \code{criteria}. Defaults to "WQ Threshold"
 #' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
 #' @param plot logical, should a plot be returned? Defaults to \code{TRUE}
-#' @param ... additional arguments passed to other methods. See \code{\link{assign_season}} and \code{\link{y_labeler}}.
+#' @param ... additional arguments passed to other methods. See \code{\link{assign_season}}
 #'
 #' @import ggplot2
 #'
@@ -33,7 +33,7 @@
 #'
 #' @concept analyze
 #'
-#' @return A \code{\link[ggplot2]{ggplot}} object
+#' @return Returns a \code{\link[ggplot2]{ggplot}} object
 #'
 #' @seealso \code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}, \code{\link{y_labeler}}
 #'

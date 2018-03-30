@@ -10,18 +10,14 @@
 #'
 #' @export
 #'
-#' @details A helper function used by \code{sk_seasonal} to return a table of tidied values.
+#' @details A helper function used by \code{\link{sk_seasonal}} to return a table of tidied values.
 #'
 #' @author Julie Padilla
 #'
 #' @concept miscellaneous
 #'
-#' @return a \code{data.frame} of results from \code{\link[EnvStats]{kendallSeasonalTrendTest}}
+#' @return Returns a \code{data.frame} of results from \code{\link[EnvStats]{kendallSeasonalTrendTest}}
 #'
-#' @examples
-#' \dontrun{
-#' data(elksmwq)
-#' }
 #'
 sk_tidy <- function(data, station, param, stat, alpha = 0.05) {
 

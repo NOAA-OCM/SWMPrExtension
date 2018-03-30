@@ -26,5 +26,5 @@ This function is intended for use with the NERRS national level reporting script
 Julie Padilla
 }
 \concept{
-Reporting
+reporting
 }

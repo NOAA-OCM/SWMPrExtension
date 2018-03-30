@@ -32,11 +32,11 @@ Returns a list of \code{\link[flextable]{flextable}} objects
 Create a list of flextable objects to display Seasonal Kendall results in the NERRS reserve level template
 }
 \details{
-Create a list of two \code{flextable} objects to be displayed in the NERRS reserve level template. The first \code{flextable} in the list contains the two-letter station IDs for each station and the full location name of each station. The second table lists the seasonal kendall results and the names of the parameters of interest.
+This function is intended for internal use with the NERRS reserve level reporting scripts. Using the results from the reserve level trend analysis, \code{create_sk_flextable_list} creates a list of two \code{flextable} objects to be displayed in the NERRS reserve level template. The first \code{flextable} in the list contains the two-letter station IDs for each station and the full location name of each station. The second table lists the seasonal kendall results and the names of the parameters of interest.
 }
 \author{
 Julie Padilla
 }
 \concept{
-Reporting
+reporting
 }

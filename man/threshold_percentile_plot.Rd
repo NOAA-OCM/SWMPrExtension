@@ -13,7 +13,7 @@ threshold_percentile_plot(swmpr_in, ...)
   plot_title = FALSE, ...)
 }
 \arguments{
-\item{swmpr_in}{input swmp object}
+\item{swmpr_in}{input swmpr object}
 
 \item{...}{additional arguments passed to other methods (not used for this function).}
 
@@ -21,7 +21,7 @@ threshold_percentile_plot(swmpr_in, ...)
 
 \item{hist_rng}{num, years to include in the plot. This variable can either be one year (e.g., \code{hist_rng = 2012}), or two years (e.g. \code{hist_rng = c(2012, 2016)}) , If range is not specified then the entire data set will be used.}
 
-\item{target_yr}{num, year of interest for plotting. If not, specified, the entire data set will be plotted.}
+\item{target_yr}{num, year of interest for plotting. If not specified, the entire data set will be plotted.}
 
 \item{percentiles}{num, percentiles to calculate (maximum: 2). Defaults to 5th and 95th percentiles.}
 
@@ -34,13 +34,13 @@ threshold_percentile_plot(swmpr_in, ...)
 \item{plot_title}{logical, should the station name be included as the plot title? Defaults to \code{FALSE}}
 }
 \value{
-A \code{\link[ggplot2]{ggplot}} object
+Returns a \code{\link[ggplot2]{ggplot}} object
 }
 \description{
 Observed data compared against user-defined percentiles
 }
 \details{
-This function provides an alternative to \code{threshold_plot}. For parameters that may not have numeric threshold criteria, a percentile threshold can be used instead. For a one-tailed analysis, the 90-th percentile is recommended. For a two-tailed analysis, the 5-th and 95-th percentiles are recommended.
+This function provides an alternative to \code{\link{threshold_criteria_plot}}. For parameters that may not have numeric threshold criteria, a percentile threshold can be used instead. For a one-tailed analysis, the 90-th percentile is recommended. For a two-tailed analysis, the 5-th and 95-th percentiles are recommended.
 
 Using \code{by_month}, the user can specify whether the percentiles should be calculated on a monthly basis or by using the entire data set.
 }
@@ -81,7 +81,7 @@ y <-
 
 }
 \seealso{
-\code{\link[ggplot2]{ggplot}}, \code{\link{y_labeler}}
+\code{\link[ggplot2]{ggplot}}
 }
 \author{
 Julie Padilla

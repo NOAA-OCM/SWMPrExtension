@@ -11,7 +11,7 @@
 #'
 #' @export
 #'
-#' @details This function returns the sampling stations associated with the data in the user-specified data file
+#' @details This function is intended for internal use with the NERRS reserve level reporting scripts. It returns the sampling stations associated with the data in the user-specified data folder.
 #'
 #' @author Julie Padilla
 #'

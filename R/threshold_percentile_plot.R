@@ -2,10 +2,10 @@
 #'
 #' Observed data compared against user-defined percentiles
 #'
-#' @param swmpr_in input swmp object
+#' @param swmpr_in input swmpr object
 #' @param param chr, variable to plot
 #' @param hist_rng num, years to include in the plot. This variable can either be one year (e.g., \code{hist_rng = 2012}), or two years (e.g. \code{hist_rng = c(2012, 2016)}) , If range is not specified then the entire data set will be used.
-#' @param target_yr num, year of interest for plotting. If not, specified, the entire data set will be plotted.
+#' @param target_yr num, year of interest for plotting. If not specified, the entire data set will be plotted.
 #' @param percentiles num, percentiles to calculate (maximum: 2). Defaults to 5th and 95th percentiles.
 #' @param by_month logical. should percentiles be calculated on a monthly basis? Defaults to \code{FALSE}
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
@@ -23,7 +23,7 @@
 #'
 #' @export
 #'
-#' @details This function provides an alternative to \code{threshold_plot}. For parameters that may not have numeric threshold criteria, a percentile threshold can be used instead. For a one-tailed analysis, the 90-th percentile is recommended. For a two-tailed analysis, the 5-th and 95-th percentiles are recommended.
+#' @details This function provides an alternative to \code{\link{threshold_criteria_plot}}. For parameters that may not have numeric threshold criteria, a percentile threshold can be used instead. For a one-tailed analysis, the 90-th percentile is recommended. For a two-tailed analysis, the 5-th and 95-th percentiles are recommended.
 #'
 #' Using \code{by_month}, the user can specify whether the percentiles should be calculated on a monthly basis or by using the entire data set.
 #'
@@ -31,9 +31,9 @@
 #'
 #' @concept analyze
 #'
-#' @return A \code{\link[ggplot2]{ggplot}} object
+#' @return Returns a \code{\link[ggplot2]{ggplot}} object
 #'
-#' @seealso \code{\link[ggplot2]{ggplot}}, \code{\link{y_labeler}}
+#' @seealso \code{\link[ggplot2]{ggplot}}
 #'
 #' @examples
 #' \dontrun{

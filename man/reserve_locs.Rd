@@ -7,22 +7,22 @@
 reserve_locs(incl = c("contig", "AK", "HI", "PR"), subset_reserve = NULL)
 }
 \arguments{
-\item{incl}{Str vector to include AK, HI , and PR}
+\item{incl}{Str vector to include AK, HI, and PR}
 
-\item{subset_reserve}{chr string of 3 letter reserve IDs to include as data points. To include He'eia use the reserve code 'HEA'}
+\item{subset_reserve}{chr string of 3 letter reserve IDs to include as data points. To include He'eia use the reserve code 'HEA'.}
 }
 \value{
-Returns a \code{dataframe} for internal use with \code{res_national_map}
+Returns a \code{data.frame} for internal use with \code{res_national_map}
 }
 \description{
-Create a dataframe of selected NERRS locations for plotting with \code{res_national_map}
+Create a data.frame of selected NERRS locations for plotting with \code{res_national_map}
 }
 \details{
-A helper function used to generate a dataframe of selected reserve locations for use with \code{res_national_map}
+A helper function used to generate a \code{data.frame} of selected reserve locations for use with \code{\link{res_national_map}}.
 }
 \author{
 Bob Rudis, Julie Padilla
 }
 \concept{
-analyze
+miscellaneous
 }

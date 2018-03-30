@@ -18,19 +18,13 @@ sk_tidy(data, station, param, stat, alpha = 0.05)
 \item{alpha}{num, significance level. Defaults to 0.05}
 }
 \value{
-a \code{data.frame} of results from \code{\link[EnvStats]{kendallSeasonalTrendTest}}
+Returns a \code{data.frame} of results from \code{\link[EnvStats]{kendallSeasonalTrendTest}}
 }
 \description{
 Tidy results from \code{\link[EnvStats]{kendallSeasonalTrendTest}}
 }
 \details{
-A helper function used by \code{sk_seasonal} to return a table of tidied values.
-}
-\examples{
-\dontrun{
-data(elksmwq)
-}
-
+A helper function used by \code{\link{sk_seasonal}} to return a table of tidied values.
 }
 \author{
 Julie Padilla

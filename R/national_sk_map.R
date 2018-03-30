@@ -7,7 +7,7 @@
 #' @param sk_reserves chr vector of 3 letter reserve codes that have seasonal kendall results
 #' @param sk_results chr vector of seasonal kendall results. Results can be 'inc', 'dec', 'insig', or 'insuff' which stand for 'increasing trend', 'decreasing trend', 'statistically insignificant trend', or 'insufficient data to detect trend'
 #' @param sk_fill_colors chr vector of colors used to fill seasonal kendall result markers
-#' @param agg_county logical, should counties be aggregated tot he state-level? Defaults to \code{TRUE}
+#' @param agg_county logical, should counties be aggregated to the state-level? Defaults to \code{TRUE}
 #'
 #' @import ggplot2
 #'
@@ -23,6 +23,8 @@
 #'
 #' @details Create a base map of the US with options for including AK, HI, and PR. The user can choose which states and NERRS reserves to highlight.
 #' This function was developed, in part, from a blog post by Bob Rudis.
+#'
+#' To ensure the proper plotting of results, the order of the results vector for \code{sk_results} should match the order of the reserves vector for \code{sk_reserves}.
 #'
 #' @author Bob Rudis, Julie Padilla
 #'

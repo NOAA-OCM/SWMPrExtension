@@ -2,7 +2,7 @@
 #'
 #' Tabulate user-specified threshold exceedances
 #'
-#' @param swmpr_in input data object
+#' @param swmpr_in input swmpr object
 #' @param ... arguments passed to other methods
 #' @param param vector of parameters to evaluate
 #' @param parameter_threshold vector of numerical thresholds to evaluate parameters against
@@ -19,13 +19,13 @@
 #'
 #' Before using this function, the user must apply \code{\link[SWMPr]{setstep}} to normalize the \code{datetimestamp} time step.
 #'
-#' For MET and WQ data, the user must specify \code{time_threshold}. This argument is the minimum duration that an event must last in order to be counted. For example, if \code{time_threshold = 2} and \code{param = "do_mgl"}, \code{parameter_threshold = 2}, \code{threshold_type = "<"} then dissolved oxygen must be lower than 2 mg/L for more than two hours or the event will not be summarized in the final table. For NUT parameters, all exceedances are included in the tabular summary.
+#' For MET and WQ data, the user must specify \code{time_threshold}. This argument is the minimum duration that an event must last in order to be counted. For example, if \code{time_threshold = 2}, \code{param = "do_mgl"}, \code{parameter_threshold = 2}, and \code{threshold_type = "<"} then dissolved oxygen must be lower than 2 mg/L for more than two hours or the event will not be summarized in the final table. For NUT parameters, all exceedances are included in the tabular summary.
 #'
 #' @author Julie Padilla
 #'
 #' @concept analyze
 #'
-#' @return A data frame of threshold exceedances by parameter
+#' @return Returns a data frame of threshold exceedances by parameter
 #'
 #' @references
 #' United States Environmental Protection Agency (USEPA). 2012. "National Coastal Condition Report IV."

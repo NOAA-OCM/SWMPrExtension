@@ -10,7 +10,7 @@
 #' @param converted logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.
 #' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
 #' @param plot logical, should a plot be returned? Defaults to \code{TRUE}
-#' @param ... additional arguments passed to other methods. See \code{\link{assign_season}} and \code{\link{y_labeler}}.
+#' @param ... additional arguments passed to other methods. See \code{\link{assign_season}}
 #'
 #' @concept analyze
 #'
@@ -32,7 +32,7 @@
 #'
 #' @author Julie Padilla
 #'
-#' @return A \code{\link[ggplot2]{ggplot}} object
+#' @return Returns a \code{\link[ggplot2]{ggplot}} object
 #'
 #' @seealso \code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}, \code{\link{y_labeler}}
 #'

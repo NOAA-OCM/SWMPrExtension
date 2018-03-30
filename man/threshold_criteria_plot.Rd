@@ -16,9 +16,9 @@ threshold_criteria_plot(swmpr_in, ...)
 \arguments{
 \item{swmpr_in}{input swmpr object}
 
-\item{...}{additional arguments passed to other methods.#' @param ... additional arguments passed to other methods. See \code{\link{y_labeler}}.}
+\item{...}{additional arguments passed to other methods. See \code{\link{y_labeler}}.}
 
-\item{param}{chr string of variable to plot, also includes the calculated parameter dissolved inorganic nitrogen ('din'). See details for more information.}
+\item{param}{chr string of the variable to plot}
 
 \item{rng}{num, years to include in the plot. This variable can either be one year (e.g., \code{rng = 2012}), or two years (e.g. \code{rng = c(2012, 2016)}) , If range is not specified then the entire data set will be used.}
 
@@ -37,15 +37,15 @@ threshold_criteria_plot(swmpr_in, ...)
 \item{plot_title}{logical, should the station name be included as the plot title? Defaults to \code{FALSE}}
 }
 \value{
-A \code{\link[ggplot2]{ggplot}} object
+Returns a \code{\link[ggplot2]{ggplot}} object
 }
 \description{
-Visualize water quality exceedances
+Observed data compared against user-defined water quality thresholds
 }
 \details{
-This function vizualizes exceedances of numeric criteria. Suggested numeric criteria for several parameters (dissolved oxygen, dissolved inorganic phosphorus, dissolved inorganic nitrogen, and chlorophyll-a) can be found in the USEPA National Coastal Condition Report (2012).
+This function vizualizes exceedances of numeric criteria which are specified using \code{thresholds}. Suggested numeric criteria for several parameters (dissolved oxygen, dissolved inorganic phosphorus, dissolved inorganic nitrogen, and chlorophyll-a) can be found in the USEPA National Coastal Condition Report (2012).
 
-If the parameter of interest does not have numeric criteria, then \code{threshold_percentile_plot}
+If the parameter of interest does not have numeric criteria, then \code{threshold_percentile_plot} is recommended.
 }
 \examples{
 \dontrun{
@@ -78,6 +78,35 @@ z <-
                  , threshold_cols = c('#FEC596', '#FFFFCC', '#ABD9E9')
                  , monthly_smooth = T)
 
+## A few examples with only two thresholds
+xx <-
+  threshold_criteria_plot(dat_wq, param = 'do_mgl'
+                 , rng = 2012
+                 , thresholds = c(2, 2)
+
+                  # A dummy blank ('') value must be added as a threshold label
+                 , threshold_labs = c('Poor', '', 'Good')
+                 , threshold_cols = c('#FEC596', '#FFFFCC', '#ABD9E9')
+                 , monthly_smooth = T)
+
+xy <-
+  threshold_criteria_plot(dat_wq, param = 'do_mgl'
+                 , rng = 2012
+                 , thresholds = c(5, 5)
+
+                 # A dummy blank ('') value must be added as a threshold label
+                 , threshold_labs = c('Poor', '', 'Good')
+                 , threshold_cols = c('#FEC596', '#FEC596', '#ABD9E9')
+                 , monthly_smooth = T)
+
+xz <-
+  threshold_criteria_plot(dat_wq, param = 'do_mgl'
+                 , rng = 2012
+                 , thresholds = c(2, 5)
+                 , threshold_labs = c('Poor', 'Good', 'Poor')
+                 , threshold_cols = c('#FEC596', '#ABD9E9', '#FEC596')
+                 , monthly_smooth = T)
+
 
 data(apacpnut)
 dat_nut <- apacpnut
@@ -106,8 +135,12 @@ z <-
                  , monthly_smooth = T)
 }
 }
+\references{
+United States Environmental Protection Agency (USEPA). 2012. "National Coastal Condition Report IV."
+http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.646.1973&rep=rep1&type=pdf
+}
 \seealso{
-\code{\link[ggplot2]{ggplot}}
+\code{\link[ggplot2]{ggplot}},\code{\link{y_labeler}}
 }
 \author{
 Julie Padilla

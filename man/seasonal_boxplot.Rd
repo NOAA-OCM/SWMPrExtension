@@ -15,7 +15,7 @@ seasonal_boxplot(swmpr_in, ...)
 \arguments{
 \item{swmpr_in}{input swmpr object}
 
-\item{...}{additional arguments passed to other methods. See \code{\link{assign_season}} and \code{\link{y_labeler}}.}
+\item{...}{additional arguments passed to other methods. See \code{\link{assign_season}}}
 
 \item{param}{chr string of variable to plot}
 
@@ -40,7 +40,7 @@ seasonal_boxplot(swmpr_in, ...)
 \item{FUN}{function used to aggregate daily SWMP data}
 }
 \value{
-A \code{\link[ggplot2]{ggplot}} object or a \code{data.frame} if plot = \code{FALSE}
+Returns a \code{\link[ggplot2]{ggplot}} object or a \code{data.frame} if \code{plot = FALSE}
 }
 \description{
 Annual time series for year of interest on top of long-term percentiles
@@ -48,7 +48,7 @@ Annual time series for year of interest on top of long-term percentiles
 \details{
 This function uses boxplots to summarize statistics calculated on a daily basis across user-defined seasons for all years within the historic range (\code{hist_rng}). If \code{hist_rng} is not specified then the minimum and maximum years within the data set will be used. The summary statistics used to generate the boxplots are \code{ggplot2} defaults: the center of the box is a median, and the lower/upper limits of the box are the 25-th and 75-th percentiles. The whiskers extend to the furthest data point within 1.5 * inter-quartile range (IQR). The dots beyond the whiskers are data points that are greater than 1.5 * IQR. If the user selects a \code{target_yr}, then a median summary statistic value will be plotted as a point against the boxplots.
 
-Using the \code{FUN} argument, the user can specify the summary statistic to use. Commonly used statistics are \code{min(x, na.rm = T)}, \code{mean(x, na.rm = T)}, and \code{max(x, na.rm = T)}. After specifying \code{FUN}, the user should also specify \code{stat_lab}, which is used to construct appropriate legend labels.
+Using the \code{FUN} argument, the user can specify the daily summary statistic to use. Commonly used statistics are \code{min(x, na.rm = T)}, \code{mean(x, na.rm = T)}, and \code{max(x, na.rm = T)}. After specifying \code{FUN}, the user should also specify \code{stat_lab}, which is used to construct appropriate legend labels.
 
 The user also has the option to add a threshold hold line using the \code{criteria} argument. Typically, this value is a water quality threshold, which is why \code{criteria_lab} defaults to \code{'WQ Threshold'}. Howver, the user has the option to specify any other type of threshold they wish. when doing so, the value for \code{criteria_lab} should be changed accordingly.
 }
@@ -74,7 +74,7 @@ stat_lab = 'Maximum', FUN = function(x) max(x, na.rm = T))
 }
 }
 \seealso{
-\code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}, \code{\link{y_labeler}}
+\code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}
 }
 \author{
 Julie Padilla

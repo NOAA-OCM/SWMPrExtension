@@ -15,7 +15,7 @@ threshold_summary(swmpr_in, ...)
 \arguments{
 \item{swmpr_in}{input swmpr object}
 
-\item{...}{additional arguments passed to other methods.}
+\item{...}{additional arguments passed to other methods. See \code{\link{assign_season}} for more details.}
 
 \item{param}{chr string of variable to plot (one only)}
 
@@ -36,13 +36,13 @@ threshold_summary(swmpr_in, ...)
 \item{plot}{logical, should a plot be returned? Defaults to \code{TRUE}}
 }
 \value{
-A \code{\link[ggplot2]{ggplot}} object (if \code{plot} = \code{T}) or a dataframe (if \code{plot} = \code{F})
+Returns a \code{\link[ggplot2]{ggplot}} object (if \code{plot} = \code{T}) or a dataframe (if \code{plot} = \code{F})
 }
 \description{
 Summary plots for threshold identification analysis
 }
 \details{
-This function provides a graphical or tabular summary of the results from \code{threshold_identification}. The user can summarize results on a monthly, seasonal, or annual basis by specifying \code{summary_type = c('month', 'season', 'year')}. The user can specify \code{'month'} for nutrient parameters, but this is not recommended and will produce a warning.
+This function provides a graphical or tabular summary of the results from \code{threshold_identification}. The user can summarize results on a monthly, seasonal, or annual basis by specifying \code{summary_type = c('month', 'season', 'year')}. If \code{summary_type = 'season'}, then the user should also define \code{season}, \code{season_names}, and \code{season_start}, as required by |code{\link{assign_season}}. The user can specify \code{'month'} for nutrient parameters, but this is not recommended and will produce a warning.
 }
 \examples{
 \dontrun{
@@ -87,7 +87,7 @@ y <-
 }
 }
 \seealso{
-, \code{\link{assign_season}}, \code{\link[ggplot2]{ggplot}}, \code{\link{threshold_identification}}, \code{\link[ggplot2]{scale_fill_brewer}}
+\code{\link{assign_season}}, \code{\link[ggplot2]{ggplot}}, \code{\link{threshold_identification}}, \code{\link[ggplot2]{scale_fill_brewer}}
 }
 \author{
 Julie Padilla

@@ -16,7 +16,7 @@ Returns 3-letter, reserve site code as chr
 Identify the 3-letter NERRS reserve code from metadata in the data file
 }
 \details{
-This function returns the 3-letter reserve code associated with the data in the user-specified data file
+This function is intended for internal use with the NERRS reserve level reporting scripts. It returns the 3-letter reserve code associated with the data in the user-specified data folder.
 }
 \author{
 Julie Padilla

@@ -14,11 +14,11 @@
 #'
 #' @export
 #'
-#' @details Create a \code{flextable} object of reserve names for display in the NERRS national level template.
+#' @details This function is intended for internal use with the NERRS national level reporting scripts. Using results from the reserve level trend analyses, \code{create_sk_national_ft_reserves} creates a \code{flextable} object of reserve names for display in the NERRS national level template.
 #'
 #' @author Julie Padilla
 #'
-#' @concept Reporting
+#' @concept reporting
 #'
 #' @return Returns a \code{\link[flextable]{flextable}} object
 #'

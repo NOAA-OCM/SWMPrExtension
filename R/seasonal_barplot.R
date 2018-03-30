@@ -26,7 +26,7 @@
 #'
 #' @export
 #'
-#' @details This function uses barplots to summarize parameters that are best viewed on a cumulative basis (e.g., precipitation).
+#' @details This function uses barplots to summarize parameters that are best viewed on a cumulative basis (e.g., precipitation). Data are aggregated on a seasonal and annual basis.
 #'
 #' There are two ways to make interannual comparisons: on an aggregate basis and on a seasonal basis. If the argument \code{season_facet = F} then parameter totals from each season will be added together to compose one, multi-color bar.If \code{season_facet = T} then parameter totals from each season separated into multiple plots for easier intra-season comparison across years.
 #'

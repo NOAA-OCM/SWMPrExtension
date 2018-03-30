@@ -17,7 +17,7 @@
 #'
 #' @author Julie Padilla
 #'
-#' @concept Reporting
+#' @concept reporting
 #'
 #' @return Returns a \code{data.frame}
 #'

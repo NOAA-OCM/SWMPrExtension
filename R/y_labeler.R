@@ -11,7 +11,7 @@
 #'
 #' @author Julie Padilla
 #'
-#' @concept analyze
+#' @concept miscellaneous
 #'
 #' @return Returns character vector or an unevaluated expression
 #'

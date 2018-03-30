@@ -18,7 +18,7 @@ Returns a dataframe of station ids, station names, lat/long
 Identify the latitude/longitude for sampling stations based on the metadata in the data file
 }
 \details{
-This function returns the coordinates associated with the data in the user-specified data file
+This function is intended for internal use with the NERRS reserve level reporting scripts. It returns the names, station codes, and coordinates associated with the data in the user-specified data folder.
 }
 \author{
 Julie Padilla

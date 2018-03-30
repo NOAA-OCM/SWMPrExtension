@@ -4,11 +4,9 @@
 #'
 #' @param data.file location of data
 #'
-#' @importFrom SWMPr site_codes
-#'
 #' @export
 #'
-#' @details This function determines the name of the NERRS reserve associated with the data in the user-specified data file
+#' @details This function is intended for internal use with the NERRS reserve level reporting scripts. It determines the name of the full name of the NERRS reserve associated with the data in the user-specified data folder.
 #'
 #' @author Julie Padilla
 #'

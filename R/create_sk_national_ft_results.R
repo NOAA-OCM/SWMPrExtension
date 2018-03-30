@@ -15,7 +15,7 @@
 #'
 #' @export
 #'
-#' @details Create a \code{flextable} object to be displayed in the NERRS national level template.
+#' @details This function is intended for internal use with the NERRS national level reporting scripts. Using results from the reserve level trend analyses, \code{create_sk_national_ft_results} creates  a \code{flextable} object of seasonal kendall results to be displayed in the NERRS national level template.
 #'
 #' @author Julie Padilla
 #'

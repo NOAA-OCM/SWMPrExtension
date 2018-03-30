@@ -20,11 +20,11 @@ Returns a \code{data.frame} of user-specified results to be displayed
 Filters a \code{dataframe} of user-specified results for display in the NERRS reserve level report
 }
 \details{
-Used internally by \code{\link{create_sk_flextable_list}} to create a \code{data.frame} of user specified parameters to be displayed
+A helper function used internally by \code{\link{create_sk_flextable_list}} to create a \code{data.frame} of user specified parameters to be displayed in the reserve level report.
 }
 \author{
 Julie Padilla
 }
 \concept{
-Reporting
+reporting
 }

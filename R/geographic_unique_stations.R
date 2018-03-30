@@ -6,7 +6,7 @@
 #'
 #' @export
 #'
-#' @details This function takes a vector of NERR stations and only returns geographically unique locations. Intended for use with \code{\link{res_local_map}}
+#' @details This function is intended for internal use with the NERRS reserve level reporting scripts and is used along with \code{\link{res_local_map}}. It takes a vector of NERR site ids and only returns geographically unique locations.
 #'
 #' @author Julie Padilla
 #'

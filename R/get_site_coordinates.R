@@ -12,7 +12,7 @@
 #'
 #' @export
 #'
-#' @details This function returns the coordinates associated with the data in the user-specified data file
+#' @details This function is intended for internal use with the NERRS reserve level reporting scripts. It returns the names, station codes, and coordinates associated with the data in the user-specified data folder.
 #'
 #' @author Julie Padilla
 #'

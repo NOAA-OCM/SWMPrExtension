@@ -33,7 +33,7 @@ annual_range(swmpr_in, ...)
 \item{plot}{logical, should a plot be returned? Defaults to \code{TRUE}}
 }
 \value{
-A \code{\link[ggplot2]{ggplot}} object
+Returns a \code{\link[ggplot2]{ggplot}} object
 }
 \description{
 Assess variability within each season for a single year

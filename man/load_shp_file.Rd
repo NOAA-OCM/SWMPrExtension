@@ -12,13 +12,13 @@ load_shp_file(path, dissolve_boundaries = T)
 \item{dissolve_boundaries}{logical, should reserve boundaries be dissolved? Defaults to \code{TRUE}}
 }
 \value{
-Returns a \code{sp} object for use with \code{res_sk_map} and \code{res_local_map}
+Returns a \code{\link[sp]{sp}} object
 }
 \description{
 Load and format shapefile for use with res_local_map
 }
 \details{
-This function loads a NERRS boundary shp file and dissolves unnecessary reserve boundaries.
+This function is intended for internal use with the NERRS reserve level reporting scripts. It loads a NERRS boundary shp file and dissolves unnecessary reserve boundaries. The resulting \code{sp} object is then used with \code{\link{res_sk_map}} and \code{\link{res_local_map}}
 }
 \author{
 Julie Padilla

@@ -32,7 +32,7 @@
 #'
 #' @concept analyze
 #'
-#' @return A \code{\link[ggplot2]{ggplot}} object
+#' @return Returns a \code{\link[ggplot2]{ggplot}} object
 #'
 #' @seealso \code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}, \code{\link{y_labeler}}
 #'

@@ -30,5 +30,5 @@ y_lab <- y_labeler('do_mgl')
 Julie Padilla
 }
 \concept{
-analyze
+miscellaneous
 }

@@ -10,17 +10,20 @@ lm_p_labs(dat_in)
 \item{dat_in}{\code{data.frame} with year, season, min, mean, max columns}
 }
 \value{
-Returns \code{data.frame} for use with \code{seasonal_dot}
+Returns \code{data.frame} for use with \code{\link{seasonal_dot}}
 }
 \description{
 Generate a dataframe of p-value labels based on p-values from linear regression
 }
 \details{
-A helper function that returns a \code{data.frame} of p-value labels for use with the \code{seasonal_dot_plot}. P-values are taken from linear regression \code{lm}.
+A helper function that returns a \code{data.frame} of p-value labels for use with the \code{\link{seasonal_dot}}. P-values are taken from linear regression \code{lm}.
 }
 \seealso{
-\code{lm}
+\code{\link[stats]{lm}}
 }
 \author{
 Julie Padilla
+}
+\concept{
+miscellaneous
 }

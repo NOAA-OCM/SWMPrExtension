@@ -27,13 +27,13 @@ res_custom_map(stations, x_loc, y_loc, bbox, shp, station_labs = T,
 \item{scale_pos}{scale_pos where should the scale be placed? Options are 'topleft', 'topright', 'bottomleft', or 'bottomright'. Defaults to 'bottomleft'}
 }
 \value{
-returns a leaflet object
+Returns a leaflet object
 }
 \description{
 Create a stylized reserve-level map of custom station locations for use with the reserve level reporting template
 }
 \details{
-Creates a stylized, reserve-leve base map. The user can specify the reserve and stations to plot. The user can also specify a bounding box. For multi-component reserves, the user should specify a bounding box that highlights the component of interest.
+Creates a stylized, reserve-level base map. The user can specify the reserve and stations to plot. The user can also specify a bounding box. For multi-component reserves, the user should specify a bounding box that highlights the component of interest.
 
 This function does not automatically detect conflicts between station labels. The \code{lab_loc} argument allows the user to specify "R" or "L" for each station to prevent labels from conflicting with each other.
 

@@ -12,11 +12,11 @@
 #'
 #' @export
 #'
-#' @details Used internally by \code{\link{create_sk_flextable_list}} to create a \code{data.frame} of user specified parameters to be displayed
+#' @details A helper function used internally by \code{\link{create_sk_flextable_list}} to create a \code{data.frame} of user specified parameters to be displayed in the reserve level report.
 #'
 #' @author Julie Padilla
 #'
-#' @concept Reporting
+#' @concept reporting
 #'
 #' @return Returns a \code{data.frame} of user-specified results to be displayed
 #'

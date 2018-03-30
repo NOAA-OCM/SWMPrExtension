@@ -15,7 +15,7 @@ historical_range(swmpr_in, ...)
 \arguments{
 \item{swmpr_in}{input swmpr object}
 
-\item{...}{additional arguments passed to other methods. See \code{\link{assign_season}} and \code{\link{y_labeler}}.}
+\item{...}{additional arguments passed to other methods. See \code{\link{assign_season}}}
 
 \item{param}{chr string of variable to plot}
 
@@ -36,7 +36,7 @@ historical_range(swmpr_in, ...)
 \item{plot}{logical, should a plot be returned? Defaults to \code{TRUE}}
 }
 \value{
-A \code{\link[ggplot2]{ggplot}} object
+Returns a \code{\link[ggplot2]{ggplot}} object
 }
 \description{
 Compare seasonal averages/mins/maxes for a target year to historical seasonal averages/mins/maxes

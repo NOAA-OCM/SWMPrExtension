@@ -6,13 +6,13 @@
 #'
 #' @export
 #'
-#' @details A Helper function for easier date label setting
+#' @details A helper function for easier date label setting
 #'
 #' @author Julie Padilla
 #'
-#' @concept analyze
+#' @concept miscellaneous
 #'
-#' @return a chr string for \code{date_breaks}
+#' @return Returns a chr string for \code{date_breaks}
 #'
 #' @seealso \code{\link{set_date_break_labs}}, \code{\link[ggplot2]{scale_x_datetime}}
 #'
@@ -39,7 +39,7 @@ set_date_breaks <- function(rng) {
 #'
 #' @author Julie Padilla
 #'
-#' @return a chr string for \code{date_labels}
+#' @return Returns a chr string for \code{date_labels}
 #'
 ##' @seealso \code{\link{set_date_breaks}}, \code{\link[ggplot2]{scale_x_datetime}}
 #'

@@ -10,13 +10,13 @@ set_date_breaks(rng)
 \item{rng}{date range years}
 }
 \value{
-a chr string for \code{date_breaks}
+Returns a chr string for \code{date_breaks}
 }
 \description{
 Select reasonable breaks for \code{\link[ggplot2]{scale_x_datetime}}
 }
 \details{
-A Helper function for easier date label setting
+A helper function for easier date label setting
 }
 \seealso{
 \code{\link{set_date_break_labs}}, \code{\link[ggplot2]{scale_x_datetime}}
@@ -25,5 +25,5 @@ A Helper function for easier date label setting
 Julie Padilla
 }
 \concept{
-analyze
+miscellaneous
 }

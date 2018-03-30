@@ -13,7 +13,7 @@ historical_daily_range(swmpr_in, ...)
   plot = TRUE, ...)
 }
 \arguments{
-\item{swmpr_in}{input swmp object}
+\item{swmpr_in}{input swmpr object}
 
 \item{...}{not used}
 
@@ -36,15 +36,15 @@ historical_daily_range(swmpr_in, ...)
 \item{plot}{logical, should a plot be returned? Defaults to \code{TRUE}}
 }
 \value{
-A \code{\link[ggplot2]{ggplot}} object
+Returns a \code{\link[ggplot2]{ggplot}} object
 }
 \description{
 Compare daily averages for a target year to historical highs and lows
 }
 \details{
-This function compares the average daily minimums/maximums and absolute minimums/maximums from a historical range to the average daily value from a target year. If \code{hist_rng} is not specified then the minimum and maximum years within the data set will be used. If \code{target_yr} is not specified then only the results for the \code{hist_rng} will be returned.
+This function compares the average daily minimums/maximums and absolute daily minimums/maximums from a historical range to the average daily value from a target year. If \code{hist_rng} is not specified then the minimum and maximum years within the data set will be used. If \code{target_yr} is not specified then only the results for the \code{hist_rng} will be returned.
 
-The user also has the option to add a threshold line using the \code{criteria} argument. Typically, this value is a water quality threshold, which is why \code{criteria_lab} defaults to \code{'WQ Threshold'}. Howver, the user has the option to specify any other type of threshold they wish. when doing so, the value for \code{criteria_lab} should be changed accordingly.
+The user also has the option to add a threshold line using the \code{criteria} argument. Typically, this value is a water quality threshold, which is why \code{criteria_lab} defaults to \code{'WQ Threshold'}. However, the user has the option to specify any other type of threshold they wish. when doing so, the value for \code{criteria_lab} should be changed accordingly.
 }
 \examples{
 \dontrun{

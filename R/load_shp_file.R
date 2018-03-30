@@ -12,13 +12,13 @@
 #'
 #' @export
 #'
-#' @details This function loads a NERRS boundary shp file and dissolves unnecessary reserve boundaries.
+#' @details This function is intended for internal use with the NERRS reserve level reporting scripts. It loads a NERRS boundary shp file and dissolves unnecessary reserve boundaries. The resulting \code{sp} object is then used with \code{\link{res_sk_map}} and \code{\link{res_local_map}}
 #'
 #' @author Julie Padilla
 #'
 #' @concept reporting
 #'
-#' @return Returns a \code{sp} object for use with \code{res_sk_map} and \code{res_local_map}
+#' @return Returns a \code{\link[sp]{sp}} object
 #'
 load_shp_file <- function(path, dissolve_boundaries = T){
 

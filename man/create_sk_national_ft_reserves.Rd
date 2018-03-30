@@ -25,11 +25,11 @@ Returns a \code{\link[flextable]{flextable}} object
 Create a \code{\link[flextable]{flextable}} of reserve names for use with the NERRS national level template.
 }
 \details{
-Create a \code{flextable} object of reserve names for display in the NERRS national level template.
+This function is intended for internal use with the NERRS national level reporting scripts. Using results from the reserve level trend analyses, \code{create_sk_national_ft_reserves} creates a \code{flextable} object of reserve names for display in the NERRS national level template.
 }
 \author{
 Julie Padilla
 }
 \concept{
-Reporting
+reporting
 }

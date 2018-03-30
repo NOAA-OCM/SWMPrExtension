@@ -12,7 +12,7 @@ raw_boxplot(swmpr_in, ...)
   plot_title = FALSE, ...)
 }
 \arguments{
-\item{swmpr_in}{input swmp object}
+\item{swmpr_in}{input swmpr object}
 
 \item{...}{additional arguments passed to other methods. See \code{\link{assign_season}} and \code{\link{y_labeler}}.}
 

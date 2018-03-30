@@ -1,9 +1,9 @@
 #' Water Quality Threshold Plot For Parameters With Criteria
 #'
-#' Visualize water quality exceedances
+#' Observed data compared against user-defined water quality thresholds
 #'
 #' @param swmpr_in input swmpr object
-#' @param param chr string of variable to plot, also includes the calculated parameter dissolved inorganic nitrogen ('din'). See details for more information.
+#' @param param chr string of the variable to plot
 #' @param rng num, years to include in the plot. This variable can either be one year (e.g., \code{rng = 2012}), or two years (e.g. \code{rng = c(2012, 2016)}) , If range is not specified then the entire data set will be used.
 #' @param thresholds numeric vector, numeric criteria that will be plotted in the background
 #' @param threshold_labs chr vector of labels for categories created by \code{thresholds}.
@@ -12,7 +12,7 @@
 #' @param crit_threshold num, value at which the critical threshold line should be plotted. Typically the same value used to establish the 'Poor' threshold.
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
 #' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
-#' @param ... additional arguments passed to other methods.#' @param ... additional arguments passed to other methods. See \code{\link{y_labeler}}.
+#' @param ... additional arguments passed to other methods. See \code{\link{y_labeler}}.
 #'
 #' @import ggplot2
 #'
@@ -24,17 +24,22 @@
 #'
 #' @export
 #'
-#' @details This function vizualizes exceedances of numeric criteria. Suggested numeric criteria for several parameters (dissolved oxygen, dissolved inorganic phosphorus, dissolved inorganic nitrogen, and chlorophyll-a) can be found in the USEPA National Coastal Condition Report (2012).
+#' @details This function vizualizes exceedances of numeric criteria which are specified using \code{thresholds}. Suggested numeric criteria for several parameters (dissolved oxygen, dissolved inorganic phosphorus, dissolved inorganic nitrogen, and chlorophyll-a) can be found in the USEPA National Coastal Condition Report (2012).
 #'
-#' If the parameter of interest does not have numeric criteria, then \code{threshold_percentile_plot}
+#' If the parameter of interest does not have numeric criteria, then \code{threshold_percentile_plot} is recommended.
+#'
+#'
+#' @references
+#' United States Environmental Protection Agency (USEPA). 2012. "National Coastal Condition Report IV."
+#' http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.646.1973&rep=rep1&type=pdf
 #'
 #' @author Julie Padilla
 #'
 #' @concept analyze
 
-#' @return A \code{\link[ggplot2]{ggplot}} object
+#' @return Returns a \code{\link[ggplot2]{ggplot}} object
 #'
-#' @seealso \code{\link[ggplot2]{ggplot}}
+#' @seealso \code{\link[ggplot2]{ggplot}},\code{\link{y_labeler}}
 #'
 #' @examples
 #' \dontrun{
@@ -65,6 +70,35 @@
 #'                  , thresholds = c(2, 5)
 #'                  , threshold_labs = c('Poor', 'Fair', 'Good')
 #'                  , threshold_cols = c('#FEC596', '#FFFFCC', '#ABD9E9')
+#'                  , monthly_smooth = T)
+#'
+#' ## A few examples with only two thresholds
+#' xx <-
+#'   threshold_criteria_plot(dat_wq, param = 'do_mgl'
+#'                  , rng = 2012
+#'                  , thresholds = c(2, 2)
+#'
+#'                   # A dummy blank ('') value must be added as a threshold label
+#'                  , threshold_labs = c('Poor', '', 'Good')
+#'                  , threshold_cols = c('#FEC596', '#FFFFCC', '#ABD9E9')
+#'                  , monthly_smooth = T)
+#'
+#' xy <-
+#'   threshold_criteria_plot(dat_wq, param = 'do_mgl'
+#'                  , rng = 2012
+#'                  , thresholds = c(5, 5)
+#'
+#'                  # A dummy blank ('') value must be added as a threshold label
+#'                  , threshold_labs = c('Poor', '', 'Good')
+#'                  , threshold_cols = c('#FEC596', '#FEC596', '#ABD9E9')
+#'                  , monthly_smooth = T)
+#'
+#' xz <-
+#'   threshold_criteria_plot(dat_wq, param = 'do_mgl'
+#'                  , rng = 2012
+#'                  , thresholds = c(2, 5)
+#'                  , threshold_labs = c('Poor', 'Good', 'Poor')
+#'                  , threshold_cols = c('#FEC596', '#ABD9E9', '#FEC596')
 #'                  , monthly_smooth = T)
 #'
 #'
@@ -168,8 +202,8 @@ threshold_criteria_plot.swmpr <- function(swmpr_in
 
   # plot prep
   #determine plotting color palette based on range
-  ts_col <- ifelse(length(unique(rng)) > 1, '#B3B3B3', '#4F94CD') #check with colorcop
-  smooth_col <- ifelse(length(unique(rng)) > 1, '#7F7F7F', '#36648B') #check with colorcop
+  ts_col <- ifelse(length(unique(rng)) > 1, '#B3B3B3', '#4F94CD')
+  smooth_col <- ifelse(length(unique(rng)) > 1, '#7F7F7F', '#36648B')
   smooth_ln <- ifelse(length(unique(rng)) > 1, 'solid', 'dashed')
 
   brks <- set_date_breaks(rng)
@@ -180,7 +214,7 @@ threshold_criteria_plot.swmpr <- function(swmpr_in
   mx <- ifelse(max(thresholds) > mx, 1.1 * max(thresholds), mx)
   mx <- ifelse(data_type == 'nut' && param != 'chla_n', ceiling(mx/0.01) * 0.01, ceiling(mx))
 
-  # assign a minimum of zero unles there are values < 0
+  # assign a minimum of zero unless there are values < 0
   mn <- min(dat[, grep(param, colnames(dat))], na.rm = T)
   mn <- ifelse(mn < 0 , min(pretty(mn)), 0)
   mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), mn)
@@ -188,11 +222,6 @@ threshold_criteria_plot.swmpr <- function(swmpr_in
   # set legend label and time series line type
   lab_dat <- ifelse(length(unique(rng)) > 1, paste('Data \n(', rng[[1]], '-', rng[[2]], ')', sep = ''), paste('Data \n(', rng[[1]], ')', sep = ''))
   ts_ln <- 'solid'
-
-  # # determine if January exists
-  # if(month(min(dat$datetimestamp)) != 1) {
-  #   x
-  # }
 
   plt <-
     ggplot(data = dat, aes_(x = dt, y = parm)) +

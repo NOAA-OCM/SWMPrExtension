@@ -6,11 +6,11 @@
 #'
 #' @export
 #'
-#' @details Used internally by \code{\link{create_sk_flextable_list}} to label \code{\link[flextable]{flextable}} columns
+#' @details A helper function used internally by \code{\link{create_sk_flextable_list}} to label \code{\link[flextable]{flextable}} columns in the trend table for the reserve level report.
 #'
 #' @author Julie Padilla
 #'
-#' @concept Reporting
+#' @concept reporting
 #'
 #' @return Returns a \code{data.frame} of user-specified results to be displayed
 #'
