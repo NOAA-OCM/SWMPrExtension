@@ -1,6 +1,6 @@
 #' Return a vector of geographically unique NERR Stations
 #'
-#' Creates a alphabetically sorted, vector of geographically unique stations for mapping
+#' Creates an alphabetically sorted, vector of geographically unique stations for mapping
 #'
 #' @param nerr_site_id chr vector of valid NERR stations
 #'

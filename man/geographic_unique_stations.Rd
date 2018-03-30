@@ -13,7 +13,7 @@ geographic_unique_stations(nerr_site_id)
 returns a vector of NERR stations
 }
 \description{
-Creates a alphabetically sorted, vector of geographically unique stations for mapping
+Creates an alphabetically sorted, vector of geographically unique stations for mapping
 }
 \details{
 This function is intended for internal use with the NERRS reserve level reporting scripts and is used along with \code{\link{res_local_map}}. It takes a vector of NERR site ids and only returns geographically unique locations.
