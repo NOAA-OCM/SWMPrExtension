@@ -39,3 +39,6 @@ To display seasonal trends, the user must specify \code{c('inc', 'dec', 'insig')
 \author{
 Julie Padilla
 }
+\concept{
+analyze
+}

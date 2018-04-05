@@ -36,7 +36,8 @@ Example dataset: \url{https://s3.amazonaws.com/swmpexdata/zip_ex.zip}
 \code{\link{all_params}}, \code{\link{all_params_dtrng}}, \code{\link{rem_reps}}, \code{\link{single_param}}
 }
 \author{
-Marcus Beck, Julie Padilla (addition of 'CollMethd' argument)
+Marcus Beck, Julie Padilla (additional of code{collMthd} argument)
+maintainer: Julie Padilla
 }
 \concept{
 retrieve

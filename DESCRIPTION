@@ -1,7 +1,7 @@
 Package: SWMPrExtension
 Type: Package
 Title: Additional Functions for Retrieving, Organizing, and Analyzing Estuary Monitoring Data
-Version: 0.3.11
+Version: 0.3.12
 Author: Julie Padilla [aut, cre]
 Maintainer: Julie Padilla <jpadilla@limno.com>
 Description: Additional tools for retrieving, organizing, and analyzing environmental
@@ -40,5 +40,13 @@ Imports:
 	sp
 Authors@R: person(given = "Julie", family = "Padilla",
     role = c("aut", "cre"),
-	email = "jpadilla@limno.com")
+	email = "jpadilla@limno.com"),
+  person(given = "Marcus", family = "Beck",
+    role = c("aut"),
+	email = "marcus@sccwrp.org"
+	comments = "import_local_nut"),
+  person(given = "Bob", family = "Rudis",
+    role = c("aut"),
+	email = "bob@rud.is",
+	comment = "National mapping functions")
 RoxygenNote: 6.0.1

@@ -27,6 +27,7 @@
 #' To ensure the proper plotting of results, the order of the results vector for \code{sk_results} should match the order of the reserves vector for \code{sk_reserves}.
 #'
 #' @author Bob Rudis, Julie Padilla
+#' Maintainer: Julie Padilla
 #'
 #' @concept analyze
 #'

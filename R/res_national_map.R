@@ -22,6 +22,7 @@
 #' This function was developed, in part, from a blog post by Bob Rudis.
 #'
 #' @author Bob Rudis, Julie Padilla
+#' Maintainer: Julie Padilla
 #'
 #' @concept analyze
 #'

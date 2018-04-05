@@ -1,4 +1,4 @@
-#' Reserve National Map
+#' NERRS Sampling Location Data Frame
 #'
 #' Create a data.frame of selected NERRS locations for plotting with \code{res_national_map}
 #'
@@ -11,7 +11,7 @@
 #'
 #' @details A helper function used to generate a \code{data.frame} of selected reserve locations for use with \code{\link{res_national_map}}.
 #'
-#' @author Bob Rudis, Julie Padilla
+#' @author Julie Padilla
 #'
 #' @concept miscellaneous
 #'

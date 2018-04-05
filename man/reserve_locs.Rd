@@ -2,7 +2,7 @@
 % Please edit documentation in R/reserve_locs.R
 \name{reserve_locs}
 \alias{reserve_locs}
-\title{Reserve National Map}
+\title{NERRS Sampling Location Data Frame}
 \usage{
 reserve_locs(incl = c("contig", "AK", "HI", "PR"), subset_reserve = NULL)
 }
@@ -21,7 +21,7 @@ Create a data.frame of selected NERRS locations for plotting with \code{res_nati
 A helper function used to generate a \code{data.frame} of selected reserve locations for use with \code{\link{res_national_map}}.
 }
 \author{
-Bob Rudis, Julie Padilla
+Julie Padilla
 }
 \concept{
 miscellaneous

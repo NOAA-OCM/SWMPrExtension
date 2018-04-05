@@ -29,6 +29,8 @@
 #'
 #' @author Julie Padilla
 #'
+#' @concept analyze
+#'
 #' @return returns a leaflet object. This function is intended to be used with mapshot to generate a png
 #' for the reserve level report
 #'

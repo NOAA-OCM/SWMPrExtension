@@ -27,7 +27,10 @@
 #'
 #' To display seasonal trends, the user must specify \code{c('inc', 'dec', 'insig')} for each station listed in the \code{stations} argument.
 #'
+#'
 #' @author Julie Padilla
+#'
+#' @concept analyze
 #'
 #' @return returns a leaflet object. This function is intended to be used with mapshot to generate a png
 #' for the reserve level report
