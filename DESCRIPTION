@@ -46,11 +46,9 @@ Authors@R: c(
 	email = "jpadilla@limno.com"),
   person(given = "Marcus", family = "Beck",
     role = c("ctb"),
-	email = "marcus@sccwrp.org",
-	comment = "import_local_nut"),
+	email = "marcus@sccwrp.org"),
   person(given = "Bob", family = "Rudis",
     role = c("ctb"),
-	email = "bob@rud.is",
-	comment = "National mapping functions")
+	email = "bob@rud.is")
 	)
 RoxygenNote: 6.0.1
