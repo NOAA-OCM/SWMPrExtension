@@ -1,3 +1,8 @@
+## Resubmission
+This is a resubmission. In this version I have:
+* Added Marcus Beck as an author
+* Added Bob Rudis as an author
+
 ## Test environments
 * local windows 10 install, R 3.4.1
 * ubuntu 14.04 (on travis-ci), R 3.4.4

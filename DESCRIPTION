@@ -38,15 +38,17 @@ Imports:
     rlang,
     stringr,
 	sp
-Authors@R: person(given = "Julie", family = "Padilla",
+Authors@R: c(
+  person(given = "Julie", family = "Padilla",
     role = c("aut", "cre"),
 	email = "jpadilla@limno.com"),
   person(given = "Marcus", family = "Beck",
-    role = c("aut"),
-	email = "marcus@sccwrp.org"
-	comments = "import_local_nut"),
+    role = c("ctb"),
+	email = "marcus@sccwrp.org",
+	comment = "import_local_nut"),
   person(given = "Bob", family = "Rudis",
-    role = c("aut"),
+    role = c("ctb"),
 	email = "bob@rud.is",
 	comment = "National mapping functions")
+	)
 RoxygenNote: 6.0.1
