@@ -37,8 +37,6 @@
 #' @return Returns a leaflet object
 #'
 #' @examples
-#' \dontrun{
-#'
 #' ### set plotting parameters
 #' stns <- c('custom stn 1', 'custom stn 2')
 #' x_coords <- c(-121.735281, -121.750369)
@@ -52,14 +50,21 @@
 #' res_custom_map(stations = stns, x_loc = x_coords, y_loc = y_coords,
 #' bbox = bounding_elk, lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
 #'
+#' \dontrun{
 #' res_custom_map(stations = stns, x_loc = x_coords, y_loc = y_coords,
 #' bbox = bounding_elk, lab_loc = lab_dir, scale_pos = pos,
 #' shp = shp_fl, station_col = c('red', 'green'))
-#'
-#'
 #' }
 #'
-res_custom_map <- function(stations, x_loc, y_loc, bbox, shp, station_labs = T, station_col = NULL, lab_loc = NULL, scale_pos = 'bottomleft') {
+res_custom_map <- function(stations
+                           , x_loc
+                           , y_loc
+                           , bbox
+                           , shp
+                           , station_labs = TRUE
+                           , station_col = NULL
+                           , lab_loc = NULL
+                           , scale_pos = 'bottomleft') {
 
   # check that a shape file exists
   if(class(shp) != 'SpatialPolygons')

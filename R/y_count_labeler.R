@@ -19,12 +19,10 @@
 #' @return Returns character vector or an unevaluated expression
 #'
 #' @examples
-#' \dontrun{
 #' y_lab <- y_count_labeler(param = 'do_mgl', parameter_threshold = 2
-#' , threshold_type = '<', time_threshold = 2, converted = F)
-#' }
+#' , threshold_type = '<', time_threshold = 2, converted = FALSE)
 #'
-y_count_labeler <- function(param, parameter_threshold, threshold_type, time_threshold = NULL, converted = F) {
+y_count_labeler <- function(param, parameter_threshold, threshold_type, time_threshold = NULL, converted = FALSE) {
 
   # general label
   gen_lab <- c('Count of Events Where ')

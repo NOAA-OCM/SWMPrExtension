@@ -42,7 +42,6 @@
 #' @seealso \code{\link[ggplot2]{ggplot}},\code{\link{y_labeler}}
 #'
 #' @examples
-#' \dontrun{
 #' data(apacpwq)
 #' dat_wq <- apacpwq
 #'
@@ -51,15 +50,15 @@
 #' ## Due to the volume of instantaneous data, these plots are a bit slow
 #' x <-
 #'   threshold_criteria_plot(dat_wq, param = 'do_mgl'
+#'                  , rng = 2012
 #'                  , thresholds = c(2, 5)
 #'                  , threshold_labs = c('Poor', 'Fair', 'Good')
-#'                  , monthly_smooth = T
+#'                  , monthly_smooth = TRUE
 #'                  , threshold_cols = c('#FEC596', '#FFFFCC', '#ABD9E9'))
 #'
-#'
+#' \dontrun{
 #' y <-
 #'   threshold_criteria_plot(dat_wq, param = 'do_mgl'
-#'                  , rng = 2012
 #'                  , thresholds = c(2, 5)
 #'                  , threshold_labs = c('Poor', 'Fair', 'Good')
 #'                  , threshold_cols = c('#FEC596', '#FFFFCC', '#ABD9E9'))
@@ -70,7 +69,7 @@
 #'                  , thresholds = c(2, 5)
 #'                  , threshold_labs = c('Poor', 'Fair', 'Good')
 #'                  , threshold_cols = c('#FEC596', '#FFFFCC', '#ABD9E9')
-#'                  , monthly_smooth = T)
+#'                  , monthly_smooth = TRUE)
 #'
 #' ## A few examples with only two thresholds
 #' xx <-
@@ -81,7 +80,7 @@
 #'                   # A dummy blank ('') value must be added as a threshold label
 #'                  , threshold_labs = c('Poor', '', 'Good')
 #'                  , threshold_cols = c('#FEC596', '#FFFFCC', '#ABD9E9')
-#'                  , monthly_smooth = T)
+#'                  , monthly_smooth = TRUE)
 #'
 #' xy <-
 #'   threshold_criteria_plot(dat_wq, param = 'do_mgl'
@@ -91,7 +90,7 @@
 #'                  # A dummy blank ('') value must be added as a threshold label
 #'                  , threshold_labs = c('Poor', '', 'Good')
 #'                  , threshold_cols = c('#FEC596', '#FEC596', '#ABD9E9')
-#'                  , monthly_smooth = T)
+#'                  , monthly_smooth = TRUE)
 #'
 #' xz <-
 #'   threshold_criteria_plot(dat_wq, param = 'do_mgl'
@@ -99,7 +98,7 @@
 #'                  , thresholds = c(2, 5)
 #'                  , threshold_labs = c('Poor', 'Good', 'Poor')
 #'                  , threshold_cols = c('#FEC596', '#ABD9E9', '#FEC596')
-#'                  , monthly_smooth = T)
+#'                  , monthly_smooth = TRUE)
 #'
 #'
 #' data(apacpnut)
@@ -126,7 +125,7 @@
 #'                  , rng = 2012
 #'                  , thresholds = c(2, 5)
 #'                  , threshold_labs = c('Good', 'Fair', 'Poor')
-#'                  , monthly_smooth = T)
+#'                  , monthly_smooth = TRUE)
 #' }
 
 threshold_criteria_plot <- function(swmpr_in, ...) UseMethod('threshold_criteria_plot')

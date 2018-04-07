@@ -5,7 +5,7 @@
 \title{Reserve National Map}
 \usage{
 res_national_map(incl = c("contig", "AK", "HI", "PR"),
-  highlight_states = NULL, highlight_reserves = NULL, agg_county = T)
+  highlight_states = NULL, highlight_reserves = NULL, agg_county = TRUE)
 }
 \arguments{
 \item{incl}{chr vector to include AK, HI , and PR (case sensitive)}
@@ -27,17 +27,16 @@ Create a base map of the US with options for including AK, HI, and PR. The user 
 This function was developed, in part, from a blog post by Bob Rudis.
 }
 \examples{
-\dontrun{
-
-##Just the national map
-res_national_map()
-
 ##National map highlighting states with NERRS
 nerr_states <- c('01', '02', '06', '10', '12', '13', '15'
 , '23', '24', '25', '27', '28', '33', '34', '36', '37', '39'
 , '41', '44', '45', '48', '51', '53', '55', '72')
 
 res_national_map(highlight_states = nerr_states)
+
+\dontrun{
+#' ##Just the national map
+res_national_map()
 
 ##National map highlighting west coast states and NERRS (including AK)
 nerr_states_west <- c('02', '06', '41', '53')
@@ -46,7 +45,6 @@ nerrs_codes <- c('pdb', 'sos', 'sfb', 'elk', 'tjr', 'kac')
 
 res_national_map(highlight_states = nerr_states_west, highlight_reserve = nerrs_codes)
 }
-
 }
 \references{
 Rudis, Bob. 2014. "Moving The Earth (well, Alaska & Hawaii) With R". rud.is (blog). November 16, 2014. https://rud.is/b/2014/11/16/moving-the-earth-well-alaska-hawaii-with-r/

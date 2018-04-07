@@ -35,10 +35,6 @@
 #' @return returns a leaflet object
 #'
 #' @examples
-#' \dontrun{
-#'
-#' ##Just the national map
-#'
 #' ## a compact reserve
 #' ### set plotting parameters
 #' stations <-
@@ -56,7 +52,7 @@
 #' res_local_map('elk', stations = stns, bbox = bounding_elk,
 #' lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
 #'
-#'
+#' \dontrun{
 #' ## a multicomponent reserve (show two different bounding boxes)
 #' ### set plotting parameters
 #' stations <-
@@ -80,7 +76,13 @@
 #'
 #' }
 #'
-res_local_map <- function(nerr_site_id, stations, bbox, shp, station_labs = T, lab_loc = NULL, scale_pos = 'bottomleft') {
+res_local_map <- function(nerr_site_id
+                          , stations
+                          , bbox
+                          , shp
+                          , station_labs = TRUE
+                          , lab_loc = NULL
+                          , scale_pos = 'bottomleft') {
 
   # check that a shape file exists
   if(class(shp) != 'SpatialPolygons')
@@ -103,11 +105,11 @@ res_local_map <- function(nerr_site_id, stations, bbox, shp, station_labs = T, l
 
   # Determine if r and l labs exist
   if(!is.null(lab_loc)){
-    left_labs <- grep('L', lab_loc)
-    right_labs <- grep('R', lab_loc)
+    if('L' %in% lab_loc){left_labs <- grep('L', lab_loc)}
+    if('R' %in% lab_loc){right_labs <- grep('R', lab_loc)}
   } else {
     #default to left labels
-    left_labs <- rep('L', length(stations))
+    left_labs <- c(1:4)
   }
 
   # order selected stations alphabetically
@@ -118,7 +120,7 @@ res_local_map <- function(nerr_site_id, stations, bbox, shp, station_labs = T, l
     addProviderTiles(leaflet::providers$Esri.WorldGrayCanvas) %>%  # Add default OpenStreetMap map tiles, CartoDB.Positron
     addPolygons(data = shp, weight = 2, color = '#B3B300', fillColor = 'yellow')
 
-  if(length(left_labs) > 0){
+  if(exists('left_labs')){
     m <- m %>%
       addCircleMarkers(lng = ~Longitude[left_labs] * -1, lat = ~Latitude[left_labs], radius = 5
                        , weight = 0, fillOpacity = 1
@@ -127,7 +129,7 @@ res_local_map <- function(nerr_site_id, stations, bbox, shp, station_labs = T, l
                        , labelOptions = labelOptions(noHide = station_labs, direction = c('left'), opacity = 1, textsize = '16px'))
   }
 
-  if(length(right_labs) > 0){
+  if(exists('right_labs')){
     m <- m %>%
       addCircleMarkers(lng = ~Longitude[right_labs] * -1, lat = ~Latitude[right_labs], radius = 5
                        , weight = 0, fillOpacity = 1

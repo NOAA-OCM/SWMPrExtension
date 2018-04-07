@@ -5,7 +5,7 @@
 \title{Local Reserve Map With Seasonal Kendall Results}
 \usage{
 res_sk_map(nerr_site_id, stations, sk_result = NULL, bbox, shp,
-  station_labs = T, lab_loc = NULL, scale_pos = "bottomleft")
+  station_labs = TRUE, lab_loc = NULL, scale_pos = "bottomleft")
 }
 \arguments{
 \item{nerr_site_id}{chr string of the reserve to make, first three characters used by NERRS}
@@ -37,8 +37,6 @@ Creates a stylized, reserve-level base map for displaying seasonal kendall resul
 To display seasonal trends, the user must specify \code{c('inc', 'dec', 'insig')} for each station listed in the \code{stations} argument.
 }
 \examples{
-\dontrun{
-
 ## a compact reserve
 ### set plotting parameters
 stations <-
@@ -55,7 +53,7 @@ sk_res <- c('inc', 'dec', 'dec', 'insig')
 res_sk_map('elk', stations = stns, sk_result = sk_res,
 bbox = bounding_elk, scale_pos = pos, shp = shp_fl)
 
-
+\dontrun{
 ## a multicomponent reserve (showing two different bounding boxes)
 ### set plotting parameters
 stations <-

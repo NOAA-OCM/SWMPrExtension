@@ -15,9 +15,7 @@
 #' @return Returns character vector
 #'
 #' @examples
-#' \dontrun{
 #' ttl <- title_labeler('elkapwq')
-#' }
 #'
 title_labeler <- function(nerr_site_id) {
 

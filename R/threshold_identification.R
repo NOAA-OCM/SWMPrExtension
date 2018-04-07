@@ -32,7 +32,6 @@
 #' http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.646.1973&rep=rep1&type=pdf
 #'
 #' @examples
-#' \dontrun{
 #' wq <- apacpwq
 #'
 #' dat_wq <- qaqc(wq, qaqc_keep = c(0, 3, 5))
@@ -42,6 +41,7 @@
 #'                           , parameter_threshold = c(2, 5, 30)
 #'                           , threshold_type = c('<', '<', '>'), time_threshold = 2)
 #'
+#' \dontrun{
 #' wq_par<- threshold_identification(dat_wq, param = c('do_mgl')
 #'                           , parameter_threshold = c(2)
 #'                           , threshold_type = c('<'), time_threshold = 2)
@@ -75,7 +75,12 @@ threshold_identification <- function(swmpr_in, ...) UseMethod('threshold_identif
 #'
 #' @method threshold_identification swmpr
 
-threshold_identification.swmpr <- function(swmpr_in, param, parameter_threshold, threshold_type, time_threshold = NULL, ...){
+threshold_identification.swmpr <- function(swmpr_in
+                                           , param
+                                           , parameter_threshold
+                                           , threshold_type
+                                           , time_threshold = NULL
+                                           , ...){
 
   dat <- swmpr_in
 

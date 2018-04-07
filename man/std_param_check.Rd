@@ -18,6 +18,15 @@ Determine if a parameter is one of the standard SWMP parameters
 \details{
 A helper function used internally by several plotting functions to determine if parameter has a standard y-axis label. To accommodate the needs of the reserve-level annual report, this function also recognizes dissolved organic phosphorus (DIP) and dissolved inorganic nitrogen (DIN) as standard parameters.
 }
+\examples{
+
+std_param_check('do_mgl')
+
+\dontrun{
+std_param_check('nitrogen')
+}
+
+}
 \author{
 Julie Padilla
 }

@@ -39,16 +39,16 @@
 #' @seealso \code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}, \code{\link{y_labeler}}
 #'
 #' @examples
-#' \dontrun{
 #' data(apaebmet)
 #' dat <- qaqc(apaebmet, qaqc_keep = c('0', '3', '5'))
 #'
 #' x <- seasonal_barplot(dat, param = 'totprcp'
 #'                       , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
 #'                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
-#'                       , hist_avg = T
-#'                       , converted = F)
+#'                       , hist_avg = TRUE
+#'                       , converted = FALSE)
 #'
+#' \dontrun{
 #' # return a table instead of a figure
 #' y <- seasonal_barplot(dat, param = 'totprcp'
 #'                       , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))

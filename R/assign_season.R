@@ -21,6 +21,13 @@
 #' @return Returns a vector of ordered season factors.
 #'
 #' @examples
+#' \dontshow{
+#' data(apacpwq)
+#'
+#' seas <- assign_season(apacpwq$datetimestamp, abb = FALSE)
+#' levels(seas)
+#' }
+#'
 #' \dontrun{
 #' data(elksmwq)
 #' dat <- elksmwq
@@ -47,7 +54,11 @@
 #' levels(seas)
 #' }
 #'
-assign_season <- function(data, season_grps = NULL, season_names = NULL, season_start = NULL, abb = TRUE) {
+assign_season <- function(data
+                          , season_grps = NULL
+                          , season_names = NULL
+                          , season_start = NULL
+                          , abb = TRUE) {
 
   dat <- data
 

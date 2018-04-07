@@ -38,6 +38,14 @@
 #' @seealso \code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}, \code{\link{y_labeler}}
 #'
 #' @examples
+#' \dontshow{
+#' data(apacpwq)
+#'
+#' dat <- qaqc(apacpwq, qaqc_keep = c('0', '3', '5'))
+#'
+#' y <- historical_range(dat, param = 'do_mgl')
+#' }
+#'
 #' \dontrun{
 ## get data, prep
 #' data(elksmwq)

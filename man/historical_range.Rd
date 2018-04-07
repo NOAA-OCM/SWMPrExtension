@@ -47,6 +47,14 @@ This function summarizes average daily values and average daily minimums/maximum
 The user also has the option to add a threshold hold line using the \code{criteria} argument. Typically, this value is a water quality threshold, which is why \code{criteria_lab} defaults to \code{'WQ Threshold'}. Howver, the user has the option to specify any other type of threshold they wish. when doing so, the value for \code{criteria_lab} should be changed accordingly.
 }
 \examples{
+\dontshow{
+data(apacpwq)
+
+dat <- qaqc(apacpwq, qaqc_keep = c('0', '3', '5'))
+
+y <- historical_range(dat, param = 'do_mgl')
+}
+
 \dontrun{
 data(elksmwq)
 

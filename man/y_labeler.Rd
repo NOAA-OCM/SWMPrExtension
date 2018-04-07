@@ -4,7 +4,7 @@
 \alias{y_labeler}
 \title{Generate y-axis Label Based on SWMP Parameter Abbreviation}
 \usage{
-y_labeler(param, converted = F)
+y_labeler(param, converted = FALSE)
 }
 \arguments{
 \item{param}{chr string of variable abbreviation}

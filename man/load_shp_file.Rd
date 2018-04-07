@@ -4,7 +4,7 @@
 \alias{load_shp_file}
 \title{Load and format shapefile for reserve level map}
 \usage{
-load_shp_file(path, dissolve_boundaries = T)
+load_shp_file(path, dissolve_boundaries = TRUE)
 }
 \arguments{
 \item{path}{path to shapefile and name}

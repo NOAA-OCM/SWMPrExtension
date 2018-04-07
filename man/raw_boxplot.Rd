@@ -38,6 +38,14 @@ Boxplots of raw data by user-defined season for a target year
 This function produces boxplots of raw, unaggregated data by user-specified season for year of interest
 }
 \examples{
+\dontshow{
+data(apacpwq)
+
+dat <- qaqc(apacpwq, qaqc_keep = c('0', '3', '5'))
+
+y <- raw_boxplot(dat, param = 'do_mgl')
+}
+
 \dontrun{
 ## get data, prep
 data(elksmwq)

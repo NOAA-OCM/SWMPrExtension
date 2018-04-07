@@ -28,6 +28,13 @@ Assign seasons to SWMPr sampling data on a monthly basis or user-defined seasona
 A helper function used by multiple data analyses to assign seasons to sampling data and to order the seasons. To assist with plotting, the seasons are assigned as factors. Seasons are assigned by first grouping the months into a \code{list} of \code{season_grps} and then specifying one name for each grouping using \code{season_names}. If \code{season_grps} is specified then \code{season_names} must also be defined. If neither argument is specified than the season assignments will default to monthly values. Using the \code{season_start} argument, the user can designate which season should be the first \code{factor} level. This assignment affects plot order for most functions. If \code{season_start} is not specified, then it will default to the first season in the list (January for monthly seasons and the first season in \code{season_names} for user-defined seasons).
 }
 \examples{
+\dontshow{
+data(apacpwq)
+
+seas <- assign_season(apacpwq$datetimestamp, abb = FALSE)
+levels(seas)
+}
+
 \dontrun{
 data(elksmwq)
 dat <- elksmwq

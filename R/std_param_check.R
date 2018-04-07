@@ -14,6 +14,14 @@
 #'
 #' @return Returns \code{TRUE} or \code{FALSE}
 #'
+#' @examples
+#'
+#' std_param_check('do_mgl')
+#'
+#' \dontrun{
+#' std_param_check('nitrogen')
+#' }
+#'
 std_param_check <- function(param) {
 
   # Parameter abbreviations

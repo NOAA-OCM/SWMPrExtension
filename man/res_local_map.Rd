@@ -4,7 +4,7 @@
 \alias{res_local_map}
 \title{Local Reserve Map}
 \usage{
-res_local_map(nerr_site_id, stations, bbox, shp, station_labs = T,
+res_local_map(nerr_site_id, stations, bbox, shp, station_labs = TRUE,
   lab_loc = NULL, scale_pos = "bottomleft")
 }
 \arguments{
@@ -36,10 +36,6 @@ This function does not automatically detect conflicts between station labels. Th
 This function is intended to be used with \code{mapview::mapshot} to generate a png for the reserve-level report.
 }
 \examples{
-\dontrun{
-
-##Just the national map
-
 ## a compact reserve
 ### set plotting parameters
 stations <-
@@ -57,7 +53,7 @@ pos <- 'bottomleft'
 res_local_map('elk', stations = stns, bbox = bounding_elk,
 lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
 
-
+\dontrun{
 ## a multicomponent reserve (show two different bounding boxes)
 ### set plotting parameters
 stations <-

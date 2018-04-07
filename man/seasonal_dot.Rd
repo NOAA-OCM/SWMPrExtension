@@ -42,29 +42,29 @@ This function summarizes minimum, mean, and maximum values calculated on a seaso
 \code{lm_trend = T} adds a linear regression to the plot, and \code{lm_lab = T} will add p-values from the linear regression to the plot. If the p-values are significant (p < 0.05) then the text will appear in bold. \code{lm_lab} text is color coded to match with the corresponding dots.
 }
 \examples{
-\dontrun{
-
 dat_wq <- elksmwq
-dat_wq <- subset(dat_wq, subset = c('2007-01-01 0:00', '2017-01-01 0:00'))
+#dat_wq <- subset(dat_wq, subset = c('2010-01-01 0:00', '2017-01-01 0:00'))
 dat_wq <- qaqc(dat_wq, qaqc_keep = c(0, 3, 5))
 
 x <-
   seasonal_dot(dat_wq, param = 'do_mgl'
-               , lm_trend = F
-               , lm_lab = F
-               , plot_title = T)
+               , lm_trend = TRUE
+               , lm_lab = TRUE
+               , plot_title = TRUE)
+
+\dontrun{
+x <-
+  seasonal_dot(dat_wq, param = 'do_mgl'
+               , lm_trend = FALSE
+               , lm_lab = FALSE
+               , plot_title = TRUE)
 
 x <-
   seasonal_dot(dat_wq, param = 'do_mgl'
-               , lm_trend = T
-               , lm_lab = F
-               , plot_title = T)
+               , lm_trend = TRUE
+               , lm_lab = FALSE
+               , plot_title = TRUE)
 
-x <-
-  seasonal_dot(dat_wq, param = 'do_mgl'
-               , lm_trend = T
-               , lm_lab = T
-               , plot_title = T)
 
 dat_nut <- elknmnut
 dat_nut <- subset(dat_nut, subset = c('2007-01-01 0:00', '2017-01-01 0:00'))
@@ -76,21 +76,21 @@ x <-
                , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
                , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
                , season_start = 'Spring'
-               , lm_trend = F
-               , lm_lab = F
-               , plot_title = T)
+               , lm_trend = FALSE
+               , lm_lab = FALSE
+               , plot_title = TRUE)
 
 x <-
   seasonal_dot(dat_nut, param = 'chla_n'
-               , lm_trend = T
-               , lm_lab = F
-               , plot_title = T)
+               , lm_trend = TRUE
+               , lm_lab = FALSE
+               , plot_title = TRUE)
 
 x <-
   seasonal_dot(dat_nut, param = 'chla_n'
-               , lm_trend = T
-               , lm_lab = T
-               , plot_title = T)
+               , lm_trend = TRUE
+               , lm_lab = TRUE
+               , plot_title = TRUE)
 }
 }
 \seealso{

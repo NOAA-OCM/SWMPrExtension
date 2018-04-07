@@ -45,8 +45,6 @@ Summary plots for threshold identification analysis
 This function provides a graphical or tabular summary of the results from \code{threshold_identification}. The user can summarize results on a monthly, seasonal, or annual basis by specifying \code{summary_type = c('month', 'season', 'year')}. If \code{summary_type = 'season'}, then the user should also define \code{season}, \code{season_names}, and \code{season_start}, as required by |code{\link{assign_season}}. The user can specify \code{'month'} for nutrient parameters, but this is not recommended and will produce a warning.
 }
 \examples{
-\dontrun{
-
 ## Water quality examples
 dat_wq <- qaqc(apacpwq, qaqc_keep = c(0, 3, 5))
 dat_wq <- setstep(dat_wq)
@@ -54,15 +52,16 @@ dat_wq <- setstep(dat_wq)
 x <-
   threshold_summary(dat_wq, param = 'do_mgl', parameter_threshold = 2
   , threshold_type = '<', time_threshold = 2, summary_type = 'month'
-  , plot_title = T)
+  , plot_title = TRUE)
 
+\dontrun{
 y <-
   threshold_summary(dat_wq, param = 'do_mgl', parameter_threshold = 2,
   threshold_type = '<', time_threshold = 2, summary_type = 'season',
   season = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12)),
   season_names = c('Winter', 'Spring', 'Summer', 'Fall'),
   season_start = 'Winter',
-  plot_title = T)
+  plot_title = TRUE)
 
 ## Nutrient examples
 dat_nut <- qaqc(apacpnut, qaqc_keep = c(0, 3, 5))
@@ -71,19 +70,19 @@ x <-
   threshold_summary(dat_nut, param = 'chla_n',
   parameter_threshold = 10,
   threshold_type = '>', summary_type = 'month',
-  plot_title = T)
+  plot_title = TRUE)
 
 y <-
   threshold_summary(dat_nut, param = 'chla_n', parameter_threshold = 10,
   threshold_type = '>', summary_type = 'season',
   season = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12)),
   season_names = c('Winter', 'Spring', 'Summer', 'Fall'),
-  season_start = 'Winter', plot_title = T)
+  season_start = 'Winter', plot_title = TRUE)
 
  z <-
    threshold_summary(dat_nut, param = 'chla_n', parameter_threshold = 10,
    threshold_type = '>', summary_type = 'year',
-   plot_title = T, plot = T)
+   plot_title = TRUE, plot = TRUE)
 }
 }
 \seealso{

@@ -9,7 +9,7 @@ sk_seasonal(swmpr_in, ...)
 
 \method{sk_seasonal}{swmpr}(swmpr_in, param = NULL, alpha = 0.05,
   data_min = 5, envStats_summary = FALSE, stat_lab = "Average",
-  FUN = function(x) mean(x, na.rm = T), ...)
+  FUN = function(x) mean(x, na.rm = TRUE), ...)
 }
 \arguments{
 \item{swmpr_in}{input swmpr object}
@@ -24,9 +24,9 @@ sk_seasonal(swmpr_in, ...)
 
 \item{envStats_summary}{logical, should the standard \code{EnvStats::kendallSeasonalTrendTest} be returned? Defaults to \code{FALSE}. See Details for more information.}
 
-\item{stat_lab}{chr, label for the summary statistic defined in \code{FUN}. Defaults to "Average"}
+\item{stat_lab}{chr, label for the summary statistic defined in \code{FUN}. Defaults to "Average".}
 
-\item{FUN}{function used to aggregate seasonal SWMP data}
+\item{FUN}{function used to aggregate seasonal SWMP data.}
 }
 \value{
 Returns a \code{data.frame} object or a summary from \code{EnvStats::kendallSeasonalTrendTest}
@@ -43,14 +43,11 @@ Data are aggregated on a user-specified seasonal basis using the \code{FUN} argu
 If \code{EnvStats_summary = T} then the detailed output summary from \code{\link[EnvStats]{kendallSeasonalTrendTest}} will be returned. If \code{EnvStats_summary = F} then an abbreviated summary will be returned in a \code{data.frame}. The abbreviated summary contains the station name, the type of statistic used to summarize the data on a seasonal basis (specified by \code{stat_lab}), and the following results from \code{\link[EnvStats]{kendallSeasonalTrendTest}}: tau, slope, p-value for the chi-square test, and the p-value for the trend test.
 }
 \examples{
-\dontrun{
-
 dat_wq <- elksmwq
-dat_wq <- subset(dat_wq, subset = c('2007-01-01 0:00', '2017-01-01 0:00'))
 dat_wq <- qaqc(dat_wq, qaqc_keep = c(0, 3, 5))
 
 x <- sk_seasonal(dat_wq, param = 'temp')
-}
+
 }
 \seealso{
 \code{\link{assign_season}}, \code{\link{y_labeler}}, \code{\link[EnvStats]{kendallSeasonalTrendTest}}

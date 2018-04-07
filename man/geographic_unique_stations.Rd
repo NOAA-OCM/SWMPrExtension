@@ -19,12 +19,10 @@ Creates an alphabetically sorted, vector of geographically unique stations for m
 This function is intended for internal use with the NERRS reserve level reporting scripts and is used along with \code{\link{res_local_map}}. It takes a vector of NERR site ids and only returns geographically unique locations.
 }
 \examples{
-\dontrun{
 stns <- c('apacpnut', 'apacpwq', 'apadbnut', 'apadbwq', 'apaebmet',
 'apaebnut', 'apaebwq', 'apaesnut', 'apaeswq')
 
 geographic_unique_stations(stns)
-}
 
 }
 \author{

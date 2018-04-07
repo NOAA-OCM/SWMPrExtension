@@ -7,7 +7,7 @@
 national_sk_map(incl = c("contig", "AK", "HI", "PR"),
   highlight_states = NULL, sk_reserves = NULL, sk_results = NULL,
   sk_fill_colors = c("#247BA0", "#A3DFFF", "#444E65", "#595959"),
-  agg_county = T)
+  agg_county = TRUE)
 }
 \arguments{
 \item{incl}{chr vector to include AK, HI , and PR (case sensitive)}
@@ -35,18 +35,13 @@ This function was developed, in part, from a blog post by Bob Rudis.
 To ensure the proper plotting of results, the order of the results vector for \code{sk_results} should match the order of the reserves vector for \code{sk_reserves}.
 }
 \examples{
-\dontrun{
-
-
 ##National map highlighting west coast states and NERRS (including AK)
 nerr_states_west <- c('02', '06', '41', '53')
 
 nerrs_codes <- c('pdb', 'sos', 'sfb', 'elk', 'tjr', 'kac')
 nerrs_sk_results <- c('inc', 'inc', 'dec', 'insig', 'insuff', 'dec')
 
-national_sk_map(highlight_states = nerr_states_west,
-sk_reserve = nerrs_codes, sk_results = nerrs_sk_results)
-}
+national_sk_map(sk_reserve = nerrs_codes, sk_results = nerrs_sk_results)
 
 }
 \references{

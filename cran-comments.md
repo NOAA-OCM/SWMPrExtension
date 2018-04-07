@@ -1,7 +1,7 @@
 ## Resubmission
 This is a resubmission. In this version I have:
-* Added Marcus Beck as an author
-* Added Bob Rudis as an author
+* unwrapped examples that run in < 5 seconds
+* created toy examples when feasible for testing
 
 ## Test environments
 * local windows 10 install, R 3.4.1

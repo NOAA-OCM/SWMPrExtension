@@ -36,8 +36,6 @@
 #' for the reserve level report
 #'
 #' @examples
-#' \dontrun{
-#'
 #' ## a compact reserve
 #' ### set plotting parameters
 #' stations <-
@@ -54,7 +52,7 @@
 #' res_sk_map('elk', stations = stns, sk_result = sk_res,
 #' bbox = bounding_elk, scale_pos = pos, shp = shp_fl)
 #'
-#'
+#' \dontrun{
 #' ## a multicomponent reserve (showing two different bounding boxes)
 #' ### set plotting parameters
 #' stations <-
@@ -77,7 +75,14 @@
 #'
 #' }
 #'
-res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, station_labs = T, lab_loc = NULL, scale_pos = 'bottomleft') {
+res_sk_map <- function(nerr_site_id
+                       , stations
+                       , sk_result = NULL
+                       , bbox
+                       , shp
+                       , station_labs = TRUE
+                       , lab_loc = NULL
+                       , scale_pos = 'bottomleft') {
 
   # check that a shape file exists
   if(class(shp) != 'SpatialPolygons')
@@ -101,15 +106,17 @@ res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, stat
 
   # Determine if r and l labs exist
   if(!is.null(lab_loc)){
-    left_labs <- grep('L', lab_loc)
-    right_labs <- grep('R', lab_loc)
+    if('L' %in% lab_loc){left_labs <- grep('L', lab_loc)}
+    if('R' %in% lab_loc){right_labs <- grep('R', lab_loc)}
   } else {
     #default to left labels
-    left_labs <- rep('L', length(stations))
+    left_labs <- c(1:4)
   }
 
   # order selected stations alphabetically
   loc <- loc[order(loc$Station.Code), ]
+
+  # return(left_labs)
 
   # Determine the types of results
   if('inc' %in% loc$sk_result){inc_icons <- grep('inc', loc$sk_result)}
@@ -122,7 +129,7 @@ res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, stat
     addProviderTiles(leaflet::providers$Esri.WorldGrayCanvas) %>%  # Add default OpenStreetMap map tiles, CartoDB.Positron
     addPolygons(data = shp, weight = 2, color = '#B3B300', fillColor = 'yellow')
 
-  if(length(left_labs) > 0){
+  if(exists('left_labs')){
     m <- m %>%
       addLabelOnlyMarkers(lng = ~Longitude[left_labs] * -1, lat = ~Latitude[left_labs]
                           , label = loc$abbrev[left_labs]
@@ -133,7 +140,8 @@ res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, stat
                                                         , offset = c(12, -15)))
   }
 
-  if(length(right_labs) > 0){
+
+  if(exists('right_labs')){
     m <- m %>%
       addLabelOnlyMarkers(lng = ~Longitude[right_labs] * -1, lat = ~Latitude[right_labs]
                           , label = loc$abbrev[right_labs]
@@ -143,8 +151,6 @@ res_sk_map <- function(nerr_site_id, stations, sk_result = NULL, bbox, shp, stat
                                                         , textsize = '16px'
                                                         , offset = c(12, -15))) #default offset is c(12, -15)
   }
-
-
 
   if(exists('inc_icons')){
     # create file path for icon image

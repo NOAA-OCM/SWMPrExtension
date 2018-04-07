@@ -15,12 +15,10 @@
 #' @return returns a vector of NERR stations
 #'
 #' @examples
-#' \dontrun{
 #' stns <- c('apacpnut', 'apacpwq', 'apadbnut', 'apadbwq', 'apaebmet',
 #' 'apaebnut', 'apaebwq', 'apaesnut', 'apaeswq')
 #'
 #' geographic_unique_stations(stns)
-#' }
 #'
 
 geographic_unique_stations <- function(nerr_site_id) {

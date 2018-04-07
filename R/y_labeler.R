@@ -20,7 +20,7 @@
 #' y_lab <- y_labeler('do_mgl')
 #' }
 #'
-y_labeler <- function(param, converted = F) {
+y_labeler <- function(param, converted = FALSE) {
 
   # Parameter abbreviations
   wq_params <- c('temp', 'spcond', 'sal', 'do_pct', 'do_mgl'

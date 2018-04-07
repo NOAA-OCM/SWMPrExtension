@@ -36,25 +36,25 @@
 #' @seealso \code{\link[ggplot2]{ggplot}}
 #'
 #' @examples
-#' \dontrun{
 #' dat_wq <- qaqc(elksmwq, qaqc_keep = c(0, 3, 5))
 #' dat_wq <- subset(dat_wq, subset = '2007-01-01 0:00', operator = '>=')
 #'
 #' x <-
 #'   threshold_percentile_plot(dat_wq, param = 'do_mgl'
-#'   , hist_rng = c(2007, 2014), by_month = F)
+#'   , hist_rng = c(2007, 2014), by_month = FALSE)
 #'
+#' \dontrun{
 #' y <-
 #'   threshold_percentile_plot(dat_wq, param = 'do_mgl', percentiles = c(0.95)
-#'   , hist_rng = c(2007, 2014), target_yr = 2014, by_month = F)
+#'   , hist_rng = c(2007, 2014), target_yr = 2014, by_month = FALSE)
 #'
 #' x2 <-
 #'   threshold_percentile_plot(dat_wq, param = 'do_mgl'
-#'   , hist_rng = c(2007, 2014), by_month = T)
+#'   , hist_rng = c(2007, 2014), by_month = TRUE)
 #'
 #' y2 <-
 #'   threshold_percentile_plot(dat_wq, param = 'do_mgl'
-#'   , hist_rng = c(2007, 2014), target_yr = 2014, by_month = T)
+#'   , hist_rng = c(2007, 2014), target_yr = 2014, by_month = TRUE)
 #'
 #'
 #' dat_nut <- qaqc(elknmnut, qaqc_keep = c(0, 3, 5))
@@ -63,11 +63,11 @@
 #'
 #' x <-
 #'   threshold_percentile_plot(dat_nut, param = 'chla_n'
-#'   , hist_rng = c(2007, 2014), by_month = F)
+#'   , hist_rng = c(2007, 2014), by_month = FALSE)
 #'
 #' y <-
 #'   threshold_percentile_plot(dat_nut, param = 'chla_n'
-#'   , hist_rng = c(2007, 2014), target_yr = 2016, by_month = F)
+#'   , hist_rng = c(2007, 2014), target_yr = 2016, by_month = FALSE)
 #' }
 #'
 threshold_percentile_plot <- function(swmpr_in, ...) UseMethod('threshold_percentile_plot')

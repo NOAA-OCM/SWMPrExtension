@@ -4,8 +4,8 @@
 \alias{res_custom_sk_map}
 \title{Local Reserve Map With Seasonal Kendall Results for Custom Stations}
 \usage{
-res_custom_sk_map(stations, x_loc, y_loc, station_labs = T,
-  sk_result = NULL, bbox, shp, scale_pos = "bottomleft")
+res_custom_sk_map(stations, x_loc, y_loc, sk_result = NULL, bbox, shp,
+  station_labs = TRUE, lab_loc = NULL, scale_pos = "bottomleft")
 }
 \arguments{
 \item{stations}{chr string of the reserve stations to include in the map}
@@ -14,13 +14,15 @@ res_custom_sk_map(stations, x_loc, y_loc, station_labs = T,
 
 \item{y_loc}{num vector of y coordinates for \code{stations}}
 
-\item{station_labs}{logical, should stations be labeled? Defaults to \code{TRUE}}
-
 \item{sk_result}{vector of values denoting direction and significance of seasonal kendall results. Result should be c('inc', 'dec', 'insig') for sig. negative, no sig. results, and sig. positive result}
 
 \item{bbox}{a bounding box associated with the reserve. Must be in the format of c(X1, Y1, X2, Y2)}
 
 \item{shp}{SpatialPolygons object}
+
+\item{station_labs}{logical, should stations be labeled? Defaults to \code{TRUE}}
+
+\item{lab_loc}{chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.}
 
 \item{scale_pos}{scale_pos where should the scale be placed? Options are 'topleft', 'topright', 'bottomleft', or 'bottomright'. Defaults to 'bottomleft'}
 }
@@ -35,6 +37,24 @@ Create a stylized reserve-level map of seasonal kendall results from custom stat
 Creates a stylized, reserve-level base map for displaying seasonal kendall results from \code{\link{sk_seasonal}}. The user can specify the reserve and stations to plot. The user can also specify a bounding box. For multi-component reserves, the user should specify a bounding box that highlights the component of interest.
 
 To display seasonal trends, the user must specify \code{c('inc', 'dec', 'insig')} for each station listed in the \code{stations} argument.
+}
+\examples{
+### set plotting parameters
+stns <- c('custom stn 1', 'custom stn 2')
+x_coords <- c(-121.735281, -121.750369)
+y_coords <- c(36.850377, 36.806667)
+shp_fl <- elk_spatial
+bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
+lab_dir <- c('R', 'L')
+trnds <- c('inc', 'dec')
+pos <- 'bottomleft'
+
+### plot
+res_custom_sk_map(stations = stns, x_loc = x_coords,
+sk_result = trnds, y_loc = y_coords,
+bbox = bounding_elk, lab_loc = lab_dir,
+scale_pos = pos, shp = shp_fl)
+
 }
 \author{
 Julie Padilla

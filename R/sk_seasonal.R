@@ -7,8 +7,8 @@
 #' @param alpha num, alpha value to use to significance test. Defaults to 0.05.
 #' @param data_min num, the minimum number of observations required to perform the analysis. Defaults to 5
 #' @param envStats_summary logical, should the standard \code{EnvStats::kendallSeasonalTrendTest} be returned? Defaults to \code{FALSE}. See Details for more information.
-#' @param stat_lab chr, label for the summary statistic defined in \code{FUN}. Defaults to "Average"
-#' @param FUN function used to aggregate seasonal SWMP data
+#' @param stat_lab chr, label for the summary statistic defined in \code{FUN}. Defaults to "Average".
+#' @param FUN function used to aggregate seasonal SWMP data.
 #' @param ... additional arguments passed to other methods. See \code{\link{assign_season}}
 #'
 #' @importFrom dplyr filter group_by summarise
@@ -35,14 +35,11 @@
 #' @seealso \code{\link{assign_season}}, \code{\link{y_labeler}}, \code{\link[EnvStats]{kendallSeasonalTrendTest}}
 #'
 #' @examples
-#' \dontrun{
-#'
 #' dat_wq <- elksmwq
-#' dat_wq <- subset(dat_wq, subset = c('2007-01-01 0:00', '2017-01-01 0:00'))
 #' dat_wq <- qaqc(dat_wq, qaqc_keep = c(0, 3, 5))
 #'
 #' x <- sk_seasonal(dat_wq, param = 'temp')
-#' }
+#'
 
 sk_seasonal <- function(swmpr_in, ...) UseMethod('sk_seasonal')
 
@@ -61,7 +58,7 @@ sk_seasonal.swmpr <- function(swmpr_in
                              , data_min = 5
                              , envStats_summary = FALSE
                              , stat_lab = 'Average'
-                             , FUN = function(x) mean(x, na.rm = T)
+                             , FUN = function(x) mean(x, na.rm = TRUE)
                              , ...) {
   dat <- swmpr_in
   parm <- sym(param)

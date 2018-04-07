@@ -37,29 +37,29 @@
 #' @seealso \code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}, \code{\link{y_labeler}}
 #'
 #' @examples
-#' \dontrun{
-#'
 #' dat_wq <- elksmwq
-#' dat_wq <- subset(dat_wq, subset = c('2007-01-01 0:00', '2017-01-01 0:00'))
+#' #dat_wq <- subset(dat_wq, subset = c('2010-01-01 0:00', '2017-01-01 0:00'))
 #' dat_wq <- qaqc(dat_wq, qaqc_keep = c(0, 3, 5))
 #'
 #' x <-
 #'   seasonal_dot(dat_wq, param = 'do_mgl'
-#'                , lm_trend = F
-#'                , lm_lab = F
-#'                , plot_title = T)
+#'                , lm_trend = TRUE
+#'                , lm_lab = TRUE
+#'                , plot_title = TRUE)
+#'
+#' \dontrun{
+#' x <-
+#'   seasonal_dot(dat_wq, param = 'do_mgl'
+#'                , lm_trend = FALSE
+#'                , lm_lab = FALSE
+#'                , plot_title = TRUE)
 #'
 #' x <-
 #'   seasonal_dot(dat_wq, param = 'do_mgl'
-#'                , lm_trend = T
-#'                , lm_lab = F
-#'                , plot_title = T)
+#'                , lm_trend = TRUE
+#'                , lm_lab = FALSE
+#'                , plot_title = TRUE)
 #'
-#' x <-
-#'   seasonal_dot(dat_wq, param = 'do_mgl'
-#'                , lm_trend = T
-#'                , lm_lab = T
-#'                , plot_title = T)
 #'
 #' dat_nut <- elknmnut
 #' dat_nut <- subset(dat_nut, subset = c('2007-01-01 0:00', '2017-01-01 0:00'))
@@ -71,21 +71,21 @@
 #'                , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
 #'                , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
 #'                , season_start = 'Spring'
-#'                , lm_trend = F
-#'                , lm_lab = F
-#'                , plot_title = T)
+#'                , lm_trend = FALSE
+#'                , lm_lab = FALSE
+#'                , plot_title = TRUE)
 #'
 #' x <-
 #'   seasonal_dot(dat_nut, param = 'chla_n'
-#'                , lm_trend = T
-#'                , lm_lab = F
-#'                , plot_title = T)
+#'                , lm_trend = TRUE
+#'                , lm_lab = FALSE
+#'                , plot_title = TRUE)
 #'
 #' x <-
 #'   seasonal_dot(dat_nut, param = 'chla_n'
-#'                , lm_trend = T
-#'                , lm_lab = T
-#'                , plot_title = T)
+#'                , lm_trend = TRUE
+#'                , lm_lab = TRUE
+#'                , plot_title = TRUE)
 #' }
 
 seasonal_dot <- function(swmpr_in, ...) UseMethod('seasonal_dot')

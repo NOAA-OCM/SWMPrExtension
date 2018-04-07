@@ -37,6 +37,14 @@
 #' @seealso \code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}, \code{\link{y_labeler}}
 #'
 #' @examples
+#' \dontshow{
+#' data(apacpwq)
+#'
+#' dat <- qaqc(apacpwq, qaqc_keep = c('0', '3', '5'))
+#'
+#' y <- annual_range(dat, param = 'do_mgl', target_yr = 2012)
+#' }
+#'
 #' \dontrun{
 #' ## get data, prep
 #' data(elksmwq)

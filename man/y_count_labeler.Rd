@@ -5,7 +5,7 @@
 \title{Generate y-axis Label Based on SWMP Parameter Abbreviation}
 \usage{
 y_count_labeler(param, parameter_threshold, threshold_type,
-  time_threshold = NULL, converted = F)
+  time_threshold = NULL, converted = FALSE)
 }
 \arguments{
 \item{param}{chr string of variable abbreviation}
@@ -28,10 +28,8 @@ Generate a y-axis label based on SWMP parameter abbreviation and threshold crite
 A helper function used internally by several plotting functions to generate y-axis labels. This function does not convert sample results from metric to english. It only adjusts the units in the y-axis label.
 }
 \examples{
-\dontrun{
 y_lab <- y_count_labeler(param = 'do_mgl', parameter_threshold = 2
-, threshold_type = '<', time_threshold = 2, converted = F)
-}
+, threshold_type = '<', time_threshold = 2, converted = FALSE)
 
 }
 \author{

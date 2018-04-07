@@ -37,7 +37,6 @@ Before using this function, the user must apply \code{\link[SWMPr]{setstep}} to 
 For MET and WQ data, the user must specify \code{time_threshold}. This argument is the minimum duration that an event must last in order to be counted. For example, if \code{time_threshold = 2}, \code{param = "do_mgl"}, \code{parameter_threshold = 2}, and \code{threshold_type = "<"} then dissolved oxygen must be lower than 2 mg/L for more than two hours or the event will not be summarized in the final table. For NUT parameters, all exceedances are included in the tabular summary.
 }
 \examples{
-\dontrun{
 wq <- apacpwq
 
 dat_wq <- qaqc(wq, qaqc_keep = c(0, 3, 5))
@@ -47,6 +46,7 @@ wq_pars<- threshold_identification(dat_wq, param = c('do_mgl', 'ph', 'temp')
                           , parameter_threshold = c(2, 5, 30)
                           , threshold_type = c('<', '<', '>'), time_threshold = 2)
 
+\dontrun{
 wq_par<- threshold_identification(dat_wq, param = c('do_mgl')
                           , parameter_threshold = c(2)
                           , threshold_type = c('<'), time_threshold = 2)

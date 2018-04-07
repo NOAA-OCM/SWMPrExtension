@@ -20,7 +20,7 @@
 #'
 #' @return Returns a \code{\link[sp]{sp}} object
 #'
-load_shp_file <- function(path, dissolve_boundaries = T){
+load_shp_file <- function(path, dissolve_boundaries = TRUE){
 
   shp <- rgdal::readOGR(dsn = path) %>%
     sp::spTransform(CRS("+proj=longlat +datum=WGS84"))

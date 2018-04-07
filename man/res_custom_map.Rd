@@ -4,7 +4,7 @@
 \alias{res_custom_map}
 \title{Local Reserve Map for Custom Stations}
 \usage{
-res_custom_map(stations, x_loc, y_loc, bbox, shp, station_labs = T,
+res_custom_map(stations, x_loc, y_loc, bbox, shp, station_labs = TRUE,
   station_col = NULL, lab_loc = NULL, scale_pos = "bottomleft")
 }
 \arguments{
@@ -40,8 +40,6 @@ This function does not automatically detect conflicts between station labels. Th
 This function is intended to be used with \code{mapview::mapshot} to generate a png for the reserve-level report.
 }
 \examples{
-\dontrun{
-
 ### set plotting parameters
 stns <- c('custom stn 1', 'custom stn 2')
 x_coords <- c(-121.735281, -121.750369)
@@ -55,11 +53,10 @@ pos <- 'bottomleft'
 res_custom_map(stations = stns, x_loc = x_coords, y_loc = y_coords,
 bbox = bounding_elk, lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
 
+\dontrun{
 res_custom_map(stations = stns, x_loc = x_coords, y_loc = y_coords,
 bbox = bounding_elk, lab_loc = lab_dir, scale_pos = pos,
 shp = shp_fl, station_col = c('red', 'green'))
-
-
 }
 
 }

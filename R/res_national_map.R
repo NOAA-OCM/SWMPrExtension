@@ -32,17 +32,16 @@
 #' Rudis, Bob. 2014. "Moving The Earth (well, Alaska & Hawaii) With R". rud.is (blog). November 16, 2014. https://rud.is/b/2014/11/16/moving-the-earth-well-alaska-hawaii-with-r/
 #'
 #' @examples
-#' \dontrun{
-#'
-#' ##Just the national map
-#' res_national_map()
-#'
 #' ##National map highlighting states with NERRS
 #' nerr_states <- c('01', '02', '06', '10', '12', '13', '15'
 #' , '23', '24', '25', '27', '28', '33', '34', '36', '37', '39'
 #' , '41', '44', '45', '48', '51', '53', '55', '72')
 #'
 #' res_national_map(highlight_states = nerr_states)
+#'
+#' \dontrun{
+#' #' ##Just the national map
+#' res_national_map()
 #'
 #' ##National map highlighting west coast states and NERRS (including AK)
 #' nerr_states_west <- c('02', '06', '41', '53')
@@ -51,25 +50,26 @@
 #'
 #' res_national_map(highlight_states = nerr_states_west, highlight_reserve = nerrs_codes)
 #' }
-#'
 res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
                         , highlight_states = NULL
                         , highlight_reserves = NULL
-                        , agg_county = T) {
+                        , agg_county = TRUE) {
 
-  get_US_county_2010_shape <- function() {
-    dir <- tempdir()
-    utils::download.file("http://www2.census.gov/geo/tiger/GENZ2010/gz_2010_us_050_00_20m.zip", destfile = file.path(dir, "gz_2010_us_050_00_20m.zip"))
-    unzip(file.path(dir, "gz_2010_us_050_00_20m.zip"), exdir = dir)
-    rgdal::readOGR(file.path(dir, "gz_2010_us_050_00_20m.shp"))
-  }
+  # get_US_county_2010_shape <- function() {
+  #   dir <- tempdir()
+  #   utils::download.file("http://www2.census.gov/geo/tiger/GENZ2010/gz_2010_us_050_00_500k.zip", destfile = file.path(dir, "gz_2010_us_050_00_500k.zip"))
+  #   unzip(file.path(dir, "gz_2010_us_050_00_500k.zip"), exdir = dir)
+  #   rgdal::readOGR(file.path(dir, "gz_2010_us_050_00_500k.shp"))
+  # }
+  #
+  # us <- get_US_county_2010_shape()
+  # # loc <- get('sampling_stations')
+  #
+  # # convert it to Albers equal area
+  # us_aea <- sp::spTransform(us, sp::CRS("+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs"))
+  # us_aea@data$id <- rownames(us_aea@data)
 
-  us <- get_US_county_2010_shape()
-  # loc <- get('sampling_stations')
-
-  # convert it to Albers equal area
-  us_aea <- sp::spTransform(us, sp::CRS("+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs"))
-  us_aea@data$id <- rownames(us_aea@data)
+  us_aea <- get('us_aea')
 
   # remove old states and put new ones back in
   us_aea_mod <- us_aea[!us_aea$STATE %in% c("02", "15", "72"),]

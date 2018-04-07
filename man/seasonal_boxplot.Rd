@@ -10,7 +10,8 @@ seasonal_boxplot(swmpr_in, ...)
 \method{seasonal_boxplot}{swmpr}(swmpr_in, param = NULL, hist_rng = NULL,
   target_yr = NULL, criteria = NULL, log_trans = FALSE,
   converted = FALSE, criteria_lab = "WQ Threshold", stat_lab = "Average",
-  plot_title = FALSE, plot = T, FUN = function(x) mean(x, na.rm = T), ...)
+  plot_title = FALSE, plot = TRUE, FUN = function(x) mean(x, na.rm =
+  TRUE), ...)
 }
 \arguments{
 \item{swmpr_in}{input swmpr object}
@@ -48,11 +49,19 @@ Annual time series for year of interest on top of long-term percentiles
 \details{
 This function uses boxplots to summarize statistics calculated on a daily basis across user-defined seasons for all years within the historic range (\code{hist_rng}). If \code{hist_rng} is not specified then the minimum and maximum years within the data set will be used. The summary statistics used to generate the boxplots are \code{ggplot2} defaults: the center of the box is a median, and the lower/upper limits of the box are the 25-th and 75-th percentiles. The whiskers extend to the furthest data point within 1.5 * inter-quartile range (IQR). The dots beyond the whiskers are data points that are greater than 1.5 * IQR. If the user selects a \code{target_yr}, then a median summary statistic value will be plotted as a point against the boxplots.
 
-Using the \code{FUN} argument, the user can specify the daily summary statistic to use. Commonly used statistics are \code{min(x, na.rm = T)}, \code{mean(x, na.rm = T)}, and \code{max(x, na.rm = T)}. After specifying \code{FUN}, the user should also specify \code{stat_lab}, which is used to construct appropriate legend labels.
+Using the \code{FUN} argument, the user can specify the daily summary statistic to use. Commonly used statistics are \code{min(x, na.rm = TRUE)}, \code{mean(x, na.rm = TRUE)}, and \code{max(x, na.rm = TRUE)}. After specifying \code{FUN}, the user should also specify \code{stat_lab}, which is used to construct appropriate legend labels.
 
 The user also has the option to add a threshold hold line using the \code{criteria} argument. Typically, this value is a water quality threshold, which is why \code{criteria_lab} defaults to \code{'WQ Threshold'}. Howver, the user has the option to specify any other type of threshold they wish. when doing so, the value for \code{criteria_lab} should be changed accordingly.
 }
 \examples{
+\dontshow{
+data(apacpwq)
+
+dat <- qaqc(apacpwq, qaqc_keep = c('0', '3', '5'))
+
+y <- seasonal_boxplot(dat, param = 'do_mgl', target_yr = 2012)
+}
+
 \dontrun{
 dat <- elksmwq
 
@@ -67,10 +76,10 @@ season_names = c('Winter', 'Spring', 'Summer', 'Fall'),
 season_start = 'Spring')
 
 do_plt_min <- seasonal_boxplot(dat, param = 'do_mgl',
-stat_lab = 'Minimum', FUN = function(x) min(x, na.rm = T))
+stat_lab = 'Minimum', FUN = function(x) min(x, na.rm = TRUE))
 
 do_plt_max <- seasonal_boxplot(dat, param = 'do_mgl',
-stat_lab = 'Maximum', FUN = function(x) max(x, na.rm = T))
+stat_lab = 'Maximum', FUN = function(x) max(x, na.rm = TRUE))
 }
 }
 \seealso{
