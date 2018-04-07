@@ -43,6 +43,8 @@ Observed data compared against user-defined percentiles
 This function provides an alternative to \code{\link{threshold_criteria_plot}}. For parameters that may not have numeric threshold criteria, a percentile threshold can be used instead. For a one-tailed analysis, the 90-th percentile is recommended. For a two-tailed analysis, the 5-th and 95-th percentiles are recommended.
 
 Using \code{by_month}, the user can specify whether the percentiles should be calculated on a monthly basis or by using the entire data set.
+
+Recommended thresholds for chlorophyll-a, dissolved inorganic nitrogen, dissolved inorganic phosphorus, and dissolved oxygen can be found in the National Coastal Condition Assessment 2010 (USEPA 2016)
 }
 \examples{
 dat_wq <- qaqc(elksmwq, qaqc_keep = c(0, 3, 5))
@@ -79,6 +81,10 @@ y <-
   , hist_rng = c(2007, 2014), target_yr = 2016, by_month = FALSE)
 }
 
+}
+\references{
+United States Environmental Protection Agency (USEPA). 2016. "National Coastal Condition Assessment 2010". EPA 841-R-15-006.
+https://cfpub.epa.gov/si/si_public_record_Report.cfm?dirEntryId=327030
 }
 \seealso{
 \code{\link[ggplot2]{ggplot}}

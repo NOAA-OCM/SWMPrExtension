@@ -35,6 +35,8 @@ This function creates tabular summary of events when a user-specified threshold 
 Before using this function, the user must apply \code{\link[SWMPr]{setstep}} to normalize the \code{datetimestamp} time step.
 
 For MET and WQ data, the user must specify \code{time_threshold}. This argument is the minimum duration that an event must last in order to be counted. For example, if \code{time_threshold = 2}, \code{param = "do_mgl"}, \code{parameter_threshold = 2}, and \code{threshold_type = "<"} then dissolved oxygen must be lower than 2 mg/L for more than two hours or the event will not be summarized in the final table. For NUT parameters, all exceedances are included in the tabular summary.
+
+Recommended thresholds for chlorophyll-a, dissolved inorganic nitrogen, dissolved inorganic phosphorus, and dissolved oxygen can be found in the National Coastal Condition Assessment 2010 (USEPA 2016)
 }
 \examples{
 wq <- apacpwq
@@ -72,8 +74,8 @@ nut_err <- threshold_identification(dat_nut, param = c('chla_n')
 }
 }
 \references{
-United States Environmental Protection Agency (USEPA). 2012. "National Coastal Condition Report IV."
-http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.646.1973&rep=rep1&type=pdf
+United States Environmental Protection Agency (USEPA). 2016. "National Coastal Condition Assessment 2010". EPA 841-R-15-006.
+https://cfpub.epa.gov/si/si_public_record_Report.cfm?dirEntryId=327030
 }
 \author{
 Julie Padilla

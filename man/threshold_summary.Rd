@@ -43,6 +43,8 @@ Summary plots for threshold identification analysis
 }
 \details{
 This function provides a graphical or tabular summary of the results from \code{threshold_identification}. The user can summarize results on a monthly, seasonal, or annual basis by specifying \code{summary_type = c('month', 'season', 'year')}. If \code{summary_type = 'season'}, then the user should also define \code{season}, \code{season_names}, and \code{season_start}, as required by |code{\link{assign_season}}. The user can specify \code{'month'} for nutrient parameters, but this is not recommended and will produce a warning.
+
+Recommended thresholds for chlorophyll-a, dissolved inorganic nitrogen, dissolved inorganic phosphorus, and dissolved oxygen can be found in the National Coastal Condition Assessment 2010 (USEPA 2016)
 }
 \examples{
 ## Water quality examples
@@ -84,6 +86,10 @@ y <-
    threshold_type = '>', summary_type = 'year',
    plot_title = TRUE, plot = TRUE)
 }
+}
+\references{
+United States Environmental Protection Agency (USEPA). 2016. "National Coastal Condition Assessment 2010". EPA 841-R-15-006.
+https://cfpub.epa.gov/si/si_public_record_Report.cfm?dirEntryId=327030
 }
 \seealso{
 \code{\link{assign_season}}, \code{\link[ggplot2]{ggplot}}, \code{\link{threshold_identification}}, \code{\link[ggplot2]{scale_fill_brewer}}

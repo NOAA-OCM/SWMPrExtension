@@ -27,11 +27,17 @@
 #'
 #' Using \code{by_month}, the user can specify whether the percentiles should be calculated on a monthly basis or by using the entire data set.
 #'
+#' Recommended thresholds for chlorophyll-a, dissolved inorganic nitrogen, dissolved inorganic phosphorus, and dissolved oxygen can be found in the National Coastal Condition Assessment 2010 (USEPA 2016)
+#'
 #' @author Julie Padilla
 #'
 #' @concept analyze
 #'
 #' @return Returns a \code{\link[ggplot2]{ggplot}} object
+#'
+#' @references
+#' United States Environmental Protection Agency (USEPA). 2016. "National Coastal Condition Assessment 2010". EPA 841-R-15-006.
+#' https://cfpub.epa.gov/si/si_public_record_Report.cfm?dirEntryId=327030
 #'
 #' @seealso \code{\link[ggplot2]{ggplot}}
 #'
