@@ -194,7 +194,7 @@ historical_daily_range.swmpr <- function(swmpr_in
     brk_labs <- month.abb
 
     # Make some labels
-    lab_hist_avg_rng <- paste('Daily Avg Range \n(', rng[[1]], '-', rng[[2]], ')', sep = '')
+    lab_hist_avg_rng <- paste('Avg Daily Range \n(', rng[[1]], '-', rng[[2]], ')', sep = '')
     lab_hist_obs_rng <- paste('Daily Range \n(', rng[[1]], '-', rng[[2]], ')', sep = '')
     lab_yr_ln <- paste('Daily Avg \n(', target_yr, ')', sep = '')
 
