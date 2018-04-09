@@ -18,7 +18,7 @@ The System Wide Monitoring Program ([SWMP](http://nerrs.noaa.gov/RCDefault.aspx?
 
 # Installing the package
 
-Install the package from CRAN as follows:
+Install the package from CRAN:
 
 
 ```r
@@ -26,7 +26,7 @@ install.packages('SWMPrExtension')
 library(SWMPrExtension)
 ```
 
-The development (unstable) version of this package can be installed from Github:
+Install the development (unstable) version from Github:
 
 
 ```r
