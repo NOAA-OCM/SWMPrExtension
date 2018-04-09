@@ -227,6 +227,12 @@ historical_daily_range.swmpr <- function(swmpr_in
       plt <- plt + scale_y_continuous(limits = c(mn, mx_log), breaks = brks, trans = y_trans, labels = scales::comma)
     }
 
+    # Adjust legend order
+    plt <-
+      plt +
+      guides(fill = guide_legend(override.aes = list(linetype = 0), order = 2, reverse = T)
+             , color = guide_legend(override.aes = list(color = 'steelblue3'), order = 1))
+
 
     # Adjust scale
     plt <-
