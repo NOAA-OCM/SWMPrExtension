@@ -145,5 +145,5 @@ SWMPrExtension adds several functions to existing concepts in SWMPr and introduc
 <tr><td><code>elknmnut</code></td><td>Nutrient data (2007-2016) from North Marsh station at Elkhorn Slough NERR.</td></tr>
 <tr><td><code>elksmwq</code></td><td>Water quality data (2007-2016) from South Marsh station at Elkhorn Slough NERR.</td></tr>
 <tr><td><code>sampling_stations</code></td><td>Metadata on NERRS stations provided by the Central Data Management Office (CDMO) when data is downloaded. Additional formatting applied in order to make the dataset useful to several <code>SWMPrExtension</code> functions.</td></tr>
-
+<tr><td><code>us_aea</code></td><td>US County boundaries from the US Census Bureau's MAF/TIGER geographic database, modified to remove non-ASCII characters. Reprojected using Albers Equal Area. Used to create national-level maps.</td></tr>
 </table>
