@@ -2,7 +2,7 @@
 ![](swmpr_logo.png)
 #### *Julie Padilla, jpadilla@limno.com*, [LimnoTech](www.limno.com)
 
-[![Travis-CI Build Status](https://travis-ci.org/padilla410/SWMPrExtension.svg?branch=master)](https://travis-ci.org/padilla410/SWMPrExtension)
+[![Travis-CI Build Status](https://travis-ci.org/padilla410/SWMPrExtension.svg?branch=master)](https://travis-ci.org/padilla410/SWMPrExtension)[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/SWMPrExtension)](https://cran.r-project.org/package=SWMPrExtension)[![Downloads from the RStudio CRAN mirror](http://cranlogs.r-pkg.org/badges/grand-total/SWMPrExtension)](http://cran.rstudio.com/package=SWMPrExtension)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -18,7 +18,13 @@ The System Wide Monitoring Program ([SWMP](http://nerrs.noaa.gov/RCDefault.aspx?
 
 # Installing the package
 
-This package is not currently available on CRAN, but will be in the near future
+Install the package from CRAN as follows:
+
+
+```r
+install.packages('SWMPrExtension')
+library(SWMPrExtension)
+```
 
 The development (unstable) version of this package can be installed from Github:
 
