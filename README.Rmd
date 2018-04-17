@@ -89,7 +89,7 @@ The core analyses available within the SWMPrExtension R package and used to crea
 
 <h3>Retrieve</h3>
 in the <code>SWMPr</code> package, retrieve functions help the user load SWMP data into R.
-
+</br>
 
 <table>
 <tr><td><code>import_local_nut</code></td><td>A modified version of <code>import_local</code> from the <code>SWMPr</code> package. This version allows the user to specify the collection method (<code>CollMethd</code>) argument to separate monthly nutrient sampling data from monthly 24-hr nutrient sampling data.</td></tr>
@@ -148,7 +148,7 @@ Miscellaneous functions are generally helper functions that are called internall
 
 <h3>Datasets</h3>
 The following data sets are included within the <code>SWMPrExtension</code> package. They are used for examples and for mapping.
-
+</br>
 <table>
 <tr><td><code>cbm_spatial</code></td><td>A shapefile of the reserve boundary for Chesapeake Bay-Maryland NERR. Available from: <code>http://cdmo.baruch.sc.edu/</code>.</td></tr>
 <tr><td><code>elk_spatial</code></td><td>A shapefile of the reserve boundary for Elkhorn Slough NERR. Available from: <code>http://cdmo.baruch.sc.edu/</code>.</td></tr>
