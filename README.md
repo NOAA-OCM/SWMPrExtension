@@ -46,6 +46,8 @@ SWMPrExtension adds several functions to existing concepts in SWMPr and introduc
 
 <h3>Analyze</h3>
 <h4>Core Analyses</h4>
+The core analyses available within the SWMPrExtension R package and used to create the reserve level annual report fall into four general categories: boxplots and barplots, range plots, threshold plots, and trend plots. There is also an additional category called “mapping” which contains functions that generate many of maps associated with the reserve-level reports.  The analyses, methods, and maps in this section were selected by and approved by a technical advisory committee composed of NERR research coordinators, SWMP technicians and CDMO staff.
+
 <table>
 <tr><td><code>annual_range.swmpr</code></td><td>For a user-specified year, calculate averages, average ranges, and min/max observed ranges the on a monthly or seasonal basis.</td></tr>
 <tr><td><code>historical_daily_range.swmpr</code></td><td>Compare a user-specified year against historical data on a daily basis.</td></tr>
@@ -73,11 +75,16 @@ SWMPrExtension adds several functions to existing concepts in SWMPr and introduc
 </table>
 
 <h3>Retrieve</h3>
+in the <code>SWMPr</code> package, retrieve functions help the user load SWMP data into R.
+
+
 <table>
 <tr><td><code>import_local_nut</code></td><td>A modified version of <code>import_local</code> from the <code>SWMPr</code> package. This version allows the user to specify the collection method (<code>CollMethd</code>) argument to separate monthly nutrient sampling data from monthly 24-hr nutrient sampling data.</td></tr>
 </table>
 
 <h3>Reporting</h3>
+The new concept of reporting refers to functions that were specifically developed for use with NERRS reserve-level & national-level reporting scripts that are used to generate the reserve-level and national-level annual reports. They are included as part of this package in case users find them useful for their own purposes.
+
 <h4>Reserve Level Template</h4>
 <table>
 <tr><td><code>create_sk_flextable_list</code></td><td>Create a list of <code>flextable</code> objects to display Seasonal Kendall results in the NERRS reserve level template.</td></tr>
@@ -99,6 +106,8 @@ SWMPrExtension adds several functions to existing concepts in SWMPr and introduc
 
 
 <h3>Miscellaneous</h3>
+Miscellaneous functions are generally helper functions that are called internally by other analysis functions.
+
 <h4>Analyze</h4>
 <table>
 <tr><td><code>assign_season</code></td><td>Assign seasons to SWMPr sampling data on a monthly basis or user-defined basis. Used by multiple analysis functions to group sampling data into user-defined seasons.</td></tr>
@@ -122,10 +131,11 @@ SWMPrExtension adds several functions to existing concepts in SWMPr and introduc
 <tr><td><code>ft_col_names</code></td><td>Convert <code>SWMPr</code> parameter abbreviations into formats appropriate for use with NERRS reserve level template <code>flextable</code>. Used internally by <code>create_sk_flextable_list</code>.</td></tr>
 <tr><td><code>generate_results_table</code></td><td>Filters a <code>data.frame</code> of user-specified results for display in the NERRS reserve level report. Used internally by <code>create_sk_flextable_list</code>.</td></tr>
 <tr><td><code>generate_station_table</code></td><td>Filters a <code>data.frame</code> of user-specified results for display in the NERRS reserve level report. Used internally by <code>create_sk_flextable_list</code>.</td></tr>
-
 </table>
 
 <h3>Datasets</h3>
+The following data sets are included within the <code>SWMPrExtension</code> package. They are used for examples and for mapping.
+
 <table>
 <tr><td><code>cbm_spatial</code></td><td>A shapefile of the reserve boundary for Chesapeake Bay-Maryland NERR. Available from: <code>http://cdmo.baruch.sc.edu/</code>.</td></tr>
 <tr><td><code>elk_spatial</code></td><td>A shapefile of the reserve boundary for Elkhorn Slough NERR. Available from: <code>http://cdmo.baruch.sc.edu/</code>.</td></tr>
