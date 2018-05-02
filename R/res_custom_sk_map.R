@@ -99,7 +99,7 @@ res_custom_sk_map <- function(stations
   }
 
   # set map label styles
-  lab_style <- list(
+  label_style <- list(
     "box-shadow" = "none",
     "border-radius" = "5px",
     "font" = "bold 16px/1.5 'Helvetica Neue', Arial, Helvetica, sans-serif",
