@@ -113,6 +113,14 @@ res_sk_map <- function(nerr_site_id
     left_labs <- c(1:4)
   }
 
+  # set map label styles
+  lab_style <- list(
+    "box-shadow" = "none",
+    "border-radius" = "5px",
+    "font" = "bold 16px/1.5 'Helvetica Neue', Arial, Helvetica, sans-serif",
+    "padding" = "1px 5px 1px 5px"
+  )
+
   # order selected stations alphabetically
   loc <- loc[order(loc$Station.Code), ]
 
@@ -136,8 +144,8 @@ res_sk_map <- function(nerr_site_id
                           , labelOptions = labelOptions(noHide = station_labs
                                                         , direction = c('left')
                                                         , opacity = 1
-                                                        , textsize = '16px'
-                                                        , offset = c(12, -15)))
+                                                        , offset = c(-10, 0)
+                                                        , style = label_style))
   }
 
 
@@ -148,8 +156,8 @@ res_sk_map <- function(nerr_site_id
                           , labelOptions = labelOptions(noHide = station_labs
                                                         , direction = c('right')
                                                         , opacity = 1
-                                                        , textsize = '16px'
-                                                        , offset = c(12, -15))) #default offset is c(12, -15)
+                                                        , offset = c(10, 0)
+                                                        , style = label_style))
   }
 
   if(exists('inc_icons')){

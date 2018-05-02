@@ -94,6 +94,14 @@ res_custom_map <- function(stations
     station_col <- 'black'
   }
 
+  # set map label styles
+  lab_style <- list(
+    "box-shadow" = "none",
+    "border-radius" = "5px",
+    "font" = "bold 16px/1.5 'Helvetica Neue', Arial, Helvetica, sans-serif",
+    "padding" = "1px 5px 1px 5px"
+  )
+
   # generate location labels
   loc <- data.frame(abbrev = stations, Latitude = y_loc, Longitude = -1 * x_loc, color = station_col, stringsAsFactors = F)
 
@@ -117,7 +125,11 @@ res_custom_map <- function(stations
                        , weight = 0, fillOpacity = 1
                        , color = loc$color[left_labs]
                        , label = loc$abbrev[left_labs]
-                       , labelOptions = labelOptions(noHide = station_labs, direction = c('left'), opacity = 1))
+                       , labelOptions = labelOptions(noHide = station_labs
+                                                     , direction = c('left')
+                                                     , opacity = 1
+                                                     , offset = c(-5, 0)
+                                                     , style = label_style))
   }
 
   if(length(right_labs) > 0){
@@ -126,7 +138,11 @@ res_custom_map <- function(stations
                        , weight = 0, fillOpacity = 1
                        , color = loc$color[right_labs]
                        , label = loc$abbrev[right_labs]
-                       , labelOptions = labelOptions(noHide = station_labs, direction = c('right'), opacity = 1))
+                       , labelOptions = labelOptions(noHide = station_labs
+                                                     , direction = c('right')
+                                                     , opacity = 1
+                                                     , offset = c(5, 0)
+                                                     , style = label_style))
   }
 
   m <- m %>%

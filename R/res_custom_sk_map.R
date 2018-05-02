@@ -98,6 +98,14 @@ res_custom_sk_map <- function(stations
     left_labs <- c(1:4)
   }
 
+  # set map label styles
+  lab_style <- list(
+    "box-shadow" = "none",
+    "border-radius" = "5px",
+    "font" = "bold 16px/1.5 'Helvetica Neue', Arial, Helvetica, sans-serif",
+    "padding" = "1px 5px 1px 5px"
+  )
+
   # Determine the types of results
   if('inc' %in% sk_result){inc_icons <- grep('inc', sk_result)}
   if('dec' %in% sk_result){dec_icons <- grep('dec', sk_result)}
@@ -115,8 +123,8 @@ res_custom_sk_map <- function(stations
                           , labelOptions = labelOptions(noHide = station_labs
                                                         , direction = c('left')
                                                         , opacity = 1
-                                                        , textsize = '16px'
-                                                        , offset = c(12, -15)))
+                                                        , offset = c(-10, 0)
+                                                        , style = label_style))
   }
 
   if(exists('right_labs')){
@@ -124,10 +132,10 @@ res_custom_sk_map <- function(stations
       addLabelOnlyMarkers(lng = ~Longitude[right_labs] * -1, lat = ~Latitude[right_labs]
                           , label = loc$abbrev[right_labs]
                           , labelOptions = labelOptions(noHide = station_labs
-                                                        , direction = c('right')
+                                                        , direction = c('left')
                                                         , opacity = 1
-                                                        , textsize = '16px'
-                                                        , offset = c(12, -15))) #default offset is c(12, -15)
+                                                        , offset = c(-10, 0)
+                                                        , style = label_style))
   }
 
 
