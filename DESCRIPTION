@@ -36,6 +36,7 @@ Imports:
 	scales,
 	RColorBrewer,
 	rgdal,
+	rgeos,
 	rlang,
 	sp
 Authors@R: c(
