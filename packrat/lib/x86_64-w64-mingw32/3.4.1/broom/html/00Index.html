@@ -11,7 +11,7 @@
 <div style="text-align: center;">
 <a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
 <a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;broom&rsquo; version 0.4.2</h2>
+</div><h2>Documentation for package &lsquo;broom&rsquo; version 0.4.4</h2>
 
 <ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
 <li><a href="../doc/index.html">User guides, package vignettes and other documentation.</a></li>
@@ -71,10 +71,14 @@
 <td>Tidiers for coxph object</td></tr>
 <tr><td style="width: 25%;"><a href="data.frame_tidiers.html">augment.data.frame</a></td>
 <td>Tidiers for data.frame objects</td></tr>
+<tr><td style="width: 25%;"><a href="decompose_tidiers.html">augment.decomposed.ts</a></td>
+<td>Tidying methods for seasonal decompositions</td></tr>
 <tr><td style="width: 25%;"><a href="felm_tidiers.html">augment.felm</a></td>
 <td>Tidying methods for models with multiple group fixed effects</td></tr>
 <tr><td style="width: 25%;"><a href="robust_tidiers.html">augment.glmRob</a></td>
 <td>Tidiers for lmRob and glmRob objects</td></tr>
+<tr><td style="width: 25%;"><a href="ivreg_tidiers.html">augment.ivreg</a></td>
+<td>Tidiers for ivreg models</td></tr>
 <tr><td style="width: 25%;"><a href="kmeans_tidiers.html">augment.kmeans</a></td>
 <td>Tidying methods for kmeans objects</td></tr>
 <tr><td style="width: 25%;"><a href="lm_tidiers.html">augment.lm</a></td>
@@ -107,6 +111,10 @@
 <td>Tidying methods for quantile regression models</td></tr>
 <tr><td style="width: 25%;"><a href="smooth.spline_tidiers.html">augment.smooth.spline</a></td>
 <td>tidying methods for smooth.spline objects</td></tr>
+<tr><td style="width: 25%;"><a href="speedlm_tidiers.html">augment.speedlm</a></td>
+<td>Tidying methods for a speedlm model</td></tr>
+<tr><td style="width: 25%;"><a href="decompose_tidiers.html">augment.stl</a></td>
+<td>Tidying methods for seasonal decompositions</td></tr>
 <tr><td style="width: 25%;"><a href="survreg_tidiers.html">augment.survreg</a></td>
 <td>Tidiers for a parametric regression survival model</td></tr>
 <tr><td style="width: 25%;"><a href="rowwise_df_tidiers.html">augment.tbl_df</a></td>
@@ -162,11 +170,15 @@
 <table width="100%">
 <tr><td style="width: 25%;"><a href="data.frame_tidiers.html">data.frame_tidiers</a></td>
 <td>Tidiers for data.frame objects</td></tr>
+<tr><td style="width: 25%;"><a href="decompose_tidiers.html">decompose_tidiers</a></td>
+<td>Tidying methods for seasonal decompositions</td></tr>
 </table>
 
 <h2><a name="E">-- E --</a></h2>
 
 <table width="100%">
+<tr><td style="width: 25%;"><a href="emmeans_tidiers.html">emmeans_tidiers</a></td>
+<td>Tidy estimated marginal means (least-squares means) objects from the emmeans and lsmeans packages</td></tr>
 <tr><td style="width: 25%;"><a href="ergm_tidiers.html">ergm_tidiers</a></td>
 <td>Tidying methods for an exponential random graph model</td></tr>
 </table>
@@ -219,6 +231,8 @@
 <td>Tidying methods for models with multiple group fixed effects</td></tr>
 <tr><td style="width: 25%;"><a href="fitdistr_tidiers.html">glance.fitdistr</a></td>
 <td>Tidying methods for fitdistr objects from the MASS package</td></tr>
+<tr><td style="width: 25%;"><a href="gam_tidiers.html">glance.Gam</a></td>
+<td>Tidying methods for a generalized additive model (gam)</td></tr>
 <tr><td style="width: 25%;"><a href="gam_tidiers.html">glance.gam</a></td>
 <td>Tidying methods for a generalized additive model (gam)</td></tr>
 <tr><td style="width: 25%;"><a href="glm_tidiers.html">glance.glm</a></td>
@@ -231,6 +245,8 @@
 <td>Tidying methods for generalized method of moments "gmm" objects</td></tr>
 <tr><td style="width: 25%;"><a href="htest_tidiers.html">glance.htest</a></td>
 <td>Tidying methods for an htest object</td></tr>
+<tr><td style="width: 25%;"><a href="ivreg_tidiers.html">glance.ivreg</a></td>
+<td>Tidiers for ivreg models</td></tr>
 <tr><td style="width: 25%;"><a href="kmeans_tidiers.html">glance.kmeans</a></td>
 <td>Tidying methods for kmeans objects</td></tr>
 <tr><td style="width: 25%;"><a href="list_tidiers.html">glance.list</a></td>
@@ -249,6 +265,8 @@
 <td>Tidying methods for Mclust objects</td></tr>
 <tr><td style="width: 25%;"><a href="lme4_tidiers.html">glance.merMod</a></td>
 <td>Tidying methods for mixed effects models</td></tr>
+<tr><td style="width: 25%;"><a href="muhaz_tidiers.html">glance.muhaz</a></td>
+<td>Tidying methods for kernel based hazard rate estimates</td></tr>
 <tr><td style="width: 25%;"><a href="multinom_tidiers.html">glance.multinom</a></td>
 <td>Tidying methods for multinomial logistic regression models</td></tr>
 <tr><td style="width: 25%;"><a href="rq_tidiers.html">glance.nlrq</a></td>
@@ -273,12 +291,16 @@
 <td>Tidying methods for quantile regression models</td></tr>
 <tr><td style="width: 25%;"><a href="smooth.spline_tidiers.html">glance.smooth.spline</a></td>
 <td>tidying methods for smooth.spline objects</td></tr>
+<tr><td style="width: 25%;"><a href="speedlm_tidiers.html">glance.speedlm</a></td>
+<td>Tidying methods for a speedlm model</td></tr>
 <tr><td style="width: 25%;"><a href="rstanarm_tidiers.html">glance.stanreg</a></td>
 <td>Tidying methods for an rstanarm model</td></tr>
 <tr><td style="width: 25%;"><a href="lm_tidiers.html">glance.summary.lm</a></td>
 <td>Tidying methods for a linear model</td></tr>
 <tr><td style="width: 25%;"><a href="summary_tidiers.html">glance.summaryDefault</a></td>
 <td>Tidiers for summaryDefault objects</td></tr>
+<tr><td style="width: 25%;"><a href="survdiff_tidiers.html">glance.survdiff</a></td>
+<td>Tidiers for Tests of Differences between Survival Curves</td></tr>
 <tr><td style="width: 25%;"><a href="sexpfit_tidiers.html">glance.survexp</a></td>
 <td>Tidy an expected survival curve</td></tr>
 <tr><td style="width: 25%;"><a href="survfit_tidiers.html">glance.survfit</a></td>
@@ -313,6 +335,8 @@
 <td>Expand a dataset to include all factorial combinations of one or more variables</td></tr>
 <tr><td style="width: 25%;"><a href="insert_NAs.html">insert_NAs</a></td>
 <td>insert a row of NAs into a data frame wherever another data frame has NAs</td></tr>
+<tr><td style="width: 25%;"><a href="ivreg_tidiers.html">ivreg_tidiers</a></td>
+<td>Tidiers for ivreg models</td></tr>
 </table>
 
 <h2><a name="K">-- K --</a></h2>
@@ -339,8 +363,6 @@
 <td>Tidying methods for a linear model</td></tr>
 <tr><td style="width: 25%;"><a href="loess_tidiers.html">loess_tidiers</a></td>
 <td>Augmenting methods for loess models</td></tr>
-<tr><td style="width: 25%;"><a href="lsmeans_tidiers.html">lsmeans_tidiers</a></td>
-<td>Tidy least-squares means objects from the lsmeans packages</td></tr>
 </table>
 
 <h2><a name="M">-- M --</a></h2>
@@ -354,6 +376,8 @@
 <td>Tidying methods for MCMC (Stan, JAGS, etc.) fits</td></tr>
 <tr><td style="width: 25%;"><a href="mle2_tidiers.html">mle2_tidiers</a></td>
 <td>Tidy mle2 maximum likelihood objects</td></tr>
+<tr><td style="width: 25%;"><a href="muhaz_tidiers.html">muhaz_tidiers</a></td>
+<td>Tidying methods for kernel based hazard rate estimates</td></tr>
 <tr><td style="width: 25%;"><a href="multcomp_tidiers.html">multcomp_tidiers</a></td>
 <td>tidying methods for objects produced by 'multcomp'</td></tr>
 <tr><td style="width: 25%;"><a href="multinom_tidiers.html">multinom_tidiers</a></td>
@@ -427,10 +451,14 @@
 <td>tidying methods for smooth.spline objects</td></tr>
 <tr><td style="width: 25%;"><a href="sparse_tidiers.html">sparse_tidiers</a></td>
 <td>Tidy a sparseMatrix object from the Matrix package</td></tr>
+<tr><td style="width: 25%;"><a href="speedlm_tidiers.html">speedlm_tidiers</a></td>
+<td>Tidying methods for a speedlm model</td></tr>
 <tr><td style="width: 25%;"><a href="sp_tidiers.html">sp_tidiers</a></td>
 <td>tidying methods for classes from the sp package.</td></tr>
 <tr><td style="width: 25%;"><a href="summary_tidiers.html">summary_tidiers</a></td>
 <td>Tidiers for summaryDefault objects</td></tr>
+<tr><td style="width: 25%;"><a href="survdiff_tidiers.html">survdiff_tidiers</a></td>
+<td>Tidiers for Tests of Differences between Survival Curves</td></tr>
 <tr><td style="width: 25%;"><a href="survfit_tidiers.html">survfit_tidiers</a></td>
 <td>tidy survival curve fits</td></tr>
 <tr><td style="width: 25%;"><a href="survreg_tidiers.html">survreg_tidiers</a></td>
@@ -496,6 +524,8 @@
 <td>Tidy a sparseMatrix object from the Matrix package</td></tr>
 <tr><td style="width: 25%;"><a href="tidy.dist.html">tidy.dist</a></td>
 <td>Tidy a distance matrix</td></tr>
+<tr><td style="width: 25%;"><a href="emmeans_tidiers.html">tidy.emmGrid</a></td>
+<td>Tidy estimated marginal means (least-squares means) objects from the emmeans and lsmeans packages</td></tr>
 <tr><td style="width: 25%;"><a href="ergm_tidiers.html">tidy.ergm</a></td>
 <td>Tidying methods for an exponential random graph model</td></tr>
 <tr><td style="width: 25%;"><a href="felm_tidiers.html">tidy.felm</a></td>
@@ -504,6 +534,8 @@
 <td>Tidying methods for fitdistr objects from the MASS package</td></tr>
 <tr><td style="width: 25%;"><a href="tidy.ftable.html">tidy.ftable</a></td>
 <td>tidy an ftable object</td></tr>
+<tr><td style="width: 25%;"><a href="gam_tidiers.html">tidy.Gam</a></td>
+<td>Tidying methods for a generalized additive model (gam)</td></tr>
 <tr><td style="width: 25%;"><a href="gam_tidiers.html">tidy.gam</a></td>
 <td>Tidying methods for a generalized additive model (gam)</td></tr>
 <tr><td style="width: 25%;"><a href="gamlss_tidiers.html">tidy.gamlss</a></td>
@@ -520,6 +552,8 @@
 <td>Tidying methods for generalized method of moments "gmm" objects</td></tr>
 <tr><td style="width: 25%;"><a href="htest_tidiers.html">tidy.htest</a></td>
 <td>Tidying methods for an htest object</td></tr>
+<tr><td style="width: 25%;"><a href="ivreg_tidiers.html">tidy.ivreg</a></td>
+<td>Tidiers for ivreg models</td></tr>
 <tr><td style="width: 25%;"><a href="kappa_tidiers.html">tidy.kappa</a></td>
 <td>Tidy a kappa object from a Cohen's kappa calculation</td></tr>
 <tr><td style="width: 25%;"><a href="kde_tidiers.html">tidy.kde</a></td>
@@ -542,8 +576,8 @@
 <td>Tidiers for lmRob and glmRob objects</td></tr>
 <tr><td style="width: 25%;"><a href="vector_tidiers.html">tidy.logical</a></td>
 <td>Tidy atomic vectors</td></tr>
-<tr><td style="width: 25%;"><a href="lsmeans_tidiers.html">tidy.lsmobj</a></td>
-<td>Tidy least-squares means objects from the lsmeans packages</td></tr>
+<tr><td style="width: 25%;"><a href="emmeans_tidiers.html">tidy.lsmobj</a></td>
+<td>Tidy estimated marginal means (least-squares means) objects from the emmeans and lsmeans packages</td></tr>
 <tr><td style="width: 25%;"><a href="tidy.manova.html">tidy.manova</a></td>
 <td>tidy a MANOVA object</td></tr>
 <tr><td style="width: 25%;"><a href="tidy.map.html">tidy.map</a></td>
@@ -556,6 +590,8 @@
 <td>Tidying methods for mixed effects models</td></tr>
 <tr><td style="width: 25%;"><a href="mle2_tidiers.html">tidy.mle2</a></td>
 <td>Tidy mle2 maximum likelihood objects</td></tr>
+<tr><td style="width: 25%;"><a href="muhaz_tidiers.html">tidy.muhaz</a></td>
+<td>Tidying methods for kernel based hazard rate estimates</td></tr>
 <tr><td style="width: 25%;"><a href="multinom_tidiers.html">tidy.multinom</a></td>
 <td>Tidying methods for multinomial logistic regression models</td></tr>
 <tr><td style="width: 25%;"><a href="rq_tidiers.html">tidy.nlrq</a></td>
@@ -586,8 +622,8 @@
 <td>Tidy person-year summaries</td></tr>
 <tr><td style="width: 25%;"><a href="rcorr_tidiers.html">tidy.rcorr</a></td>
 <td>Tidying methods for rcorr objects</td></tr>
-<tr><td style="width: 25%;"><a href="lsmeans_tidiers.html">tidy.ref.grid</a></td>
-<td>Tidy least-squares means objects from the lsmeans packages</td></tr>
+<tr><td style="width: 25%;"><a href="emmeans_tidiers.html">tidy.ref.grid</a></td>
+<td>Tidy estimated marginal means (least-squares means) objects from the emmeans and lsmeans packages</td></tr>
 <tr><td style="width: 25%;"><a href="ridgelm_tidiers.html">tidy.ridgelm</a></td>
 <td>Tidying methods for ridgelm objects from the MASS package</td></tr>
 <tr><td style="width: 25%;"><a href="mcmc_tidiers.html">tidy.rjags</a></td>
@@ -610,6 +646,8 @@
 <td>tidying methods for classes from the sp package.</td></tr>
 <tr><td style="width: 25%;"><a href="tidy.spec.html">tidy.spec</a></td>
 <td>tidy a spec objet</td></tr>
+<tr><td style="width: 25%;"><a href="speedlm_tidiers.html">tidy.speedlm</a></td>
+<td>Tidying methods for a speedlm model</td></tr>
 <tr><td style="width: 25%;"><a href="mcmc_tidiers.html">tidy.stanfit</a></td>
 <td>Tidying methods for MCMC (Stan, JAGS, etc.) fits</td></tr>
 <tr><td style="width: 25%;"><a href="rstanarm_tidiers.html">tidy.stanreg</a></td>
@@ -620,6 +658,8 @@
 <td>Tidying methods for a linear model</td></tr>
 <tr><td style="width: 25%;"><a href="summary_tidiers.html">tidy.summaryDefault</a></td>
 <td>Tidiers for summaryDefault objects</td></tr>
+<tr><td style="width: 25%;"><a href="survdiff_tidiers.html">tidy.survdiff</a></td>
+<td>Tidiers for Tests of Differences between Survival Curves</td></tr>
 <tr><td style="width: 25%;"><a href="sexpfit_tidiers.html">tidy.survexp</a></td>
 <td>Tidy an expected survival curve</td></tr>
 <tr><td style="width: 25%;"><a href="survfit_tidiers.html">tidy.survfit</a></td>

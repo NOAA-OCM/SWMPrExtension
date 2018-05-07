@@ -34,16 +34,29 @@ glance(kclust)
 kclusts <- data.frame(k=1:9) %>% group_by(k) %>% do(kclust=kmeans(points.matrix, .$k))
 
 ## ------------------------------------------------------------------------
-clusters <- kclusts %>% group_by(k) %>% do(tidy(.$kclust[[1]]))
-assignments <- kclusts %>% group_by(k) %>% do(augment(.$kclust[[1]], points.matrix))
-clusterings <- kclusts %>% group_by(k) %>% do(glance(.$kclust[[1]]))
+clusters <- kclusts %>%
+    group_by(k) %>%
+    do(tidy(.$kclust[[1]]))
+
+assignments <- kclusts %>%
+    group_by(k) %>%
+    do(augment(.$kclust[[1]], points.matrix))
+
+clusterings <- kclusts %>%
+    group_by(k) %>%
+    do(glance(.$kclust[[1]]))
 
 ## ------------------------------------------------------------------------
-p1 <- ggplot(assignments, aes(x1, x2)) + geom_point(aes(color=.cluster)) + facet_wrap(~ k)
+p1 <- ggplot(assignments, aes(x1, x2)) +
+    geom_point(aes(color=.cluster)) +
+    facet_wrap(~ k)
+
 p1
 
 ## ------------------------------------------------------------------------
-p2 <- p1 + geom_point(data=clusters, size=10, shape="x")
+p2 <- p1 +
+    geom_point(data = clusters, size = 10, shape = "x")
+
 p2
 
 ## ------------------------------------------------------------------------

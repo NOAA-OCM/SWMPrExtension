@@ -36,9 +36,7 @@ Imports:
 	scales,
 	RColorBrewer,
 	rgdal,
-	rgeos,
-    rlang,
-    stringr,
+	rlang,
 	sp
 Authors@R: c(
   person(given = "Julie", family = "Padilla",

@@ -335,14 +335,25 @@ head(augment(kclust, points.matrix))
 
 <p>Then tidy the clusterings three ways: using <code>tidy</code>, using <code>augment</code>, and using <code>glance</code>. Each of these goes into a separate dataset as they represent different types of data.</p>
 
-<pre><code class="r">clusters &lt;- kclusts %&gt;% group_by(k) %&gt;% do(tidy(.$kclust[[1]]))
-assignments &lt;- kclusts %&gt;% group_by(k) %&gt;% do(augment(.$kclust[[1]], points.matrix))
-clusterings &lt;- kclusts %&gt;% group_by(k) %&gt;% do(glance(.$kclust[[1]]))
+<pre><code class="r">clusters &lt;- kclusts %&gt;%
+    group_by(k) %&gt;%
+    do(tidy(.$kclust[[1]]))
+
+assignments &lt;- kclusts %&gt;%
+    group_by(k) %&gt;%
+    do(augment(.$kclust[[1]], points.matrix))
+
+clusterings &lt;- kclusts %&gt;%
+    group_by(k) %&gt;%
+    do(glance(.$kclust[[1]]))
 </code></pre>
 
 <p>Now we can plot the original points, with each point colored according to the original cluster:</p>
 
-<pre><code class="r">p1 &lt;- ggplot(assignments, aes(x1, x2)) + geom_point(aes(color=.cluster)) + facet_wrap(~ k)
+<pre><code class="r">p1 &lt;- ggplot(assignments, aes(x1, x2)) +
+    geom_point(aes(color=.cluster)) +
+    facet_wrap(~ k)
+
 p1
 </code></pre>
 
@@ -350,7 +361,9 @@ p1
 
 <p>Already we get a good sense of the proper number of clusters (3), and how the k-means algorithm functions when k is too high or too low. We can then add the centers of the cluster using the data from <code>tidy</code>:</p>
 
-<pre><code class="r">p2 &lt;- p1 + geom_point(data=clusters, size=10, shape=&quot;x&quot;)
+<pre><code class="r">p2 &lt;- p1 +
+    geom_point(data = clusters, size = 10, shape = &quot;x&quot;)
+
 p2
 </code></pre>
 

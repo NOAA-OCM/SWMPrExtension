@@ -79,22 +79,35 @@ kclusts <- data.frame(k=1:9) %>% group_by(k) %>% do(kclust=kmeans(points.matrix,
 Then tidy the clusterings three ways: using `tidy`, using `augment`, and using `glance`. Each of these goes into a separate dataset as they represent different types of data.
 
 ```{r}
-clusters <- kclusts %>% group_by(k) %>% do(tidy(.$kclust[[1]]))
-assignments <- kclusts %>% group_by(k) %>% do(augment(.$kclust[[1]], points.matrix))
-clusterings <- kclusts %>% group_by(k) %>% do(glance(.$kclust[[1]]))
+clusters <- kclusts %>%
+    group_by(k) %>%
+    do(tidy(.$kclust[[1]]))
+
+assignments <- kclusts %>%
+    group_by(k) %>%
+    do(augment(.$kclust[[1]], points.matrix))
+
+clusterings <- kclusts %>%
+    group_by(k) %>%
+    do(glance(.$kclust[[1]]))
 ```
 
 Now we can plot the original points, with each point colored according to the original cluster:
 
 ```{r}
-p1 <- ggplot(assignments, aes(x1, x2)) + geom_point(aes(color=.cluster)) + facet_wrap(~ k)
+p1 <- ggplot(assignments, aes(x1, x2)) +
+    geom_point(aes(color=.cluster)) +
+    facet_wrap(~ k)
+
 p1
 ```
 
 Already we get a good sense of the proper number of clusters (3), and how the k-means algorithm functions when k is too high or too low. We can then add the centers of the cluster using the data from `tidy`:
 
 ```{r}
-p2 <- p1 + geom_point(data=clusters, size=10, shape="x")
+p2 <- p1 +
+    geom_point(data = clusters, size = 10, shape = "x")
+
 p2
 ```
 

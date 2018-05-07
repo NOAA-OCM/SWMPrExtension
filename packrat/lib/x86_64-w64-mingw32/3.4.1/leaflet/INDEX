@@ -44,6 +44,7 @@ expandLimitsBbox        Same as expandLimits, but takes a polygon (that
 filterNULL              remove NULL elements from a list
 gadmCHE                 Administrative borders of Switzerland (level 1)
 getMapData              returns the map's data
+groupOptions            Set options on layer groups
 iconList                Make icon set
 icons                   Create a list of icon data
 leaflet                 Create a Leaflet map widget

@@ -55,8 +55,11 @@ expandLimits	expandLimits
 expandLimitsBbox	expandLimitsBbox
 filterNULL	filterNULL
 fitBounds	map-methods
+flyTo	map-methods
+flyToBounds	map-methods
 gadmCHE	gadmCHE
 getMapData	getMapData
+groupOptions	groupOptions
 hideGroup	showGroup
 highlightOptions	map-layers
 iconList	iconList

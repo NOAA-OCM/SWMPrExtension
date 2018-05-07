@@ -267,21 +267,20 @@ bootnls &lt;- mtcars %&gt;% bootstrap(100) %&gt;%
 <pre><code class="r">bootnls
 </code></pre>
 
-<pre><code>## Source: local data frame [200 x 6]
-## Groups: replicate [100]
-## 
-##    replicate  term  estimate std.error  statistic      p.value
-##        &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;
-## 1          1     k 46.632502  4.026016 11.5827898 1.343891e-12
-## 2          1     b  4.360637  1.538267  2.8347730 8.129583e-03
-## 3          2     k 54.182476  4.964976 10.9129374 5.756829e-12
-## 4          2     b  1.004868  1.897196  0.5296599 6.002460e-01
-## 5          3     k 43.257212  3.564860 12.1343382 4.222953e-13
-## 6          3     b  4.833510  1.297909  3.7240748 8.101899e-04
-## 7          4     k 48.531351  4.456883 10.8890786 6.069158e-12
-## 8          4     b  3.509346  1.688979  2.0777907 4.638415e-02
-## 9          5     k 52.605099  5.662690  9.2897713 2.472139e-10
-## 10         5     b  3.344380  2.300411  1.4538184 1.563791e-01
+<pre><code>## # A tibble: 200 x 6
+## # Groups:   replicate [100]
+##    replicate term  estimate std.error statistic           p.value
+##        &lt;int&gt; &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;             &lt;dbl&gt;
+##  1         1 k        46.6       4.03    11.6   0.00000000000134 
+##  2         1 b         4.36      1.54     2.83  0.00813          
+##  3         2 k        54.2       4.96    10.9   0.00000000000576 
+##  4         2 b         1.00      1.90     0.530 0.600            
+##  5         3 k        43.3       3.56    12.1   0.000000000000422
+##  6         3 b         4.83      1.30     3.72  0.000810         
+##  7         4 k        48.5       4.46    10.9   0.00000000000607 
+##  8         4 b         3.51      1.69     2.08  0.0464           
+##  9         5 k        52.6       5.66     9.29  0.000000000247   
+## 10         5 b         3.34      2.30     1.45  0.156            
 ## # ... with 190 more rows
 </code></pre>
 
@@ -292,11 +291,11 @@ bootnls %&gt;% group_by(term) %&gt;% summarize(low=quantile(estimate, alpha / 2)
                                          high=quantile(estimate, 1 - alpha / 2))
 </code></pre>
 
-<pre><code>## # A tibble: 2 × 3
-##    term       low      high
-##   &lt;chr&gt;     &lt;dbl&gt;     &lt;dbl&gt;
-## 1     b  0.214338  6.538996
-## 2     k 39.725501 58.699301
+<pre><code>## # A tibble: 2 x 3
+##   term     low  high
+##   &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt;
+## 1 b      0.214  6.54
+## 2 k     39.7   58.7
 </code></pre>
 
 <p>Or you can use histograms to give you a more detailed idea of the uncertainty in each estimate:</p>

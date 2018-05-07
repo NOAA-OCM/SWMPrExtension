@@ -27,6 +27,10 @@ confint_tidy            Calculate confidence interval as a tidy data
 coxph_tidiers           Tidiers for coxph object
 cv.glmnet_tidiers       Tidiers for glmnet cross-validation objects
 data.frame_tidiers      Tidiers for data.frame objects
+decompose_tidiers       Tidying methods for seasonal decompositions
+emmeans_tidiers         Tidy estimated marginal means (least-squares
+                        means) objects from the emmeans and lsmeans
+                        packages
 ergm_tidiers            Tidying methods for an exponential random graph
                         model
 felm_tidiers            Tidying methods for models with multiple group
@@ -54,6 +58,7 @@ inflate                 Expand a dataset to include all factorial
                         combinations of one or more variables
 insert_NAs              insert a row of NAs into a data frame wherever
                         another data frame has NAs
+ivreg_tidiers           Tidiers for ivreg models
 kappa_tidiers           Tidy a kappa object from a Cohen's kappa
                         calculation
 kde_tidiers             Tidy a kernel density estimate object from the
@@ -66,13 +71,13 @@ lme4_tidiers            Tidying methods for mixed effects models
 lmodel2_tidiers         Tidiers for linear model II objects from the
                         lmodel2 package
 loess_tidiers           Augmenting methods for loess models
-lsmeans_tidiers         Tidy least-squares means objects from the
-                        lsmeans packages
 matrix_tidiers          Tidiers for matrix objects
 mclust_tidiers          Tidying methods for Mclust objects
 mcmc_tidiers            Tidying methods for MCMC (Stan, JAGS, etc.)
                         fits
 mle2_tidiers            Tidy mle2 maximum likelihood objects
+muhaz_tidiers           Tidying methods for kernel based hazard rate
+                        estimates
 multcomp_tidiers        tidying methods for objects produced by
                         'multcomp'
 multinom_tidiers        Tidying methods for multinomial logistic
@@ -107,7 +112,10 @@ sp_tidiers              tidying methods for classes from the sp
                         package.
 sparse_tidiers          Tidy a sparseMatrix object from the Matrix
                         package
+speedlm_tidiers         Tidying methods for a speedlm model
 summary_tidiers         Tidiers for summaryDefault objects
+survdiff_tidiers        Tidiers for Tests of Differences between
+                        Survival Curves
 survfit_tidiers         tidy survival curve fits
 survreg_tidiers         Tidiers for a parametric regression survival
                         model
