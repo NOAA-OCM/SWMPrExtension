@@ -3,12 +3,15 @@ annual_range.swmpr	annual_range
 assign_season	assign_season
 cbm_spatial	cbm_spatial
 create_sk_flextable_list	create_sk_flextable_list
+create_sk_national_ft_reserves	create_sk_national_ft_reserves
+create_sk_national_ft_results	create_sk_national_ft_results
 elknmnut	elknmnut
 elksmwq	elksmwq
 elk_spatial	elk_spatial
 ft_col_names	ft_col_names
 generate_results_table	generate_results_table
 generate_station_table	generate_station_table
+geographic_unique_stations	geographic_unique_stations
 get_reserve	get_reserve
 get_shp_name	get_shp_name
 get_sites	get_sites
@@ -43,6 +46,7 @@ sk_seasonal	sk_seasonal
 sk_seasonal.swmpr	sk_seasonal
 sk_tidy	sk_tidy
 std_param_check	std_param_check
+summarise_handoff_files	summarise_handoff_files
 threshold_criteria_plot	threshold_criteria_plot
 threshold_criteria_plot.swmpr	threshold_criteria_plot
 threshold_identification	threshold_identification
@@ -52,5 +56,6 @@ threshold_percentile_plot.swmpr	threshold_percentile_plot
 threshold_summary	threshold_summary
 threshold_summary.swmpr	threshold_summary
 title_labeler	title_labeler
+us_aea	us_aea
 y_count_labeler	y_count_labeler
 y_labeler	y_labeler
