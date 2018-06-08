@@ -1,3 +1,248 @@
+2018-06-01 12:14  rsbivand
+
+	* DESCRIPTION, LICENSE.note: add LICENSE.note
+
+2018-06-01 08:02  rsbivand
+
+	* configure, configure.ac: tidy
+
+2018-05-31 18:33  rsbivand
+
+	* tests/srs_rendering.Rout.save: tidy
+
+2018-05-31 18:28  rsbivand
+
+	* tests/srs_rendering.R: tidy
+
+2018-05-31 18:07  rsbivand
+
+	* tests/srs_rendering.Rout.save: tidy
+
+2018-05-31 18:04  rsbivand
+
+	* tests/srs_rendering.R: tidy
+
+2018-05-31 18:02  rsbivand
+
+	* tests/srs_rendering.Rout.save: tidy
+
+2018-05-31 17:56  rsbivand
+
+	* tests/srs_rendering.R: tidy
+
+2018-05-31 12:11  rsbivand
+
+	* .Rbuildignore, tests/srs_rendering.R,
+	  tests/srs_rendering.Rout.save: tests for SRS GDAL version
+
+2018-05-31 08:11  rsbivand
+
+	* configure, configure.ac, m4, m4/ax_cxx_compile_stdcxx.m4: add
+	  CXX11 check
+
+2018-05-30 12:11  rsbivand
+
+	* configure, configure.ac: configure.ac fix
+
+2018-05-30 08:03  rsbivand
+
+	* src/gdal-bindings.cpp: importFromWkt bug: removed & for const
+	  char*
+
+2018-05-29 18:24  rsbivand
+
+	* src/ogr_proj.cpp: tidy
+
+2018-05-29 18:13  rsbivand
+
+	* DESCRIPTION: tidy
+
+2018-05-29 16:53  rsbivand
+
+	* src/OGR_write.cpp, src/gdal-bindings.cpp, src/ogr_proj.cpp,
+	  src/projectit.cpp: add valgrind fixme tags
+
+2018-05-29 12:22  rsbivand
+
+	* src/gdal-bindings.cpp: 2.3.0 const
+
+2018-05-29 11:51  rsbivand
+
+	* src/gdal-bindings.cpp, src/ogr_proj.cpp, src/projectit.cpp:
+	  valgrind and GDAL 2.3.0 const
+
+2018-05-23 19:34  rsbivand
+
+	* configure, configure.ac: fix configure test
+
+2018-05-07 12:56  rsbivand
+
+	* ChangeLog, inst/ChangeLog: tidy
+
+2018-05-07 12:55  rsbivand
+
+	* tests/tests.Rout.save: tidy
+
+2018-05-07 12:51  rsbivand
+
+	* DESCRIPTION, configure, configure.ac, inst/include,
+	  inst/include/projects.h: updating ext-dep limits
+
+2018-04-30 13:29  rsbivand
+
+	* DESCRIPTION, configure, configure.ac: add enable deprecated
+
+2018-04-06 07:09  rsbivand
+
+	* ChangeLog, inst/ChangeLog: add geojson string test
+
+2018-04-06 07:08  rsbivand
+
+	* tests/tests.R, tests/tests.Rout.save: add geojson string test
+
+2018-04-05 11:21  rsbivand
+
+	* DESCRIPTION: check before normalizePath() in OGR access
+
+2018-04-05 11:19  rsbivand
+
+	* DESCRIPTION, R/ogr.R, R/ogr_sp.R: check before normalizePath() in
+	  OGR access
+
+2018-04-02 14:26  rsbivand
+
+	* DESCRIPTION, configure, configure.ac: add config check for
+	  projects.h
+
+2018-03-17 17:29  rsbivand
+
+	* src/projectit.cpp: BDRs checkCRSArgs fix avoiding unnecessary
+	  string operations
+
+2018-03-17 17:10  rsbivand
+
+	* DESCRIPTION, src/projectit.cpp: allocate string in checkCRSArgs
+	  dynamically
+
+2018-03-13 14:50  rsbivand
+
+	* ChangeLog, inst/ChangeLog: tidy
+
+2018-03-13 14:09  rsbivand
+
+	* R/Class-CRSx.R: WebMerc on 4.9.3
+
+2018-03-13 13:07  rsbivand
+
+	* ChangeLog, inst/ChangeLog: tidy
+
+2018-03-13 13:06  rsbivand
+
+	* configure: work-around for proj 5.0.0 Web Mercator bug
+
+2018-03-13 13:05  rsbivand
+
+	* R/Class-CRSx.R, tests/test_proj.R, tests/test_proj.Rout.save:
+	  work-around for proj 5.0.0 Web Mercator bug
+
+2018-02-26 13:33  rsbivand
+
+	* DESCRIPTION, src/projectit.cpp: fix projInfo("units") for 5.0.0
+
+2018-02-15 11:29  rsbivand
+
+	* ChangeLog, inst/ChangeLog: add enc2utf8 to OGR readers
+
+2018-02-15 11:28  rsbivand
+
+	* R/ogr_sp.R: add enc2utf8 to OGR readers
+
+2018-02-15 10:01  rsbivand
+
+	* ChangeLog, inst/ChangeLog: add enc2utf8 to OGR readers
+
+2018-02-15 10:01  rsbivand
+
+	* R/ogr.R: add enc2utf8 to OGR readers
+
+2018-02-15 09:01  rsbivand
+
+	* ChangeLog, inst/ChangeLog: add enc2utf8 to OGR readers
+
+2018-02-15 09:00  rsbivand
+
+	* R/ogr.R, R/ogr_sp.R: add enc2utf8 to OGR readers
+
+2018-02-14 10:47  rsbivand
+
+	* ChangeLog, inst/ChangeLog: tidy
+
+2018-02-14 10:47  rsbivand
+
+	* ChangeLog, R/ogr.R, R/ogr_sp.R, R/ogr_write.R, inst/ChangeLog:
+	  add normalizePath() to OGR
+
+2018-02-10 15:54  rsbivand
+
+	* ChangeLog, inst/ChangeLog: add new Windows drivers
+
+2018-02-10 15:53  rsbivand
+
+	* DESCRIPTION, configure, src/Makevars.win, tools/winlibs.R: add
+	  new Windows drivers
+
+2018-01-30 12:38  rsbivand
+
+	* DESCRIPTION, R/make_EPSG.R, man/make_EPSG.Rd: condition on proj
+	  version for make_EPSG
+
+2017-11-21 17:37  rsbivand
+
+	* ChangeLog, inst/ChangeLog: tidy
+
+2017-11-21 17:26  rsbivand
+
+	* DESCRIPTION: tidy
+
+2017-11-21 12:58  rsbivand
+
+	* DESCRIPTION, R/ogr_write.R, src/OGR_write.cpp: reverse field
+	  number bugfix for all drivers but ESRI Shapefile
+
+2017-11-20 09:49  rsbivand
+
+	* ChangeLog, inst/ChangeLog: tidy
+
+2017-11-20 09:48  rsbivand
+
+	* DESCRIPTION: tidy
+
+2017-11-05 15:32  rsbivand
+
+	* ChangeLog, inst/ChangeLog: tidy
+
+2017-11-05 15:30  rsbivand
+
+	* R/ogr_write.R, src/OGR_write.cpp: adding warning that field names
+	  changed
+
+2017-11-04 15:09  rsbivand
+
+	* configure: tidy
+
+2017-11-04 15:08  rsbivand
+
+	* ChangeLog, inst/ChangeLog: tidy
+
+2017-11-04 15:07  rsbivand
+
+	* DESCRIPTION, src/OGR_write.cpp: fix shapefile writing bug for
+	  field names only differing in case/CASE
+
+2017-10-27 11:12  rsbivand
+
+	* ChangeLog, DESCRIPTION, configure, inst/ChangeLog: tidy
+
 2017-10-23 18:58  rsbivand
 
 	* R/AAA.R: add extSoftVersion
