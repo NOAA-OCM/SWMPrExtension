@@ -3,6 +3,171 @@
 \newcommand{\ghpr}{\href{https://github.com/RcppCore/Rcpp/pull/#1}{##1}}
 \newcommand{\ghit}{\href{https://github.com/RcppCore/Rcpp/issues/#1}{##1}}
 
+\section{Changes in Rcpp version 0.12.17 (2018-05-09)}{
+  \itemize{
+    \item Changes in Rcpp API:
+    \itemize{
+      \item The random number \code{Generator} class no longer inhreits from
+      \code{RNGScope} (Kevin in \ghpr{837} fixing \ghit{836}).
+      \item A spurious parenthesis was removed to please gcc8 (Dirk
+      fixing \ghit{841})
+      \item The optional \code{Timer} class header now undefines
+      \code{FALSE} which was seen to have side-effects on some platforms
+      (Romain in \ghpr{847} fixing \ghpr{846}).
+      \item Optional \code{StoragePolicy} attributes now also work for
+      string vectors (Romain in \ghpr{850} fixing \ghit{849}).
+    }
+    \item Changes in Rcpp Documentation:
+    \itemize{
+      \item A few old typesetting conventions from the prior Rnw format
+      have been corrected (Peter Hickey in \ghpr{831}; Joris Meys; Dirk)
+      \item Two internal links to the introduction published in JSS have been
+      updated to the changed filename given the newer TAS introduction.
+      \item Some remaining backticks were replaced with straight quotes
+      (Ralf Stubner in \ghpr{845}).
+      \item A citation to the Rcpp introducion in the The American
+      Statistician has been added to the introductory and FAQ vignettes.
+    }
+  }
+}
+
+\section{Changes in Rcpp version 0.12.16 (2018-03-08)}{
+  \itemize{
+    \item Changes in Rcpp API:
+    \itemize{
+      \item Rcpp now sets and puts the RNG state upon each entry to an Rcpp
+      function, ensuring that nested invocations of Rcpp functions manage the
+      RNG state as expected (Kevin in \ghpr{825} addressing \ghit{823}).
+      \item The \code{R::pythag} wrapper has been commented out; the underlying
+      function has been gone from R since 2.14.0, and \code{::hypot()} (part of
+      C99) is now used unconditionally for complex numbers (Dirk in \ghpr{826}).
+      \item The \code{long long} type can now be used on 64-bit Windows (Kevin
+      in \ghpr{811} and again in \ghpr{829} addressing \ghit{804}).
+    }
+    \item Changes in Rcpp Attributes:
+    \itemize{
+      \item Code generated with \code{cppFunction()} now uses \code{.Call()}
+      directly (Kirill Mueller in \ghpr{813} addressing \ghit{795}).
+    }
+    \item Changes in Rcpp Documentation:
+    \itemize{
+      \item The Rcpp FAQ vignette is now indexed as `Rcpp-FAQ`; a stale Gmane
+      reference was removed and entry for getting compilers under Conda was added.
+      \item The top-level README.md now has a \emph{Support} section.
+      \item The Rcpp.bib reference file was refreshed to current versions.
+    }
+  }
+}
+
+\section{Changes in Rcpp version 0.12.15 (2018-01-16)}{
+  \itemize{
+    \item Changes in Rcpp API:
+    \itemize{
+      \item Calls from exception handling to \code{Rf_warning()} now correctly
+      set an initial format string (Dirk in \ghpr{777} fixing \ghit{776}).
+      \item The 'new' Date and Datetime vectors now have \code{is_na} methods
+      too. (Dirk in \ghpr{783} fixing \ghit{781}).
+      \item Protect more temporary \code{SEXP} objects produced by \code{wrap}
+      (Kevin in \ghpr{784}).
+      \item Use public R APIs for \code{new_env} (Kevin in \ghpr{785}).
+      \item Evaluation of R code is now safer when compiled against R
+      3.5 (you also need to explicitly define \code{RCPP_PROTECTED_EVAL}
+      before including \code{Rcpp.h}). Longjumps of all kinds (condition
+      catching, returns, restarts, debugger exit) are appropriately
+      detected and handled, e.g. the C++ stack unwinds correctly
+      (Lionel in \ghpr{789}). [ Committed but subsequently disabled in release
+      0.12.15 ]
+      \item The new function \code{Rcpp_fast_eval()} can be used for
+      performance-sensitive evaluation of R code. Unlike
+      \code{Rcpp_eval()}, it does not try to catch errors with
+      \code{tryEval} in order to avoid the catching overhead. While this
+      is safe thanks to the stack unwinding protection, this also means
+      that R errors are not transformed to an \code{Rcpp::exception}. If
+      you are relying on error rethrowing, you have to use the slower
+      \code{Rcpp_eval()}. On old R versions \code{Rcpp_fast_eval()}
+      falls back to \code{Rcpp_eval()} so it is safe to use against any
+      versions of R  (Lionel in \ghpr{789}). [ Committed but subsequently
+      disabled in release 0.12.15 ]
+      \item Overly-clever checks for \code{NA} have been removed (Kevin in
+      \ghpr{790}).
+      \item The included tinyformat has been updated to the current version,
+      Rcpp-specific changes are now more isolated (Kirill in \ghpr{791}).
+      \item Overly picky \emph{fall-through} warnings by gcc-7 regarding
+      \code{switch} statements are now pre-empted (Kirill in \ghpr{792}).
+      \item Permit compilation on ANDROID (Kenny Bell in \ghpr{796}).
+      \item Improve support for NVCC, the CUDA compiler (Iñaki Ucar in
+      \ghpr{798} addressing \ghit{797}).
+      \item Speed up tests for NA and NaN (Kirill and Dirk in \ghpr{799} and
+      \ghpr{800}).
+      \item Rearrange stack unwind test code, keep test disabled for now (Lionel
+      in \ghpr{801}).
+      \item Further condition away protect unwind behind #define (Dirk in
+      \ghpr{802}).
+    }
+    \item Changes in Rcpp Attributes:
+    \itemize{
+      \item Addressed a missing Rcpp namespace prefix when generating a C++
+      interface (James Balamuta in \ghpr{779}).
+    }
+    \item Changes in Rcpp Documentation:
+    \itemize{
+      \item The Rcpp FAQ now shows \code{Rcpp::Rcpp.plugin.maker()} and not the
+      outdated \code{:::} use applicable non-exported functions.
+    }
+  }
+}
+
+\section{Changes in Rcpp version 0.12.14 (2017-11-17)}{
+  \itemize{
+    \item Changes in Rcpp API:
+    \itemize{
+      \item New const iterators functions \code{cbegin()} and \code{cend()}
+      added to \code{MatrixRow} as well (Dan Dillon in \ghpr{750}).
+      \item The \code{Rostream} object now contains a \code{Buffer} rather than
+      allocating one (Kirill Müller in \ghpr{763}).
+      \item New \code{DateVector} and \code{DatetimeVector} classes are now the
+      default fully deprecating the old classes as announced one year ago.
+    }
+    \item Changes in Rcpp Package:
+    \itemize{
+      \item DESCRIPTION file now list doi information per CRAN suggestion.
+    }
+    \item Changes in Rcpp Documentation:
+    \itemize{
+      \item Update CITATION file with doi information and PeerJ preprint.
+    }
+  }
+}
+
+\section{Changes in Rcpp version 0.12.13 (2017-09-24)}{
+  \itemize{
+    \item Changes in Rcpp API:
+    \itemize{
+      \item New const iterators functions \code{cbegin()} and \code{cend()} have
+      been added to several vector and matrix classes (Dan Dillon and James
+      Balamuta in \ghpr{748}) starting to address \ghit{741}).
+    }
+    \item Changes in Rcpp Modules:
+    \itemize{
+      \item Misplacement of one parenthesis in macro \code{LOAD_RCPP_MODULE}
+      was corrected (Lei Yu in \ghpr{737})
+    }
+    \item Changes in Rcpp Documentation:
+    \itemize{
+      \item Rewrote the macOS sections to depend on official documentation due
+      to large changes in the macOS toolchain. (James Balamuta in \ghpr{742}
+      addressing issue \ghit{682}).
+      \item Added a new vignette \sQuote{Rcpp-introduction} based on new PeerJ
+      preprint, renamed existing introduction to \sQuote{Rcpp-jss-2011}.
+      \item Transitioned all vignettes to the 'pinp' RMarkdown template
+      (James Balamuta and Dirk Eddelbuettel in \ghpr{755} addressing
+      issue \ghit{604}).
+      \item Added an entry on running `compileAttributes()` twice to the
+      Rcpp-FAQ (\ghit{#745}).
+    }
+  }
+}
+
 \section{Changes in Rcpp version 0.12.12 (2017-07-13)}{
   \itemize{
     \item Changes in Rcpp API:

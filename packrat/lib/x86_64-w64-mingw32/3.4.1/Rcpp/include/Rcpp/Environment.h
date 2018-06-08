@@ -23,10 +23,6 @@
 #ifndef Rcpp_Environment_h
 #define Rcpp_Environment_h
 
-// From 'R/Defn.h'
-// NOTE: can't include header directly as it checks for some C99 features
-extern "C" SEXP R_NewHashedEnv(SEXP, SEXP);
-
 namespace Rcpp{
 
     RCPP_API_CLASS(Environment_Impl),
@@ -113,7 +109,11 @@ namespace Rcpp{
 
             /* We need to evaluate if it is a promise */
             if( TYPEOF(res) == PROMSXP){
-                res = Rf_eval( res, env ) ;
+#if defined(RCPP_USE_UNWIND_PROTECT)
+                res = internal::Rcpp_eval_impl(res, env);
+#else
+                res = Rf_eval(res, env);
+#endif
             }
             return res ;
         }
@@ -133,7 +133,11 @@ namespace Rcpp{
 
             /* We need to evaluate if it is a promise */
             if( TYPEOF(res) == PROMSXP){
-                res = Rf_eval( res, env ) ;
+#if defined(RCPP_USE_UNWIND_PROTECT)
+                res = internal::Rcpp_eval_impl(res, env);
+#else
+                res = Rf_eval(res, env);
+#endif
             }
             return res ;
         }
@@ -155,7 +159,11 @@ namespace Rcpp{
 
             /* We need to evaluate if it is a promise */
             if( TYPEOF(res) == PROMSXP){
-                res = Rf_eval( res, env ) ;
+#if defined(RCPP_USE_UNWIND_PROTECT)
+                res = internal::Rcpp_eval_impl(res, env);
+#else
+                res = Rf_eval(res, env);
+#endif
             }
             return res ;
         }
@@ -178,7 +186,11 @@ namespace Rcpp{
 
             /* We need to evaluate if it is a promise */
             if( TYPEOF(res) == PROMSXP){
-                res = Rf_eval( res, env ) ;
+#if defined(RCPP_USE_UNWIND_PROTECT)
+                res = internal::Rcpp_eval_impl(res, env);
+#else
+                res = Rf_eval(res, env);
+#endif
             }
             return res ;
         }
@@ -213,6 +225,10 @@ namespace Rcpp{
             SEXP nameSym = Rf_install(name.c_str());
             Rf_defineVar( nameSym, x, Storage::get__() );
             return true ;
+        }
+
+        bool assign(const std::string& name, const Shield<SEXP>& x) const {
+            return assign(name, (SEXP) x);
         }
 
         /**
@@ -401,21 +417,6 @@ namespace Rcpp{
     };
 
 typedef Environment_Impl<PreserveStorage> Environment ;
-
-inline Environment new_env(int size = 29) {
-    Shield<SEXP> sizeSEXP(Rf_ScalarInteger(size));
-    return R_NewHashedEnv(R_EmptyEnv, sizeSEXP);
-}
-
-inline Environment new_env(SEXP parent, int size = 29) {
-    Shield<SEXP> sizeSEXP(Rf_ScalarInteger(size));
-    Shield<SEXP> parentSEXP(parent);
-    if (!Rf_isEnvironment(parentSEXP)) {
-        stop("parent is not an environment");
-    }
-    return R_NewHashedEnv(parentSEXP, sizeSEXP);
-}
-
 
 } // namespace Rcpp
 

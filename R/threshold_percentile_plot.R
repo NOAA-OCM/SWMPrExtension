@@ -91,7 +91,7 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
                                          , hist_rng = NULL
                                          , target_yr = NULL
                                          , percentiles = c(0.05, 0.95)
-                                         , by_month = TRUE
+                                         , by_month = FALSE
                                          , log_trans = FALSE
                                          , converted = FALSE
                                          , plot_title = FALSE
@@ -206,12 +206,13 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
 
   if(length(percentiles) > 1) {
     mn <- ifelse(min(dat_subset[ , 2], na.rm = T) < min(bars$perc_lo), min(dat_subset[ , 2], na.rm = T), min(bars$perc_lo))
-    mn <- ifelse(data_type == 'nut' && param != 'chla_n', ceiling(mn/0.01) * 0.01, ifelse(mn < 0, floor(mn), ceiling(mn)))
+    mn <- ifelse(data_type == 'nut', 0, ifelse(mn < 0, floor(mn), ceiling(mn)))
   } else {
-    mn <- ifelse(min(dat_subset[ , 2], na.rm = T) > min(bars$perc_hi), min(dat_subset[ , 2], na.rm = T), min(bars$perc_hi))
-    mn <- ifelse(data_type == 'nut' && param != 'chla_n', ceiling(mn/0.01) * 0.01, ifelse(mn < 0, floor(mn), ceiling(mn)))
+    mn <- ifelse(min(dat_subset[ , 2], na.rm = T) < min(bars$perc_hi), min(dat_subset[ , 2], na.rm = T), min(bars$perc_hi)) #note: perc_lo DNE when percentiles < 2
+    mn <- ifelse(data_type == 'nut', 0, ifelse(mn < 0, floor(mn), ceiling(mn)))
   }
   mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), mn)
+
 
   # plot ----
   plt <- ggplot(dat_subset, aes_(x = dt, y = parm, color = lab_dat)) +
@@ -221,7 +222,8 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
   # add a log transformed access if log_trans = T
   if(!log_trans) {
 
-    plt <- plt + scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma)
+    plt <- plt +
+      scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma)
 
   } else {
 
