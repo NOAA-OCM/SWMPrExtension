@@ -1,4 +1,7 @@
-#### SWMPrExtension 0.3.13
+#### SWMPrExtension 0.3.15
+* Updates to y-axis for threshold_percentile_plot
+
+#### SWMPrExtension 0.3.14
 * Changes to leaflet package resulted in station labels without formats. Currently this bug cannot be fully addressed. Basic formatting has been implemented for reserve level mapping functions
 * Updates to:
 ** res_sk_map

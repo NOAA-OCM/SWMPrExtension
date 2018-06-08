@@ -9,7 +9,7 @@ threshold_percentile_plot(swmpr_in, ...)
 
 \method{threshold_percentile_plot}{swmpr}(swmpr_in, param = NULL,
   hist_rng = NULL, target_yr = NULL, percentiles = c(0.05, 0.95),
-  by_month = TRUE, log_trans = FALSE, converted = FALSE,
+  by_month = FALSE, log_trans = FALSE, converted = FALSE,
   plot_title = FALSE, ...)
 }
 \arguments{
