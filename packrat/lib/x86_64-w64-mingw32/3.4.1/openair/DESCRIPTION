@@ -35,4 +35,4 @@ Built: R 3.4.1; x86_64-w64-mingw32; 2017-09-14 19:04:42 UTC; windows
 Archs: i386, x64
 InstallAgent: packrat 0.4.8.1
 InstallSource: CRAN
-Hash: 9909d31b1e17d962653de0edf1a78fb0
+Hash: d009b5cb57c885cc07c47eda114d8819
