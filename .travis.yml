@@ -8,10 +8,9 @@ cache: packages
 os:
   - linux
   - osx
-
+  
 addons:
   apt:
     packages:
-      - libgdal1-dev
+      - libgdal-dev
       - libproj-dev
-      - libgeos-dev
