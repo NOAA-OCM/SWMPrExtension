@@ -49,7 +49,7 @@ Authors@R: c(
 	email = "marcus@sccwrp.org"),
   person(given = "Kimberly", family = "Cressman",
     role = c("ctb"),
-	email = "kimberly.cressman@dmr.md.gov"),
+	email = "kimberly.cressman@dmr.ms.gov"),
   person(given = "Bob", family = "Rudis",
     role = c("ctb"),
 	email = "bob@rud.is")
