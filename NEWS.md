@@ -1,3 +1,6 @@
+#### SWMPrExtension 0.3.16
+* Updates to historical_range and historical_daily_range: analysis now allows for comparisons between a target year and a historical rnage that does not include the target year.
+
 #### SWMPrExtension 0.3.15
 * Updates to y-axis for threshold_percentile_plot
 

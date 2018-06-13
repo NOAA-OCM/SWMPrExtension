@@ -9,7 +9,6 @@ output:
 ---
 
 ![](swmpr_logo.png)
-#### *Julie Padilla, jpadilla@limno.com*, [LimnoTech](www.limno.com)
 
 [![Travis-CI Build Status](https://travis-ci.org/LimnoTech/SWMPrExtension.svg?branch=master)](https://travis-ci.org/LimnoTech/SWMPrExtension)[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/SWMPrExtension)](https://cran.r-project.org/package=SWMPrExtension)[![Downloads from the RStudio CRAN mirror](http://cranlogs.r-pkg.org/badges/grand-total/SWMPrExtension)](http://cran.rstudio.com/package=SWMPrExtension)
 

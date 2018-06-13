@@ -73,7 +73,7 @@ x <- x + labs(x = NULL, y = "Dissolved Oxygen (mg/L)")
 \code{\link[ggplot2]{ggplot}}, \code{\link{assign_season}}, \code{\link{y_labeler}}
 }
 \author{
-Julie Padilla
+Julie Padilla, Kimberly Cressman
 }
 \concept{
 analyze

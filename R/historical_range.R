@@ -16,7 +16,7 @@
 #'
 #' @import ggplot2
 #'
-#' @importFrom dplyr filter group_by select summarise
+#' @importFrom dplyr between filter group_by select summarise
 #' @importFrom magrittr "%>%"
 #' @importFrom lubridate  year floor_date
 #' @importFrom rlang .data
@@ -29,7 +29,7 @@
 #'
 #' The user also has the option to add a threshold hold line using the \code{criteria} argument. Typically, this value is a water quality threshold, which is why \code{criteria_lab} defaults to \code{'WQ Threshold'}. Howver, the user has the option to specify any other type of threshold they wish. when doing so, the value for \code{criteria_lab} should be changed accordingly.
 #'
-#' @author Julie Padilla
+#' @author Julie Padilla, Kimberly Cressman
 #'
 #' @concept analyze
 #'
@@ -142,9 +142,11 @@ historical_range.swmpr <- function(swmpr_in
   if(attr(dat, 'qaqc_cols'))
     warning('QAQC columns present. QAQC not performed before analysis.')
 
-  # Filter to historic range
-  dat <- dat %>% dplyr::filter(lubridate::year(.data$datetimestamp) >= rng[[1]]
-                               & lubridate::year(.data$datetimestamp) <= rng[[2]])
+  # Filter to historic range and target year
+  dat <- dat %>% dplyr::filter(lubridate::year(.data$datetimestamp) == target_yr |
+                                 dplyr::between(lubridate::year(.data$datetimestamp),as.numeric(rng[[1]]), as.numeric(rng[[2]])))
+  # dat <- dat %>% dplyr::filter(lubridate::year(.data$datetimestamp) >= rng[[1]]
+  #                              & lubridate::year(.data$datetimestamp) <= rng[[2]])
 
   # Assign date for determining daily stat value
   dat$date <- lubridate::floor_date(dat$datetimestamp, unit = 'days')
@@ -162,6 +164,11 @@ historical_range.swmpr <- function(swmpr_in
 
   # Assign seasons
   dat_all$season <- assign_season(dat_all$date, ...)
+
+  # separate into historical and target year data.frames
+  dat_yr <- dat_all %>% dplyr::filter(lubridate::year(date) == target_yr)
+  dat_all <- dat_all %>%
+    dplyr::filter(dplyr::between(lubridate::year(.data$date), as.numeric(rng[[1]]), as.numeric(rng[[2]])))
 
   # Determine average min/max/mean for each month (for all years together)
   if(data_type != 'nut') {
@@ -192,7 +199,7 @@ historical_range.swmpr <- function(swmpr_in
 
   }
 
-  dat_yr <- dat_all %>% dplyr::filter(year(date) == target_yr)
+
 
   if(data_type != 'nut') {
     dat_yr <- dat_yr %>%
@@ -256,18 +263,29 @@ historical_range.swmpr <- function(swmpr_in
       plt <- plt + scale_y_continuous(limits = c(mn, mx_log), breaks = brks, trans = y_trans, labels = scales::comma)
     }
 
+
+    # conditionally assign legend/ribbon colors (lab_yr_rng is less than lab_hist_rng when plotting a target year that is outside the historical range)
+    if(lab_yr_rng > lab_hist_rng) {
+      ribbon_fill <- c('steelblue3', 'gray40', 'steelblue3')
+      alpha_fill <- c('steelblue3', 'gray40')
+    } else {
+      ribbon_fill <- c('steelblue3', 'steelblue3', 'gray40')
+      alpha_fill <- c('gray40', 'steelblue3')
+    }
+
     # Adjust scale
     plt <-
       plt +
       scale_color_manual('', values = c('gray40')) +
-      scale_fill_manual('', values = c('steelblue3', 'gray40', 'steelblue3'), guide = F) +
+      scale_fill_manual('', values = ribbon_fill, guide = F) +
+      # scale_fill_manual('', values = c('steelblue3', 'gray40', 'steelblue3'), guide = F) +
       scale_shape_manual('', values = c(21)) +
       scale_alpha_manual('', values = rep(0.25, 2))
 
     # Override legend defaults
     plt <-
       plt +
-      guides(alpha = guide_legend(override.aes = list(fill = c('steelblue3', 'gray40')), order = 3, reverse = T)
+      guides(alpha = guide_legend(override.aes = list(fill = alpha_fill), order = 3, reverse = T)
              , shape = guide_legend(override.aes = list(fill = 'steelblue3'), order = 1)
              , color = guide_legend(override.aes = list(color = 'gray40'), order = 2))
 

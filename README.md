@@ -1,6 +1,5 @@
 
 ![](swmpr_logo.png)
-#### *Julie Padilla, jpadilla@limno.com*, [LimnoTech](www.limno.com)
 
 [![Travis-CI Build Status](https://travis-ci.org/LimnoTech/SWMPrExtension.svg?branch=master)](https://travis-ci.org/LimnoTech/SWMPrExtension)[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/SWMPrExtension)](https://cran.r-project.org/package=SWMPrExtension)[![Downloads from the RStudio CRAN mirror](http://cranlogs.r-pkg.org/badges/grand-total/SWMPrExtension)](http://cran.rstudio.com/package=SWMPrExtension)
 
@@ -10,7 +9,7 @@
 
 # Overview 
 
-The System Wide Monitoring Program ([SWMP](http://nerrs.noaa.gov/RCDefault.aspx?ID=18)) was implemented by the National Estuarine Research Reserve System ([NERRS](http://nerrs.noaa.gov/)) in 1995 to provide continuous monitoring data at over 140 continuous monitoring stations in 28 estuaries across the United States.  SWMPrExtension (pronounce "swamper extension") is an R package that provides additional functions to organize and analyze SWMP data and is intended as a companion package for [SWMPr](https://github.com/fawda123/SWMPr) (pronounced "swamper"). Documentation for SWMPrExtension is outlined below.
+The System Wide Monitoring Program ([SWMP](http://nerrs.noaa.gov/RCDefault.aspx?ID=18)) was implemented by the National Estuarine Research Reserve System ([NERRS](http://nerrs.noaa.gov/)) in 1995 to provide continuous monitoring data at over 140 continuous monitoring stations in 28 estuaries across the United States.  SWMPrExtension (pronounce "swamper extension") is an R package that provides additional functions to organize and analyze SWMP data and is intended as a companion package for [SWMPr](https://github.com/fawda123/SWMPr) (pronounced "swamper"). Currently, there is no citation for SWMPrExtension.
 
 [SWMPr](https://github.com/fawda123/SWMPr) is an R package for retrieving, organizing, and analyzing estuary monitoring data from SWMP. SWMPr can be cited as follows:
 
@@ -32,7 +31,7 @@ Install the development (unstable) version from Github:
 ```r
 install.packages('devtools')
 library(devtools)
-install_github('limnotech/SWMPrExtension')
+install_github('padilla410/SWMPrExtension')
 library(SWMPrExtension)
 ```
 

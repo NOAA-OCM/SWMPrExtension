@@ -16,7 +16,7 @@
 #'
 #' @import ggplot2
 #'
-#' @importFrom dplyr filter group_by select summarise
+#' @importFrom dplyr between filter group_by select summarise
 #' @importFrom magrittr "%>%"
 #' @importFrom lubridate  year floor_date yday
 #' @importFrom rlang .data
@@ -29,7 +29,7 @@
 #'
 #' The user also has the option to add a threshold line using the \code{criteria} argument. Typically, this value is a water quality threshold, which is why \code{criteria_lab} defaults to \code{'WQ Threshold'}. However, the user has the option to specify any other type of threshold they wish. when doing so, the value for \code{criteria_lab} should be changed accordingly.
 #'
-#' @author Julie Padilla
+#' @author Julie Padilla, Kimberly Cressman
 #'
 #' @concept analyze
 #'
@@ -138,8 +138,8 @@ historical_daily_range.swmpr <- function(swmpr_in
     warning('QAQC columns present. QAQC not performed before analysis.')
 
   # Filter to historic range
-  dat <- dat %>% dplyr::filter(lubridate::year(.data$datetimestamp) >= rng[[1]]
-                               & lubridate::year(.data$datetimestamp) <= rng[[2]])
+  dat <- dat %>% dplyr::filter(lubridate::year(.data$datetimestamp) == target_yr |
+                                 dplyr::between(lubridate::year(.data$datetimestamp),as.numeric(rng[[1]]), as.numeric(rng[[2]])))
 
   # Assign date for determining daily stat value
   dat$date <- lubridate::floor_date(dat$datetimestamp, unit = 'days')
@@ -157,6 +157,11 @@ historical_daily_range.swmpr <- function(swmpr_in
 
   dat_all$julian_day <- lubridate::yday(dat_all$date)
 
+  # separate into historical and target year data.frames
+  dat_yr <- dat_all %>% dplyr::filter(lubridate::year(date) == target_yr)
+  dat_all <- dat_all %>%
+    dplyr::filter(dplyr::between(lubridate::year(.data$date), as.numeric(rng[[1]]), as.numeric(rng[[2]])))
+
   # Determine average min/max/mean for each julian day (for all years together)
   dat_hist_avg <- dat_all %>%
     dplyr::group_by(!! jd) %>%
@@ -169,8 +174,6 @@ historical_daily_range.swmpr <- function(swmpr_in
     dplyr::summarise(mean = mean(!! avg, na.rm = T)
                      , min = min(!!  mini, na.rm = T)
                      , max = max(!! maxi, na.rm = T))
-
-  dat_yr <- dat_all %>% dplyr::filter(lubridate::year(date) == target_yr)
 
   # account for missing julian days
   if(length(dat_yr[1, ] < 365)){
