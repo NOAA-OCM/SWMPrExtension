@@ -2,7 +2,8 @@
 
 language: r
 sudo: required
-cache: packages
+dist: trusty
+#cache: packages
 
 os:
   - linux
