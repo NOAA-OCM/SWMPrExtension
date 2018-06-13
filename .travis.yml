@@ -9,5 +9,9 @@ os:
   - linux
   - osx
 
-before_install:
-  - sudo apt-get libproj-dev libgeos-dev libgdal1-dev
+addons:
+  apt:
+    packages:
+      - libgdal1-dev
+      - libproj-dev
+      - libgeos-dev
