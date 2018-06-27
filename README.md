@@ -31,7 +31,7 @@ Install the development (unstable) version from Github:
 ```r
 install.packages('devtools')
 library(devtools)
-install_github('LimnoTech/SWMPrExtension')
+install_github('NOAA-OCM/SWMPrExtension')
 library(SWMPrExtension)
 ```
 
