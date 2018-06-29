@@ -10,7 +10,7 @@ output:
 
 ![](swmpr_logo.png)
 
-[![Travis-CI Build Status](https://travis-ci.org/LimnoTech/SWMPrExtension.svg?branch=master)](https://travis-ci.org/LimnoTech/SWMPrExtension)[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/SWMPrExtension)](https://cran.r-project.org/package=SWMPrExtension)[![Downloads from the RStudio CRAN mirror](http://cranlogs.r-pkg.org/badges/grand-total/SWMPrExtension)](http://cran.rstudio.com/package=SWMPrExtension)
+<!-- [![Travis-CI Build Status](https://travis-ci.org/LimnoTech/SWMPrExtension.svg?branch=master)](https://travis-ci.org/LimnoTech/SWMPrExtension)-->[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/SWMPrExtension)](https://cran.r-project.org/package=SWMPrExtension)[![Downloads from the RStudio CRAN mirror](http://cranlogs.r-pkg.org/badges/grand-total/SWMPrExtension)](http://cran.rstudio.com/package=SWMPrExtension)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -29,6 +29,9 @@ The System Wide Monitoring Program ([SWMP](http://nerrs.noaa.gov/RCDefault.aspx?
 [SWMPr](https://github.com/fawda123/SWMPr) is an R package for retrieving, organizing, and analyzing estuary monitoring data from SWMP. SWMPr can be cited as follows:
 
 *Beck MW. 2016. SWMPr: An R package for retrieving, organizing, and analyzing environmental data for estuaries.  The R Journal. 8(1):219-232. https://journal.r-project.org/archive/2016-1/beck.pdf*
+
+# NOAA Open Source Disclaimer
+This repository is a scientific product and is not official communication of the National Oceanic and Atmospheric Administration, or the United States Department of Commerce. All NOAA GitHub project code is provided on an ?as is? basis and the user assumes responsibility for its use. Any claims against the Department of Commerce or Department of Commerce bureaus stemming from the use of this GitHub project will be governed by all applicable Federal law. Any reference to specific commercial products, processes, or services by service mark, trademark, manufacturer, or otherwise, does not constitute or imply their endorsement, recommendation or favoring by the Department of Commerce. The Department of Commerce seal and logo, or the seal and logo of a DOC bureau, shall not be used in any manner to imply endorsement of any commercial product or activity by DOC or the United States Government.
 
 # Installing the package
 

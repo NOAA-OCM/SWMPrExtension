@@ -11,7 +11,7 @@
 
 
 
-<title></title>
+<title>README.utf8</title>
 
 <script src="README_files/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -20,8 +20,8 @@
 <script src="README_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="README_files/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="README_files/navigation-1.1/tabsets.js"></script>
-<link href="README_files/highlightjs-1.1/default.css" rel="stylesheet" />
-<script src="README_files/highlightjs-1.1/highlight.js"></script>
+<link href="README_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="README_files/highlightjs-9.12.0/highlight.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -30,10 +30,12 @@
   }
 </style>
 <script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
 }
 </script>
 
@@ -119,17 +121,19 @@ $(document).ready(function () {
 </div>
 
 
-<div class="figure">
-<img src="swmpr_logo.png" />
-
-</div>
-<p><a href="https://travis-ci.org/LimnoTech/SWMPrExtension"><img src="https://travis-ci.org/LimnoTech/SWMPrExtension.svg?branch=master" alt="Travis-CI Build Status" /></a><a href="https://cran.r-project.org/package=SWMPrExtension"><img src="http://www.r-pkg.org/badges/version/SWMPrExtension" alt="CRAN_Status_Badge" /></a><a href="http://cran.rstudio.com/package=SWMPrExtension"><img src="http://cranlogs.r-pkg.org/badges/grand-total/SWMPrExtension" alt="Downloads from the RStudio CRAN mirror" /></a></p>
+<p><img src="swmpr_logo.png" /></p>
+<!-- [![Travis-CI Build Status](https://travis-ci.org/LimnoTech/SWMPrExtension.svg?branch=master)](https://travis-ci.org/LimnoTech/SWMPrExtension)-->
+<p><a href="https://cran.r-project.org/package=SWMPrExtension"><img src="http://www.r-pkg.org/badges/version/SWMPrExtension" alt="CRAN_Status_Badge" /></a><a href="http://cran.rstudio.com/package=SWMPrExtension"><img src="http://cranlogs.r-pkg.org/badges/grand-total/SWMPrExtension" alt="Downloads from the RStudio CRAN mirror" /></a></p>
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <div id="overview" class="section level1">
 <h1>Overview</h1>
 <p>The System Wide Monitoring Program (<a href="http://nerrs.noaa.gov/RCDefault.aspx?ID=18">SWMP</a>) was implemented by the National Estuarine Research Reserve System (<a href="http://nerrs.noaa.gov/">NERRS</a>) in 1995 to provide continuous monitoring data at over 140 continuous monitoring stations in 28 estuaries across the United States. SWMPrExtension (pronounced “swamper extension”) is an R package that provides additional functions to organize and analyze SWMP data and is intended as a companion package for <a href="https://github.com/fawda123/SWMPr">SWMPr</a> (pronounced “swamper”). Currently, there is no citation for SWMPrExtension.</p>
 <p><a href="https://github.com/fawda123/SWMPr">SWMPr</a> is an R package for retrieving, organizing, and analyzing estuary monitoring data from SWMP. SWMPr can be cited as follows:</p>
 <p>*Beck MW. 2016. SWMPr: An R package for retrieving, organizing, and analyzing environmental data for estuaries. The R Journal. 8(1):219-232. <a href="https://journal.r-project.org/archive/2016-1/beck.pdf*" class="uri">https://journal.r-project.org/archive/2016-1/beck.pdf*</a></p>
+</div>
+<div id="noaa-open-source-disclaimer" class="section level1">
+<h1>NOAA Open Source Disclaimer</h1>
+<p>This repository is a scientific product and is not official communication of the National Oceanic and Atmospheric Administration, or the United States Department of Commerce. All NOAA GitHub project code is provided on an ?as is? basis and the user assumes responsibility for its use. Any claims against the Department of Commerce or Department of Commerce bureaus stemming from the use of this GitHub project will be governed by all applicable Federal law. Any reference to specific commercial products, processes, or services by service mark, trademark, manufacturer, or otherwise, does not constitute or imply their endorsement, recommendation or favoring by the Department of Commerce. The Department of Commerce seal and logo, or the seal and logo of a DOC bureau, shall not be used in any manner to imply endorsement of any commercial product or activity by DOC or the United States Government.</p>
 </div>
 <div id="installing-the-package" class="section level1">
 <h1>Installing the package</h1>
