@@ -1,5 +1,6 @@
-#### SWMPrExtension 0.3.17
+#### SWMPrExtension 1.0
 * package maintainer changed from Julie Padilla to Dave Eslinger
+* license changed to NOAA approved language
 
 #### SWMPrExtension 0.3.16
 * Updates to historical_range and historical_daily_range: analysis now allows for comparisons between a target year and a historical rnage that does not include the target year.
