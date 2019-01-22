@@ -1,4 +1,8 @@
 #### SWMPrExtension 1.0
+* Updates to plot legends for compatibility with ggplot2 3.0.0
+* Updates to `threshold_percentile_plot` to handle issues with the y-axis
+
+#### SWMPrExtension 1.0
 * package maintainer changed from Julie Padilla to Dave Eslinger
 * license changed to NOAA approved language
 
