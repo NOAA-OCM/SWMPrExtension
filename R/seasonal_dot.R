@@ -222,7 +222,7 @@ seasonal_dot.swmpr <- function(swmpr_in
       plt +
       theme(legend.key.size = unit(7, 'pt')) +
       theme(legend.text = element_text(size = 10)) +
-      theme(legend.spacing.x = unit(6, 'pt'))
+      theme(legend.spacing.x = unit(-6, 'pt'))
 
     # add regression line if specified
     if(lm_trend) {

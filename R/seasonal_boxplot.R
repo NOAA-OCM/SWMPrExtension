@@ -274,7 +274,7 @@ seasonal_boxplot.swmpr <- function(swmpr_in
             , legend.key.width = unit(0.5, 'cm')) +
       theme(legend.text = element_text(size = 10)
             , legend.text.align = 0.5) +
-      theme(legend.spacing.x = unit(6, 'pt'))
+      theme(legend.spacing.x = unit(-6, 'pt'))
 
     return(plt)
   } else {
