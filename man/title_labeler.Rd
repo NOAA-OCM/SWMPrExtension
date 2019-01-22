@@ -25,4 +25,6 @@ ttl <- title_labeler('elkapwq')
 \author{
 Julie Padilla
 }
-\concept{miscellaneous}
+\concept{
+miscellaneous
+}

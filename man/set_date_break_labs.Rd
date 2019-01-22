@@ -24,4 +24,6 @@ A helper function for easier date label setting
 \author{
 Julie Padilla
 }
-\concept{analyze}
+\concept{
+analyze
+}

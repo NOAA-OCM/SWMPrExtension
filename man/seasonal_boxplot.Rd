@@ -7,10 +7,9 @@
 \usage{
 seasonal_boxplot(swmpr_in, ...)
 
-\method{seasonal_boxplot}{swmpr}(swmpr_in, param = NULL,
-  hist_rng = NULL, target_yr = NULL, criteria = NULL,
-  log_trans = FALSE, converted = FALSE,
-  criteria_lab = "WQ Threshold", stat_lab = "Average",
+\method{seasonal_boxplot}{swmpr}(swmpr_in, param = NULL, hist_rng = NULL,
+  target_yr = NULL, criteria = NULL, log_trans = FALSE,
+  converted = FALSE, criteria_lab = "WQ Threshold", stat_lab = "Average",
   plot_title = FALSE, plot = TRUE, FUN = function(x) mean(x, na.rm =
   TRUE), ...)
 }
@@ -89,4 +88,8 @@ stat_lab = 'Maximum', FUN = function(x) max(x, na.rm = TRUE))
 \author{
 Julie Padilla
 }
-\concept{analyze}
+\concept{
+analyze
+
+analyze
+}

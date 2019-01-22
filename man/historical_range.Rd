@@ -7,11 +7,10 @@
 \usage{
 historical_range(swmpr_in, ...)
 
-\method{historical_range}{swmpr}(swmpr_in, param = NULL,
-  hist_rng = NULL, target_yr = NULL, criteria = NULL,
-  log_trans = FALSE, converted = FALSE,
-  criteria_lab = "WQ Threshold", plot_title = FALSE, plot = TRUE,
-  ...)
+\method{historical_range}{swmpr}(swmpr_in, param = NULL, hist_rng = NULL,
+  target_yr = NULL, criteria = NULL, log_trans = FALSE,
+  converted = FALSE, criteria_lab = "WQ Threshold", plot_title = FALSE,
+  plot = TRUE, ...)
 }
 \arguments{
 \item{swmpr_in}{input swmpr object}
@@ -76,4 +75,8 @@ x <- x + labs(x = NULL, y = "Dissolved Oxygen (mg/L)")
 \author{
 Julie Padilla, Kimberly Cressman
 }
-\concept{analyze}
+\concept{
+analyze
+
+analyze
+}

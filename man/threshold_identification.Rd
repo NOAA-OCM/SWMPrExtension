@@ -7,8 +7,8 @@
 \usage{
 threshold_identification(swmpr_in, ...)
 
-\method{threshold_identification}{swmpr}(swmpr_in, param,
-  parameter_threshold, threshold_type, time_threshold = NULL, ...)
+\method{threshold_identification}{swmpr}(swmpr_in, param, parameter_threshold,
+  threshold_type, time_threshold = NULL, ...)
 }
 \arguments{
 \item{swmpr_in}{input swmpr object}
@@ -80,4 +80,8 @@ https://cfpub.epa.gov/si/si_public_record_Report.cfm?dirEntryId=327030
 \author{
 Julie Padilla
 }
-\concept{analyze}
+\concept{
+analyze
+
+analyze
+}

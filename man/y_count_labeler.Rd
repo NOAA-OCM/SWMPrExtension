@@ -35,4 +35,6 @@ y_lab <- y_count_labeler(param = 'do_mgl', parameter_threshold = 2
 \author{
 Julie Padilla
 }
-\concept{miscellaneous}
+\concept{
+miscellaneous
+}

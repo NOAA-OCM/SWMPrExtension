@@ -4,8 +4,7 @@
 \alias{import_local_nut}
 \title{Import local CDMO data}
 \usage{
-import_local_nut(path, station_code, collMethd = c(1, 2),
-  trace = FALSE)
+import_local_nut(path, station_code, collMethd = c(1, 2), trace = FALSE)
 }
 \arguments{
 \item{path}{chr string of full path to .csv files with raw data, can be a zipped or unzipped directory where the former must include the .zip extension}
@@ -40,4 +39,6 @@ Example dataset: \url{https://s3.amazonaws.com/swmpexdata/zip_ex.zip}
 Marcus Beck, Julie Padilla (additional of code{collMthd} argument)
 maintainer: Julie Padilla
 }
-\concept{retrieve}
+\concept{
+retrieve
+}
