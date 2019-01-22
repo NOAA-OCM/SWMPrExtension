@@ -10,7 +10,7 @@ output:
 
 ![](swmpr_logo.png)
 
-<!-- [![Travis-CI Build Status](https://travis-ci.org/padilla410/SWMPrExtension.svg?branch=master)](https://travis-ci.org/padilla410/SWMPrExtension)-->[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/SWMPrExtension)](https://cran.r-project.org/package=SWMPrExtension)[![Downloads from the RStudio CRAN mirror](http://cranlogs.r-pkg.org/badges/grand-total/SWMPrExtension)](http://cran.rstudio.com/package=SWMPrExtension)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/SWMPrExtension)](https://cran.r-project.org/package=SWMPrExtension)[![Downloads from the RStudio CRAN mirror](http://cranlogs.r-pkg.org/badges/grand-total/SWMPrExtension)](http://cran.rstudio.com/package=SWMPrExtension)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
