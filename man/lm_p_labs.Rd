@@ -24,6 +24,4 @@ A helper function that returns a \code{data.frame} of p-value labels for use wit
 \author{
 Julie Padilla
 }
-\concept{
-miscellaneous
-}
+\concept{miscellaneous}

@@ -8,9 +8,10 @@
 threshold_summary(swmpr_in, ...)
 
 \method{threshold_summary}{swmpr}(swmpr_in, param = NULL,
-  summary_type = c("month", "season", "year"), parameter_threshold = NULL,
-  threshold_type = NULL, time_threshold = NULL, converted = F,
-  pal = "Set3", plot_title = FALSE, plot = TRUE, ...)
+  summary_type = c("month", "season", "year"),
+  parameter_threshold = NULL, threshold_type = NULL,
+  time_threshold = NULL, converted = F, pal = "Set3",
+  plot_title = FALSE, plot = TRUE, ...)
 }
 \arguments{
 \item{swmpr_in}{input swmpr object}
@@ -97,8 +98,4 @@ https://cfpub.epa.gov/si/si_public_record_Report.cfm?dirEntryId=327030
 \author{
 Julie Padilla
 }
-\concept{
-analyze
-
-analyze
-}
+\concept{analyze}

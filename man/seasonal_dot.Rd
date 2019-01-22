@@ -99,8 +99,4 @@ x <-
 \author{
 Julie Padilla
 }
-\concept{
-analyze
-
-analyze
-}
+\concept{analyze}

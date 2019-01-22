@@ -23,6 +23,4 @@ Used internally by \code{\link{create_sk_flextable_list}} to create a \code{data
 \author{
 Julie Padilla
 }
-\concept{
-reporting
-}
+\concept{reporting}

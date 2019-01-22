@@ -10,3 +10,4 @@
 ^README-.*\.png$
 ^cran-comments\.md$
 ^\.Rhistory$
+^LICENSE.txt

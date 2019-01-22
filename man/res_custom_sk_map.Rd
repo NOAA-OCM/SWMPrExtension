@@ -59,6 +59,4 @@ scale_pos = pos, shp = shp_fl)
 \author{
 Julie Padilla
 }
-\concept{
-analyze
-}
+\concept{analyze}

@@ -63,8 +63,4 @@ raw_boxplot(dat, param = 'do_mgl')
 \author{
 Julie Padilla
 }
-\concept{
-analyze
-
-analyze
-}
+\concept{analyze}
