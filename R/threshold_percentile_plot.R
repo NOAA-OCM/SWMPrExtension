@@ -219,11 +219,12 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
     geom_line(lwd = 1) +
     scale_x_datetime(date_breaks = brks, date_labels = lab_brks)
 
+  # return(c(mn, mx))
   # add a log transformed access if log_trans = T
   if(!log_trans) {
 
     plt <- plt +
-      scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma)
+      scale_y_continuous(limits = c(mn, mx), trans = y_trans)
 
   } else {
 
