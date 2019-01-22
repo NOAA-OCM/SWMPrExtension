@@ -9,7 +9,8 @@ annual_range(swmpr_in, ...)
 
 \method{annual_range}{swmpr}(swmpr_in, param = NULL, target_yr = NULL,
   criteria = NULL, log_trans = FALSE, converted = FALSE,
-  criteria_lab = "WQ Threshold", plot_title = FALSE, plot = TRUE, ...)
+  criteria_lab = "WQ Threshold", plot_title = FALSE, plot = TRUE,
+  ...)
 }
 \arguments{
 \item{swmpr_in}{input swmpr object}
@@ -68,8 +69,4 @@ do_plt <- annual_range(dat, param = 'do_mgl', target_yr = 2012, criteria = 2)
 \author{
 Julie Padilla
 }
-\concept{
-analyze
-
-analyze
-}
+\concept{analyze}

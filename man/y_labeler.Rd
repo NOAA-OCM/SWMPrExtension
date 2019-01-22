@@ -29,6 +29,4 @@ y_lab <- y_labeler('do_mgl')
 \author{
 Julie Padilla
 }
-\concept{
-miscellaneous
-}
+\concept{miscellaneous}

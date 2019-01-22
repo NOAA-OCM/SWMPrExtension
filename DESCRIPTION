@@ -54,4 +54,4 @@ Authors@R: c(
     role = c("ctb"),
 	email = "bob@rud.is")
 	)
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1

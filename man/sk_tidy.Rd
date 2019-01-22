@@ -29,6 +29,4 @@ A helper function used by \code{\link{sk_seasonal}} to return a table of tidied 
 \author{
 Julie Padilla
 }
-\concept{
-miscellaneous
-}
+\concept{miscellaneous}

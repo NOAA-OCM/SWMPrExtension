@@ -25,6 +25,4 @@ This function is intended for use with the NERRS national level reporting script
 \author{
 Julie Padilla
 }
-\concept{
-reporting
-}
+\concept{reporting}
