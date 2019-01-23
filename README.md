@@ -1,9 +1,8 @@
 ![](swmpr_logo.png)
 
 <!-- [![Travis-CI Build Status](https://travis-ci.org/LimnoTech/SWMPrExtension.svg?branch=master)](https://travis-ci.org/LimnoTech/SWMPrExtension)-->
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/SWMPrExtension)](https://cran.r-project.org/package=SWMPrExtension)
-
-[![Downloads from the RStudio CRAN mirror](http://cranlogs.r-pkg.org/badges/grand-total/SWMPrExtension)](http://cran.rstudio.com/package=SWMPrExtension)
+<!-- Start badges -->
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/SWMPrExtension)](https://cran.r-project.org/package=SWMPrExtension)[![Downloads from the RStudio CRAN mirror](http://cranlogs.r-pkg.org/badges/grand-total/SWMPrExtension)](http://cran.rstudio.com/package=SWMPrExtension) <!-- End badges -->
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 Overview
