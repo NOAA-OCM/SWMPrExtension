@@ -1,7 +1,9 @@
 ---
 output:
-  md_document:
-    variant: markdown_github
+  html_document:
+    keep_md: no
+    toc: no
+    self_contained: no
 ---
 
 ![](swmpr_logo.png)
@@ -65,7 +67,7 @@ The core analyses available within the SWMPrExtension R package and used to crea
 
 <h4>Core Analyses</h4>
 <table>
-<tr><td><code>annual\\_range.swmpr</code></td><td>For a user-specified year, calculate averages, average ranges, and min/max observed ranges the on a monthly or seasonal basis.</td></tr>
+<tr><td><code>annual_range.swmpr</code></td><td>For a user-specified year, calculate averages, average ranges, and min/max observed ranges the on a monthly or seasonal basis.</td></tr>
 <tr><td><code>historical_daily_range.swmpr</code></td><td>Compare a user-specified year against historical data on a daily basis.</td></tr>
 <tr><td><code>historical_range.swmpr</code></td><td>Compare a user-specified year against historical data on a monthly/seasonal basis.</td></tr>
 <tr><td><code>raw_boxplot.swmpr</code></td><td>Generate a monthly/seasonal boxplots of raw data for a target year.</td></tr>
