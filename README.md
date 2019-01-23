@@ -58,7 +58,7 @@ Core Analyses
 <table>
 <tr>
 <td>
-<code>annual\_range.swmpr</code>
+<code>annual\\\_range.swmpr</code>
 </td>
 <td>
 For a user-specified year, calculate averages, average ranges, and min/max observed ranges the on a monthly or seasonal basis.
