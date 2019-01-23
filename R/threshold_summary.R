@@ -12,6 +12,7 @@
 #' @param pal Select a palette for boxplot fill colors. See \code{\link[ggplot2]{scale_fill_brewer}} for more details.
 #' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
 #' @param plot logical, should a plot be returned? Defaults to \code{TRUE}
+#' @param label_y_axis logical, include label for y-axis?
 #' @param ... additional arguments passed to other methods. See \code{\link{assign_season}} for more details.
 #'
 #'
@@ -102,6 +103,7 @@ threshold_summary.swmpr <- function(swmpr_in
                                     , pal = 'Set3'
                                     , plot_title = FALSE
                                     , plot = TRUE
+                                    , label_y_axis = TRUE
                                     , ...) {
 
   dat <- swmpr_in
@@ -130,7 +132,9 @@ threshold_summary.swmpr <- function(swmpr_in
     warning('QAQC columns present. QAQC not performed before analysis.')
 
   # Assign label for y axis
-  y_label <- y_count_labeler(param = param, parameter_threshold = parameter_threshold, threshold_type = threshold_type, time_threshold = time_threshold, converted = conv)
+  y_label <- ifelse(label_y_axis
+                    , y_count_labeler(param = param, parameter_threshold = parameter_threshold, threshold_type = threshold_type, time_threshold = time_threshold, converted = conv)
+                    , '')
 
   dat_threshold <- threshold_identification(dat
                                             , param = param
