@@ -1,9 +1,7 @@
 ---
 output:
-  html_document:
-    keep_md: no
-    toc: no
-    self_contained: no
+  md_document:
+    variant: markdown_github
 ---
 
 ![](swmpr_logo.png)
