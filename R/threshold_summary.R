@@ -18,7 +18,7 @@
 #'
 #' @import ggplot2
 #'
-#' @importFrom dplyr group_by left_join summarise
+#' @importFrom dplyr group_by left_join n summarise
 #' @importFrom magrittr "%>%"
 #' @importFrom lubridate  month year
 #' @importFrom rlang .data
