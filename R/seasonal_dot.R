@@ -6,6 +6,7 @@
 #' @param param chr string of variable to plot
 #' @param lm_trend logical, add linear trend line?
 #' @param lm_lab logical, add significance label? Statistically significant results will appear in bold.
+#' @param free_y logical, should the y-axis be free? Defaults to \code{FALSE}. If \code{FALSE}, defaults to zero, unless negative values are present. If \code{TRUE}, y-axis limits are selected by \code{ggplot}
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
 #' @param converted logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.
 #' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
@@ -102,6 +103,7 @@ seasonal_dot.swmpr <- function(swmpr_in
                                , param = NULL
                                , lm_trend = FALSE
                                , lm_lab = FALSE
+                               , free_y = FALSE
                                , log_trans = FALSE
 							                 , converted = FALSE
                                , plot_title = FALSE
@@ -185,21 +187,33 @@ seasonal_dot.swmpr <- function(swmpr_in
       facet_wrap(~ season) +
       labs(x = NULL, y = eval(y_label))
 
-    # add a log transformed access if log_trans = T
+    # add a log transformed access if log_trans == T
+    ## allow y-axis to be free if free_y == T
     if(!log_trans) {
 
-      plt <- plt + scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma)
+      if(free_y){
+        plt <- plt
+      } else {
+        plt <- plt + expand_limits(y = mn)#scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma)
+      }
 
     } else {
 
-      mx_log <- 10^(ceiling(log10(mx)))
+      if(free_y) {
+        plt <- scale_y_continuous(trans = y_trans)
+      } else {
+        # mx_log <- 10^(ceiling(log10(mx)))
 
-      mag_lo <- nchar(mn) - 2
-      mag_hi <- nchar(mx_log) - 1
+        # mag_lo <- nchar(mn) - 2
+        # mag_hi <- nchar(mx_log) - 1
 
-      brks <- 10^(-mag_lo:mag_hi)
+        # brks <- 10^(-mag_lo:mag_hi)
 
-      plt <- plt + scale_y_continuous(limits = c(mn, mx_log), breaks = brks, trans = y_trans, labels = scales::comma)
+        plt <- plt +
+          scale_y_continuous(trans = y_trans, labels = scales::comma) +
+          expand_limits(y = mn)
+        # scale_y_continuous(limits = c(mn, mx_log), breaks = brks, trans = y_trans, labels = scales::comma)
+      }
     }
 
 

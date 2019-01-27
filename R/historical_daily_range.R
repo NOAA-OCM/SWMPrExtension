@@ -7,6 +7,7 @@
 #' @param hist_rng numeric vector, if historic range is not specified then the min/max values of the data set will be used.
 #' @param target_yr numeric, the target year that should be compared against the historic range. If target year is not specified then dot will not be plotted
 #' @param criteria numeric, a numeric criteria that will be plotted as a horizontal line
+#' @param free_y logical, should the y-axis be free? Defaults to \code{FALSE}. If \code{FALSE}, defaults to zero, unless negative values are present. If \code{TRUE}, y-axis limits are selected by \code{ggplot}
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
 #' @param converted logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.
 #' @param criteria_lab chr, label for the threshold criteria defined in \code{criteria}. Defaults to "WQ Threshold"
@@ -77,6 +78,7 @@ historical_daily_range.swmpr <- function(swmpr_in
                                    , hist_rng = NULL
                                    , target_yr = NULL
                                    , criteria = NULL
+                                   , free_y = FALSE
                                    , log_trans = FALSE
                                    , converted = FALSE
                                    , criteria_lab = 'WQ Threshold'
@@ -183,8 +185,8 @@ historical_daily_range.swmpr <- function(swmpr_in
 
   if(plot){
     # Set the plot range
-    mx <- max(dat_hist_obs$max, na.rm = T)
-    mx <- ceiling(mx)
+    # mx <- max(dat_hist_obs$max, na.rm = T)
+    # mx <- ceiling(mx)
     # mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), 0)
 
     # assign a minimum of zero unles there are values < 0
@@ -213,21 +215,33 @@ historical_daily_range.swmpr <- function(swmpr_in
       theme_bw() +
       theme(legend.position = 'top', legend.direction = 'horizontal')
 
-    # add a log transformed access if log_trans = T
+    # add a log transformed access if log_trans == T
+    ## allow y-axis to be free if free_y == T
     if(!log_trans) {
 
-      plt <- plt + scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma)
+      if(free_y){
+        plt <- plt
+      } else {
+        plt <- plt + expand_limits(y = mn)#scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma)
+      }
 
     } else {
 
-      mx_log <- 10^(ceiling(log10(mx)))
+      if(free_y) {
+        plt <- scale_y_continuous(trans = y_trans)
+      } else {
+        # mx_log <- 10^(ceiling(log10(mx)))
 
-      mag_lo <- nchar(mn) - 2
-      mag_hi <- nchar(mx_log) - 1
+        # mag_lo <- nchar(mn) - 2
+        # mag_hi <- nchar(mx_log) - 1
 
-      brks <- 10^(-mag_lo:mag_hi)
+        # brks <- 10^(-mag_lo:mag_hi)
 
-      plt <- plt + scale_y_continuous(limits = c(mn, mx_log), breaks = brks, trans = y_trans, labels = scales::comma)
+        plt <- plt +
+          scale_y_continuous(trans = y_trans, labels = scales::comma) +
+          expand_limits(y = mn)
+        # scale_y_continuous(limits = c(mn, mx_log), breaks = brks, trans = y_trans, labels = scales::comma)
+      }
     }
 
     # Adjust legend order

@@ -9,7 +9,7 @@ historical_daily_range(swmpr_in, ...)
 
 \method{historical_daily_range}{swmpr}(swmpr_in, param = NULL,
   hist_rng = NULL, target_yr = NULL, criteria = NULL,
-  log_trans = FALSE, converted = FALSE,
+  free_y = FALSE, log_trans = FALSE, converted = FALSE,
   criteria_lab = "WQ Threshold", plot_title = FALSE, plot = TRUE,
   ...)
 }
@@ -25,6 +25,8 @@ historical_daily_range(swmpr_in, ...)
 \item{target_yr}{numeric, the target year that should be compared against the historic range. If target year is not specified then dot will not be plotted}
 
 \item{criteria}{numeric, a numeric criteria that will be plotted as a horizontal line}
+
+\item{free_y}{logical, should the y-axis be free? Defaults to \code{FALSE}. If \code{FALSE}, defaults to zero, unless negative values are present. If \code{TRUE}, y-axis limits are selected by \code{ggplot}}
 
 \item{log_trans}{logical, should y-axis be log? Defaults to \code{FALSE}}
 
