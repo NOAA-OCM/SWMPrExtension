@@ -18,7 +18,7 @@
 #'
 #' @import ggplot2
 #'
-#' @importFrom dplyr group_by left_join n summarise
+#' @importFrom dplyr filter group_by left_join n summarise
 #' @importFrom magrittr "%>%"
 #' @importFrom lubridate  month year
 #' @importFrom rlang .data
@@ -174,13 +174,16 @@ threshold_summary.swmpr <- function(swmpr_in
 
   } else {
 
+    # return(dat_threshold)
     summary <- dat_threshold %>%
       group_by(!! yr, !! grp, !! seas) %>%
       summarise(count = n())
 
     grp_ct <- as.numeric(length(unique(levels(summary$season))))
     grp_nm <- as.character(unique(levels(summary$season)))
+
     summary$grp_join <- as.character(summary$season)
+    summary <- summary %>% filter(count > 0)
 
     dummy <- data.frame(grp_join = rep(grp_nm, yr_ct)
                         , year = rep(c(mn_yr:mx_yr), each = grp_ct)
@@ -197,6 +200,7 @@ threshold_summary.swmpr <- function(swmpr_in
   if(plot){
 
     by_arg <- ifelse(summary_type == 'year', 1, length(unique(levels(dat_grp$grp_join))))
+
 
     brks <- seq(from = 1, to = max(dat_grp$x_lab), by = by_arg)
     brk_labs <- seq(from = mn_yr, to = mx_yr, by = 1)
@@ -224,7 +228,7 @@ threshold_summary.swmpr <- function(swmpr_in
     plt <- plt +
       theme(legend.key.size = unit(7, 'pt')) +
       theme(legend.text = element_text(size = 8)) +
-      theme(legend.spacing.x = unit(-5, 'pt'))
+      theme(legend.spacing.x = unit(5, 'pt'))
 
 
     if(summary_type == 'year') {
