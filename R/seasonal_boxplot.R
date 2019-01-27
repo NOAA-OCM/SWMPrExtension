@@ -7,6 +7,7 @@
 #' @param hist_rng numeric vector, if historic range is not specified then the min/max values of the data set will be used.
 #' @param target_yr numeric, the target year that should be compared against the historic range. If target year is not specified then dot will not be plotted
 #' @param criteria numeric, a numeric criteria that will be plotted as a horizontal line
+#' @param free_y logical, should the y-axis be free? Defaults to \code{FALSE}. If \code{FALSE}, defaults to zero, unless negative values are present. If \code{TRUE}, y-axis limits are selected by \code{ggplot}
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
 #' @param converted logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.
 #' @param criteria_lab chr, label for the threshold criteria defined in \code{criteria}. Defaults to "WQ Threshold"
@@ -87,6 +88,7 @@ seasonal_boxplot.swmpr <- function(swmpr_in
                                    , hist_rng = NULL
                                    , target_yr = NULL
                                    , criteria = NULL
+                                   , free_y = FALSE
                                    , log_trans = FALSE
 								                   , converted = FALSE
 								                   , criteria_lab = 'WQ Threshold'
@@ -189,6 +191,8 @@ seasonal_boxplot.swmpr <- function(swmpr_in
     mn <- ifelse(mn < 0 , min(pretty(mn)), 0)
     mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), mn)
 
+    return(c(mn, mx))
+
     lab_bp_fill <- ifelse(data_type == 'nut', paste('Monthly Sample \n(', rng[[1]], '-', rng[[2]], ')', sep = '')
                       , paste('Daily ', stat_lab, 's \n(', rng[[1]], '-', rng[[2]], ')', sep = ''))
 
@@ -203,7 +207,11 @@ seasonal_boxplot.swmpr <- function(swmpr_in
     # add a log transformed access if log_trans = T
     if(!log_trans) {
 
-      plt <- plt + scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma)
+      if(free_y){
+       plt <- plt
+      } else {
+       plt <- plt + expand_limits(y = mn)#scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma)
+      }
 
     } else {
 
