@@ -220,7 +220,8 @@ historical_daily_range.swmpr <- function(swmpr_in
       if(!free_y){plt <- plt + expand_limits(y = mn)}
 
     } else {
-      plt <- scale_y_continuous(trans = y_trans
+      plt <- plt +
+        scale_y_continuous(trans = y_trans
                                 , labels = format_format(digits = 2, big.mark = " ", decimal.mark = ".", scientific = FALSE)
                                 , breaks = pretty_breaks(n = 8))
 
