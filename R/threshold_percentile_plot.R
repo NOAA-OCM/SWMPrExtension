@@ -224,7 +224,8 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
 
     plt <- plt +
       scale_y_continuous(limits = c(mn, mx), trans = y_trans
-                         , labels = format_format(digits = 2, big.mark = " ", decimal.mark = ".", scientific = FALSE))
+                         , labels = format_format(digits = 2, big.mark = " ", decimal.mark = ".", scientific = FALSE)
+                         , breaks = pretty_breaks(n = 8))
 
   } else {
 
