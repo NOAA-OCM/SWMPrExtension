@@ -20,7 +20,7 @@
 #' @importFrom magrittr "%>%"
 #' @importFrom lubridate  year floor_date
 #' @importFrom rlang .data
-#' @importFrom scales comma
+#' @importFrom scales format_format pretty_breaks
 #' @importFrom tidyr complete
 #'
 #' @export
@@ -196,32 +196,19 @@ annual_range.swmpr <- function(swmpr_in
     # add a log transformed access if log_trans == T
     ## allow y-axis to be free if free_y == T
     if(!log_trans) {
+      plt <- plt +
+        scale_y_continuous(labels = format_format(digits = 2, big.mark = " ", decimal.mark = ".", scientific = FALSE)
+                           , breaks = pretty_breaks(n = 5))
 
-      if(free_y){
-        plt <- plt
-      } else {
-        plt <- plt + expand_limits(y = mn)#scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma)
-      }
+      if(!free_y){plt <- plt + expand_limits(y = mn)}
 
     } else {
+      plt <- scale_y_continuous(trans = y_trans
+                                , labels = format_format(digits = 2, big.mark = " ", decimal.mark = ".", scientific = FALSE)
+                                , breaks = pretty_breaks(n = 5))
 
-      if(free_y) {
-        plt <- scale_y_continuous(trans = y_trans)
-      } else {
-        # mx_log <- 10^(ceiling(log10(mx)))
-
-        # mag_lo <- nchar(mn) - 2
-        # mag_hi <- nchar(mx_log) - 1
-
-        # brks <- 10^(-mag_lo:mag_hi)
-
-        plt <- plt +
-          scale_y_continuous(trans = y_trans, labels = scales::comma) +
-          expand_limits(y = mn)
-        # scale_y_continuous(limits = c(mn, mx_log), breaks = brks, trans = y_trans, labels = scales::comma)
-      }
+      if(!free_y) {plt <- plt + expand_limits(y = mn)}
     }
-
 
     plt <-
       plt +

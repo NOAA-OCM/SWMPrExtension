@@ -18,7 +18,7 @@
 #' @importFrom dplyr filter group_by left_join summarise
 #' @importFrom magrittr "%>%"
 #' @importFrom lubridate  ymd_hms month year
-#' @importFrom scales comma
+#' @importFrom scales format_format
 #' @importFrom stats quantile
 #'
 #' @export
@@ -223,7 +223,8 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
   if(!log_trans) {
 
     plt <- plt +
-      scale_y_continuous(limits = c(mn, mx), trans = y_trans)
+      scale_y_continuous(limits = c(mn, mx), trans = y_trans
+                         , labels = format_format(digits = 2, big.mark = " ", decimal.mark = ".", scientific = FALSE))
 
   } else {
 
@@ -235,7 +236,8 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
     brks <- 10^(-mag_lo:mag_hi)
 
     plt <- plt +
-      scale_y_continuous(limits = c(mn, mx_log), breaks = brks, trans = y_trans)
+      scale_y_continuous(limits = c(mn, mx_log), breaks = brks, trans = y_trans
+                         , labels = format_format(digits = 2, big.mark = " ", decimal.mark = ".", scientific = FALSE))
   }
 
   if(length(percentiles) > 1) {

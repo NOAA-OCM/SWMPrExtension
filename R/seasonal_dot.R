@@ -22,7 +22,7 @@
 #' @importFrom magrittr "%>%"
 #' @importFrom tidyr complete gather
 #' @importFrom rlang .data
-#' @importFrom scales comma
+#' @importFrom scales format_format pretty_breaks
 #' @importFrom stats median
 #'
 #' @export
@@ -191,29 +191,18 @@ seasonal_dot.swmpr <- function(swmpr_in
     ## allow y-axis to be free if free_y == T
     if(!log_trans) {
 
-      if(free_y){
-        plt <- plt
-      } else {
-        plt <- plt + expand_limits(y = mn)#scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma)
-      }
+      plt <- plt +
+        scale_y_continuous(labels = format_format(digits = 2, big.mark = " ", decimal.mark = ".", scientific = FALSE)
+                           , breaks = pretty_breaks(n = 5))
+
+      if(!free_y){plt <- plt + expand_limits(y = mn)}
 
     } else {
+      plt <- scale_y_continuous(trans = y_trans
+                                , labels = format_format(digits = 2, big.mark = " ", decimal.mark = ".", scientific = FALSE)
+                                , breaks = pretty_breaks(n = 5))
 
-      if(free_y) {
-        plt <- scale_y_continuous(trans = y_trans)
-      } else {
-        # mx_log <- 10^(ceiling(log10(mx)))
-
-        # mag_lo <- nchar(mn) - 2
-        # mag_hi <- nchar(mx_log) - 1
-
-        # brks <- 10^(-mag_lo:mag_hi)
-
-        plt <- plt +
-          scale_y_continuous(trans = y_trans, labels = scales::comma) +
-          expand_limits(y = mn)
-        # scale_y_continuous(limits = c(mn, mx_log), breaks = brks, trans = y_trans, labels = scales::comma)
-      }
+      if(!free_y) {plt <- plt + expand_limits(y = mn)}
     }
 
 
@@ -254,16 +243,19 @@ seasonal_dot.swmpr <- function(swmpr_in
 
       p_labs <- lm_p_labs(plt_data)
 
+      # return max y-value from ggplot object
+      y_mx <- max(ggplot_build(plt)$layout$panel_scales_y[[1]]$range$range)
+
       if(nrow(p_labs) > 0) {
         plt <-
           plt +
-          annotate("text", x = brks[2], y = mx
+          annotate("text", x = brks[2], y = y_mx
                    , label = p_labs$max, fontface = ifelse(p_labs$max == 'p < 0.05', 2, 1)
                    , hjust = 1, color = 'red') +
-          annotate("text", x = brks[2], y = mx * 0.9
+          annotate("text", x = brks[2], y = y_mx * 0.9
                    , label = p_labs$mean, fontface = ifelse(p_labs$mean == 'p < 0.05', 2, 1)
                    , hjust = 1, color = 'black') +
-          annotate("text", x = brks[2], y = mx * 0.8
+          annotate("text", x = brks[2], y = y_mx * 0.8
                    , label = p_labs$min, fontface = ifelse(p_labs$min == 'p < 0.05', 2, 1)
                    , hjust = 1, color = 'blue')
       } else {
