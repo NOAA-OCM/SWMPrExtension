@@ -147,7 +147,7 @@ raw_boxplot.swmpr <- function(swmpr_in
   ## allow y-axis to be free if free_y == T
   if(!log_trans) {
     plt <- plt +
-      scale_y_continuous(labels = format_format(digits = 2, big.mark = " ", decimal.mark = ".", scientific = FALSE)
+      scale_y_continuous(labels = format_format(digits = 2, big.mark = ",", decimal.mark = ".", scientific = FALSE)
                          , breaks = pretty_breaks(n = 8))
 
     if(!free_y){plt <- plt + expand_limits(y = mn)}
@@ -155,7 +155,7 @@ raw_boxplot.swmpr <- function(swmpr_in
   } else {
     plt <- plt +
       scale_y_continuous(trans = y_trans
-                         , labels = format_format(digits = 2, big.mark = " ", decimal.mark = ".", scientific = FALSE)
+                         , labels = format_format(digits = 2, big.mark = ",", decimal.mark = ".", scientific = FALSE)
                          , breaks = pretty_breaks(n = 8))
 
     if(!free_y) {plt <- plt + expand_limits(y = mn)}
