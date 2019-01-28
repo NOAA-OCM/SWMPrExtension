@@ -228,7 +228,7 @@ threshold_summary.swmpr <- function(swmpr_in
     plt <- plt +
       theme(legend.key.size = unit(7, 'pt')) +
       theme(legend.text = element_text(size = 8)) +
-      theme(legend.spacing.x = unit(5, 'pt'))
+      theme(legend.spacing.x = unit(3, 'pt'))
 
 
     if(summary_type == 'year') {
