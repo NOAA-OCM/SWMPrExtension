@@ -193,14 +193,14 @@ seasonal_dot.swmpr <- function(swmpr_in
 
       plt <- plt +
         scale_y_continuous(labels = format_format(digits = 2, big.mark = " ", decimal.mark = ".", scientific = FALSE)
-                           , breaks = pretty_breaks(n = 5))
+                           , breaks = pretty_breaks(n = 8))
 
       if(!free_y){plt <- plt + expand_limits(y = mn)}
 
     } else {
       plt <- scale_y_continuous(trans = y_trans
                                 , labels = format_format(digits = 2, big.mark = " ", decimal.mark = ".", scientific = FALSE)
-                                , breaks = pretty_breaks(n = 5))
+                                , breaks = pretty_breaks(n = 8))
 
       if(!free_y) {plt <- plt + expand_limits(y = mn)}
     }
