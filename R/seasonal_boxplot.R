@@ -191,8 +191,6 @@ seasonal_boxplot.swmpr <- function(swmpr_in
     mn <- ifelse(mn < 0 , min(pretty(mn)), 0)
     mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), mn)
 
-    return(c(mn, mx))
-
     lab_bp_fill <- ifelse(data_type == 'nut', paste('Monthly Sample \n(', rng[[1]], '-', rng[[2]], ')', sep = '')
                       , paste('Daily ', stat_lab, 's \n(', rng[[1]], '-', rng[[2]], ')', sep = ''))
 
