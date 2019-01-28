@@ -206,10 +206,10 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
 
   if(length(percentiles) > 1) {
     mn <- ifelse(min(dat_subset[ , 2], na.rm = T) < min(bars$perc_lo), min(dat_subset[ , 2], na.rm = T), min(bars$perc_lo))
-    mn <- ifelse(data_type == 'nut', 0, ifelse(mn < 0, floor(mn), ceiling(mn)))
+    mn <- ifelse(data_type == 'nut', 0, floor(mn))
   } else {
     mn <- ifelse(min(dat_subset[ , 2], na.rm = T) < min(bars$perc_hi), min(dat_subset[ , 2], na.rm = T), min(bars$perc_hi)) #note: perc_lo DNE when percentiles < 2
-    mn <- ifelse(data_type == 'nut', 0, ifelse(mn < 0, floor(mn), ceiling(mn)))
+    mn <- ifelse(data_type == 'nut', 0, ceiling(mx))
   }
   mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), mn)
 
@@ -223,7 +223,7 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
   if(!log_trans) {
 
     plt <- plt +
-      scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma)
+      scale_y_continuous(limits = c(mn, mx), trans = y_trans)
 
   } else {
 
@@ -235,7 +235,7 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
     brks <- 10^(-mag_lo:mag_hi)
 
     plt <- plt +
-      scale_y_continuous(limits = c(mn, mx_log), breaks = brks, trans = y_trans, labels = scales::comma)
+      scale_y_continuous(limits = c(mn, mx_log), breaks = brks, trans = y_trans)
   }
 
   if(length(percentiles) > 1) {
