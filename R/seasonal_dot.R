@@ -162,6 +162,9 @@ seasonal_dot.swmpr <- function(swmpr_in
   # ensure all factor levels are accounted for, even if there is no data
   plt_data <- tidyr::complete(plt_data, !! seas)
 
+  # remove NaN, -Inf, Inf values
+  plt_data[, c(3:5)] <- remove_inf_and_nan(plt_data[, c(3:5)])
+
   if(plot) {
     agg_lab <- ifelse(length(levels(plt_data$season)) == 12, 'Monthly ', 'Seasonal ')
 
