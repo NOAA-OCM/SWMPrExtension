@@ -173,6 +173,7 @@ historical_range.swmpr <- function(swmpr_in
     dplyr::filter(dplyr::between(lubridate::year(.data$date), as.numeric(rng[[1]]), as.numeric(rng[[2]])))
 
 
+  # return(dat_all)
   # Determine average min/max/mean for each month (for all years together)
   dat_hist <- dat_all %>%
     dplyr::group_by(!! seas) %>%
@@ -180,7 +181,14 @@ historical_range.swmpr <- function(swmpr_in
                      , min = mean(!!  mini, na.rm = T)
                      , max = mean(!! maxi, na.rm = T))
 
+  # Determine average min/max/mean for each month (for all years together)
   if(data_type != 'nut') {
+    dat_hist <- dat_all %>%
+      dplyr::group_by(!! seas) %>%
+      dplyr::summarise(mean = mean(!! avg, na.rm = T)
+                       , min = mean(!!  mini, na.rm = T)
+                       , max = mean(!! maxi, na.rm = T))
+
     # Make some labels
     lab_hist_rng <- paste('Daily Avg Range \n(', rng[[1]], '-', rng[[2]], ')', sep = '')
     lab_hist_ln <- paste('Daily Avg \n(', rng[[1]], '-', rng[[2]], ')', sep = '')
@@ -188,6 +196,12 @@ historical_range.swmpr <- function(swmpr_in
     lab_yr_ln <- paste('Daily Avg \n(', target_yr, ')', sep = '')
 
   } else {
+    dat_hist <- dat_all %>%
+      dplyr::group_by(!! seas) %>%
+      dplyr::summarise(mean = mean(!! avg, na.rm = T)
+                       , min = min(!!  mini, na.rm = T)
+                       , max = max(!! maxi, na.rm = T))
+
     # Make some labels
     lab_hist_rng <- paste('Seasonal Range \n(', rng[[1]], '-', rng[[2]], ')', sep = '')
     lab_hist_ln <- paste('Seasonal Avg \n(', rng[[1]], '-', rng[[2]], ')', sep = '')
@@ -195,11 +209,20 @@ historical_range.swmpr <- function(swmpr_in
     lab_yr_ln <- paste('Seasonal Avg \n(', target_yr, ')', sep = '')
 
   }
-  dat_yr <- dat_yr %>%
-    dplyr::group_by(!! seas) %>%
-    dplyr::summarise(mean = mean(!! avg, na.rm = T)
-                     , min = mean(!!  mini, na.rm = T)
-                     , max = mean(!! maxi, na.rm = T))
+
+  if(data_type != 'nut') {
+    dat_yr <- dat_yr %>%
+      dplyr::group_by(!! seas) %>%
+      dplyr::summarise(mean = mean(!! avg, na.rm = T)
+                       , min = mean(!!  mini, na.rm = T)
+                       , max = mean(!! maxi, na.rm = T))
+  } else {
+    dat_yr <- dat_yr %>%
+      dplyr::group_by(!! seas) %>%
+      dplyr::summarise(mean = mean(!! avg, na.rm = T)
+                       , min = min(!!  mini, na.rm = T)
+                       , max = max(!! maxi, na.rm = T))
+  }
 
   # ensure all factor levels are accounted for, even if there is no data
   dat_yr <- tidyr::complete(dat_yr, !! seas)
@@ -268,7 +291,6 @@ historical_range.swmpr <- function(swmpr_in
       plt +
       scale_color_manual('', values = c('gray40')) +
       scale_fill_manual('', values = ribbon_fill, guide = F) +
-      # scale_fill_manual('', values = c('steelblue3', 'gray40', 'steelblue3'), guide = F) +
       scale_shape_manual('', values = c(21)) +
       scale_alpha_manual('', values = rep(0.25, 2))
 
@@ -307,7 +329,8 @@ historical_range.swmpr <- function(swmpr_in
 
       plt <-
         plt +
-        guides(alpha = guide_legend(override.aes = list(fill = c('steelblue3', 'gray40'), linetype = 0), order = 3, reverse = T)
+        guides(alpha = guide_legend(override.aes = list(fill = alpha_fill, linetype = 0), order = 3, reverse = T)
+        # guides(alpha = guide_legend(override.aes = list(fill = c('steelblue3', 'gray40'), linetype = 0), order = 3, reverse = T)
                , shape = guide_legend(override.aes = list(fill = 'steelblue3', linetype = 0), order = 1)
                , color = guide_legend(override.aes = list(color = 'gray40'), order = 2)
                , linetype = guide_legend(override.aes = list(color = 'red'), order = 4))
