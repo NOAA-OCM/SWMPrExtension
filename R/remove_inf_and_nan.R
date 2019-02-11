@@ -15,9 +15,7 @@
 #' @concept miscellaneous
 #'
 #' @return Returns a \code{matrix} object
-#"
-#' Replace Inf/-Inf/NaN values
-#' @param x a matrix
+#'
 remove_inf_and_nan <- function(x) {
   x[is.na(x)] <- NA
   x <- apply(x, 2, function(x) {

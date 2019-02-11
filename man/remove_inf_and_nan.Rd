@@ -8,12 +8,9 @@ remove_inf_and_nan(x)
 }
 \arguments{
 \item{x}{input matrix}
-
-\item{x}{a matrix}
 }
 \value{
 Returns a \code{matrix} object
-Replace Inf/-Inf/NaN values
 }
 \description{
 Replace \code{Inf}, \code{-Inf}, and \code{NaN} in a matrix with \code{NA}
