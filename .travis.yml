@@ -8,12 +8,10 @@ dist: trusty
 os:
   - linux
   - osx
-  
-before_install:
-  - sudo apt-get install -y libmagick++-dev
-  
+
 addons:
   apt:
     packages:
       - libgdal-dev
       - libproj-dev
+      - libmagick++-dev
