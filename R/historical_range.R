@@ -321,7 +321,6 @@ historical_range.swmpr <- function(swmpr_in
 
     # Add criteria line if specified
     if(!is.null(criteria)) {
-
       plt <- plt +
         geom_hline(aes(yintercept = criteria, linetype = factor(criteria_lab))
                    , color = 'red', show.legend = T) +
@@ -330,7 +329,6 @@ historical_range.swmpr <- function(swmpr_in
       plt <-
         plt +
         guides(alpha = guide_legend(override.aes = list(fill = alpha_fill, linetype = 0), order = 3, reverse = T)
-        # guides(alpha = guide_legend(override.aes = list(fill = c('steelblue3', 'gray40'), linetype = 0), order = 3, reverse = T)
                , shape = guide_legend(override.aes = list(fill = 'steelblue3', linetype = 0), order = 1)
                , color = guide_legend(override.aes = list(color = 'gray40'), order = 2)
                , linetype = guide_legend(override.aes = list(color = 'red'), order = 4))
