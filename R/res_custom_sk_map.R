@@ -71,8 +71,8 @@ res_custom_sk_map <- function(stations
     stop('Incorrect number of seasonal kendall results specified.')
 
   # # check that length(lab_loc) = length(stations)
-  if(!is.null(station_labs) && length(lab_loc) != length(stations))
-    stop('Incorrect number of label location identifiers specified. R or L designation must be made for each station.' )
+  # if(!is.null(station_labs) && length(lab_loc) != length(stations))
+  #   stop('Incorrect number of label location identifiers specified. R or L designation must be made for each station.' )
 
   # check that the bb has the right dimensions
   if(is.null(bbox))
@@ -95,7 +95,7 @@ res_custom_sk_map <- function(stations
     if('R' %in% lab_loc){right_labs <- grep('R', lab_loc)}
   } else {
     #default to left labels
-    left_labs <- c(1:4)
+    left_labs <- c(1:length(stations))
   }
 
   # set map label styles
@@ -116,7 +116,7 @@ res_custom_sk_map <- function(stations
     addProviderTiles(leaflet::providers$Esri.WorldGrayCanvas) %>%  # Add default OpenStreetMap map tiles, CartoDB.Positron
     addPolygons(data = shp, weight = 2, color = '#B3B300', fillColor = 'yellow')
 
-  if(exists('right_labs')){
+  if(exists('left_labs')){
     m <- m %>%
       addLabelOnlyMarkers(lng = ~Longitude[left_labs] * -1, lat = ~Latitude[left_labs]
                           , label = loc$abbrev[left_labs]
@@ -132,9 +132,9 @@ res_custom_sk_map <- function(stations
       addLabelOnlyMarkers(lng = ~Longitude[right_labs] * -1, lat = ~Latitude[right_labs]
                           , label = loc$abbrev[right_labs]
                           , labelOptions = labelOptions(noHide = station_labs
-                                                        , direction = c('left')
+                                                        , direction = c('right')
                                                         , opacity = 1
-                                                        , offset = c(-10, 0)
+                                                        , offset = c(10, 0)
                                                         , style = label_style))
   }
 
