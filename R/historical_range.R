@@ -201,25 +201,19 @@ historical_range.swmpr <- function(swmpr_in
 
   }
 
-
-
-  if(data_type != 'nut') {
-    dat_yr <- dat_yr %>%
-      dplyr::group_by(!! seas) %>%
-      dplyr::summarise(mean = mean(!! avg, na.rm = T)
-                       , min = mean(!!  mini, na.rm = T)
-                       , max = mean(!! maxi, na.rm = T))
-  } else {
-    dat_yr <- dat_yr %>%
-      dplyr::group_by(!! seas) %>%
-      dplyr::summarise(mean = mean(!! avg, na.rm = T)
-                       , min = min(!!  mini, na.rm = T)
-                       , max = max(!! maxi, na.rm = T))
-  }
+  dat_yr <- dat_yr %>%
+    dplyr::group_by(!! seas) %>%
+    dplyr::summarise(mean = mean(!! avg, na.rm = T)
+                     , min = mean(!!  mini, na.rm = T)
+                     , max = mean(!! maxi, na.rm = T))
 
   # ensure all factor levels are accounted for, even if there is no data
   dat_yr <- tidyr::complete(dat_yr, !! seas)
   dat_hist <- tidyr::complete(dat_hist, !! seas)
+
+  # remove NaN, -Inf, Inf values
+  dat_yr[, c(2:4)] <- remove_inf_and_nan(dat_yr[, c(2:4)])
+  dat_hist[, c(2:4)] <- remove_inf_and_nan(dat_hist[, c(2:4)])
 
   if(plot){
     # Set the plot range
@@ -280,7 +274,6 @@ historical_range.swmpr <- function(swmpr_in
       plt +
       scale_color_manual('', values = c('gray40')) +
       scale_fill_manual('', values = ribbon_fill, guide = F) +
-      # scale_fill_manual('', values = c('steelblue3', 'gray40', 'steelblue3'), guide = F) +
       scale_shape_manual('', values = c(21)) +
       scale_alpha_manual('', values = rep(0.25, 2))
 

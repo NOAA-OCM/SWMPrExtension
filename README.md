@@ -447,6 +447,14 @@ Filters a <code>data.frame</code> of user-specified results for display in the N
 Filters a <code>data.frame</code> of user-specified results for display in the NERRS reserve level report. Used internally by <code>create\_sk\_flextable\_list</code>.
 </td>
 </tr>
+<tr>
+<td>
+<code>remove\_inf\_and\_nan</code>
+</td>
+<td>
+Removes <code>-Inf</code>, <code>Inf</code>, and <code>NaN</code> from a matrix. Used internally by several functions to prevent plotting errors.
+</td>
+</tr>
 </table>
 <h3>
 Datasets

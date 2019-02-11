@@ -1,7 +1,8 @@
-#### SWMPrExtension 1.0.1
+#### SWMPrExtension 1.1.0
 * Updates to plot legends for compatibility with ggplot2 3.0.0
 * Updates to `threshold_percentile_plot()` to handle issues with the y-axis
 * Updates to `threshold_summary()` to work with dplyr 0.8.0
+* added `remove_inf_and_nan()` to fix issues with range plots 
 
 #### SWMPrExtension 1.0
 * package maintainer changed from Julie Padilla to Dave Eslinger
