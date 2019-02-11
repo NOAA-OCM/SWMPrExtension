@@ -2,7 +2,7 @@
 * Updates to plot legends for compatibility with ggplot2 3.0.0
 * Updates to `threshold_percentile_plot()` to handle issues with the y-axis
 * Updates to `threshold_summary()` to work with dplyr 0.8.0
-* Added `remove_inf_and_nan()` to fix issues with range plots 
+* Added `remove_inf_and_nan()` to fix issues with range plots and dot_plot
 * Corrections to custom mapping functions (label placement)
 
 #### SWMPrExtension 1.0
