@@ -1,3 +1,6 @@
+#### SWMPrExtension 1.1.1
+* Updates to allow user to specify trend colors for `create_sk_flextable_list` function
+
 #### SWMPrExtension 1.1.0
 * Updates to plot legends for compatibility with ggplot2 3.0.0
 * Updates to `threshold_percentile_plot()` to handle issues with the y-axis

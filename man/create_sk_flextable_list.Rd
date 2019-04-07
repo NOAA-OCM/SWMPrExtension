@@ -4,9 +4,10 @@
 \alias{create_sk_flextable_list}
 \title{Create a List of Flextable Objects}
 \usage{
-create_sk_flextable_list(sk_result, stations, param, font_sz_stn = 6,
-  font_sz_result = 12, font_sz_head = 6, ht_head = 0.28,
-  ht_body = 0.202)
+create_sk_flextable_list(sk_result, stations, param,
+  trend_col = c("#247BA0", "#A3DFFF", "#D9D9D9", "white"),
+  font_sz_stn = 6, font_sz_result = 12, font_sz_head = 6,
+  ht_head = 0.28, ht_body = 0.202)
 }
 \arguments{
 \item{sk_result}{a \code{data.frame} of reformatted results from \code{\link{sk_seasonal}}}
@@ -14,6 +15,8 @@ create_sk_flextable_list(sk_result, stations, param, font_sz_stn = 6,
 \item{stations}{chr, vector of stations to be displayed}
 
 \item{param}{chr, vector of parameters to be displayed}
+
+\item{trend_col}{chr, a four element vector that specifies colors for increasing, decreasing, no change, and insufficient data trends}
 
 \item{font_sz_stn}{int, specify the font size of displayed station names}
 

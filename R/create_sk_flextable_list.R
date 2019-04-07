@@ -5,6 +5,7 @@
 #' @param sk_result a \code{data.frame} of reformatted results from \code{\link{sk_seasonal}}
 #' @param stations chr, vector of stations to be displayed
 #' @param param chr, vector of parameters to be displayed
+#' @param trend_col chr, a four element vector that specifies colors for increasing, decreasing, no change, and insufficient data trends
 #' @param font_sz_stn int, specify the font size of displayed station names
 #' @param font_sz_result int, specify the font size of the displayed results
 #' @param font_sz_head int, specify the font size of the table header row
@@ -26,7 +27,7 @@
 #' @return Returns a list of \code{\link[flextable]{flextable}} objects
 #'
 
-create_sk_flextable_list <- function(sk_result, stations, param
+create_sk_flextable_list <- function(sk_result, stations, param, trend_col = c('#247BA0', '#A3DFFF', '#D9D9D9', 'white')
                                      , font_sz_stn = 6, font_sz_result = 12, font_sz_head = 6
                                      , ht_head = 0.28, ht_body = 0.202) {
 
@@ -65,7 +66,7 @@ create_sk_flextable_list <- function(sk_result, stations, param
   def_cell_hd <- fp_cell(background.color = 'white', border = fp_border(color = '#444E65')
                          , margin.top = 2, margin.bottom = 2)
   def_txt_bdy <- fp_text(color = '#444E65', font.size = font_sz_result)
-  def_cell_bdy <- fp_cell(background.color = '#D9D9D9', border = fp_border(color = '#444E65'))
+  def_cell_bdy <- fp_cell(background.color = trend_col[3], border = fp_border(color = '#444E65'))
 
   # set alignment and border for all parts of the table
   ft <- align(ft_result, align = 'center', part = 'all')
@@ -87,7 +88,7 @@ create_sk_flextable_list <- function(sk_result, stations, param
 
     ft <- style(ft, condition, result,
                 pr_t = fp_text(color = "white", font.family = 'Wingdings 3', font.size = font_sz_result, bold = T),
-                pr_c = fp_cell(background.color = '#247BA0', border = fp_border(color = '#444E65')))
+                pr_c = fp_cell(background.color = trend_col[1], border = fp_border(color = '#444E65')))
   }
 
   # formatting for decreasing trends
@@ -97,7 +98,7 @@ create_sk_flextable_list <- function(sk_result, stations, param
 
     ft <- style(ft, condition, result,
                 pr_t = fp_text(color="white", font.family = 'Wingdings 3', font.size = font_sz_result),
-                pr_c = fp_cell(background.color = '#A3DFFF', border = fp_border(color = '#444E65')))
+                pr_c = fp_cell(background.color = trend_col[2], border = fp_border(color = '#444E65')))
 
   }
 
@@ -108,7 +109,7 @@ create_sk_flextable_list <- function(sk_result, stations, param
 
     ft <- style(ft, condition, result,
                 pr_t = fp_text(color='#A5A5A5', font.size = font_sz_result),
-                pr_c = fp_cell(background.color = 'white', border = fp_border(color = '#444E65')))
+                pr_c = fp_cell(background.color = trend_col[4], border = fp_border(color = '#444E65')))
 
   }
 
