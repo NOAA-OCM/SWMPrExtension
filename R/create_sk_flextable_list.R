@@ -11,6 +11,8 @@
 #' @param font_sz_head int, specify the font size of the table header row
 #' @param ht_head num, specify the cell height of the table body rows. Units for this parameter are in inches.
 #' @param ht_body num, specify the cell height of the table header row. Units for this parameter are in inches.
+#' @param is_swmp logical, are the parameter names consistent with SWMP parameter names? default is \code{TRUE}.
+#' @param par_names chr, a list of parameter names to be used if the names to not match standard CDMO parameters.
 #'
 #' @importFrom flextable align border flextable height style width
 #' @importFrom stats formula
@@ -29,7 +31,7 @@
 
 create_sk_flextable_list <- function(sk_result, stations, param, trend_col = c('#247BA0', '#A3DFFF', '#D9D9D9', 'white')
                                      , font_sz_stn = 6, font_sz_result = 12, font_sz_head = 6
-                                     , ht_head = 0.28, ht_body = 0.202) {
+                                     , ht_head = 0.28, ht_body = 0.202, is_swmp = T, par_names = NULL) {
 
   tbl_station <- generate_station_table(sk_result, stations)
   tbl_result <- generate_results_table(sk_result, stations, param)
@@ -57,7 +59,15 @@ create_sk_flextable_list <- function(sk_result, stations, param, trend_col = c('
   ft_result <- flextable(data = tbl_result)
 
   # generate a data.frame with preferred names for head
-  nms <- ft_col_names(param = param)
+  if(is_swmp) {
+    nms <- ft_col_names(param = param)
+  } else {
+    if(is.null(par_names))
+      stop('par_names is NULL. Please provide a vector of parameter names')
+
+    nms <- par_names
+  }
+
   ft_result$header$dataset <- data.frame(as.list(nms))
 
   # set styling elements
