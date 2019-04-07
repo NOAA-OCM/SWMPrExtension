@@ -9,6 +9,9 @@ os:
   - linux
   - osx
 
+r_packages:
+  - devtools
+  
 addons:
   apt:
     packages:
