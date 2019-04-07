@@ -7,7 +7,7 @@
 create_sk_flextable_list(sk_result, stations, param,
   trend_col = c("#247BA0", "#A3DFFF", "#D9D9D9", "white"),
   font_sz_stn = 6, font_sz_result = 12, font_sz_head = 6,
-  ht_head = 0.28, ht_body = 0.202)
+  ht_head = 0.28, ht_body = 0.202, is_swmp = T, par_names = NULL)
 }
 \arguments{
 \item{sk_result}{a \code{data.frame} of reformatted results from \code{\link{sk_seasonal}}}
@@ -27,6 +27,10 @@ create_sk_flextable_list(sk_result, stations, param,
 \item{ht_head}{num, specify the cell height of the table body rows. Units for this parameter are in inches.}
 
 \item{ht_body}{num, specify the cell height of the table header row. Units for this parameter are in inches.}
+
+\item{is_swmp}{logical, are the parameter names consistent with SWMP parameter names? default is \code{TRUE}.}
+
+\item{par_names}{chr, a list of parameter names to be used if the names to not match standard CDMO parameters.}
 }
 \value{
 Returns a list of \code{\link[flextable]{flextable}} objects
