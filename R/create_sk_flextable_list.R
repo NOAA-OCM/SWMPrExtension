@@ -33,7 +33,7 @@
 #'
 
 create_sk_flextable_list <- function(sk_result, stations, param, trend_col = c('#247BA0', '#A3DFFF', '#D9D9D9', 'white')
-                                     , font_col_default = '#404040'
+                                     , font_col_default = '#444E65'
                                      , font_sz_stn = 6, font_sz_result = 12, font_sz_head = 6
                                      , ht_head = 0.28, ht_body = 0.202, is_swmp = T
                                      , stn_name = NULL, stn_abbrev = NULL, par_name = NULL) {
@@ -93,10 +93,10 @@ create_sk_flextable_list <- function(sk_result, stations, param, trend_col = c('
 
   # set styling elements
   def_par <- fp_par(text.align = 'center')
-  def_txt_hd <- fp_text(color = font_col_default, bold = T, font.size = font_sz_head)
+  def_txt_hd <- fp_text(color = '#404040', bold = T, font.size = font_sz_head)
   def_cell_hd <- fp_cell(background.color = 'white', border = fp_border(color = '#444E65')
                          , margin.top = 2, margin.bottom = 2)
-  def_txt_bdy <- fp_text(color = '#444E65', font.size = font_sz_result)
+  def_txt_bdy <- fp_text(color = font_col_default, font.size = font_sz_result)
   def_cell_bdy <- fp_cell(background.color = trend_col[3], border = fp_border(color = '#444E65'))
 
   # set alignment and border for all parts of the table
