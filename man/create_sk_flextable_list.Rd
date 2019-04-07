@@ -6,8 +6,9 @@
 \usage{
 create_sk_flextable_list(sk_result, stations, param,
   trend_col = c("#247BA0", "#A3DFFF", "#D9D9D9", "white"),
-  font_sz_stn = 6, font_sz_result = 12, font_sz_head = 6,
-  ht_head = 0.28, ht_body = 0.202, is_swmp = T, par_names = NULL)
+  font_col_default = "#404040", font_sz_stn = 6, font_sz_result = 12,
+  font_sz_head = 6, ht_head = 0.28, ht_body = 0.202, is_swmp = T,
+  stn_name = NULL, stn_abbrev = NULL, par_name = NULL)
 }
 \arguments{
 \item{sk_result}{a \code{data.frame} of reformatted results from \code{\link{sk_seasonal}}}
@@ -17,6 +18,8 @@ create_sk_flextable_list(sk_result, stations, param,
 \item{param}{chr, vector of parameters to be displayed}
 
 \item{trend_col}{chr, a four element vector that specifies colors for increasing, decreasing, no change, and insufficient data trends}
+
+\item{font_col_default}{chr, default color to be used for trend table}
 
 \item{font_sz_stn}{int, specify the font size of displayed station names}
 
@@ -28,9 +31,13 @@ create_sk_flextable_list(sk_result, stations, param,
 
 \item{ht_body}{num, specify the cell height of the table header row. Units for this parameter are in inches.}
 
-\item{is_swmp}{logical, are the parameter names consistent with SWMP parameter names? default is \code{TRUE}.}
+\item{is_swmp}{logical, are the station names and parameter names consistent with SWMP station and parameter names? If either of these conditions is false then this parameter should be set to \code{FALSE} and then the user should define \code{stn_name}, \code{stn_abbrev}, and \code{par_name}. default is \code{TRUE}.}
 
-\item{par_names}{chr, a list of parameter names to be used if the names to not match standard CDMO parameters.}
+\item{stn_name}{chr, a list of full station names that the user would like to add to the trend table (e.g., "Cat Point")}
+
+\item{stn_abbrev}{chr, a list of station abbreviations that the user would like to add to the trend table (e.g., "CP" as an abbreviation for Cat Point).}
+
+\item{par_name}{chr, a list of parameter names to be used if the names to not match standard CDMO parameters.}
 }
 \value{
 Returns a list of \code{\link[flextable]{flextable}} objects

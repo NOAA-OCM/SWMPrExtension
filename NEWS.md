@@ -1,5 +1,6 @@
 #### SWMPrExtension 1.1.1
 * Updates to allow user to specify trend colors for `create_sk_flextable_list` function
+* Additional updates to compensate for changes in Officer 0.3.3 flextable structure
 
 #### SWMPrExtension 1.1.0
 * Updates to plot legends for compatibility with ggplot2 3.0.0
