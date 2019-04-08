@@ -3,6 +3,7 @@
 language: r
 sudo: required
 dist: trusty
+warnings_are_errors: false
 #cache: packages
 
 os:
