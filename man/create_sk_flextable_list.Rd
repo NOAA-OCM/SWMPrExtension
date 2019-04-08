@@ -6,7 +6,7 @@
 \usage{
 create_sk_flextable_list(sk_result, stations, param,
   trend_col = c("#247BA0", "#A3DFFF", "#D9D9D9", "white"),
-  font_col_default = "#404040", font_sz_stn = 6, font_sz_result = 12,
+  font_col_default = "#444E65", font_sz_stn = 6, font_sz_result = 12,
   font_sz_head = 6, ht_head = 0.28, ht_body = 0.202, is_swmp = T,
   stn_name = NULL, stn_abbrev = NULL, par_name = NULL)
 }
