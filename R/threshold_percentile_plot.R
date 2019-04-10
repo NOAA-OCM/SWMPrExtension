@@ -7,6 +7,7 @@
 #' @param hist_rng num, years to include in the plot. This variable can either be one year (e.g., \code{hist_rng = 2012}), or two years (e.g. \code{hist_rng = c(2012, 2016)}) , If range is not specified then the entire data set will be used.
 #' @param target_yr num, year of interest for plotting. If not specified, the entire data set will be plotted.
 #' @param percentiles num, percentiles to calculate (maximum: 2). Defaults to 5th and 95th percentiles.
+#' @param free_y logical, should the y-axis be free? Defaults to \code{FALSE}. If \code{FALSE}, defaults to zero, unless negative values are present. If \code{TRUE}, y-axis limits are selected by \code{ggplot}
 #' @param by_month logical. should percentiles be calculated on a monthly basis? Defaults to \code{FALSE}
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
 #' @param converted logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.
@@ -91,6 +92,7 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
                                          , hist_rng = NULL
                                          , target_yr = NULL
                                          , percentiles = c(0.05, 0.95)
+                                         , free_y = FALSE
                                          , by_month = FALSE
                                          , log_trans = FALSE
                                          , converted = FALSE
@@ -223,9 +225,10 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
   if(!log_trans) {
 
     plt <- plt +
-      scale_y_continuous(limits = c(mn, mx), trans = y_trans
-                         , labels = format_format(digits = 2, big.mark = ",", decimal.mark = ".", scientific = FALSE)
+      scale_y_continuous(labels = format_format(digits = 2, big.mark = ",", decimal.mark = ".", scientific = FALSE)
                          , breaks = pretty_breaks(n = 8))
+
+    if(!free_y){plt <- plt + expand_limits(y = mn)}
 
   } else {
 
@@ -237,8 +240,10 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
     brks <- 10^(-mag_lo:mag_hi)
 
     plt <- plt +
-      scale_y_continuous(limits = c(mn, mx_log), breaks = brks, trans = y_trans
+      scale_y_continuous(breaks = brks, trans = y_trans
                          , labels = format_format(digits = 2, big.mark = ",", decimal.mark = ".", scientific = FALSE))
+
+    if(!free_y) {plt <- plt + expand_limits(y = mn)}
   }
 
   if(length(percentiles) > 1) {
