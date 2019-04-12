@@ -6,6 +6,7 @@
 #' @param param chr string of variable to plot
 #' @param lm_trend logical, add linear trend line?
 #' @param lm_lab logical, add significance label? Statistically significant results will appear in bold.
+#' @param free_y logical, should the y-axis be free? Defaults to \code{FALSE}. If \code{FALSE}, defaults to zero, unless negative values are present. If \code{TRUE}, y-axis limits are selected by \code{ggplot}
 #' @param log_trans logical, should y-axis be log? Defaults to \code{FALSE}
 #' @param converted logical, were the units converted from the original units used by CDMO? Defaults to \code{FALSE}. See \code{y_labeler} for details.
 #' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
@@ -21,7 +22,7 @@
 #' @importFrom magrittr "%>%"
 #' @importFrom tidyr complete gather
 #' @importFrom rlang .data
-#' @importFrom scales comma
+#' @importFrom scales format_format pretty_breaks
 #' @importFrom stats median
 #'
 #' @export
@@ -102,6 +103,7 @@ seasonal_dot.swmpr <- function(swmpr_in
                                , param = NULL
                                , lm_trend = FALSE
                                , lm_lab = FALSE
+                               , free_y = FALSE
                                , log_trans = FALSE
 							                 , converted = FALSE
                                , plot_title = FALSE
@@ -160,6 +162,9 @@ seasonal_dot.swmpr <- function(swmpr_in
   # ensure all factor levels are accounted for, even if there is no data
   plt_data <- tidyr::complete(plt_data, !! seas)
 
+  # remove NaN, -Inf, Inf values
+  plt_data[, c(3:5)] <- remove_inf_and_nan(plt_data[, c(3:5)])
+
   if(plot) {
     agg_lab <- ifelse(length(levels(plt_data$season)) == 12, 'Monthly ', 'Seasonal ')
 
@@ -185,21 +190,23 @@ seasonal_dot.swmpr <- function(swmpr_in
       facet_wrap(~ season) +
       labs(x = NULL, y = eval(y_label))
 
-    # add a log transformed access if log_trans = T
+    # add a log transformed access if log_trans == T
+    ## allow y-axis to be free if free_y == T
     if(!log_trans) {
 
-      plt <- plt + scale_y_continuous(limits = c(mn, mx), trans = y_trans, labels = scales::comma)
+      plt <- plt +
+        scale_y_continuous(labels = format_format(digits = 2, big.mark = ",", decimal.mark = ".", scientific = FALSE)
+                           , breaks = pretty_breaks(n = 8))
+
+      if(!free_y){plt <- plt + expand_limits(y = mn)}
 
     } else {
+      plt <- plt +
+        scale_y_continuous(trans = y_trans
+                                , labels = format_format(digits = 2, big.mark = ",", decimal.mark = ".", scientific = FALSE)
+                                , breaks = pretty_breaks(n = 8))
 
-      mx_log <- 10^(ceiling(log10(mx)))
-
-      mag_lo <- nchar(mn) - 2
-      mag_hi <- nchar(mx_log) - 1
-
-      brks <- 10^(-mag_lo:mag_hi)
-
-      plt <- plt + scale_y_continuous(limits = c(mn, mx_log), breaks = brks, trans = y_trans, labels = scales::comma)
+      if(!free_y) {plt <- plt + expand_limits(y = mn)}
     }
 
 
@@ -222,7 +229,7 @@ seasonal_dot.swmpr <- function(swmpr_in
       plt +
       theme(legend.key.size = unit(7, 'pt')) +
       theme(legend.text = element_text(size = 10)) +
-      theme(legend.spacing.x = unit(-6, 'pt'))
+      theme(legend.spacing.x = unit(3, 'pt'))
 
     # add regression line if specified
     if(lm_trend) {
@@ -240,16 +247,19 @@ seasonal_dot.swmpr <- function(swmpr_in
 
       p_labs <- lm_p_labs(plt_data)
 
+      # return max y-value from ggplot object
+      y_mx <- max(ggplot_build(plt)$layout$panel_scales_y[[1]]$range$range)
+
       if(nrow(p_labs) > 0) {
         plt <-
           plt +
-          annotate("text", x = brks[2], y = mx
+          annotate("text", x = brks[2], y = y_mx
                    , label = p_labs$max, fontface = ifelse(p_labs$max == 'p < 0.05', 2, 1)
                    , hjust = 1, color = 'red') +
-          annotate("text", x = brks[2], y = mx * 0.9
+          annotate("text", x = brks[2], y = y_mx * 0.9
                    , label = p_labs$mean, fontface = ifelse(p_labs$mean == 'p < 0.05', 2, 1)
                    , hjust = 1, color = 'black') +
-          annotate("text", x = brks[2], y = mx * 0.8
+          annotate("text", x = brks[2], y = y_mx * 0.8
                    , label = p_labs$min, fontface = ifelse(p_labs$min == 'p < 0.05', 2, 1)
                    , hjust = 1, color = 'blue')
       } else {

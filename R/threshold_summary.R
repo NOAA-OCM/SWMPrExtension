@@ -12,12 +12,13 @@
 #' @param pal Select a palette for boxplot fill colors. See \code{\link[ggplot2]{scale_fill_brewer}} for more details.
 #' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
 #' @param plot logical, should a plot be returned? Defaults to \code{TRUE}
+#' @param label_y_axis logical, include label for y-axis?
 #' @param ... additional arguments passed to other methods. See \code{\link{assign_season}} for more details.
 #'
 #'
 #' @import ggplot2
 #'
-#' @importFrom dplyr group_by left_join summarise
+#' @importFrom dplyr filter group_by left_join n summarise
 #' @importFrom magrittr "%>%"
 #' @importFrom lubridate  month year
 #' @importFrom rlang .data
@@ -102,6 +103,7 @@ threshold_summary.swmpr <- function(swmpr_in
                                     , pal = 'Set3'
                                     , plot_title = FALSE
                                     , plot = TRUE
+                                    , label_y_axis = TRUE
                                     , ...) {
 
   dat <- swmpr_in
@@ -130,7 +132,9 @@ threshold_summary.swmpr <- function(swmpr_in
     warning('QAQC columns present. QAQC not performed before analysis.')
 
   # Assign label for y axis
-  y_label <- y_count_labeler(param = param, parameter_threshold = parameter_threshold, threshold_type = threshold_type, time_threshold = time_threshold, converted = conv)
+  y_label <- ifelse(label_y_axis
+                    , y_count_labeler(param = param, parameter_threshold = parameter_threshold, threshold_type = threshold_type, time_threshold = time_threshold, converted = conv)
+                    , '')
 
   dat_threshold <- threshold_identification(dat
                                             , param = param
@@ -170,13 +174,16 @@ threshold_summary.swmpr <- function(swmpr_in
 
   } else {
 
+    # return(dat_threshold)
     summary <- dat_threshold %>%
       group_by(!! yr, !! grp, !! seas) %>%
       summarise(count = n())
 
     grp_ct <- as.numeric(length(unique(levels(summary$season))))
     grp_nm <- as.character(unique(levels(summary$season)))
+
     summary$grp_join <- as.character(summary$season)
+    summary <- summary %>% filter(count > 0)
 
     dummy <- data.frame(grp_join = rep(grp_nm, yr_ct)
                         , year = rep(c(mn_yr:mx_yr), each = grp_ct)
@@ -193,6 +200,7 @@ threshold_summary.swmpr <- function(swmpr_in
   if(plot){
 
     by_arg <- ifelse(summary_type == 'year', 1, length(unique(levels(dat_grp$grp_join))))
+
 
     brks <- seq(from = 1, to = max(dat_grp$x_lab), by = by_arg)
     brk_labs <- seq(from = mn_yr, to = mx_yr, by = 1)
@@ -220,7 +228,7 @@ threshold_summary.swmpr <- function(swmpr_in
     plt <- plt +
       theme(legend.key.size = unit(7, 'pt')) +
       theme(legend.text = element_text(size = 8)) +
-      theme(legend.spacing.x = unit(-5, 'pt'))
+      theme(legend.spacing.x = unit(3, 'pt'))
 
 
     if(summary_type == 'year') {

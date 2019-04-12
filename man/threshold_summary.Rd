@@ -8,9 +8,10 @@
 threshold_summary(swmpr_in, ...)
 
 \method{threshold_summary}{swmpr}(swmpr_in, param = NULL,
-  summary_type = c("month", "season", "year"), parameter_threshold = NULL,
-  threshold_type = NULL, time_threshold = NULL, converted = F,
-  pal = "Set3", plot_title = FALSE, plot = TRUE, ...)
+  summary_type = c("month", "season", "year"),
+  parameter_threshold = NULL, threshold_type = NULL,
+  time_threshold = NULL, converted = F, pal = "Set3",
+  plot_title = FALSE, plot = TRUE, label_y_axis = TRUE, ...)
 }
 \arguments{
 \item{swmpr_in}{input swmpr object}
@@ -34,6 +35,8 @@ threshold_summary(swmpr_in, ...)
 \item{plot_title}{logical, should the station name be included as the plot title? Defaults to \code{FALSE}}
 
 \item{plot}{logical, should a plot be returned? Defaults to \code{TRUE}}
+
+\item{label_y_axis}{logical, include label for y-axis?}
 }
 \value{
 Returns a \code{\link[ggplot2]{ggplot}} object (if \code{plot} = \code{T}) or a dataframe (if \code{plot} = \code{F})
@@ -97,8 +100,4 @@ https://cfpub.epa.gov/si/si_public_record_Report.cfm?dirEntryId=327030
 \author{
 Julie Padilla
 }
-\concept{
-analyze
-
-analyze
-}
+\concept{analyze}

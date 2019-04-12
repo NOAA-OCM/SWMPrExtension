@@ -7,9 +7,10 @@
 \usage{
 seasonal_boxplot(swmpr_in, ...)
 
-\method{seasonal_boxplot}{swmpr}(swmpr_in, param = NULL, hist_rng = NULL,
-  target_yr = NULL, criteria = NULL, log_trans = FALSE,
-  converted = FALSE, criteria_lab = "WQ Threshold", stat_lab = "Average",
+\method{seasonal_boxplot}{swmpr}(swmpr_in, param = NULL,
+  hist_rng = NULL, target_yr = NULL, criteria = NULL,
+  free_y = FALSE, log_trans = FALSE, converted = FALSE,
+  criteria_lab = "WQ Threshold", stat_lab = "Average",
   plot_title = FALSE, plot = TRUE, FUN = function(x) mean(x, na.rm =
   TRUE), ...)
 }
@@ -25,6 +26,8 @@ seasonal_boxplot(swmpr_in, ...)
 \item{target_yr}{numeric, the target year that should be compared against the historic range. If target year is not specified then dot will not be plotted}
 
 \item{criteria}{numeric, a numeric criteria that will be plotted as a horizontal line}
+
+\item{free_y}{logical, should the y-axis be free? Defaults to \code{FALSE}. If \code{FALSE}, defaults to zero, unless negative values are present. If \code{TRUE}, y-axis limits are selected by \code{ggplot}}
 
 \item{log_trans}{logical, should y-axis be log? Defaults to \code{FALSE}}
 
@@ -88,8 +91,4 @@ stat_lab = 'Maximum', FUN = function(x) max(x, na.rm = TRUE))
 \author{
 Julie Padilla
 }
-\concept{
-analyze
-
-analyze
-}
+\concept{analyze}
