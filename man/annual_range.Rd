@@ -8,8 +8,9 @@
 annual_range(swmpr_in, ...)
 
 \method{annual_range}{swmpr}(swmpr_in, param = NULL, target_yr = NULL,
-  criteria = NULL, log_trans = FALSE, converted = FALSE,
-  criteria_lab = "WQ Threshold", plot_title = FALSE, plot = TRUE, ...)
+  criteria = NULL, free_y = FALSE, log_trans = FALSE,
+  converted = FALSE, criteria_lab = "WQ Threshold",
+  plot_title = FALSE, plot = TRUE, ...)
 }
 \arguments{
 \item{swmpr_in}{input swmpr object}
@@ -21,6 +22,8 @@ annual_range(swmpr_in, ...)
 \item{target_yr}{numeric, the target year that should be compared against the historic range. If target year is not specified then the dot will not be plotted.}
 
 \item{criteria}{numeric, a numeric criteria that will be plotted as a horizontal line}
+
+\item{free_y}{logical, should the y-axis be free? Defaults to \code{FALSE}. If \code{FALSE}, defaults to zero, unless negative values are present. If \code{TRUE}, y-axis limits are selected by \code{ggplot}}
 
 \item{log_trans}{logical, should y-axis be log? Defaults to \code{FALSE}}
 
@@ -68,8 +71,4 @@ do_plt <- annual_range(dat, param = 'do_mgl', target_yr = 2012, criteria = 2)
 \author{
 Julie Padilla
 }
-\concept{
-analyze
-
-analyze
-}
+\concept{analyze}

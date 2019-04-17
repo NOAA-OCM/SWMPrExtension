@@ -7,10 +7,10 @@
 \usage{
 seasonal_barplot(swmpr_in, ...)
 
-\method{seasonal_barplot}{swmpr}(swmpr_in, param = NULL, hist_rng = NULL,
-  log_trans = FALSE, converted = FALSE, hist_avg = TRUE,
-  bar_position = "stack", season_facet = FALSE, plot_title = FALSE,
-  plot = TRUE, ...)
+\method{seasonal_barplot}{swmpr}(swmpr_in, param = NULL,
+  hist_rng = NULL, log_trans = FALSE, converted = FALSE,
+  hist_avg = TRUE, bar_position = "stack", season_facet = FALSE,
+  plot_title = FALSE, plot = TRUE, ...)
 }
 \arguments{
 \item{swmpr_in}{input swmpr object}
@@ -89,8 +89,4 @@ x <- seasonal_barplot(dat, param = 'totprcp'
 \author{
 Julie Padilla
 }
-\concept{
-analyze
-
-analyze
-}
+\concept{analyze}

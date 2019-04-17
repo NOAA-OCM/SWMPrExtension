@@ -28,6 +28,4 @@ geographic_unique_stations(stns)
 \author{
 Julie Padilla
 }
-\concept{
-mapping
-}
+\concept{mapping}

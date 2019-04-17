@@ -1,16 +1,17 @@
 ---
 output:
-  html_document:
-    keep_md: yes
-    toc: no
-    self_contained: no
-  pdf_document:
-    toc: yes
+  md_document:
+    variant: markdown_github
 ---
 
 ![](swmpr_logo.png)
 
-<!-- [![Travis-CI Build Status](https://travis-ci.org/LimnoTech/SWMPrExtension.svg?branch=master)](https://travis-ci.org/LimnoTech/SWMPrExtension)-->[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/SWMPrExtension)](https://cran.r-project.org/package=SWMPrExtension)[![Downloads from the RStudio CRAN mirror](http://cranlogs.r-pkg.org/badges/grand-total/SWMPrExtension)](http://cran.rstudio.com/package=SWMPrExtension)
+<!-- [![Travis-CI Build Status](https://travis-ci.org/LimnoTech/SWMPrExtension.svg?branch=master)](https://travis-ci.org/LimnoTech/SWMPrExtension)-->
+
+<!-- Start badges -->
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/SWMPrExtension)](https://cran.r-project.org/package=SWMPrExtension)[![Downloads from the RStudio CRAN mirror](http://cranlogs.r-pkg.org/badges/grand-total/SWMPrExtension)](http://cran.rstudio.com/package=SWMPrExtension)
+<!-- End badges -->
+
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -146,6 +147,7 @@ Miscellaneous functions are generally helper functions that are called internall
 <tr><td><code>ft_col_names</code></td><td>Convert <code>SWMPr</code> parameter abbreviations into formats appropriate for use with NERRS reserve level template <code>flextable</code>. Used internally by <code>create_sk_flextable_list</code>.</td></tr>
 <tr><td><code>generate_results_table</code></td><td>Filters a <code>data.frame</code> of user-specified results for display in the NERRS reserve level report. Used internally by <code>create_sk_flextable_list</code>.</td></tr>
 <tr><td><code>generate_station_table</code></td><td>Filters a <code>data.frame</code> of user-specified results for display in the NERRS reserve level report. Used internally by <code>create_sk_flextable_list</code>.</td></tr>
+<tr><td><code>remove_inf_and_nan</code></td><td>Removes <code>-Inf</code>, <code>Inf</code>, and <code>NaN</code> from a matrix. Used internally by several functions to prevent plotting errors.</td></tr>
 </table>
 
 <h3>Datasets</h3>

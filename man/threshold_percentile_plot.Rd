@@ -9,8 +9,8 @@ threshold_percentile_plot(swmpr_in, ...)
 
 \method{threshold_percentile_plot}{swmpr}(swmpr_in, param = NULL,
   hist_rng = NULL, target_yr = NULL, percentiles = c(0.05, 0.95),
-  by_month = FALSE, log_trans = FALSE, converted = FALSE,
-  plot_title = FALSE, ...)
+  free_y = FALSE, by_month = FALSE, log_trans = FALSE,
+  converted = FALSE, plot_title = FALSE, ...)
 }
 \arguments{
 \item{swmpr_in}{input swmpr object}
@@ -24,6 +24,8 @@ threshold_percentile_plot(swmpr_in, ...)
 \item{target_yr}{num, year of interest for plotting. If not specified, the entire data set will be plotted.}
 
 \item{percentiles}{num, percentiles to calculate (maximum: 2). Defaults to 5th and 95th percentiles.}
+
+\item{free_y}{logical, should the y-axis be free? Defaults to \code{FALSE}. If \code{FALSE}, defaults to zero, unless negative values are present. If \code{TRUE}, y-axis limits are selected by \code{ggplot}}
 
 \item{by_month}{logical. should percentiles be calculated on a monthly basis? Defaults to \code{FALSE}}
 
@@ -92,8 +94,4 @@ https://cfpub.epa.gov/si/si_public_record_Report.cfm?dirEntryId=327030
 \author{
 Julie Padilla
 }
-\concept{
-analyze
-
-analyze
-}
+\concept{analyze}

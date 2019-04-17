@@ -5,7 +5,8 @@
 \title{Reserve National Map}
 \usage{
 res_national_map(incl = c("contig", "AK", "HI", "PR"),
-  highlight_states = NULL, highlight_reserves = NULL, agg_county = TRUE)
+  highlight_states = NULL, highlight_reserves = NULL,
+  agg_county = TRUE)
 }
 \arguments{
 \item{incl}{chr vector to include AK, HI , and PR (case sensitive)}
@@ -53,6 +54,4 @@ Rudis, Bob. 2014. "Moving The Earth (well, Alaska & Hawaii) With R". rud.is (blo
 Bob Rudis, Julie Padilla
 Maintainer: Julie Padilla
 }
-\concept{
-analyze
-}
+\concept{analyze}

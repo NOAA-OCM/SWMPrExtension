@@ -107,11 +107,11 @@ res_custom_map <- function(stations
 
   # Determine if r and l labs exist
   if(!is.null(lab_loc)){
-    left_labs <- grep('L', lab_loc)
-    right_labs <- grep('R', lab_loc)
+    if('L' %in% lab_loc){left_labs <- grep('L', lab_loc)}
+    if('R' %in% lab_loc){right_labs <- grep('R', lab_loc)}
   } else {
     #default to left labels
-    left_labs <- rep('L', length(stations))
+    left_labs <- c(1:4)
   }
 
   # Plot map
@@ -119,7 +119,7 @@ res_custom_map <- function(stations
     addProviderTiles(leaflet::providers$Esri.WorldGrayCanvas) %>%  # Add default OpenStreetMap map tiles, CartoDB.Positron
     addPolygons(data = shp, weight = 2, color = '#B3B300', fillColor = 'yellow')
 
-  if(length(left_labs) > 0){
+  if(exists('left_labs')){
     m <- m %>%
       addCircleMarkers(lng = ~Longitude[left_labs] * -1, lat = ~Latitude[left_labs], radius = 5
                        , weight = 0, fillOpacity = 1
@@ -132,7 +132,7 @@ res_custom_map <- function(stations
                                                      , style = label_style))
   }
 
-  if(length(right_labs) > 0){
+  if(exists('right_labs')){
     m <- m %>%
       addCircleMarkers(lng = ~Longitude[right_labs] * -1, lat = ~Latitude[right_labs], radius = 5
                        , weight = 0, fillOpacity = 1

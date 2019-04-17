@@ -21,6 +21,4 @@ A helper function used internally by \code{\link{create_sk_flextable_list}} to l
 \author{
 Julie Padilla
 }
-\concept{
-reporting
-}
+\concept{reporting}

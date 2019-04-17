@@ -51,6 +51,4 @@ Rudis, Bob. 2014. "Moving The Earth (well, Alaska & Hawaii) With R". rud.is (blo
 Bob Rudis, Julie Padilla
 Maintainer: Julie Padilla
 }
-\concept{
-analyze
-}
+\concept{analyze}

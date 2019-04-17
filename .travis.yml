@@ -3,14 +3,16 @@
 language: r
 sudo: required
 dist: trusty
+#warnings_are_errors: false
 #cache: packages
 
 os:
   - linux
-  - osx
+ # - osx
   
 addons:
   apt:
     packages:
       - libgdal-dev
       - libproj-dev
+      - libmagick++-dev

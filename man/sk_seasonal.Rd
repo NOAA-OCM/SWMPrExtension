@@ -55,8 +55,4 @@ x <- sk_seasonal(dat_wq, param = 'temp')
 \author{
 Julie Padilla
 }
-\concept{
-analyze
-
-analyze
-}
+\concept{analyze}

@@ -8,8 +8,8 @@
 raw_boxplot(swmpr_in, ...)
 
 \method{raw_boxplot}{swmpr}(swmpr_in, param = NULL, target_yr = NULL,
-  criteria = NULL, log_trans = FALSE, converted = FALSE,
-  plot_title = FALSE, ...)
+  criteria = NULL, free_y = FALSE, log_trans = FALSE,
+  converted = FALSE, plot_title = FALSE, ...)
 }
 \arguments{
 \item{swmpr_in}{input swmpr object}
@@ -21,6 +21,8 @@ raw_boxplot(swmpr_in, ...)
 \item{target_yr}{numeric, if target year is not specified then all data in the data frame will be used.}
 
 \item{criteria}{numeric, a numeric criteria that will be plotted as a horizontal line}
+
+\item{free_y}{logical, should the y-axis be free? Defaults to \code{FALSE}. If \code{FALSE}, defaults to zero, unless negative values are present. If \code{TRUE}, y-axis limits are selected by \code{ggplot}}
 
 \item{log_trans}{logical, should y-axis be log? Defaults to \code{FALSE}}
 
@@ -63,8 +65,4 @@ raw_boxplot(dat, param = 'do_mgl')
 \author{
 Julie Padilla
 }
-\concept{
-analyze
-
-analyze
-}
+\concept{analyze}
