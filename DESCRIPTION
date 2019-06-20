@@ -2,7 +2,7 @@ Package: SWMPrExtension
 Type: Package
 Title: Additional Functions for Retrieving, Organizing, and Analyzing Estuary Monitoring Data
 Version: 1.1.1
-Maintainer: Julie Padilla <jpadilla@limno.com>
+Maintainer: Dave Eslinger <dave.eslinger@noaa.gov>
 Description: Additional tools for retrieving, organizing, and analyzing environmental
     data from the System Wide Monitoring Program of the National Estuarine
     Research Reserve System <http://cdmo.baruch.sc.edu/>. These tools 
@@ -38,7 +38,7 @@ Imports:
 	sp
 Authors@R: c(
   person(given = "Julie", family = "Padilla",
-    role = c("aut", "cre"),
+    role = c("aut", "ctb"),
 	email = "jpadilla@limno.com"),
   person(given = "Marcus", family = "Beck",
     role = c("ctb"),
@@ -46,6 +46,9 @@ Authors@R: c(
   person(given = "Kimberly", family = "Cressman",
     role = c("ctb"),
 	email = "kimberly.cressman@dmr.ms.gov"),
+  person(given = "Dave", family = "Eslinger",
+    role = c("cre"),
+	email = "jpadilla@limno.com"),
   person(given = "Bob", family = "Rudis",
     role = c("ctb"),
 	email = "bob@rud.is")
