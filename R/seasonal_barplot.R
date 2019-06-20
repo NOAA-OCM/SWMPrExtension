@@ -79,8 +79,6 @@ seasonal_barplot <- function(swmpr_in, ...) UseMethod('seasonal_barplot')
 
 #' @rdname seasonal_barplot
 #'
-#' @concept analyze
-#'
 #' @export
 #'
 #' @method seasonal_barplot swmpr

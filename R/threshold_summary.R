@@ -87,8 +87,6 @@ threshold_summary <- function(swmpr_in, ...) UseMethod('threshold_summary')
 
 #' @rdname threshold_summary
 #'
-#' @concept analyze
-#'
 #' @export
 #'
 #' @method threshold_summary swmpr

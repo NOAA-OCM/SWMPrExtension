@@ -2,6 +2,7 @@
 * Updates to allow user to specify trend colors for `create_sk_flextable_list` function
 * Additional updates to compensate for changes in Officer 0.3.3 flextable structure
 * adding `free_y` argument to `threshold_percentile_plot`
+* Minor fix to help files if searching by concept, e.g., `help.search('analyze', package = "SWMPrExtension")
 
 #### SWMPrExtension 1.1.0
 * Updates to plot legends for compatibility with ggplot2 3.0.0
@@ -27,7 +28,6 @@
  * res_sk_custom_map
  * res_local_map
  * res_custom_map
-
 
 #### SWMPrExtension 0.3.13
 * Documentation updates and the addition of toy examples for testing

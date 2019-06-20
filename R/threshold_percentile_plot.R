@@ -81,8 +81,6 @@ threshold_percentile_plot <- function(swmpr_in, ...) UseMethod('threshold_percen
 
 #' @rdname threshold_percentile_plot
 #'
-#' @concept analyze
-#'
 #' @export
 #'
 #' @method threshold_percentile_plot swmpr

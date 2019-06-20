@@ -77,8 +77,6 @@ seasonal_boxplot <- function(swmpr_in, ...) UseMethod('seasonal_boxplot')
 
 #' @rdname seasonal_boxplot
 #'
-#' @concept analyze
-#'
 #' @export
 #'
 #' @method seasonal_boxplot swmpr

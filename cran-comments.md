@@ -1,3 +1,7 @@
+## Resubmission
+Fixes to documentation include removal of multi-line multi-par \concept entries.
+Package maintainer changed from Julie Padilla (jpadilla@limno.com) to Dave Eslinger (dave.eslinger@noaa.gov)
+
 ## Test environments
 * local windows 10 install, R 3.5.2
 * ubuntu 14.04 (on travis-ci), R 3.5.2

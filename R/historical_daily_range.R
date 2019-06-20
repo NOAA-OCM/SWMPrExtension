@@ -67,8 +67,6 @@ historical_daily_range <- function(swmpr_in, ...) UseMethod('historical_daily_ra
 
 #' @rdname historical_daily_range
 #'
-#' @concept analyze
-#'
 #' @export
 #'
 #' @method historical_daily_range swmpr
