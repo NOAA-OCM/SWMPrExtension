@@ -48,7 +48,7 @@ Authors@R: c(
 	email = "kimberly.cressman@dmr.ms.gov"),
   person(given = "Dave", family = "Eslinger",
     role = c("cre"),
-	email = "jpadilla@limno.com"),
+	email = "dave.eslinger@noaa.gov"),
   person(given = "Bob", family = "Rudis",
     role = c("ctb"),
 	email = "bob@rud.is")
