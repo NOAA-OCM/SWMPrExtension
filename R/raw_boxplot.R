@@ -52,8 +52,6 @@ raw_boxplot <- function(swmpr_in, ...) UseMethod('raw_boxplot')
 
 #' @rdname raw_boxplot
 #'
-#' @concept analyze
-#'
 #' @export
 #'
 #' @method raw_boxplot swmpr

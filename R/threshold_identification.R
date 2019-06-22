@@ -71,8 +71,6 @@ threshold_identification <- function(swmpr_in, ...) UseMethod('threshold_identif
 
 #' @rdname threshold_identification
 #'
-#' @concept analyze
-#'
 #' @export
 #'
 #' @method threshold_identification swmpr

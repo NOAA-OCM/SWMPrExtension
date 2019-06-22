@@ -93,8 +93,6 @@ seasonal_dot <- function(swmpr_in, ...) UseMethod('seasonal_dot')
 
 #' @rdname seasonal_dot
 #'
-#' @concept analyze
-#'
 #' @export
 #'
 #' @method seasonal_dot swmpr

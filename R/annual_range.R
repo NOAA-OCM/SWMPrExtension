@@ -60,8 +60,6 @@ annual_range <- function(swmpr_in, ...) UseMethod('annual_range')
 
 #' @rdname annual_range
 #'
-#' @concept analyze
-#'
 #' @export
 #'
 #' @method annual_range swmpr

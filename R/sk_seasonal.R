@@ -45,8 +45,6 @@ sk_seasonal <- function(swmpr_in, ...) UseMethod('sk_seasonal')
 
 #' @rdname sk_seasonal
 #'
-#' @concept analyze
-#'
 #' @export
 #'
 #' @method sk_seasonal swmpr
