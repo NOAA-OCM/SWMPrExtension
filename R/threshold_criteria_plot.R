@@ -132,8 +132,6 @@ threshold_criteria_plot <- function(swmpr_in, ...) UseMethod('threshold_criteria
 
 #' @rdname threshold_criteria_plot
 #'
-#' @concept analyze
-#'
 #' @export
 #'
 #' @method threshold_criteria_plot swmpr
