@@ -103,7 +103,7 @@ res_custom_map <- function(stations
   )
 
   # generate location labels
-  loc <- data.frame(abbrev = stations, Latitude = y_loc, Longitude = -1 * x_loc, color = station_col, stringsAsFactors = F)
+  loc <- data.frame(abbrev = stations, Latitude = y_loc, Longitude = -1 * x_loc, color = station_col, stringsAsFactors = FALSE)
 
   # Determine if r and l labs exist
   if(!is.null(lab_loc)){

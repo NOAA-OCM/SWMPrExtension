@@ -165,15 +165,15 @@ historical_daily_range.swmpr <- function(swmpr_in
   # Determine average min/max/mean for each julian day (for all years together)
   dat_hist_avg <- dat_all %>%
     dplyr::group_by(!! jd) %>%
-    dplyr::summarise(mean = mean(!! avg, na.rm = T)
-                     , min = mean(!!  mini, na.rm = T)
-                     , max = mean(!! maxi, na.rm = T))
+    dplyr::summarise(mean = mean(!! avg, na.rm = TRUE)
+                     , min = mean(!!  mini, na.rm = TRUE)
+                     , max = mean(!! maxi, na.rm = TRUE))
 
   dat_hist_obs <- dat_all %>%
     dplyr::group_by(!! jd) %>%
-    dplyr::summarise(mean = mean(!! avg, na.rm = T)
-                     , min = min(!!  mini, na.rm = T)
-                     , max = max(!! maxi, na.rm = T))
+    dplyr::summarise(mean = mean(!! avg, na.rm = TRUE)
+                     , min = min(!!  mini, na.rm = TRUE)
+                     , max = max(!! maxi, na.rm = TRUE))
 
   # account for missing julian days
   if(length(dat_yr[1, ] < 365)){
@@ -183,8 +183,8 @@ historical_daily_range.swmpr <- function(swmpr_in
 
   if(plot){
     # assign a minimum of zero unles there are values < 0
-    mn <- ifelse(min(dat_hist_obs$min, na.rm = T) < min(dat_hist_avg$min, na.rm = T)
-                 , min(dat_hist_obs$min, na.rm = T), min(dat_hist_avg$min, na.rm = T))
+    mn <- ifelse(min(dat_hist_obs$min, na.rm = TRUE) < min(dat_hist_avg$min, na.rm = TRUE)
+                 , min(dat_hist_obs$min, na.rm = TRUE), min(dat_hist_avg$min, na.rm = TRUE))
     mn <- ifelse(mn < 0 , min(pretty(mn)), 0)
     mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), mn)
 
@@ -208,8 +208,8 @@ historical_daily_range.swmpr <- function(swmpr_in
       theme_bw() +
       theme(legend.position = 'top', legend.direction = 'horizontal')
 
-    # add a log transformed access if log_trans == T
-    ## allow y-axis to be free if free_y == T
+    # add a log transformed access if log_trans == TRUE
+    ## allow y-axis to be free if free_y == TRUE
     if(!log_trans) {
       plt <- plt +
         scale_y_continuous(labels = format_format(digits = 2, big.mark = ",", decimal.mark = ".", scientific = FALSE)
@@ -229,7 +229,7 @@ historical_daily_range.swmpr <- function(swmpr_in
     # Adjust legend order
     plt <-
       plt +
-      guides(fill = guide_legend(override.aes = list(linetype = 0), order = 2, reverse = T)
+      guides(fill = guide_legend(override.aes = list(linetype = 0), order = 2, reverse = TRUE)
              , color = guide_legend(override.aes = list(color = 'steelblue3'), order = 1))
 
 
@@ -263,12 +263,12 @@ historical_daily_range.swmpr <- function(swmpr_in
 
       plt <- plt +
         geom_hline(aes(yintercept = criteria, linetype = factor(criteria_lab))
-                   , color = 'red', show.legend = T) +
+                   , color = 'red', show.legend = TRUE) +
         scale_linetype_manual('', values = c('longdash'))
 
       plt <-
         plt +
-        guides(fill = guide_legend(override.aes = list(linetype = 0), order = 2, reverse = T)
+        guides(fill = guide_legend(override.aes = list(linetype = 0), order = 2, reverse = TRUE)
                , color = guide_legend(override.aes = list(color = 'steelblue3'), order = 1)
                , linetype = guide_legend(override.aes = list(color = 'red'), order = 3))
     }

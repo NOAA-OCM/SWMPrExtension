@@ -40,8 +40,8 @@ create_sk_national_ft_reserves <- function(sk_result
   ft_header$header$dataset <- header_col_names
 
   # format
-  def_txt_hd <- fp_text(color = '#404040', bold = T, font.size = font_sz_head)
-  def_txt_bdy <- fp_text(color = '#404040', bold = T, font.size = font_sz_stn)
+  def_txt_hd <- fp_text(color = '#404040', bold = TRUE, font.size = font_sz_head)
+  def_txt_bdy <- fp_text(color = '#404040', bold = TRUE, font.size = font_sz_stn)
   def_par_hd <- fp_par(text.align = 'center')
   def_par_bdy <- fp_par(text.align = 'left')
   def_cell <- fp_cell(background.color = "white", border = fp_border(color = '#444E65'))

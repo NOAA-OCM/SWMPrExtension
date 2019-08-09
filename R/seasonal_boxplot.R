@@ -158,7 +158,7 @@ seasonal_boxplot.swmpr <- function(swmpr_in
     warning('QAQC columns present. QAQC not performed before analysis.')
 
   # Assign the seasons and order them
-  dat$season <- assign_season(dat$datetimestamp, abb = T, ...)
+  dat$season <- assign_season(dat$datetimestamp, abb = TRUE, ...)
 
   # Assign date for determining daily stat value
   dat$date <- lubridate::floor_date(dat$datetimestamp, unit = 'days')
@@ -181,11 +181,11 @@ seasonal_boxplot.swmpr <- function(swmpr_in
 
   if(plot) {
 
-    mx <- max(dat_hist$result, na.rm = T)
+    mx <- max(dat_hist$result, na.rm = TRUE)
     mx <- ifelse(data_type == 'nut' && param != 'chla_n', ceiling(mx/0.01) * 0.01, ceiling(mx))
 
     # assign a minimum of zero unless there are values < 0
-    mn <- min(dat_hist$result, na.rm = T)
+    mn <- min(dat_hist$result, na.rm = TRUE)
     mn <- ifelse(mn < 0 , min(pretty(mn)), 0)
     mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), mn)
 
@@ -200,8 +200,8 @@ seasonal_boxplot.swmpr <- function(swmpr_in
       theme(legend.position = 'top'
             , legend.direction = 'horizontal')
 
-    # add a log transformed access if log_trans == T
-    ## allow y-axis to be free if free_y == T
+    # add a log transformed access if log_trans == TRUE
+    ## allow y-axis to be free if free_y == TRUE
     if(!log_trans) {
       plt <- plt +
         scale_y_continuous(labels = format_format(digits = 2, big.mark = ",", decimal.mark = ".", scientific = FALSE)
@@ -226,7 +226,7 @@ seasonal_boxplot.swmpr <- function(swmpr_in
         dplyr::group_by(!! seas, !! dt) %>%
         dplyr::summarise(result = FUN(!! parm)) %>%
         dplyr::group_by(!! seas) %>%
-        dplyr::summarise(med = stats::median(.data$result, na.rm = T))
+        dplyr::summarise(med = stats::median(.data$result, na.rm = TRUE))
 
       pt_fill <- ifelse(data_type == 'nut', paste('Monthly Sample \n(', target_yr, ')', sep = '')
                         , paste('Median Daily ', stat_lab, ' \n(', target_yr, ')', sep = ''))
@@ -241,7 +241,7 @@ seasonal_boxplot.swmpr <- function(swmpr_in
 
       plt <- plt +
         geom_hline(aes(yintercept = criteria, color = factor(criteria_lab), linetype = factor('WQ Threshold'))
-                   , show.legend = T) +
+                   , show.legend = TRUE) +
         scale_color_manual('', values = c('WQ Threshold' = 'red')) +
         scale_linetype_manual('', values = c('WQ Threshold' = 'longdash'))
 

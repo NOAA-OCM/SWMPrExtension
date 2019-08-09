@@ -48,7 +48,7 @@ create_sk_national_ft_results <- function(sk_result, param
 
   # set styling elements
   def_par <- fp_par(text.align = 'center')
-  def_txt_hd <- fp_text(color = '#404040', bold = T, font.size = font_sz_head)
+  def_txt_hd <- fp_text(color = '#404040', bold = TRUE, font.size = font_sz_head)
   def_cell_hd <- fp_cell(background.color = 'white', border = fp_border(color = '#444E65')
                          , margin.top = 2, margin.bottom = 2)
   def_txt_bdy <- fp_text(color = '#444E65', font.size = font_sz_result)
@@ -73,7 +73,7 @@ create_sk_national_ft_results <- function(sk_result, param
     result <- formula(paste('~ ', col_names[[i]], sep = ''))
 
     ft <- style(ft, condition, result,
-                pr_t = fp_text(color = "white", font.family = 'Wingdings 3', font.size = font_sz_result, bold = T),
+                pr_t = fp_text(color = "white", font.family = 'Wingdings 3', font.size = font_sz_result, bold = TRUE),
                 pr_c = fp_cell(background.color = '#247BA0', border = fp_border(color = '#444E65')))
   }
 

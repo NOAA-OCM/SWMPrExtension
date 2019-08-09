@@ -36,7 +36,7 @@ summarise_handoff_files <- function(path, param, res_region = NULL) {
     stop('res_region must be specified. res_region should be a data.frame with two columns: one that consists of unique NERR reserve ids, and one that regional classifications.')
 
   # load data for parameter of interest
-  x <- lapply(files, read.csv, header = T, stringsAsFactors = F, encoding = 'UTF-8') %>% bind_rows
+  x <- lapply(files, read.csv, header = TRUE, stringsAsFactors = FALSE, encoding = 'UTF-8') %>% bind_rows
 
   x$NERR.Site.ID <- abbrev
   x <- left_join(res_region, x)

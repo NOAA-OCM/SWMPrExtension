@@ -123,7 +123,7 @@ threshold_identification.swmpr <- function(swmpr_in
 
   # Prepare logical statements to be used in analysis
   statements <- paste(param, thresh_type, thresholds)
-  df_statements <- data.frame(parameter = param, statement = statements, stringsAsFactors = F)
+  df_statements <- data.frame(parameter = param, statement = statements, stringsAsFactors = FALSE)
 
   if(data_type != 'nut') {
     # stop if time series is not standardized
@@ -199,7 +199,7 @@ threshold_identification.swmpr <- function(swmpr_in
     if(length(param) > 1){
       ls <- list(rep(dat, length(param)))
 
-      x <- mapply(generate_nut_flags, ls, statements, SIMPLIFY = F)
+      x <- mapply(generate_nut_flags, ls, statements, SIMPLIFY = FALSE)
       names(x) <- param
 
       out <- bind_rows(x, .id = 'parameter')

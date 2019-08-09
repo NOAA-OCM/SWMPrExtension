@@ -87,7 +87,7 @@ res_custom_sk_map <- function(stations
     stop('An incorrect number of y coordinates were specified. One y coordinate must be specified for each station')
 
   # generate location labels
-  loc <- data.frame(abbrev = stations, Latitude = y_loc, Longitude = -1 * x_loc, stringsAsFactors = F)
+  loc <- data.frame(abbrev = stations, Latitude = y_loc, Longitude = -1 * x_loc, stringsAsFactors = FALSE)
 
   # Determine if r and l labs exist
   if(!is.null(lab_loc)){

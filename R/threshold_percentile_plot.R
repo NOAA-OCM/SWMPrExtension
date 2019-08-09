@@ -164,12 +164,12 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
   if(length(percentiles) > 1) {
     bars <- dat_subset %>%
       group_by(!! grp) %>%
-      summarise(perc_hi = quantile(!! parm, probs = max(percentiles), na.rm = T)
-                , perc_lo = quantile(!! parm, probs = min(percentiles), na.rm = T))
+      summarise(perc_hi = quantile(!! parm, probs = max(percentiles), na.rm = TRUE)
+                , perc_lo = quantile(!! parm, probs = min(percentiles), na.rm = TRUE))
   } else {
     bars <- dat_subset %>%
       group_by(!! grp) %>%
-      summarise(perc_hi = quantile(!! parm, probs = percentiles, na.rm = T))
+      summarise(perc_hi = quantile(!! parm, probs = percentiles, na.rm = TRUE))
   }
 
   if(!is.null(target_yr)){
@@ -182,7 +182,7 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
   yr_ct <- mx_yr - mn_yr + 1
 
   # add dummy data to bars
-  dummy <- data.frame(month = rep(c(1:12), yr_ct), year = rep(c(mn_yr:mx_yr), each = 12), dummy = -999, stringsAsFactors = F)
+  dummy <- data.frame(month = rep(c(1:12), yr_ct), year = rep(c(mn_yr:mx_yr), each = 12), dummy = -999, stringsAsFactors = FALSE)
   dummy[nrow(dummy) + 1 , ] <- c(1, max(dummy$year) + 1, -999)
 
   bar_plt <- left_join(dummy, bars)
@@ -201,14 +201,14 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
   brks <- ifelse(is.null(target_yr), set_date_breaks(hist_rng), set_date_breaks(target_yr))
   lab_brks <- ifelse(is.null(target_yr), set_date_break_labs(hist_rng), set_date_break_labs(target_yr))
 
-  mx <- ifelse(max(dat_subset[ , 2], na.rm = T) > max(bars$perc_hi), max(dat_subset[ , 2], na.rm = T), max(bars$perc_hi))
+  mx <- ifelse(max(dat_subset[ , 2], na.rm = TRUE) > max(bars$perc_hi), max(dat_subset[ , 2], na.rm = TRUE), max(bars$perc_hi))
   mx <- ifelse(data_type == 'nut' && param != 'chla_n', ceiling(mx/0.01) * 0.01, ceiling(mx))
 
   if(length(percentiles) > 1) {
-    mn <- ifelse(min(dat_subset[ , 2], na.rm = T) < min(bars$perc_lo), min(dat_subset[ , 2], na.rm = T), min(bars$perc_lo))
+    mn <- ifelse(min(dat_subset[ , 2], na.rm = TRUE) < min(bars$perc_lo), min(dat_subset[ , 2], na.rm = TRUE), min(bars$perc_lo))
     mn <- ifelse(data_type == 'nut', 0, floor(mn))
   } else {
-    mn <- ifelse(min(dat_subset[ , 2], na.rm = T) < min(bars$perc_hi), min(dat_subset[ , 2], na.rm = T), min(bars$perc_hi)) #note: perc_lo DNE when percentiles < 2
+    mn <- ifelse(min(dat_subset[ , 2], na.rm = TRUE) < min(bars$perc_hi), min(dat_subset[ , 2], na.rm = TRUE), min(bars$perc_hi)) #note: perc_lo DNE when percentiles < 2
     mn <- ifelse(data_type == 'nut', 0, ceiling(mx))
   }
   mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), mn)
@@ -219,7 +219,7 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
     geom_line(lwd = 1) +
     scale_x_datetime(date_breaks = brks, date_labels = lab_brks)
 
-  # add a log transformed access if log_trans = T
+  # add a log transformed access if log_trans = TRUE
   if(!log_trans) {
 
     plt <- plt +
@@ -265,7 +265,7 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
       plt +
       geom_line(data = bar_plt, aes_(x = dt, y = p_hi, color = lab_perc)
                 , lwd = 1
-                , inherit.aes = F)
+                , inherit.aes = FALSE)
   }
 
 
@@ -310,7 +310,7 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
   plt <-
     plt +
     guides(fill = guide_legend(order = 1)
-           , color = guide_legend(order = 2, reverse = T))
+           , color = guide_legend(order = 2, reverse = TRUE))
 
   # add plot title if specified
   if(plot_title) {

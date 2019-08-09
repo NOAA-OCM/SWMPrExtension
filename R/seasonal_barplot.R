@@ -28,7 +28,7 @@
 #'
 #' @details This function uses barplots to summarize parameters that are best viewed on a cumulative basis (e.g., precipitation). Data are aggregated on a seasonal and annual basis.
 #'
-#' There are two ways to make interannual comparisons: on an aggregate basis and on a seasonal basis. If the argument \code{season_facet = F} then parameter totals from each season will be added together to compose one, multi-color bar.If \code{season_facet = T} then parameter totals from each season separated into multiple plots for easier intra-season comparison across years.
+#' There are two ways to make interannual comparisons: on an aggregate basis and on a seasonal basis. If the argument \code{season_facet = FALSE} then parameter totals from each season will be added together to compose one, multi-color bar.If \code{season_facet = TRUE} then parameter totals from each season separated into multiple plots for easier intra-season comparison across years.
 #'
 #' @author Julie Padilla
 #'
@@ -53,16 +53,16 @@
 #' y <- seasonal_barplot(dat, param = 'totprcp'
 #'                       , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
 #'                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
-#'                       , converted = F
-#'                       , plot = F)
+#'                       , converted = FALSE
+#'                       , plot = FALSE)
 #'
 #' ## divide plot into seasonal facets
 #' x <- seasonal_barplot(dat, param = 'totprcp'
 #'                       , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
 #'                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
-#'                       , season_facet = T
-#'                       , hist_avg = T
-#'                       , converted = F)
+#'                       , season_facet = TRUE
+#'                       , hist_avg = TRUE
+#'                       , converted = FALSE)
 #'
 #' ## convert from mm to in
 #' dat$totprcp <- dat$totprcp / 25.4
@@ -70,9 +70,9 @@
 #' x <- seasonal_barplot(dat, param = 'totprcp'
 #'                       , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
 #'                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
-#'                       , hist_avg = T
+#'                       , hist_avg = TRUE
 #'                       , converted
-#'                        = T)
+#'                        = TRUE)
 #' }
 #"
 seasonal_barplot <- function(swmpr_in, ...) UseMethod('seasonal_barplot')
@@ -155,15 +155,15 @@ seasonal_barplot.swmpr <- function(swmpr_in
 
   dat_hist <- dat_hist %>%
     dplyr::group_by(!! yr, !! seas) %>%
-    dplyr::summarise(result = sum(!! parm, na.rm = T))
+    dplyr::summarise(result = sum(!! parm, na.rm = TRUE))
 
   if(plot){
     seas_col <- cols
 
     if(season_facet) {
-      yr_mx <- dat_hist %>% group_by(!! yr, !! seas) %>% summarise(max_val = sum(!! res, na.rm = T))
+      yr_mx <- dat_hist %>% group_by(!! yr, !! seas) %>% summarise(max_val = sum(!! res, na.rm = TRUE))
     } else {
-      yr_mx <- dat_hist %>% group_by(!! yr) %>% summarise(max_val = sum(!! res, na.rm = T))
+      yr_mx <- dat_hist %>% group_by(!! yr) %>% summarise(max_val = sum(!! res, na.rm = TRUE))
     }
 
     mx <- ceiling(max(yr_mx$max_val) / 10) * 10 * 1.1
@@ -222,7 +222,7 @@ seasonal_barplot.swmpr <- function(swmpr_in
 
       seas_means <- dat_hist %>%
         group_by(.data$season) %>%
-        summarise(mean = mean(.data$result, na.rm = T))
+        summarise(mean = mean(.data$result, na.rm = TRUE))
 
       dat_hist <- merge(dat_hist, seas_means)
     }
@@ -237,18 +237,18 @@ seasonal_barplot.swmpr <- function(swmpr_in
         # return(dat_hist)
         bar_seas <- bar_seas +
           geom_hline(aes(yintercept = dat_hist$mean, linetype = factor(lab_parm))
-                     , color = '#767171', lwd = 1.5, show.legend = T) +
+                     , color = '#767171', lwd = 1.5, show.legend = TRUE) +
           scale_linetype_manual(values = 'solid')
 
       } else {
 
         avg <- dat_hist %>% group_by(year) %>%
-          summarise(sum = sum(.data$result, na.rm = T)) %>%
-          summarise(avg = mean(sum, na.rm = T))
+          summarise(sum = sum(.data$result, na.rm = TRUE)) %>%
+          summarise(avg = mean(sum, na.rm = TRUE))
 
         bar_seas <- bar_seas +
           geom_hline(aes(yintercept = avg[[1]], linetype = factor(lab_parm))#mean(dat_hist$result), linetype = factor(lab_parm))
-                     , color = '#767171', lwd = 1.5, show.legend = T) +
+                     , color = '#767171', lwd = 1.5, show.legend = TRUE) +
           scale_linetype_manual(values = 'solid')
       }
 

@@ -117,13 +117,13 @@ raw_boxplot.swmpr <- function(swmpr_in
     dat <- dat %>% dplyr::filter(year(.data$datetimestamp) == target_yr)
 
   # Assign the seasons and order them
-  dat$season <- assign_season(dat$datetimestamp, abb = T, ...)
+  dat$season <- assign_season(dat$datetimestamp, abb = TRUE, ...)
 
-  # mx <- max(dat[, parm_index], na.rm = T)
+  # mx <- max(dat[, parm_index], na.rm = TRUE)
   # mx <- max(pretty(mx))
 
   # assign a minimum of zero unless there are values < 0
-  mn <- min(dat[, parm_index], na.rm = T)
+  mn <- min(dat[, parm_index], na.rm = TRUE)
   mn <- ifelse(mn < 0 , min(pretty(mn)), 0)
   mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), mn)
 
@@ -141,8 +141,8 @@ raw_boxplot.swmpr <- function(swmpr_in
     theme(legend.position = 'top'
           , legend.direction = 'horizontal')
 
-  # add a log transformed access if log_trans == T
-  ## allow y-axis to be free if free_y == T
+  # add a log transformed access if log_trans == TRUE
+  ## allow y-axis to be free if free_y == TRUE
   if(!log_trans) {
     plt <- plt +
       scale_y_continuous(labels = format_format(digits = 2, big.mark = ",", decimal.mark = ".", scientific = FALSE)
@@ -163,7 +163,7 @@ raw_boxplot.swmpr <- function(swmpr_in
 
     plt <- plt +
       geom_hline(aes(yintercept = criteria, color = factor('WQ Threshold'), linetype = factor('WQ Threshold'))
-                  , show.legend = T) +
+                  , show.legend = TRUE) +
       scale_color_manual('', values = c('WQ Threshold' = 'red')) +
       scale_linetype_manual('', values = c('WQ Threshold' = 'longdash'))
 

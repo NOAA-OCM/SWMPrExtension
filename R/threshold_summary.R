@@ -34,7 +34,7 @@
 #'
 #' @concept analyze
 #'
-#' @return Returns a \code{\link[ggplot2]{ggplot}} object (if \code{plot} = \code{T}) or a dataframe (if \code{plot} = \code{F})
+#' @return Returns a \code{\link[ggplot2]{ggplot}} object (if \code{plot} = \code{TRUE}) or a dataframe (if \code{plot} = \code{FALSE})
 #'
 #' @references
 #' United States Environmental Protection Agency (USEPA). 2016. "National Coastal Condition Assessment 2010". EPA 841-R-15-006.
@@ -97,7 +97,7 @@ threshold_summary.swmpr <- function(swmpr_in
                                     , parameter_threshold = NULL
                                     , threshold_type = NULL
                                     , time_threshold = NULL
-                                    , converted = F
+                                    , converted = FALSE
                                     , pal = 'Set3'
                                     , plot_title = FALSE
                                     , plot = TRUE
@@ -144,7 +144,7 @@ threshold_summary.swmpr <- function(swmpr_in
 
 
   # Assign the seasons and order them
-  dat_threshold$season <- assign_season(dat_threshold$starttime, abb = T, ...)
+  dat_threshold$season <- assign_season(dat_threshold$starttime, abb = TRUE, ...)
 
   summary <- dat_threshold %>%
     group_by(!! yr, !! grp, !! seas) %>%
@@ -163,7 +163,7 @@ threshold_summary.swmpr <- function(swmpr_in
 
     dummy <- data.frame(grp_join = c(mn_yr:mx_yr)
                         , year = c(mn_yr:mx_yr)
-                        , stringsAsFactors = F)
+                        , stringsAsFactors = FALSE)
 
     dat_grp <- left_join(dummy, summary)
     dat_grp$count[is.na(dat_grp$count)] <- 0
@@ -185,7 +185,7 @@ threshold_summary.swmpr <- function(swmpr_in
 
     dummy <- data.frame(grp_join = rep(grp_nm, yr_ct)
                         , year = rep(c(mn_yr:mx_yr), each = grp_ct)
-                        , stringsAsFactors = F)
+                        , stringsAsFactors = FALSE)
 
     dat_grp <- left_join(dummy, summary)
     dat_grp$count[is.na(dat_grp$count)] <- 0
@@ -212,7 +212,7 @@ threshold_summary.swmpr <- function(swmpr_in
     plt <-
       plt +
       theme_bw() +
-      guides(fill = guide_legend(override.aes = list(linetype = 'blank'), order = 1, nrow = 2, byrow = T)) +
+      guides(fill = guide_legend(override.aes = list(linetype = 'blank'), order = 1, nrow = 2, byrow = TRUE)) +
       theme(panel.grid.minor.y = element_blank()
             , panel.grid.major.y = element_line(linetype = 'dashed')) +
       theme(panel.grid.minor.x = element_blank()) +
@@ -234,7 +234,7 @@ threshold_summary.swmpr <- function(swmpr_in
       yrs <- length(unique(brks))
 
       plt <- plt + scale_fill_manual('', values = rep('gray30', yrs)) +
-        guides(fill = F)
+        guides(fill = FALSE)
     } else {
       plt <- plt + scale_fill_brewer('', palette = pal)
     }

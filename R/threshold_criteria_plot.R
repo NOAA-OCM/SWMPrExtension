@@ -207,12 +207,12 @@ threshold_criteria_plot.swmpr <- function(swmpr_in
   lab_brks <- set_date_break_labs(rng)
 
   # set y axis range
-  mx <- max(dat[, grep(param, colnames(dat))], na.rm = T)
+  mx <- max(dat[, grep(param, colnames(dat))], na.rm = TRUE)
   mx <- ifelse(max(thresholds) > mx, 1.1 * max(thresholds), mx)
   mx <- ifelse(data_type == 'nut' && param != 'chla_n', ceiling(mx/0.01) * 0.01, ceiling(mx))
 
   # assign a minimum of zero unless there are values < 0
-  mn <- min(dat[, grep(param, colnames(dat))], na.rm = T)
+  mn <- min(dat[, grep(param, colnames(dat))], na.rm = TRUE)
   mn <- ifelse(mn < 0 , min(pretty(mn)), 0)
   mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), mn)
 
@@ -299,7 +299,7 @@ threshold_criteria_plot.swmpr <- function(swmpr_in
 
     df_smooth <- dat %>%
       group_by(year = lubridate::year(!! dt), month = lubridate::month(!! dt)) %>%
-      summarise(mean = mean(!! parm, na.rm = T)) %>%
+      summarise(mean = mean(!! parm, na.rm = TRUE)) %>%
       mutate(datetimestamp = paste(year, '-', month, '-', '01', ' ', '0:00', sep = ''))
 
     df_smooth$datetimestamp <- as.POSIXct(df_smooth$datetimestamp)

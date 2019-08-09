@@ -175,17 +175,17 @@ historical_range.swmpr <- function(swmpr_in
   # Determine average min/max/mean for each month (for all years together)
   dat_hist <- dat_all %>%
     dplyr::group_by(!! seas) %>%
-    dplyr::summarise(mean = mean(!! avg, na.rm = T)
-                     , min = mean(!!  mini, na.rm = T)
-                     , max = mean(!! maxi, na.rm = T))
+    dplyr::summarise(mean = mean(!! avg, na.rm = TRUE)
+                     , min = mean(!!  mini, na.rm = TRUE)
+                     , max = mean(!! maxi, na.rm = TRUE))
 
   # Determine average min/max/mean for each month (for all years together)
   if(data_type != 'nut') {
     dat_hist <- dat_all %>%
       dplyr::group_by(!! seas) %>%
-      dplyr::summarise(mean = mean(!! avg, na.rm = T)
-                       , min = mean(!!  mini, na.rm = T)
-                       , max = mean(!! maxi, na.rm = T))
+      dplyr::summarise(mean = mean(!! avg, na.rm = TRUE)
+                       , min = mean(!!  mini, na.rm = TRUE)
+                       , max = mean(!! maxi, na.rm = TRUE))
 
     # Make some labels
     lab_hist_rng <- paste('Daily Avg Range \n(', rng[[1]], '-', rng[[2]], ')', sep = '')
@@ -196,9 +196,9 @@ historical_range.swmpr <- function(swmpr_in
   } else {
     dat_hist <- dat_all %>%
       dplyr::group_by(!! seas) %>%
-      dplyr::summarise(mean = mean(!! avg, na.rm = T)
-                       , min = min(!!  mini, na.rm = T)
-                       , max = max(!! maxi, na.rm = T))
+      dplyr::summarise(mean = mean(!! avg, na.rm = TRUE)
+                       , min = min(!!  mini, na.rm = TRUE)
+                       , max = max(!! maxi, na.rm = TRUE))
 
     # Make some labels
     lab_hist_rng <- paste('Seasonal Range \n(', rng[[1]], '-', rng[[2]], ')', sep = '')
@@ -211,15 +211,15 @@ historical_range.swmpr <- function(swmpr_in
   if(data_type != 'nut') {
     dat_yr <- dat_yr %>%
       dplyr::group_by(!! seas) %>%
-      dplyr::summarise(mean = mean(!! avg, na.rm = T)
-                       , min = mean(!!  mini, na.rm = T)
-                       , max = mean(!! maxi, na.rm = T))
+      dplyr::summarise(mean = mean(!! avg, na.rm = TRUE)
+                       , min = mean(!!  mini, na.rm = TRUE)
+                       , max = mean(!! maxi, na.rm = TRUE))
   } else {
     dat_yr <- dat_yr %>%
       dplyr::group_by(!! seas) %>%
-      dplyr::summarise(mean = mean(!! avg, na.rm = T)
-                       , min = min(!!  mini, na.rm = T)
-                       , max = max(!! maxi, na.rm = T))
+      dplyr::summarise(mean = mean(!! avg, na.rm = TRUE)
+                       , min = min(!!  mini, na.rm = TRUE)
+                       , max = max(!! maxi, na.rm = TRUE))
   }
 
   # ensure all factor levels are accounted for, even if there is no data
@@ -232,13 +232,13 @@ historical_range.swmpr <- function(swmpr_in
 
   if(plot){
     # Set the plot range
-    mx <- ifelse(max(dat_yr[ , c(2:4)], na.rm = T) > max(dat_hist[ , c(2:4)], na.rm = T)
-                 , max(dat_yr[ , c(2:4)], na.rm = T), max(dat_hist[ , c(2:4)], na.rm = T))
+    mx <- ifelse(max(dat_yr[ , c(2:4)], na.rm = TRUE) > max(dat_hist[ , c(2:4)], na.rm = TRUE)
+                 , max(dat_yr[ , c(2:4)], na.rm = TRUE), max(dat_hist[ , c(2:4)], na.rm = TRUE))
     mx <- max(pretty(mx))
 
     # assign a minimum of zero unles there are values < 0
-    mn <- ifelse(min(dat_yr[ , c(2:4)], na.rm = T) < min(dat_hist[ , c(2:4)], na.rm = T)
-                 , min(dat_yr[ , c(2:4)], na.rm = T), min(dat_hist[ , c(2:4)], na.rm = T))
+    mn <- ifelse(min(dat_yr[ , c(2:4)], na.rm = TRUE) < min(dat_hist[ , c(2:4)], na.rm = TRUE)
+                 , min(dat_yr[ , c(2:4)], na.rm = TRUE), min(dat_hist[ , c(2:4)], na.rm = TRUE))
     mn <- ifelse(mn < 0 , min(pretty(mn)), 0)
     mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), mn)
 
@@ -257,8 +257,8 @@ historical_range.swmpr <- function(swmpr_in
       theme_bw() +
       theme(legend.position = 'top')
 
-    # add a log transformed access if log_trans == T
-    ## allow y-axis to be free if free_y == T
+    # add a log transformed access if log_trans == TRUE
+    ## allow y-axis to be free if free_y == TRUE
     if(!log_trans) {
       plt <- plt +
         scale_y_continuous(labels = format_format(digits = 2, big.mark = ",", decimal.mark = ".", scientific = FALSE)
@@ -288,14 +288,14 @@ historical_range.swmpr <- function(swmpr_in
     plt <-
       plt +
       scale_color_manual('', values = c('gray40')) +
-      scale_fill_manual('', values = ribbon_fill, guide = F) +
+      scale_fill_manual('', values = ribbon_fill, guide = FALSE) +
       scale_shape_manual('', values = c(21)) +
       scale_alpha_manual('', values = rep(0.25, 2))
 
     # Override legend defaults
     plt <-
       plt +
-      guides(alpha = guide_legend(override.aes = list(fill = alpha_fill), order = 3, reverse = T)
+      guides(alpha = guide_legend(override.aes = list(fill = alpha_fill), order = 3, reverse = TRUE)
              , shape = guide_legend(override.aes = list(fill = 'steelblue3'), order = 1)
              , color = guide_legend(override.aes = list(color = 'gray40'), order = 2))
 
@@ -321,12 +321,12 @@ historical_range.swmpr <- function(swmpr_in
     if(!is.null(criteria)) {
       plt <- plt +
         geom_hline(aes(yintercept = criteria, linetype = factor(criteria_lab))
-                   , color = 'red', show.legend = T) +
+                   , color = 'red', show.legend = TRUE) +
         scale_linetype_manual('', values = c('longdash'))
 
       plt <-
         plt +
-        guides(alpha = guide_legend(override.aes = list(fill = alpha_fill, linetype = 0), order = 3, reverse = T)
+        guides(alpha = guide_legend(override.aes = list(fill = alpha_fill, linetype = 0), order = 3, reverse = TRUE)
                , shape = guide_legend(override.aes = list(fill = 'steelblue3', linetype = 0), order = 1)
                , color = guide_legend(override.aes = list(color = 'gray40'), order = 2)
                , linetype = guide_legend(override.aes = list(color = 'red'), order = 4))

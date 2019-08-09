@@ -33,7 +33,7 @@ lm_p_labs <- function(dat_in) {
   sample_check <- dat_in %>% group_by(.data$season) %>% summarise(count = n())
   sample_check <- sample_check[, 2]
 
-  if(max(sample_check, na.rm = T) > 1) {
+  if(max(sample_check, na.rm = TRUE) > 1) {
   # if(dat_in %>% group_by(.data$season) %>% summarise(count = n()) %>% .data[, 2] %>% max(.data) > 1) {
     lm_results <- dat_in %>%
       group_by(.data$season) %>%
@@ -52,7 +52,7 @@ lm_p_labs <- function(dat_in) {
     lm_mean_tidy$lab <- ifelse(lm_mean_tidy$p.value < 0.05, 'p < 0.05', 'p > 0.05')
     lm_max_tidy$lab <- ifelse(lm_max_tidy$p.value < 0.05, 'p < 0.05', 'p > 0.05')
 
-    df_lab <- data.frame(season = lm_min_tidy$season, min = lm_min_tidy$lab, mean = lm_mean_tidy$lab, max = lm_max_tidy$lab, stringsAsFactors = F)
+    df_lab <- data.frame(season = lm_min_tidy$season, min = lm_min_tidy$lab, mean = lm_mean_tidy$lab, max = lm_max_tidy$lab, stringsAsFactors = FALSE)
 
     # reinsert missing levels
     df_lab <- tidyr::complete(df_lab, season)

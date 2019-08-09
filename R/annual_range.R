@@ -135,7 +135,7 @@ annual_range.swmpr <- function(swmpr_in
 
   # Assign the seasons and order them
   dat <- dat %>% filter(lubridate::year(.data$datetimestamp) == target_yr)
-  dat$season <- assign_season(dat$datetimestamp, abb = T, ...)
+  dat$season <- assign_season(dat$datetimestamp, abb = TRUE, ...)
 
     # Assign date for determining daily stat value
   dat$date <- lubridate::floor_date(dat$datetimestamp, unit = 'days')
@@ -146,28 +146,28 @@ annual_range.swmpr <- function(swmpr_in
 
   dat_day <- dat %>%
     group_by(!! seas, !! dt) %>%
-    summarise(mean = mean(!! parm, na.rm = T)
-              , min = min(!! parm, na.rm = T)
-              , max = max(!! parm, na.rm = T))
+    summarise(mean = mean(!! parm, na.rm = TRUE)
+              , min = min(!! parm, na.rm = TRUE)
+              , max = max(!! parm, na.rm = TRUE))
 
   dat_month <- dat_day %>%
     group_by(!! seas) %>%
-    summarise(mean = mean(!! avg, na.rm = T)
-              , min_avg = mean(!! mini, na.rm = T)
-              , max_avg = mean(!! maxi, na.rm = T)
-              , min = min(!! mini, na.rm = T)
-              , max = max(!! maxi, na.rm = T))
+    summarise(mean = mean(!! avg, na.rm = TRUE)
+              , min_avg = mean(!! mini, na.rm = TRUE)
+              , max_avg = mean(!! maxi, na.rm = TRUE)
+              , min = min(!! mini, na.rm = TRUE)
+              , max = max(!! maxi, na.rm = TRUE))
 
   # ensure all factor levels are accounted for, even if there is no data
   dat_month <- tidyr::complete(dat_month, !! seas)
 
   if(plot){
     # Set the plot range
-    # mx <- max(dat_day$max, na.rm = T)
+    # mx <- max(dat_day$max, na.rm = TRUE)
     # mx <- max(pretty(mx))
 
     # assign a minimum of zero unles there are values < 0
-    mn <- min(dat_month$min, na.rm = T)
+    mn <- min(dat_month$min, na.rm = TRUE)
     mn <- ifelse(mn < 0 , min(pretty(mn)), 0)
     mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), mn)
 
@@ -191,8 +191,8 @@ annual_range.swmpr <- function(swmpr_in
         geom_ribbon(aes_(x = seas, ymax = maxi, ymin = mini, group = 1, fill = lab_rng_mx, alpha = lab_rng_mx))
     }
 
-    # add a log transformed access if log_trans == T
-    ## allow y-axis to be free if free_y == T
+    # add a log transformed access if log_trans == TRUE
+    ## allow y-axis to be free if free_y == TRUE
     if(!log_trans) {
       plt <- plt +
         scale_y_continuous(labels = format_format(digits = 2, big.mark = ",", decimal.mark = ".", scientific = FALSE)
@@ -211,7 +211,7 @@ annual_range.swmpr <- function(swmpr_in
 
     plt <-
       plt +
-      scale_fill_manual('', values = c(rep('steelblue3', 3)), guide = F) +
+      scale_fill_manual('', values = c(rep('steelblue3', 3)), guide = FALSE) +
       scale_shape_manual('', values = c(21)) +
       scale_alpha_manual('', values = c(0.4, 0.15))
 
@@ -227,7 +227,7 @@ annual_range.swmpr <- function(swmpr_in
       plt <- plt +
         geom_hline(aes(yintercept = criteria, color = factor(criteria_lab)
                        , linetype = factor(criteria_lab))
-                   , show.legend = T) +
+                   , show.legend = TRUE) +
         scale_color_manual('', values = c('red')) +
         scale_linetype_manual('', values = c('longdash'))
     }

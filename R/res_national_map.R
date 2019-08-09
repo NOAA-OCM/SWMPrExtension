@@ -128,13 +128,13 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
     gg <- gg + geom_map(data = map, map = map
                         , aes_string('long', 'lat', map_id = 'id')
                         , fill = '#f8f8f8', color = '#999999'
-                        , size = 0.15, show.legend = F)
+                        , size = 0.15, show.legend = FALSE)
   } else {
     map$flag <- ifelse(map$id %in% highlight_states, TRUE, FALSE)
 
     gg <- gg + geom_map(data = map, map = map
                         , aes_string('long', 'lat', map_id = 'id', fill = 'flag')
-                        , color = '#999999', size = 0.15, show.legend = F) +
+                        , color = '#999999', size = 0.15, show.legend = FALSE) +
       scale_fill_manual(values = c('#f8f8f8', '#cccccc'))
   }
 

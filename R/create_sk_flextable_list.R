@@ -35,7 +35,7 @@
 create_sk_flextable_list <- function(sk_result, stations, param, trend_col = c('#247BA0', '#A3DFFF', '#D9D9D9', 'white')
                                      , font_col_default = '#444E65'
                                      , font_sz_stn = 6, font_sz_result = 12, font_sz_head = 6
-                                     , ht_head = 0.28, ht_body = 0.202, is_swmp = T
+                                     , ht_head = 0.28, ht_body = 0.202, is_swmp = TRUE
                                      , stn_name = NULL, stn_abbrev = NULL, par_name = NULL) {
 
   # Checks
@@ -55,7 +55,7 @@ create_sk_flextable_list <- function(sk_result, stations, param, trend_col = c('
     tbl_result <- generate_results_table(sk_result, stations, param)
     par_nms <- ft_col_names(param = param)
   } else {
-    tbl_station <- data.frame(loc_id = stn_abbrev, loc_name = stn_name, stringsAsFactors = F)
+    tbl_station <- data.frame(loc_id = stn_abbrev, loc_name = stn_name, stringsAsFactors = FALSE)
     tbl_station <- tbl_station[order(tbl_station$loc_name), ]
     tbl_result <- sk_result[sk_result$station %in% stations, ]
     tbl_result <- tbl_result[order(tbl_result$station), ]
@@ -76,8 +76,8 @@ create_sk_flextable_list <- function(sk_result, stations, param, trend_col = c('
   ft_header$header$dataset <- header_col_names
 
   # format
-  def_txt_hd <- fp_text(color = '#404040', bold = T, font.size = font_sz_head)
-  def_txt_bdy <- fp_text(color = '#404040', bold = T, font.size = font_sz_stn)
+  def_txt_hd <- fp_text(color = '#404040', bold = TRUE, font.size = font_sz_head)
+  def_txt_bdy <- fp_text(color = '#404040', bold = TRUE, font.size = font_sz_stn)
   def_par <- fp_par(text.align = 'center')
   def_cell <- fp_cell(background.color = "white", border = fp_border(color = '#444E65'))
 
@@ -93,7 +93,7 @@ create_sk_flextable_list <- function(sk_result, stations, param, trend_col = c('
 
   # set styling elements
   def_par <- fp_par(text.align = 'center')
-  def_txt_hd <- fp_text(color = '#404040', bold = T, font.size = font_sz_head)
+  def_txt_hd <- fp_text(color = '#404040', bold = TRUE, font.size = font_sz_head)
   def_cell_hd <- fp_cell(background.color = 'white', border = fp_border(color = '#444E65')
                          , margin.top = 2, margin.bottom = 2)
   def_txt_bdy <- fp_text(color = font_col_default, font.size = font_sz_result)
@@ -118,7 +118,7 @@ create_sk_flextable_list <- function(sk_result, stations, param, trend_col = c('
     result <- col_names[[i]]
 
     ft <- style(ft, condition, result,
-                pr_t = fp_text(color = "white", font.family = 'Wingdings 3', font.size = font_sz_result, bold = T),
+                pr_t = fp_text(color = "white", font.family = 'Wingdings 3', font.size = font_sz_result, bold = TRUE),
                 pr_c = fp_cell(background.color = trend_col[1], border = fp_border(color = '#444E65')))
   }
 

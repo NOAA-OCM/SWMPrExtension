@@ -113,7 +113,7 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   map <- ggplot2::fortify(us_aea_mod, region = "GEO_ID")
 
   # Prep reserve locations for plotting
-  df_loc <- data.frame(NERR.Site.ID = sk_reserves, sk_res = sk_results, stringsAsFactors = F)
+  df_loc <- data.frame(NERR.Site.ID = sk_reserves, sk_res = sk_results, stringsAsFactors = FALSE)
 
   reserve_locations <- reserve_locs(incl = incl)
   reserve_locations <- reserve_locations[reserve_locations$NERR.Site.ID %in% sk_reserves, ]
@@ -130,13 +130,13 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
     gg <- gg + geom_map(data = map, map = map
                         , aes_string('long', 'lat', map_id = 'id')
                         , fill = '#f8f8f8', color = '#999999'
-                        , size = 0.15, show.legend = F)
+                        , size = 0.15, show.legend = FALSE)
   } else {
     map$flag <- ifelse(map$id %in% highlight_states, TRUE, FALSE)
 
     gg <- gg + geom_map(data = map, map = map
                         , aes_string('long', 'lat', map_id = 'id', fill = 'flag')
-                        , color = '#999999', size = 0.15, show.legend = F) +
+                        , color = '#999999', size = 0.15, show.legend = FALSE) +
       scale_fill_manual(values = c('#f8f8f8', '#BBBBBB'))
   }
 
