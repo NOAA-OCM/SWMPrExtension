@@ -18,7 +18,7 @@
 #'
 #' std_param_check('do_mgl')
 #'
-#' \dontrun{
+#' \donttest{
 #' std_param_check('nitrogen')
 #' }
 #'

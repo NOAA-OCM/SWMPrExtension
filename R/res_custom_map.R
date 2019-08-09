@@ -50,7 +50,7 @@
 #' res_custom_map(stations = stns, x_loc = x_coords, y_loc = y_coords,
 #' bbox = bounding_elk, lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
 #'
-#' \dontrun{
+#' \donttest{
 #' res_custom_map(stations = stns, x_loc = x_coords, y_loc = y_coords,
 #' bbox = bounding_elk, lab_loc = lab_dir, scale_pos = pos,
 #' shp = shp_fl, station_col = c('red', 'green'))

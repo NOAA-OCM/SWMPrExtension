@@ -38,7 +38,7 @@
 #' y <- raw_boxplot(dat, param = 'do_mgl')
 #' }
 #'
-#' \dontrun{
+#' \donttest{
 #' ## get data, prep
 #' data(elksmwq)
 #' dat <- elksmwq

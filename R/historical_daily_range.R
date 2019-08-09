@@ -47,7 +47,7 @@
 #' y <- historical_daily_range(dat, param = 'do_mgl', target_yr = 2012)
 #' }
 #'
-#' \dontrun{
+#' \donttest{
 ## get data, prep
 #' data(apacpwq)
 #' dat <- apacpwq

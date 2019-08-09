@@ -52,7 +52,7 @@
 #' y <- seasonal_boxplot(dat, param = 'do_mgl', target_yr = 2012)
 #' }
 #'
-#' \dontrun{
+#' \donttest{
 ## get data, prep
 #' dat <- elksmwq
 #'

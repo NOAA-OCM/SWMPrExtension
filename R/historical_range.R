@@ -47,7 +47,7 @@
 #' y <- historical_range(dat, param = 'do_mgl')
 #' }
 #'
-#' \dontrun{
+#' \donttest{
 ## get data, prep
 #' data(elksmwq)
 #'

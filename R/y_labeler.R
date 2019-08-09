@@ -16,7 +16,7 @@
 #' @return Returns character vector or an unevaluated expression
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' y_lab <- y_labeler('do_mgl')
 #' }
 #'

@@ -39,7 +39,7 @@
 #'
 #' res_national_map(highlight_states = nerr_states)
 #'
-#' \dontrun{
+#' \donttest{
 #' #' ##Just the national map
 #' res_national_map()
 #'

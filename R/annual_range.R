@@ -46,7 +46,7 @@
 #' y <- annual_range(dat, param = 'do_mgl', target_yr = 2012)
 #' }
 #'
-#' \dontrun{
+#' \donttest{
 #' ## get data, prep
 #' data(elksmwq)
 #' dat <- elksmwq

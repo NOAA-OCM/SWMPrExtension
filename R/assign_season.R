@@ -28,7 +28,7 @@
 #' levels(seas)
 #' }
 #'
-#' \dontrun{
+#' \donttest{
 #' data(elksmwq)
 #' dat <- elksmwq
 #'

@@ -52,7 +52,7 @@
 #' res_sk_map('elk', stations = stns, sk_result = sk_res,
 #' bbox = bounding_elk, scale_pos = pos, shp = shp_fl)
 #'
-#' \dontrun{
+#' \donttest{
 #' ## a multicomponent reserve (showing two different bounding boxes)
 #' ### set plotting parameters
 #' stations <-

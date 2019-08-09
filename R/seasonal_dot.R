@@ -48,7 +48,7 @@
 #'                , lm_lab = TRUE
 #'                , plot_title = TRUE)
 #'
-#' \dontrun{
+#' \donttest{
 #' x <-
 #'   seasonal_dot(dat_wq, param = 'do_mgl'
 #'                , lm_trend = FALSE

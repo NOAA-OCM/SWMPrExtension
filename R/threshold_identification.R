@@ -30,7 +30,7 @@
 #' @return Returns a data frame of threshold exceedances by parameter
 #'
 #' @references
-#' United States Environmental Protection Agency (USEPA). 2016. "National Coastal Condition Assessment 2010". EPA 841-R-15-006.
+#' United States Environmental Protection Agency (USEPA). 2015. "National Coastal Condition Assessment 2010". EPA 841-R-15-006.
 #' https://cfpub.epa.gov/si/si_public_record_Report.cfm?dirEntryId=327030
 #'
 #' @examples
@@ -43,7 +43,7 @@
 #'                           , parameter_threshold = c(2, 5, 30)
 #'                           , threshold_type = c('<', '<', '>'), time_threshold = 2)
 #'
-#' \dontrun{
+#' \donttest{
 #' wq_par<- threshold_identification(dat_wq, param = c('do_mgl')
 #'                           , parameter_threshold = c(2)
 #'                           , threshold_type = c('<'), time_threshold = 2)

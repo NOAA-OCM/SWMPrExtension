@@ -37,7 +37,7 @@
 #' @return Returns a \code{\link[ggplot2]{ggplot}} object (if \code{plot} = \code{TRUE}) or a dataframe (if \code{plot} = \code{FALSE})
 #'
 #' @references
-#' United States Environmental Protection Agency (USEPA). 2016. "National Coastal Condition Assessment 2010". EPA 841-R-15-006.
+#' United States Environmental Protection Agency (USEPA). 2015. "National Coastal Condition Assessment 2010". EPA 841-R-15-006.
 #' https://cfpub.epa.gov/si/si_public_record_Report.cfm?dirEntryId=327030
 #'
 #' @seealso \code{\link{assign_season}}, \code{\link[ggplot2]{ggplot}}, \code{\link{threshold_identification}}, \code{\link[ggplot2]{scale_fill_brewer}}
@@ -52,7 +52,7 @@
 #'   , threshold_type = '<', time_threshold = 2, summary_type = 'month'
 #'   , plot_title = TRUE)
 #'
-#' \dontrun{
+#' \donttest{
 #' y <-
 #'   threshold_summary(dat_wq, param = 'do_mgl', parameter_threshold = 2,
 #'   threshold_type = '<', time_threshold = 2, summary_type = 'season',

@@ -48,7 +48,7 @@
 #'                       , hist_avg = TRUE
 #'                       , converted = FALSE)
 #'
-#' \dontrun{
+#' \donttest{
 #' # return a table instead of a figure
 #' y <- seasonal_barplot(dat, param = 'totprcp'
 #'                       , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))

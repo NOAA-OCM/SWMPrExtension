@@ -52,7 +52,7 @@
 #' res_local_map('elk', stations = stns, bbox = bounding_elk,
 #' lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
 #'
-#' \dontrun{
+#' \donttest{
 #' ## a multicomponent reserve (show two different bounding boxes)
 #' ### set plotting parameters
 #' stations <-
