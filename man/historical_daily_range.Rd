@@ -58,7 +58,7 @@ dat <- qaqc(apacpwq, qaqc_keep = c('0', '3', '5'))
 y <- historical_daily_range(dat, param = 'do_mgl', target_yr = 2012)
 }
 
-\dontrun{
+\donttest{
 data(apacpwq)
 dat <- apacpwq
 

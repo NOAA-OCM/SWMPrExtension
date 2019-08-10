@@ -22,7 +22,7 @@ A helper function used internally by several plotting functions to determine if 
 
 std_param_check('do_mgl')
 
-\dontrun{
+\donttest{
 std_param_check('nitrogen')
 }
 

@@ -37,10 +37,10 @@ Non-parametric test for monotonic seasonal trends
 \details{
 This function performs a seasonal kendall test on seasonally aggregated values using \code{\link[EnvStats]{kendallSeasonalTrendTest}}.
 
-Data are aggregated on a user-specified seasonal basis using the \code{FUN} argument. For example, using default settings, \code{sk_seasonal} would perform a seasonal kendall test on average monthly values. However, if the user set \code{FUN = min(x, na.rm = T)} then a seasonal kendall would be performed on monthly minimum values.
+Data are aggregated on a user-specified seasonal basis using the \code{FUN} argument. For example, using default settings, \code{sk_seasonal} would perform a seasonal kendall test on average monthly values. However, if the user set \code{FUN = min(x, na.rm = TRUE)} then a seasonal kendall would be performed on monthly minimum values.
 
 
-If \code{EnvStats_summary = T} then the detailed output summary from \code{\link[EnvStats]{kendallSeasonalTrendTest}} will be returned. If \code{EnvStats_summary = F} then an abbreviated summary will be returned in a \code{data.frame}. The abbreviated summary contains the station name, the type of statistic used to summarize the data on a seasonal basis (specified by \code{stat_lab}), and the following results from \code{\link[EnvStats]{kendallSeasonalTrendTest}}: tau, slope, p-value for the chi-square test, and the p-value for the trend test.
+If \code{EnvStats_summary = TRUE} then the detailed output summary from \code{\link[EnvStats]{kendallSeasonalTrendTest}} will be returned. If \code{EnvStats_summary = FALSE} then an abbreviated summary will be returned in a \code{data.frame}. The abbreviated summary contains the station name, the type of statistic used to summarize the data on a seasonal basis (specified by \code{stat_lab}), and the following results from \code{\link[EnvStats]{kendallSeasonalTrendTest}}: tau, slope, p-value for the chi-square test, and the p-value for the trend test.
 }
 \examples{
 dat_wq <- elksmwq

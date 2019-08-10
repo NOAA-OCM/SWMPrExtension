@@ -56,7 +56,7 @@ x <-
   threshold_percentile_plot(dat_wq, param = 'do_mgl'
   , hist_rng = c(2007, 2014), by_month = FALSE)
 
-\dontrun{
+\donttest{
 y <-
   threshold_percentile_plot(dat_wq, param = 'do_mgl', percentiles = c(0.95)
   , hist_rng = c(2007, 2014), target_yr = 2014, by_month = FALSE)
@@ -85,7 +85,7 @@ y <-
 
 }
 \references{
-United States Environmental Protection Agency (USEPA). 2016. "National Coastal Condition Assessment 2010". EPA 841-R-15-006.
+United States Environmental Protection Agency (USEPA). 2015. "National Coastal Condition Assessment 2010". EPA 841-R-15-006.
 https://cfpub.epa.gov/si/si_public_record_Report.cfm?dirEntryId=327030
 }
 \seealso{

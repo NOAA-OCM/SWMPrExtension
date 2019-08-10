@@ -65,7 +65,7 @@ dat <- qaqc(apacpwq, qaqc_keep = c('0', '3', '5'))
 y <- seasonal_boxplot(dat, param = 'do_mgl', target_yr = 2012)
 }
 
-\dontrun{
+\donttest{
 dat <- elksmwq
 
 dat <- qaqc(dat, qaqc_keep = c('0', '3', '5'))

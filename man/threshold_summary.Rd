@@ -10,7 +10,7 @@ threshold_summary(swmpr_in, ...)
 \method{threshold_summary}{swmpr}(swmpr_in, param = NULL,
   summary_type = c("month", "season", "year"),
   parameter_threshold = NULL, threshold_type = NULL,
-  time_threshold = NULL, converted = F, pal = "Set3",
+  time_threshold = NULL, converted = FALSE, pal = "Set3",
   plot_title = FALSE, plot = TRUE, label_y_axis = TRUE, ...)
 }
 \arguments{
@@ -39,7 +39,7 @@ threshold_summary(swmpr_in, ...)
 \item{label_y_axis}{logical, include label for y-axis?}
 }
 \value{
-Returns a \code{\link[ggplot2]{ggplot}} object (if \code{plot} = \code{T}) or a dataframe (if \code{plot} = \code{F})
+Returns a \code{\link[ggplot2]{ggplot}} object (if \code{plot} = \code{TRUE}) or a dataframe (if \code{plot} = \code{FALSE})
 }
 \description{
 Summary plots for threshold identification analysis
@@ -59,7 +59,7 @@ x <-
   , threshold_type = '<', time_threshold = 2, summary_type = 'month'
   , plot_title = TRUE)
 
-\dontrun{
+\donttest{
 y <-
   threshold_summary(dat_wq, param = 'do_mgl', parameter_threshold = 2,
   threshold_type = '<', time_threshold = 2, summary_type = 'season',
@@ -91,7 +91,7 @@ y <-
 }
 }
 \references{
-United States Environmental Protection Agency (USEPA). 2016. "National Coastal Condition Assessment 2010". EPA 841-R-15-006.
+United States Environmental Protection Agency (USEPA). 2015. "National Coastal Condition Assessment 2010". EPA 841-R-15-006.
 https://cfpub.epa.gov/si/si_public_record_Report.cfm?dirEntryId=327030
 }
 \seealso{

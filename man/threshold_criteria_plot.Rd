@@ -62,7 +62,7 @@ x <-
                  , monthly_smooth = TRUE
                  , threshold_cols = c('#FEC596', '#FFFFCC', '#ABD9E9'))
 
-\dontrun{
+\donttest{
 y <-
   threshold_criteria_plot(dat_wq, param = 'do_mgl'
                  , thresholds = c(2, 5)

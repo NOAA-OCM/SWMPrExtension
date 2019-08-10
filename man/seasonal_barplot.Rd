@@ -44,7 +44,7 @@ Cumulative bar plot over a historic range
 \details{
 This function uses barplots to summarize parameters that are best viewed on a cumulative basis (e.g., precipitation). Data are aggregated on a seasonal and annual basis.
 
-There are two ways to make interannual comparisons: on an aggregate basis and on a seasonal basis. If the argument \code{season_facet = F} then parameter totals from each season will be added together to compose one, multi-color bar.If \code{season_facet = T} then parameter totals from each season separated into multiple plots for easier intra-season comparison across years.
+There are two ways to make interannual comparisons: on an aggregate basis and on a seasonal basis. If the argument \code{season_facet = FALSE} then parameter totals from each season will be added together to compose one, multi-color bar.If \code{season_facet = TRUE} then parameter totals from each season separated into multiple plots for easier intra-season comparison across years.
 }
 \examples{
 data(apaebmet)
@@ -56,21 +56,21 @@ x <- seasonal_barplot(dat, param = 'totprcp'
                       , hist_avg = TRUE
                       , converted = FALSE)
 
-\dontrun{
+\donttest{
 # return a table instead of a figure
 y <- seasonal_barplot(dat, param = 'totprcp'
                       , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
-                      , converted = F
-                      , plot = F)
+                      , converted = FALSE
+                      , plot = FALSE)
 
 ## divide plot into seasonal facets
 x <- seasonal_barplot(dat, param = 'totprcp'
                       , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
-                      , season_facet = T
-                      , hist_avg = T
-                      , converted = F)
+                      , season_facet = TRUE
+                      , hist_avg = TRUE
+                      , converted = FALSE)
 
 ## convert from mm to in
 dat$totprcp <- dat$totprcp / 25.4
@@ -78,9 +78,9 @@ dat$totprcp <- dat$totprcp / 25.4
 x <- seasonal_barplot(dat, param = 'totprcp'
                       , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
-                      , hist_avg = T
+                      , hist_avg = TRUE
                       , converted
-                       = T)
+                       = TRUE)
 }
 }
 \seealso{

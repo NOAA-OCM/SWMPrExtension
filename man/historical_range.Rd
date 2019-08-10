@@ -58,7 +58,7 @@ dat <- qaqc(apacpwq, qaqc_keep = c('0', '3', '5'))
 y <- historical_range(dat, param = 'do_mgl')
 }
 
-\dontrun{
+\donttest{
 data(elksmwq)
 
 dat <- qaqc(elksmwq, qaqc_keep = c('0', '3', '5'))

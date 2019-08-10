@@ -14,7 +14,6 @@ Description: Tools for performing routine analysis and plotting tasks with envir
     United States Environmental Protection Agency (2015) <https://cfpub.epa.gov/si/si_public_record_Report.cfm?dirEntryId=327030>.
     Rudis, Bob (2014) <https://rud.is/b/2014/11/16/moving-the-earth-well-alaska-hawaii-with-r/>.
     United States Environmental Protection Agency (2012) <http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.646.1973&rep=rep1&type=pdf>.
-
 BugReports: https://github.com/NOAA-OCM/SWMPrExtension/issues
 License: CC0
 Encoding: UTF-8

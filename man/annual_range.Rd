@@ -55,7 +55,7 @@ dat <- qaqc(apacpwq, qaqc_keep = c('0', '3', '5'))
 y <- annual_range(dat, param = 'do_mgl', target_yr = 2012)
 }
 
-\dontrun{
+\donttest{
 ## get data, prep
 data(elksmwq)
 dat <- elksmwq

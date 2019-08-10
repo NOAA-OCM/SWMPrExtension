@@ -35,7 +35,7 @@ nerr_states <- c('01', '02', '06', '10', '12', '13', '15'
 
 res_national_map(highlight_states = nerr_states)
 
-\dontrun{
+\donttest{
 #' ##Just the national map
 res_national_map()
 
