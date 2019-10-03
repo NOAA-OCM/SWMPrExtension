@@ -259,11 +259,17 @@ seasonal_dot.swmpr <- function(swmpr_in
         plt <-
           plt +
           geom_text(aes(label = .data$max, x = .data$x, y = .data$max_y)
-                    , data = p_labs, hjust = 1, color = 'red') +
+                    , data = p_labs
+                    , fontface = ifelse(p_labs$max == 'p < 0.05', 2, 1)
+                    , hjust = 1, color = 'red') +
           geom_text(aes(label = .data$mean, x = .data$x, y = .data$mean_y)
-                    , data = p_labs, hjust = 1, color = 'black') +
+                    , data = p_labs
+                    , fontface = ifelse(p_labs$mean == 'p < 0.05', 2, 1)
+                    , hjust = 1, color = 'black') +
           geom_text(aes(label = .data$min, x = .data$x, y = .data$min_y)
-                    , data = p_labs, hjust = 1, color = 'blue')
+                    , data = p_labs
+                    , fontface = ifelse(p_labs$min == 'p < 0.05', 2, 1)
+                    , hjust = 1, color = 'blue')
       # plt <-
       #   plt +
       #     annotate("text", x = brks[2], y = y_mx
