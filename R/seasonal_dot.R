@@ -249,17 +249,32 @@ seasonal_dot.swmpr <- function(swmpr_in
       y_mx <- max(ggplot_build(plt)$layout$panel_scales_y[[1]]$range$range)
 
       if(nrow(p_labs) > 0) {
+        # Add plot coordinates to label dataframe for geom_text()
+        p_labs$x  <-  brks[2]
+        p_labs$max_y <- y_mx
+        p_labs$mean_y <- y_mx * 0.9
+        p_labs$min_y <- y_mx * 0.8
+
+        # Annotate with geom_text() instead of annotate()
         plt <-
           plt +
-          annotate("text", x = brks[2], y = y_mx
-                   , label = p_labs$max, fontface = ifelse(p_labs$max == 'p < 0.05', 2, 1)
-                   , hjust = 1, color = 'red') +
-          annotate("text", x = brks[2], y = y_mx * 0.9
-                   , label = p_labs$mean, fontface = ifelse(p_labs$mean == 'p < 0.05', 2, 1)
-                   , hjust = 1, color = 'black') +
-          annotate("text", x = brks[2], y = y_mx * 0.8
-                   , label = p_labs$min, fontface = ifelse(p_labs$min == 'p < 0.05', 2, 1)
-                   , hjust = 1, color = 'blue')
+          geom_text(aes(label = .data$max, x = .data$x, y = .data$max_y)
+                    , data = p_labs, hjust = 1, color = 'red') +
+          geom_text(aes(label = .data$mean, x = .data$x, y = .data$mean_y)
+                    , data = p_labs, hjust = 1, color = 'black') +
+          geom_text(aes(label = .data$min, x = .data$x, y = .data$min_y)
+                    , data = p_labs, hjust = 1, color = 'blue')
+      # plt <-
+      #   plt +
+      #     annotate("text", x = brks[2], y = y_mx
+      #              , label = p_labs$max, fontface = ifelse(p_labs$max == 'p < 0.05', 2, 1)
+      #              , hjust = 1, color = 'red') +
+      #     annotate("text", x = brks[2], y = y_mx * 0.9
+      #              , label = p_labs$mean, fontface = ifelse(p_labs$mean == 'p < 0.05', 2, 1)
+      #              , hjust = 1, color = 'black') +
+      #     annotate("text", x = brks[2], y = y_mx * 0.8
+      #              , label = p_labs$min, fontface = ifelse(p_labs$min == 'p < 0.05', 2, 1)
+      #              , hjust = 1, color = 'blue')
       } else {
         warning('Insufficient data to calculate linear regression p-values')
       }

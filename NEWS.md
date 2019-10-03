@@ -1,3 +1,5 @@
+#### SWMPrExtension 1.1.1.9000
+* Fixed annotation error in seasonal_dot.R; changed from annotate() to geom_text().
 #### SWMPrExtension 1.1.1
 * Updates to allow user to specify trend colors for `create_sk_flextable_list` function
 * Additional updates to compensate for changes in Officer 0.3.3 flextable structure
