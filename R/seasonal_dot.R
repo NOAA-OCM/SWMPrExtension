@@ -245,15 +245,17 @@ seasonal_dot.swmpr <- function(swmpr_in
 
       p_labs <- lm_p_labs(plt_data)
 
-      # return max y-value from ggplot object
-      y_mx <- max(ggplot_build(plt)$layout$panel_scales_y[[1]]$range$range)
-
       if(nrow(p_labs) > 0) {
+        # return max & min y-value from ggplot object
+        y_mx <- max(ggplot_build(plt)$layout$panel_scales_y[[1]]$range$range)
+        y_mn <- min(ggplot_build(plt)$layout$panel_scales_y[[1]]$range$range)
+        y_rng <- y_mx - y_mn
+
         # Add plot coordinates to label dataframe for geom_text()
         p_labs$x  <-  brks[2]
-        p_labs$max_y <- y_mx
-        p_labs$mean_y <- y_mx * 0.9
-        p_labs$min_y <- y_mx * 0.8
+        p_labs$max_y <- y_mx - (0.01 * y_rng)
+        p_labs$mean_y <- y_mx - (0.135 * y_rng)
+        p_labs$min_y <- y_mx - (0.255 * y_rng)
 
         # Annotate with geom_text() instead of annotate()
         plt <-
