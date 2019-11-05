@@ -1,22 +1,16 @@
-## Resubmission
-Fixes to documentation include removal of multi-line multi-par \concept entries that resulted in package being removed from CRAN on 06-16-2019
-Package maintainer changed from Julie Padilla (jpadilla@limno.com) to Dave Eslinger (dave.eslinger@noaa.gov)
-
 ## Test environments
-* local windows 10 install, R 3.5.2
-* ubuntu 14.04 (on travis-ci), R 3.5.2
-* OS X (on travis-ci), R 3.5.2
-* win-builder [http://win-builder.r-project.org/](http://win-builder.r-project.org/) (devel and release)
-* rhub [https://builder.r-hub.io/](https://builder.r-hub.io/)
+* local windows 10 install, R 3.6.1
+* win-builder [http://win-builder.r-project.org/](http://win-builder.r-project.org/) (devel, release, and old-release)
+* devtools::release()
+
 
 ## R CMD check results
-There were no ERRORs or WARNINGs. 
+There were no ERRORs, no WARNINGs and 1 NOTES.
 
-There was one NOTE:
-* Possibly mis-spelled words in DESCRIPTION:
-    Estuarine (8:66)
-
-Estuarine is not a typo
-  
+NOTE:  Namespace in Imports field not imported from: ‘rgeos’
+     All declared Imports should be used.
+     
+     `rgeos` is needed for examples in national_sk_map.R.  I'm not sure why it shows up as not being used.
+     
 ## Downstream dependencies
 None.
