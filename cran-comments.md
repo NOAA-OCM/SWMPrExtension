@@ -5,13 +5,13 @@
 
 
 ## R CMD check results
-There were no ERRORs, no WARNINGs and 0NOTES.
+There were no ERRORs, no WARNINGs and 0 NOTES.
 
 Some of the R-hub check_for_cran results gave he below note:
 NOTE:  Namespace in Imports field not imported from: ‘rgeos’
      All declared Imports should be used.
-     
+
      However, `rgeos` is needed for examples in national_sk_map.R.  I'm not sure why it shows up as not being used.
-     
+
 ## Downstream dependencies
 None.
