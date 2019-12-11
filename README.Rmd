@@ -4,7 +4,7 @@ output:
     variant: markdown_github
 ---
 
-![](swmpr_logo.png)
+![](swmprExtension_logo.png)
 
 <!-- [![Travis-CI Build Status](https://travis-ci.org/LimnoTech/SWMPrExtension.svg?branch=master)](https://travis-ci.org/LimnoTech/SWMPrExtension)-->
 
