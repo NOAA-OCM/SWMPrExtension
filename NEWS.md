@@ -1,3 +1,5 @@
+#### SWMPrExtension 1.1.2.1
+* working on fixing rgdal vulnerabilities required when using PROJ > 6 in sp and, possibly, on moving to sf. 
 #### SWMPrExtension 1.1.2
 * Fixed annotation error in seasonal_dot.R; changed from annotate() to geom_text().
 
