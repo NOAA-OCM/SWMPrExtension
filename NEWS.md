@@ -1,5 +1,7 @@
 #### SWMPrExtension 1.1.2.1
 * working on fixing rgdal vulnerabilities required when using PROJ > 6 in sp and, possibly, on moving to sf. 
+* Corrected mis-matched and mis-labeled map projections in res_national_map.R so that all national-level maps use a Lambert Azimuthal Equal Area projections.  This is the projection that was being used for some shapefiles, but was mislabelled as Albers Equal Area, which then lead to some projection mismatch errors.
+
 #### SWMPrExtension 1.1.2
 * Fixed annotation error in seasonal_dot.R; changed from annotate() to geom_text().
 

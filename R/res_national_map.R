@@ -70,6 +70,8 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   # us_aea@data$id <- rownames(us_aea@data)
 
   us_aea <- get('us_aea')
+  pstring <- "+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs"
+  sp::proj4string(us_aea) <- pstring
 
   # remove old states and put new ones back in
   us_aea_mod <- us_aea[!us_aea$STATE %in% c("02", "15", "72"),]
@@ -81,9 +83,10 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
     alaska <- maptools::elide(alaska, rotate = -50)
     alaska <- maptools::elide(alaska, scale = max(apply(sp::bbox(alaska), 1, diff)) / 2.3)
     alaska <- maptools::elide(alaska, shift = c(-2100000, -2500000))
-    sp::proj4string(alaska) <- sp::proj4string(us_aea)
+    sp::proj4string(alaska) <- sp::proj4string(us_aea_mod)
 
     us_aea_mod <- maptools::spRbind(us_aea_mod, alaska)
+#    us_aea_mod <- rbind(us_aea_mod, alaska)
   }
 
   if('HI' %in% incl) {
@@ -94,6 +97,7 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
     sp::proj4string(hawaii) <- sp::proj4string(us_aea)
 
     us_aea_mod <- maptools::spRbind(us_aea_mod, hawaii)
+#    us_aea_mod <- rbind(us_aea_mod, hawaii)
   }
 
   if('PR' %in% incl) {
@@ -103,6 +107,7 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
     sp::proj4string(pr) <- sp::proj4string(us_aea)
 
     us_aea_mod <- maptools::spRbind(us_aea_mod, pr)
+
   }
 
   if(agg_county) {
