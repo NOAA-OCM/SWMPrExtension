@@ -621,12 +621,12 @@ functions.
 </tr>
 <tr>
 <td>
-<code>us\_aea</code>
+<code>us\_laea</code>
 </td>
 <td>
 US County boundaries from the US Census Bureau’s MAF/TIGER geographic
 database, modified to remove non-ASCII characters. Reprojected using
-Albers Equal Area. Used to create national-level maps.
+Lambert Azimuthal Equal Area. Used to create national-level maps.
 </td>
 </tr>
 </table>

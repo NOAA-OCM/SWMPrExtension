@@ -59,7 +59,6 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   #   (https://spatialreference.org/ref/sr-org/north-american-lambert-azimuthal-equal-area-projection/)
   #   not an Albers Equal Area projection. Changing all "_aea" to "_laea" to correct the
   #   labelling issue
-    projString <- "+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs"
 
   # get_US_county_2010_shape <- function() {
   #   dir <- tempdir()
@@ -72,12 +71,13 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   # # loc <- get('sampling_stations')
   #
   # # project it to Lambert Azimuthal Equal Area
+  # projString <- "+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs"
   # us_laea <- sp::spTransform(us, sp::CRS(projString))
   # us_laea@data$id <- rownames(us_laea@data)
+  # # NOTE BENE: There is some step missing here to remove non-ascii characters.  That will create a much smaller data set.
   # save(us_laea,file = "data/us_laea.rda")
 
   us_laea <- get('us_laea')
-  #sp::proj4string(us_laea) <- projString
 
   # remove old states and put new ones back in
   us_laea_mod <- us_laea[!us_laea$STATE %in% c("02", "15", "72"),]
