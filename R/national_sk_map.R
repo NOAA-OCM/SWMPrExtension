@@ -55,62 +55,70 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   if(length(sk_reserves) != length(sk_results))
     stop('A seasonal kendall result is required for each reserve specified in sk_reserve')
 
+  # Projection used is actually a North American Lambert Azimuthal Equal Area projection,
+  #   (https://spatialreference.org/ref/sr-org/north-american-lambert-azimuthal-equal-area-projection/)
+  #   not an Albers Equal Area projection. Changing all "_aea" to "_laea" to correct the
+  #   labelling issue
+
   # get_US_county_2010_shape <- function() {
   #   dir <- tempdir()
-  #   utils::download.file("http://www2.census.gov/geo/tiger/GENZ2010/gz_2010_us_050_00_20m.zip", destfile = file.path(dir, "gz_2010_us_050_00_20m.zip"))
-  #   unzip(file.path(dir, "gz_2010_us_050_00_20m.zip"), exdir = dir)
-  #   rgdal::readOGR(file.path(dir, "gz_2010_us_050_00_20m.shp"))
+  #   utils::download.file("http://www2.census.gov/geo/tiger/GENZ2010/gz_2010_us_050_00_500k.zip", destfile = file.path(dir, "gz_2010_us_050_00_500k.zip"))
+  #   unzip(file.path(dir, "gz_2010_us_050_00_500k.zip"), exdir = dir)
+  #   rgdal::readOGR(file.path(dir, "gz_2010_us_050_00_500k.shp"))
   # }
   #
   # us <- get_US_county_2010_shape()
+  # # loc <- get('sampling_stations')
   #
-  # # convert it to Albers equal area
-  # us_aea <- sp::spTransform(us, sp::CRS("+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs"))
-  # us_aea@data$id <- rownames(us_aea@data)
+  # # project it to Lambert Azimuthal Equal Area
+  # projString <- "+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs"
+  # us_laea <- sp::spTransform(us, sp::CRS(projString))
+  # us_laea@data$id <- rownames(us_laea@data)
+  # save(us_laea,file = "data/us_laea.rda")
 
-  us_aea <- get('us_aea')
+  us_laea <- get('us_laea')
 
   # remove old states and put new ones back in
-  us_aea_mod <- us_aea[!us_aea$STATE %in% c("02", "15", "72"),]
+  us_laea_mod <- us_laea[!us_laea$STATE %in% c("02", "15", "72"),]
 
   if('AK' %in% incl) {
     # extract, then rotate, shrink & move alaska (and reset projection)
     # need to use state IDs via # https://www.census.gov/geo/reference/ansi_statetables.html
-    alaska <- us_aea[us_aea$STATE == "02", ]
+    alaska <- us_laea[us_laea$STATE == "02", ]
     alaska <- maptools::elide(alaska, rotate = -50)
     alaska <- maptools::elide(alaska, scale = max(apply(sp::bbox(alaska), 1, diff)) / 2.3)
     alaska <- maptools::elide(alaska, shift = c(-2100000, -2500000))
-    sp::proj4string(alaska) <- sp::proj4string(us_aea)
+    sp::proj4string(alaska) <- sp::proj4string(us_laea)
 
-    us_aea_mod <- maptools::spRbind(us_aea_mod, alaska)
+    us_laea_mod <- maptools::spRbind(us_laea_mod, alaska)
   }
 
   if('HI' %in% incl) {
     # extract, then rotate & shift hawaii
-    hawaii <- us_aea[us_aea$STATE == "15",]
+    hawaii <- us_laea[us_laea$STATE == "15",]
     hawaii <- maptools::elide(hawaii, rotate = -35)
     hawaii <- maptools::elide(hawaii, shift=c(5400000, -1400000))
-    sp::proj4string(hawaii) <- sp::proj4string(us_aea)
+    sp::proj4string(hawaii) <- sp::proj4string(us_laea)
 
-    us_aea_mod <- maptools::spRbind(us_aea_mod, hawaii)
+    us_laea_mod <- maptools::spRbind(us_laea_mod, hawaii)
   }
 
   if('PR' %in% incl) {
     # extract, then rotate & shift pr
-    pr <- us_aea[us_aea$STATE == "72", ]
+    pr <- us_laea[us_laea$STATE == "72", ]
     pr <- maptools::elide(pr, shift = c(-1400000,2000))
-    sp::proj4string(pr) <- sp::proj4string(us_aea)
+    sp::proj4string(pr) <- sp::proj4string(us_laea)
 
-    us_aea_mod <- maptools::spRbind(us_aea_mod, pr)
+    us_laea_mod <- maptools::spRbind(us_laea_mod, pr)
   }
 
   if(agg_county) {
-    us_aea.diss <- maptools::unionSpatialPolygons(us_aea_mod, IDs = us_aea_mod@data$STATE)
-    us_aea_mod <- us_aea.diss
+    us_laea.diss <- maptools::unionSpatialPolygons(us_laea_mod, IDs = us_laea_mod@data$STATE)
+    us_laea_mod <- us_laea.diss
   }
 
   # get ready for ggplotting it... this takes a cpl seconds ----
-  map <- ggplot2::fortify(us_aea_mod, region = "GEO_ID")
+  map <- ggplot2::fortify(us_laea_mod, region = "GEO_ID")
 
   # Prep reserve locations for plotting
   df_loc <- data.frame(NERR.Site.ID = sk_reserves, sk_res = sk_results, stringsAsFactors = FALSE)

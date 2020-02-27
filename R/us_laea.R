@@ -1,6 +1,6 @@
 #' US County Map
 #'
-#' US County boundaries from the US Census Bureau's MAF/TIGER geographic database. Reprojected using Albers Equal Area.
+#' US County boundaries from the US Census Bureau's MAF/TIGER geographic database. Reprojected using Lambert Azimuthal Equal Area.
 #'
 #' @format A \code{\link[sp]{SpatialPolygonsDataFrame}} object
 #'
@@ -8,9 +8,9 @@
 #'
 #' @docType data
 #' @keywords datasets
-#' @name us_aea
-#' @usage data(us_aea)
+#' @name us_laea
+#' @usage data(us_laea)
 #' @source \href{https://www.census.gov/geo/maps-data/data/cbf/cbf_counties.html}{US Census Bureau}
 #'
 
-"us_aea"
+"us_laea"
