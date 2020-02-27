@@ -4,11 +4,12 @@
 ^.*\.Rproj$
 ^README_files*
 ^README.*
-^swmpr_logo.png$
+^swmprExtension_logo.png$
 ^\.Rproj\.user$
 ^\.travis\.yml$
 ^README\.Rmd$
 ^README-.*\.png$
 ^cran-comments\.md$
+^cran-comments\.html$
 ^\.Rhistory$
 ^CRAN-RELEASE$
