@@ -70,8 +70,8 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   # us <- get_US_county_2010_shape()
   # # loc <- get('sampling_stations')
   #
-  # # project it to Lambert Azimuthal Equal Area
-  # projString <- "+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs"
+  # # project it to Lambert Azimuthal Equal Area, EPSG:2163
+  # projString <- "+init=epsg:2163"
   # us_laea <- sp::spTransform(us, sp::CRS(projString))
   # us_laea@data$id <- rownames(us_laea@data)
   # # NOTE BENE: There is some step missing here to remove non-ascii characters.  That will create a much smaller data set.
