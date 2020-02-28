@@ -10,7 +10,7 @@
 #' @keywords datasets
 #' @name us_laea
 #' @usage data(us_laea)
-#' @source \href{https://www.census.gov/geo/maps-data/data/cbf/cbf_counties.html}{US Census Bureau}
+#' @source \href{https://www.census.gov/geographies/mapping-files.html}{US Census Bureau}
 #'
 
 "us_laea"
