@@ -4,8 +4,12 @@
 \alias{get_sites}
 \title{Identify NERRS reserve stations from metadata}
 \usage{
-get_sites(data.file, type = c("wq", "nut", "met"), active = TRUE,
-  primary = TRUE)
+get_sites(
+  data.file,
+  type = c("wq", "nut", "met"),
+  active = TRUE,
+  primary = TRUE
+)
 }
 \arguments{
 \item{data.file}{location of data}

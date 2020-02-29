@@ -4,8 +4,16 @@
 \alias{res_sk_map}
 \title{Local Reserve Map With Seasonal Kendall Results}
 \usage{
-res_sk_map(nerr_site_id, stations, sk_result = NULL, bbox, shp,
-  station_labs = TRUE, lab_loc = NULL, scale_pos = "bottomleft")
+res_sk_map(
+  nerr_site_id,
+  stations,
+  sk_result = NULL,
+  bbox,
+  shp,
+  station_labs = TRUE,
+  lab_loc = NULL,
+  scale_pos = "bottomleft"
+)
 }
 \arguments{
 \item{nerr_site_id}{chr string of the reserve to make, first three characters used by NERRS}

@@ -6,7 +6,7 @@
 \title{US County Map}
 \format{A \code{\link[sp]{SpatialPolygonsDataFrame}} object}
 \source{
-\href{https://www.census.gov/geo/maps-data/data/cbf/cbf_counties.html}{US Census Bureau}
+\href{https://www.census.gov/geographies/mapping-files.html}{US Census Bureau}
 }
 \usage{
 data(us_laea)

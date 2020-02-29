@@ -4,8 +4,7 @@
 \alias{reserve_locs}
 \title{NERRS Sampling Location Data Frame}
 \usage{
-reserve_locs(incl = c("contig", "AK", "HI", "PR"),
-  subset_reserve = NULL)
+reserve_locs(incl = c("contig", "AK", "HI", "PR"), subset_reserve = NULL)
 }
 \arguments{
 \item{incl}{Str vector to include AK, HI, and PR}

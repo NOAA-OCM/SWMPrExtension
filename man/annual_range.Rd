@@ -7,10 +7,19 @@
 \usage{
 annual_range(swmpr_in, ...)
 
-\method{annual_range}{swmpr}(swmpr_in, param = NULL, target_yr = NULL,
-  criteria = NULL, free_y = FALSE, log_trans = FALSE,
-  converted = FALSE, criteria_lab = "WQ Threshold",
-  plot_title = FALSE, plot = TRUE, ...)
+\method{annual_range}{swmpr}(
+  swmpr_in,
+  param = NULL,
+  target_yr = NULL,
+  criteria = NULL,
+  free_y = FALSE,
+  log_trans = FALSE,
+  converted = FALSE,
+  criteria_lab = "WQ Threshold",
+  plot_title = FALSE,
+  plot = TRUE,
+  ...
+)
 }
 \arguments{
 \item{swmpr_in}{input swmpr object}

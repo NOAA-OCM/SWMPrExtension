@@ -7,11 +7,19 @@
 \usage{
 threshold_criteria_plot(swmpr_in, ...)
 
-\method{threshold_criteria_plot}{swmpr}(swmpr_in, param = NULL,
-  rng = NULL, thresholds = NULL, threshold_labs = c("Good", "Fair",
-  "Poor"), threshold_cols = c("#ABD9E9", "#FFFFCC", "#FEC596"),
-  crit_threshold = NULL, log_trans = FALSE, monthly_smooth = FALSE,
-  plot_title = FALSE, ...)
+\method{threshold_criteria_plot}{swmpr}(
+  swmpr_in,
+  param = NULL,
+  rng = NULL,
+  thresholds = NULL,
+  threshold_labs = c("Good", "Fair", "Poor"),
+  threshold_cols = c("#ABD9E9", "#FFFFCC", "#FEC596"),
+  crit_threshold = NULL,
+  log_trans = FALSE,
+  monthly_smooth = FALSE,
+  plot_title = FALSE,
+  ...
+)
 }
 \arguments{
 \item{swmpr_in}{input swmpr object}

@@ -4,8 +4,13 @@
 \alias{y_count_labeler}
 \title{Generate y-axis Label Based on SWMP Parameter Abbreviation}
 \usage{
-y_count_labeler(param, parameter_threshold, threshold_type,
-  time_threshold = NULL, converted = FALSE)
+y_count_labeler(
+  param,
+  parameter_threshold,
+  threshold_type,
+  time_threshold = NULL,
+  converted = FALSE
+)
 }
 \arguments{
 \item{param}{chr string of variable abbreviation}

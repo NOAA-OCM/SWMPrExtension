@@ -7,9 +7,18 @@
 \usage{
 seasonal_dot(swmpr_in, ...)
 
-\method{seasonal_dot}{swmpr}(swmpr_in, param = NULL, lm_trend = FALSE,
-  lm_lab = FALSE, free_y = FALSE, log_trans = FALSE,
-  converted = FALSE, plot_title = FALSE, plot = TRUE, ...)
+\method{seasonal_dot}{swmpr}(
+  swmpr_in,
+  param = NULL,
+  lm_trend = FALSE,
+  lm_lab = FALSE,
+  free_y = FALSE,
+  log_trans = FALSE,
+  converted = FALSE,
+  plot_title = FALSE,
+  plot = TRUE,
+  ...
+)
 }
 \arguments{
 \item{swmpr_in}{input swmpr object}

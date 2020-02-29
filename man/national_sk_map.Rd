@@ -4,10 +4,14 @@
 \alias{national_sk_map}
 \title{Reserve National Map with Seasonal Kendall Results}
 \usage{
-national_sk_map(incl = c("contig", "AK", "HI", "PR"),
-  highlight_states = NULL, sk_reserves = NULL, sk_results = NULL,
+national_sk_map(
+  incl = c("contig", "AK", "HI", "PR"),
+  highlight_states = NULL,
+  sk_reserves = NULL,
+  sk_results = NULL,
   sk_fill_colors = c("#247BA0", "#A3DFFF", "#444E65", "#595959"),
-  agg_county = TRUE)
+  agg_county = TRUE
+)
 }
 \arguments{
 \item{incl}{chr vector to include AK, HI , and PR (case sensitive)}

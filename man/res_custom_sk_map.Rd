@@ -4,8 +4,17 @@
 \alias{res_custom_sk_map}
 \title{Local Reserve Map With Seasonal Kendall Results for Custom Stations}
 \usage{
-res_custom_sk_map(stations, x_loc, y_loc, sk_result = NULL, bbox, shp,
-  station_labs = TRUE, lab_loc = NULL, scale_pos = "bottomleft")
+res_custom_sk_map(
+  stations,
+  x_loc,
+  y_loc,
+  sk_result = NULL,
+  bbox,
+  shp,
+  station_labs = TRUE,
+  lab_loc = NULL,
+  scale_pos = "bottomleft"
+)
 }
 \arguments{
 \item{stations}{chr string of the reserve stations to include in the map}

@@ -7,11 +7,20 @@
 \usage{
 threshold_summary(swmpr_in, ...)
 
-\method{threshold_summary}{swmpr}(swmpr_in, param = NULL,
+\method{threshold_summary}{swmpr}(
+  swmpr_in,
+  param = NULL,
   summary_type = c("month", "season", "year"),
-  parameter_threshold = NULL, threshold_type = NULL,
-  time_threshold = NULL, converted = FALSE, pal = "Set3",
-  plot_title = FALSE, plot = TRUE, label_y_axis = TRUE, ...)
+  parameter_threshold = NULL,
+  threshold_type = NULL,
+  time_threshold = NULL,
+  converted = FALSE,
+  pal = "Set3",
+  plot_title = FALSE,
+  plot = TRUE,
+  label_y_axis = TRUE,
+  ...
+)
 }
 \arguments{
 \item{swmpr_in}{input swmpr object}

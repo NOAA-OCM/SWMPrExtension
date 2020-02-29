@@ -4,12 +4,22 @@
 \alias{create_sk_flextable_list}
 \title{Create a List of Flextable Objects}
 \usage{
-create_sk_flextable_list(sk_result, stations, param,
+create_sk_flextable_list(
+  sk_result,
+  stations,
+  param,
   trend_col = c("#247BA0", "#A3DFFF", "#D9D9D9", "white"),
-  font_col_default = "#444E65", font_sz_stn = 6, font_sz_result = 12,
-  font_sz_head = 6, ht_head = 0.28, ht_body = 0.202,
-  is_swmp = TRUE, stn_name = NULL, stn_abbrev = NULL,
-  par_name = NULL)
+  font_col_default = "#444E65",
+  font_sz_stn = 6,
+  font_sz_result = 12,
+  font_sz_head = 6,
+  ht_head = 0.28,
+  ht_body = 0.202,
+  is_swmp = TRUE,
+  stn_name = NULL,
+  stn_abbrev = NULL,
+  par_name = NULL
+)
 }
 \arguments{
 \item{sk_result}{a \code{data.frame} of reformatted results from \code{\link{sk_seasonal}}}

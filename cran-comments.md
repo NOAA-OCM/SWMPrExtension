@@ -1,6 +1,6 @@
 ## Test environments
 * local windows 10 install, R 3.6.2
-* win-builder [http://win-builder.r-project.org/](http://win-builder.r-project.org/) (devel, release, and old-release)
+* win-builder [http://win-builder.r-project.org/](http://win-builder.r-project.org/) (devel)
 * devtools::release()
 
 

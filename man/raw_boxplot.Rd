@@ -7,9 +7,17 @@
 \usage{
 raw_boxplot(swmpr_in, ...)
 
-\method{raw_boxplot}{swmpr}(swmpr_in, param = NULL, target_yr = NULL,
-  criteria = NULL, free_y = FALSE, log_trans = FALSE,
-  converted = FALSE, plot_title = FALSE, ...)
+\method{raw_boxplot}{swmpr}(
+  swmpr_in,
+  param = NULL,
+  target_yr = NULL,
+  criteria = NULL,
+  free_y = FALSE,
+  log_trans = FALSE,
+  converted = FALSE,
+  plot_title = FALSE,
+  ...
+)
 }
 \arguments{
 \item{swmpr_in}{input swmpr object}

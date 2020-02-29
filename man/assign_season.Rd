@@ -4,8 +4,13 @@
 \alias{assign_season}
 \title{Assign seasons to SWMP sampling data}
 \usage{
-assign_season(data, season_grps = NULL, season_names = NULL,
-  season_start = NULL, abb = TRUE)
+assign_season(
+  data,
+  season_grps = NULL,
+  season_names = NULL,
+  season_start = NULL,
+  abb = TRUE
+)
 }
 \arguments{
 \item{data}{a vector of POSIXct dates}

@@ -4,8 +4,17 @@
 \alias{res_custom_map}
 \title{Local Reserve Map for Custom Stations}
 \usage{
-res_custom_map(stations, x_loc, y_loc, bbox, shp, station_labs = TRUE,
-  station_col = NULL, lab_loc = NULL, scale_pos = "bottomleft")
+res_custom_map(
+  stations,
+  x_loc,
+  y_loc,
+  bbox,
+  shp,
+  station_labs = TRUE,
+  station_col = NULL,
+  lab_loc = NULL,
+  scale_pos = "bottomleft"
+)
 }
 \arguments{
 \item{stations}{chr string of the reserve stations to include in the map}

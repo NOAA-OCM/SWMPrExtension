@@ -4,8 +4,13 @@
 \alias{create_sk_national_ft_reserves}
 \title{Create a Flextable Object of Reserve Names}
 \usage{
-create_sk_national_ft_reserves(sk_result, font_sz_stn = 8,
-  font_sz_head = 8, ht_head = 0.75, ht_body = 0.2)
+create_sk_national_ft_reserves(
+  sk_result,
+  font_sz_stn = 8,
+  font_sz_head = 8,
+  ht_head = 0.75,
+  ht_body = 0.2
+)
 }
 \arguments{
 \item{sk_result}{a \code{data.frame} of reformatted results from \code{\link{sk_seasonal}}}

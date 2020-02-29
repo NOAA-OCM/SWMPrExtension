@@ -4,8 +4,15 @@
 \alias{res_local_map}
 \title{Local Reserve Map}
 \usage{
-res_local_map(nerr_site_id, stations, bbox, shp, station_labs = TRUE,
-  lab_loc = NULL, scale_pos = "bottomleft")
+res_local_map(
+  nerr_site_id,
+  stations,
+  bbox,
+  shp,
+  station_labs = TRUE,
+  lab_loc = NULL,
+  scale_pos = "bottomleft"
+)
 }
 \arguments{
 \item{nerr_site_id}{chr string of the reserve to make, first three characters used by NERRS}

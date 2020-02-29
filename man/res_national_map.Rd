@@ -4,9 +4,12 @@
 \alias{res_national_map}
 \title{Reserve National Map}
 \usage{
-res_national_map(incl = c("contig", "AK", "HI", "PR"),
-  highlight_states = NULL, highlight_reserves = NULL,
-  agg_county = TRUE)
+res_national_map(
+  incl = c("contig", "AK", "HI", "PR"),
+  highlight_states = NULL,
+  highlight_reserves = NULL,
+  agg_county = TRUE
+)
 }
 \arguments{
 \item{incl}{chr vector to include AK, HI , and PR (case sensitive)}

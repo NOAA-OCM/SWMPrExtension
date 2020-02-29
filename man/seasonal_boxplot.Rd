@@ -7,12 +7,22 @@
 \usage{
 seasonal_boxplot(swmpr_in, ...)
 
-\method{seasonal_boxplot}{swmpr}(swmpr_in, param = NULL,
-  hist_rng = NULL, target_yr = NULL, criteria = NULL,
-  free_y = FALSE, log_trans = FALSE, converted = FALSE,
-  criteria_lab = "WQ Threshold", stat_lab = "Average",
-  plot_title = FALSE, plot = TRUE, FUN = function(x) mean(x, na.rm =
-  TRUE), ...)
+\method{seasonal_boxplot}{swmpr}(
+  swmpr_in,
+  param = NULL,
+  hist_rng = NULL,
+  target_yr = NULL,
+  criteria = NULL,
+  free_y = FALSE,
+  log_trans = FALSE,
+  converted = FALSE,
+  criteria_lab = "WQ Threshold",
+  stat_lab = "Average",
+  plot_title = FALSE,
+  plot = TRUE,
+  FUN = function(x) mean(x, na.rm = TRUE),
+  ...
+)
 }
 \arguments{
 \item{swmpr_in}{input swmpr object}

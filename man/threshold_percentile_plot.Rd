@@ -7,10 +7,19 @@
 \usage{
 threshold_percentile_plot(swmpr_in, ...)
 
-\method{threshold_percentile_plot}{swmpr}(swmpr_in, param = NULL,
-  hist_rng = NULL, target_yr = NULL, percentiles = c(0.05, 0.95),
-  free_y = FALSE, by_month = FALSE, log_trans = FALSE,
-  converted = FALSE, plot_title = FALSE, ...)
+\method{threshold_percentile_plot}{swmpr}(
+  swmpr_in,
+  param = NULL,
+  hist_rng = NULL,
+  target_yr = NULL,
+  percentiles = c(0.05, 0.95),
+  free_y = FALSE,
+  by_month = FALSE,
+  log_trans = FALSE,
+  converted = FALSE,
+  plot_title = FALSE,
+  ...
+)
 }
 \arguments{
 \item{swmpr_in}{input swmpr object}

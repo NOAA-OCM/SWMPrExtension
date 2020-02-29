@@ -7,9 +7,16 @@
 \usage{
 sk_seasonal(swmpr_in, ...)
 
-\method{sk_seasonal}{swmpr}(swmpr_in, param = NULL, alpha = 0.05,
-  data_min = 5, envStats_summary = FALSE, stat_lab = "Average",
-  FUN = function(x) mean(x, na.rm = TRUE), ...)
+\method{sk_seasonal}{swmpr}(
+  swmpr_in,
+  param = NULL,
+  alpha = 0.05,
+  data_min = 5,
+  envStats_summary = FALSE,
+  stat_lab = "Average",
+  FUN = function(x) mean(x, na.rm = TRUE),
+  ...
+)
 }
 \arguments{
 \item{swmpr_in}{input swmpr object}
