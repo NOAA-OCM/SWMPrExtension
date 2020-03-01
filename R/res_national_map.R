@@ -71,7 +71,9 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   # # loc <- get('sampling_stations')
   #
   # # project it to Lambert Azimuthal Equal Area, EPSG:2163
-  # projString <- "+init=epsg:2163"
+  # # projString <- "+init=epsg:2163"
+  # NOTE BENE: Actually using non-standard WGS84 LAEA, no EPSG code
+  # # projString <- "+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs"
   # us_laea <- sp::spTransform(us, sp::CRS(projString))
   # us_laea@data$id <- rownames(us_laea@data)
   # # NOTE BENE: There is some step missing here to remove non-ascii characters.  That will create a much smaller data set.
@@ -81,6 +83,7 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
 
   # remove old states and put new ones back in
   us_laea_mod <- us_laea[!us_laea$STATE %in% c("02", "15", "72"),]
+  sp::proj4string(us_laea_mod) <- sp::proj4string(us_laea)
 
   if('AK' %in% incl) {
     # extract, then rotate, shrink & move alaska (and reset projection)
@@ -99,7 +102,7 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
     hawaii <- us_laea[us_laea$STATE == "15",]
     hawaii <- maptools::elide(hawaii, rotate = -35)
     hawaii <- maptools::elide(hawaii, shift=c(5400000, -1400000))
-    sp::proj4string(hawaii) <- sp::proj4string(us_laea)
+    sp::proj4string(hawaii) <- sp::proj4string(us_laea_mod)
 
     us_laea_mod <- maptools::spRbind(us_laea_mod, hawaii)
   }
@@ -108,7 +111,7 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
     # extract, then rotate & shift pr
     pr <- us_laea[us_laea$STATE == "72", ]
     pr <- maptools::elide(pr, shift = c(-1400000,2000))
-    sp::proj4string(pr) <- sp::proj4string(us_laea)
+    sp::proj4string(pr) <- sp::proj4string(us_laea_mod)
 
     us_laea_mod <- maptools::spRbind(us_laea_mod, pr)
 

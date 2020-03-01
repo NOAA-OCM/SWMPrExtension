@@ -40,8 +40,8 @@ Imports:
 	scales,
 	RColorBrewer,
 	rgdal,
-	rgeos,
-	rlang,
+  rgeos,
+  rlang,
 	sp
 Authors@R: c(
   person(given = "Julie", family = "Padilla",
