@@ -1,3 +1,6 @@
+#### SWMPrExtension 1.1.3.1
+* Addressing ISSUE #29: replacing "sp" with "sf"
+
 #### SWMPrExtension 1.1.3
 * Fixed ISSUE# 46: Addressed {rgdal} & {sp} issues when using PROJ > 6. 
 * Corrected mismatched and mislabeled map projections in national mapping code so that all national-level maps use a Lambert Azimuthal Equal Area projections.  This is the projection that was being used for some shapefiles, but was mislabelled as Albers Equal Area, which then lead to some projection mismatch errors.
