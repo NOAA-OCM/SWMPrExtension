@@ -1,5 +1,6 @@
 #### SWMPrExtension 1.1.3.1
-* Addressing ISSUE #29: replacing "sp" with "sf"
+* Addressing ISSUE #29: replacing {sp} with {sf}
+* Switch national map projection to EPSG=2163, a standard (i.e., has an EPSG code), spherical Lambert Azimuthal Equal Area projection.
 
 #### SWMPrExtension 1.1.3
 * Fixed ISSUE# 46: Addressed {rgdal} & {sp} issues when using PROJ > 6. 

@@ -8,6 +8,8 @@
 #' @param agg_county logical, should counties be aggregated tot he state-level? Defaults to \code{TRUE}
 #'
 #' @import ggplot2
+#' @import dplyr
+#' @import sf
 #'
 #' @importFrom ggthemes theme_map
 #' @importFrom maptools elide spRbind unionSpatialPolygons
@@ -55,56 +57,72 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
                         , highlight_reserves = NULL
                         , agg_county = TRUE) {
 
-  # Projection used is actually a North American Lambert Azimuthal Equal Area projection,
-  #   (https://spatialreference.org/ref/sr-org/north-american-lambert-azimuthal-equal-area-projection/)
-  #   not an Albers Equal Area projection. Changing all "_aea" to "_laea" to correct the
-  #   labelling issue
+  # Function used to rotate geometry of {sf} objects
+  rot = function(a) matrix(c(cos(a), sin(a), -sin(a), cos(a)), 2, 2)
 
-  # get_US_county_2010_shape <- function() {
-  #   dir <- tempdir()
-  #   utils::download.file("http://www2.census.gov/geo/tiger/GENZ2010/gz_2010_us_050_00_500k.zip", destfile = file.path(dir, "gz_2010_us_050_00_500k.zip"))
-  #   unzip(file.path(dir, "gz_2010_us_050_00_500k.zip"), exdir = dir)
-  #   rgdal::readOGR(file.path(dir, "gz_2010_us_050_00_500k.shp"))
+  # Projection used is that used by the US National Atlas, which is a North American
+  #   Lambert Azimuthal Equal Area projection, EPSG = 2163,
+  #   (https://spatialreference.org/ref/epsg/2163/)
+  epsg = 2163
+
+  # get_US_county_shape <- function() {
+  # #  shape <- "cb_2018_us_county_20m"
+  #   shape <- "cb_2018_us_state_20m"
+  #   remote <- "https://www2.census.gov/geo/tiger/GENZ2018/shp/"
+  #   zipped <- paste(shape,".zip", sep = "")
+  #   local_dir <- tempdir()
+  #   utils::download.file(paste(remote,shape,".zip",sep = ""),
+  #                        destfile = file.path(local_dir, zipped))
+  #   unzip(file.path(local_dir, zipped), exdir = local_dir)
+  #   sf::st_read(file.path(local_dir, paste(shape,".shp", sep = "") ) )
+  #
   # }
   #
-  # us <- get_US_county_2010_shape()
+  # us <- get_US_county_shape()
   # # loc <- get('sampling_stations')
   #
   # # project it to Lambert Azimuthal Equal Area, EPSG:2163
-  # # projString <- "+init=epsg:2163"
-  # NOTE BENE: Actually using non-standard WGS84 LAEA, no EPSG code
-  # # projString <- "+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs"
-  # us_laea <- sp::spTransform(us, sp::CRS(projString))
-  # us_laea@data$id <- rownames(us_laea@data)
-  # # NOTE BENE: There is some step missing here to remove non-ascii characters.  That will create a much smaller data set.
+  # us_laea <- sf::st_transform(us, epsg)
   # save(us_laea,file = "data/us_laea.rda")
 
   us_laea <- get('us_laea')
 
   # remove old states and put new ones back in
-  us_laea_mod <- us_laea[!us_laea$STATE %in% c("02", "15", "72"),]
-  sp::proj4string(us_laea_mod) <- sp::proj4string(us_laea)
+  us_laea_mod <- us_laea %>%
+    filter(! STATEFP %in% c("02", "15", "72") )
+
+  usc_laea_mod <- usc_laea %>%
+    filter(! STATEFP %in% c("02", "15", "72") )
+
 
   if('AK' %in% incl) {
     # extract, then rotate, shrink & move alaska (and reset projection)
     # need to use state IDs via # https://www.census.gov/geo/reference/ansi_statetables.html
-    alaska <- us_laea[us_laea$STATE == "02", ]
-    alaska <- maptools::elide(alaska, rotate = -50)
-    alaska <- maptools::elide(alaska, scale = max(apply(sp::bbox(alaska), 1, diff)) / 2.3)
-    alaska <- maptools::elide(alaska, shift = c(-2100000, -2500000))
-    sp::proj4string(alaska) <- sp::proj4string(us_laea_mod)
-
-    us_laea_mod <- maptools::spRbind(us_laea_mod, alaska)
-  }
+    alaska <- filter(us_laea, STATEFP == "02" )# %>%
+      #sf::st_simplify(preserveTopology = TRUE, dTolerance = 5e3 )
+    aShift = c(1.2e6, -4.9e6)
+    cntrd = st_centroid(alaska$geometry)
+    # Then rotate and scale around that centroid
+    alaska$geometry = (alaska$geometry - cntrd) * rot(-50 * pi/180) * .45 + cntrd
+    alaska$geometry[[1]] <- alaska$geometry[[1]] + st_point(aShift)
+    # Can add some offsets directly to the $geometry list to #  move the feature
+    st_crs(alaska) <- st_crs(us_laea)
+    us_laea_mod2 <- st_union(us_laea_mod, alaska)
+    plot(st_geometry(us_laea_mod2), border = "black")
+   }
 
   if('HI' %in% incl) {
-    # extract, then rotate & shift hawaii
-    hawaii <- us_laea[us_laea$STATE == "15",]
-    hawaii <- maptools::elide(hawaii, rotate = -35)
-    hawaii <- maptools::elide(hawaii, shift=c(5400000, -1400000))
-    sp::proj4string(hawaii) <- sp::proj4string(us_laea_mod)
-
-    us_laea_mod <- maptools::spRbind(us_laea_mod, hawaii)
+    hawaii <- filter(us_laea, STATEFP == "15" )# %>%
+    #sf::st_simplify(preserveTopology = TRUE, dTolerance = 5e3 )
+    hShift = c(5.4e6, -1.3e6)
+    cntrd = st_centroid(hawaii$geometry)
+    # Then rotate and scale around that centroid
+    hawaii$geometry = (hawaii$geometry - cntrd) * rot(-35 * pi/180) + cntrd
+    hawaii$geometry[[1]] <- hawaii$geometry[[1]] + st_point(hShift)
+    # Can add some offsets directly to the $geometry list to #  move the feature
+    st_crs(hawaii) <- st_crs(us_laea)
+    us_laea_mod3 <- st_union(us_laea_mod2, hawaii)
+    plot(st_geometry(us_laea_mod3), border = "red")
   }
 
   if('PR' %in% incl) {
