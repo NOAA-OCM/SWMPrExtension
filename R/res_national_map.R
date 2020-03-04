@@ -66,8 +66,8 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   epsg = 2163
 
   # get_US_county_shape <- function() {
-  # #  shape <- "cb_2018_us_county_20m"
-  #   shape <- "cb_2018_us_state_20m"
+  #   shape <- "cb_2018_us_county_20m"
+  #   # shape <- "cb_2018_us_state_20m"
   #   remote <- "https://www2.census.gov/geo/tiger/GENZ2018/shp/"
   #   zipped <- paste(shape,".zip", sep = "")
   #   local_dir <- tempdir()
@@ -75,12 +75,8 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   #                        destfile = file.path(local_dir, zipped))
   #   unzip(file.path(local_dir, zipped), exdir = local_dir)
   #   sf::st_read(file.path(local_dir, paste(shape,".shp", sep = "") ) )
-  #
   # }
-  #
   # us <- get_US_county_shape()
-  # # loc <- get('sampling_stations')
-  #
   # # project it to Lambert Azimuthal Equal Area, EPSG:2163
   # us_laea <- sf::st_transform(us, epsg)
   # save(us_laea,file = "data/us_laea.rda")
@@ -88,60 +84,57 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   us_laea <- get('us_laea')
 
   # remove old states and put new ones back in
-  us_laea_mod <- us_laea %>%
-    filter(! STATEFP %in% c("02", "15", "72") )
+  us_laea_mod <- filter(us_laea, ! STATEFP %in% c("02", "15", "72") )
 
-  usc_laea_mod <- usc_laea %>%
-    filter(! STATEFP %in% c("02", "15", "72") )
+  # usc_laea_mod <- usc_laea %>%
+  #   filter(! STATEFP %in% c("02", "15", "72") )
 
 
   if('AK' %in% incl) {
     # extract, then rotate, shrink & move alaska (and reset projection)
     # need to use state IDs via # https://www.census.gov/geo/reference/ansi_statetables.html
-    alaska <- filter(us_laea, STATEFP == "02" )# %>%
-      #sf::st_simplify(preserveTopology = TRUE, dTolerance = 5e3 )
-    aShift = c(1.2e6, -4.9e6)
-    cntrd = st_centroid(alaska$geometry)
-    # Then rotate and scale around that centroid
-    alaska$geometry = (alaska$geometry - cntrd) * rot(-50 * pi/180) * .45 + cntrd
-    alaska$geometry[[1]] <- alaska$geometry[[1]] + st_point(aShift)
-    # Can add some offsets directly to the $geometry list to #  move the feature
-    st_crs(alaska) <- st_crs(us_laea)
-    us_laea_mod2 <- st_union(us_laea_mod, alaska)
-    plot(st_geometry(us_laea_mod2), border = "black")
+    alaska <- us_laea[us_laea$STATEFP == "02", ] %>%
+      sf::st_simplify(preserveTopology = TRUE, dTolerance = 5e3 )
+    shift = c(1.2e6, -4.9e6)
+    shift = c(0.6e6, -2.e6)
+    alaska$geometry = (alaska$geometry) * rot(-50 * pi/180) * .45
+    alaska$geometry[[1]] <- alaska$geometry[[1]] + sf::st_point(shift)
+    sf::st_crs(alaska) <- sf::st_crs(us_laea)
+    us_laea_mod <- sf::st_union(us_laea_mod, alaska)
+    # plot(sf::st_geometry(us_laea_mod2), border = "green")
    }
 
   if('HI' %in% incl) {
-    hawaii <- filter(us_laea, STATEFP == "15" )# %>%
-    #sf::st_simplify(preserveTopology = TRUE, dTolerance = 5e3 )
-    hShift = c(5.4e6, -1.3e6)
-    cntrd = st_centroid(hawaii$geometry)
-    # Then rotate and scale around that centroid
-    hawaii$geometry = (hawaii$geometry - cntrd) * rot(-35 * pi/180) + cntrd
-    hawaii$geometry[[1]] <- hawaii$geometry[[1]] + st_point(hShift)
+    hawaii <- us_laea[us_laea$STATEFP == "15", ]
+    shift = c(3.8e6, 1.8e6)
+    hawaii$geometry = (hawaii$geometry ) * rot(-35 * pi/180)
+    hawaii$geometry[[1]] <- hawaii$geometry[[1]] + st_point(shift)
     # Can add some offsets directly to the $geometry list to #  move the feature
     st_crs(hawaii) <- st_crs(us_laea)
-    us_laea_mod3 <- st_union(us_laea_mod2, hawaii)
-    plot(st_geometry(us_laea_mod3), border = "red")
+    us_laea_mod <- st_union(us_laea_mod, hawaii)
+    # plot(st_geometry(us_laea_mod), border = "blue")
   }
 
   if('PR' %in% incl) {
     # extract, then rotate & shift pr
-    pr <- us_laea[us_laea$STATE == "72", ]
-    pr <- maptools::elide(pr, shift = c(-1400000,2000))
-    sp::proj4string(pr) <- sp::proj4string(us_laea_mod)
-
-    us_laea_mod <- maptools::spRbind(us_laea_mod, pr)
-
+    pr <- us_laea[us_laea$STATEFP == "72", ]
+    shift = c( -1.4e6, 2e3)
+    pr$geometry[[1]] <- pr$geometry[[1]] + st_point(shift)
+    # Can add some offsets directly to the $geometry list to #  move the feature
+    st_crs(pr) <- st_crs(us_laea)
+    us_laea_mod <- st_union(us_laea_mod, pr)
+    # plot(st_geometry(us_laea_mod), border = "red")
   }
 
-  if(agg_county) {
-    us_laea.diss <- maptools::unionSpatialPolygons(us_laea_mod, IDs = us_laea_mod@data$STATE)
-    us_laea_mod <- us_laea.diss
+  if(!agg_county) {
+    print("Warning: County level data maps not available.")
+    # us_laea.diss <- st::st_di(us_laea_mod, IDs = us_laea_mod@data$STATE)
+    # us_laea_mod <- us_laea.diss
   }
 
   # get ready for ggplotting it... this takes a cpl seconds ----
-  map <- ggplot2::fortify(us_laea_mod, region = "GEO_ID")
+  us_laea_mod$id <- us_laea_mod$STATEFP
+  map <- ggplot2::fortify(us_laea_mod, region = "GEOID")
 
   # Prep reserve locations for plotting
   reserve_locations <- reserve_locs(incl = incl)
@@ -161,6 +154,7 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
                         , size = 0.15, show.legend = FALSE)
   } else {
     map$flag <- ifelse(map$id %in% highlight_states, TRUE, FALSE)
+    # map$flag <- ifelse(map$STATEFP %in% highlight_states, TRUE, FALSE)
 
     gg <- gg + geom_map(data = map, map = map
                         , aes_string('long', 'lat', map_id = 'id', fill = 'flag')
