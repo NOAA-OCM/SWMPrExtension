@@ -98,6 +98,7 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
     shift = c(1.2e6, -4.9e6)
     shift = c(0.6e6, -2.e6)
     alaska$geometry = (alaska$geometry) * rot(-50 * pi/180) * .45
+    sf::st_crs(alaska) <- sf::st_crs(us_laea)
     alaska$geometry[[1]] <- alaska$geometry[[1]] + sf::st_point(shift)
     sf::st_crs(alaska) <- sf::st_crs(us_laea)
     us_laea_mod <- sf::st_union(us_laea_mod, alaska)
@@ -108,10 +109,11 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
     hawaii <- us_laea[us_laea$STATEFP == "15", ]
     shift = c(3.8e6, 1.8e6)
     hawaii$geometry = (hawaii$geometry ) * rot(-35 * pi/180)
-    hawaii$geometry[[1]] <- hawaii$geometry[[1]] + st_point(shift)
+    sf::st_crs(hawaii) <- sf::st_crs(us_laea)
+    hawaii$geometry[[1]] <- hawaii$geometry[[1]] + sf::st_point(shift)
     # Can add some offsets directly to the $geometry list to #  move the feature
-    st_crs(hawaii) <- st_crs(us_laea)
-    us_laea_mod <- st_union(us_laea_mod, hawaii)
+    sf::st_crs(hawaii) <- sf::st_crs(us_laea)
+    us_laea_mod <- sf::st_union(us_laea_mod, hawaii)
     # plot(st_geometry(us_laea_mod), border = "blue")
   }
 
@@ -119,16 +121,16 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
     # extract, then rotate & shift pr
     pr <- us_laea[us_laea$STATEFP == "72", ]
     shift = c( -1.4e6, 2e3)
-    pr$geometry[[1]] <- pr$geometry[[1]] + st_point(shift)
+    pr$geometry[[1]] <- pr$geometry[[1]] + sf::st_point(shift)
     # Can add some offsets directly to the $geometry list to #  move the feature
-    st_crs(pr) <- st_crs(us_laea)
-    us_laea_mod <- st_union(us_laea_mod, pr)
+    sf::st_crs(pr) <- sf::st_crs(us_laea)
+    us_laea_mod <- sf::st_union(us_laea_mod, pr)
     # plot(st_geometry(us_laea_mod), border = "red")
   }
 
   if(!agg_county) {
     print("Warning: County level data maps not available.")
-    # us_laea.diss <- st::st_di(us_laea_mod, IDs = us_laea_mod@data$STATE)
+    # us_laea.diss <- sf::st_di(us_laea_mod, IDs = us_laea_mod@data$STATE)
     # us_laea_mod <- us_laea.diss
   }
 
