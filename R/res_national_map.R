@@ -131,20 +131,23 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   # }
   # -------------------------------------
   library(maps)
-  if(agg_county) {
-    print("Warning: County names/boundaries only available for CONUS")
-    states <- st_as_sf(maps::map("county", plot = FALSE, fill = TRUE)) %>%
-      separate(ID, sep = ",", into = c("state","county"))
-  } else {
-    states <- st_as_sf(maps::map("state", plot = FALSE, fill = TRUE))
-  }
 
   fips <- state.fips %>%
-    tidyr::separate(polyname, sep = ":", into = c("name",NA),
-                                   fill = "right", remove = TRUE) %>%
-    transmute(fips = sprintf("%02d",fips), name, abb) %>%
+    tidyr::separate(polyname, sep = ":", into = c("state",NA),
+                    fill = "right", remove = TRUE) %>%
+    transmute(fips = sprintf("%02d",fips), state, abb) %>%
     unique()
 
+    if(agg_county) {
+    print("Warning: County names/boundaries only available for CONUS")
+    statesc <- st_as_sf(maps::map("county", plot = FALSE, fill = TRUE)) %>%
+      separate(ID, sep = ",", into = c("state","county")) %>%
+      left_join(fips, by = "state")
+  } else {
+    states <- st_as_sf(maps::map("state", plot = FALSE, fill = TRUE)) %>%
+      transmute(state = ID) %>%
+      left_join(fips, by = "state")
+  }
 
 
   # The {maps} state and countylibrary only has data for CONUS, incl. DC
@@ -159,11 +162,9 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   # Now we have the data, all in WGS84, EPSG=4326
   # Figure out fill colors as needed:
   if(is.null(highlight_states)) {
-    fill  <-  c('#f8f8f8', '#cccccc') #'#f8f8f8'
-    color  <-  '#999999'
+    states$flag <- FALSE
   } else {
-    map$flag <- ifelse(map$id %in% highlight_states, TRUE, FALSE)
-    # map$flag <- ifelse(map$STATEFP %in% highlight_states, TRUE, FALSE)
+    states$flag <- ifelse(states$fips %in% highlight_states, TRUE, FALSE)
 
     gg <- gg + geom_map(data = map, map = map
                         , aes_string('long', 'lat', map_id = 'id', fill = 'flag')
@@ -171,14 +172,15 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
       scale_fill_manual(values = c('#f8f8f8', '#cccccc'))
   }
 
+  fill_colors  <-  c('#f8f8f8', '#cccccc') #'#f8f8f8'
+  line_color  <-  '#999999'
 
   # Project as needed and create area-appropriate maps
 
   mainland <- ggplot(data = states) +
-      # (mainland <- ggplot(data = states) +
-      # (mainland <- ggplot(data = counties) +
-      geom_sf(fill = "cornsilk") +
-      coord_sf(crs = st_crs(2163), xlim = c(-2500000, 2500000),
+    geom_sf(fill = flag, color = '#999999', size = 0.15, show.legend = FALSE) +
+    scale_fill_manual(values = fill_colors) +
+    coord_sf(crs = st_crs(2163), xlim = c(-2500000, 2500000),
                ylim = c(-2300000, 730000))
 
   alaska <- ggplot(data = usa) +
