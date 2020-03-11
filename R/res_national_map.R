@@ -17,7 +17,7 @@
 ##' @importFrom sp CRS bbox proj4string spTransform
 #' @importFrom utils download.file unzip
 #' @importFrom tidyr separate
-#' @importFrom sf st_crs st
+#' @importFrom sf st_crs st_as_sf
 #' @importFrom maps map county state world
 #'
 #' @export
@@ -131,6 +131,7 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   # }
   # -------------------------------------
   library(maps)
+  library(dplyr)
 
   fips <- state.fips %>%
     tidyr::separate(polyname, sep = ":", into = c("state",NA),
@@ -140,12 +141,12 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
 
     if(agg_county) {
     print("Warning: County names/boundaries only available for CONUS")
-    statesc <- st_as_sf(maps::map("county", plot = FALSE, fill = TRUE)) %>%
-      separate(ID, sep = ",", into = c("state","county")) %>%
+    conus <- sf::st_as_sf(maps::map("county", plot = FALSE, fill = TRUE)) %>%
+      tidyr::separate(ID, sep = ",", into = c("state","county")) %>%
       left_join(fips, by = "state")
   } else {
-    states <- st_as_sf(maps::map("state", plot = FALSE, fill = TRUE)) %>%
-      transmute(state = ID) %>%
+    conus <- sf::st_as_sf(maps::map("state", plot = FALSE, fill = TRUE)) %>%
+      transmute(state = as.character(ID)) %>%
       left_join(fips, by = "state")
   }
 
@@ -153,59 +154,70 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   # The {maps} state and countylibrary only has data for CONUS, incl. DC
   # so get a "usa" data set from the world data, which includes HI and AK, but
   # has CONUS without interior boundaries.
-  usa <- subset(world, admin == "United States of America")
+  usa <- sf::st_as_sf(maps::map("world", plot = FALSE, fill = TRUE)) %>%
+    transmute(admin = as.character(ID)) %>%
+    filter(admin == "USA")
 
   # Lastly, grab Puerto Rico from the same world database
-  puertorico <- subset(world, admin == "Puerto Rico")
+  puertorico <- sf::st_as_sf(maps::map("world", plot = FALSE, fill = TRUE)) %>%
+    transmute(admin = as.character(ID)) %>%
+    filter(admin == "Puerto Rico")
 
 
   # Now we have the data, all in WGS84, EPSG=4326
+
+  # debugging highlight_states
+  highlight_states <- c("02","12","15", "16","06","72")
   # Figure out fill colors as needed:
-  if(is.null(highlight_states)) {
-    states$flag <- FALSE
-  } else {
-    states$flag <- ifelse(states$fips %in% highlight_states, TRUE, FALSE)
-
-    gg <- gg + geom_map(data = map, map = map
-                        , aes_string('long', 'lat', map_id = 'id', fill = 'flag')
-                        , color = '#999999', size = 0.15, show.legend = FALSE) +
-      scale_fill_manual(values = c('#f8f8f8', '#cccccc'))
-  }
-
   fill_colors  <-  c('#f8f8f8', '#cccccc') #'#f8f8f8'
   line_color  <-  '#999999'
 
+  if(is.null(highlight_states)) {
+    conus$flag <- FALSE
+    ak_fill <-  fill_colors[[1]]
+    hi_fill <-  fill_colors[[1]]
+    pr_fill <-  fill_colors[[1]]
+  } else {
+    conus$flag <- ifelse(conus$fips %in% highlight_states, TRUE, FALSE)
+    ak_fill <-  ifelse("02" %in% highlight_states, fill_colors[[2]], fill_colors[[1]])
+    hi_fill <-  ifelse("15" %in% highlight_states, fill_colors[[2]], fill_colors[[1]])
+    pr_fill <-  ifelse("72" %in% highlight_states, fill_colors[[2]], fill_colors[[1]])
+
+    # gg <- gg + geom_map(data = map, map = map
+    #                     , aes_string('long', 'lat', map_id = 'id', fill = 'flag')
+    #                     , color = '#999999', size = 0.15, show.legend = FALSE) +
+    #   scale_fill_manual(values = c('#f8f8f8', '#cccccc'))
+  }
+
+
   # Project as needed and create area-appropriate maps
 
-  mainland <- ggplot(data = states) +
-    geom_sf(fill = flag, color = '#999999', size = 0.15, show.legend = FALSE) +
+  mainland <- ggplot(data = conus) +
+    geom_sf(aes(fill = flag), color = line_color, size = 0.15, show.legend = FALSE) +
     scale_fill_manual(values = fill_colors) +
     coord_sf(crs = st_crs(2163), xlim = c(-2500000, 2500000),
                ylim = c(-2300000, 730000))
 
   alaska <- ggplot(data = usa) +
-      geom_sf(fill = "cornsilk") +
+      geom_sf(fill = ak_fill) +
       coord_sf(crs = st_crs(3467), xlim = c(-2400000, 1600000),
                ylim = c(200000, 2500000), expand = FALSE, datum = NA)
 
   hawaii  <- ggplot(data = usa) +
-      geom_sf(fill = "cornsilk") +
+      geom_sf(fill = hi_fill) +
       coord_sf(crs = st_crs(4135), xlim = c(-161, -154),
                ylim = c(18, 23), expand = FALSE, datum = NA)
 
 
   pr <- ggplot(data = puertorico) +
-    geom_sf(fill = "cornsilk") +
+    geom_sf(fill = pr_fill) +
     coord_sf(crs = st_crs(4437),xlim = c(12000,350000),
              ylim = c(160000, 320000), expand = FALSE, datum = NA)
-  # 440489.48 332912.68
-  # 11900.57 149804.42
-
 
   # -------------------------------------
   # get ready for ggplotting it... this takes a cpl seconds ----
-  us_laea_mod$id <- us_laea_mod$STATEFP
-  map <- ggplot2::fortify(us_laea_mod, region = "GEOID")
+  # us_laea_mod$id <- us_laea_mod$STATEFP
+  # map <- ggplot2::fortify(us_laea_mod, region = "GEOID")
 
   # Prep reserve locations for plotting
   reserve_locations <- reserve_locs(incl = incl)
