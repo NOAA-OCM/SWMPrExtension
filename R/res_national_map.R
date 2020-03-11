@@ -5,7 +5,7 @@
 #' @param incl chr vector to include AK, HI , and PR (case sensitive)
 #' @param highlight_states chr vector of state FIPS codes
 #' @param highlight_reserves chr vector of 3 letter reserve codes
-#' @param agg_county logical, should counties be aggregated tot he state-level? Defaults to \code{TRUE}
+#' @param agg_county logical, should counties be aggregated to the state-level? Defaults to \code{TRUE}
 #'
 #' @import ggplot2
 #' @import dplyr
@@ -140,14 +140,14 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
     unique()
 
     if(agg_county) {
-    print("Warning: County names/boundaries only available for CONUS")
-    conus <- sf::st_as_sf(maps::map("county", plot = FALSE, fill = TRUE)) %>%
-      tidyr::separate(ID, sep = ",", into = c("state","county")) %>%
-      left_join(fips, by = "state")
-  } else {
-    conus <- sf::st_as_sf(maps::map("state", plot = FALSE, fill = TRUE)) %>%
-      transmute(state = as.character(ID)) %>%
-      left_join(fips, by = "state")
+      conus <- sf::st_as_sf(maps::map("state", plot = FALSE, fill = TRUE)) %>%
+        transmute(state = as.character(ID)) %>%
+        left_join(fips, by = "state")
+    } else {
+      print("Warning: County names/boundaries only available for CONUS")
+      conus <- sf::st_as_sf(maps::map("county", plot = FALSE, fill = TRUE)) %>%
+        tidyr::separate(ID, sep = ",", into = c("state","county")) %>%
+        left_join(fips, by = "state")
   }
 
 
@@ -163,86 +163,99 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
     transmute(admin = as.character(ID)) %>%
     filter(admin == "Puerto Rico")
 
-
-  # Now we have the data, all in WGS84, EPSG=4326
-
   # debugging highlight_states
   highlight_states <- c("02","12","15", "16","06","72")
-  # Figure out fill colors as needed:
-  fill_colors  <-  c('#f8f8f8', '#cccccc') #'#f8f8f8'
+  highlight_reserves <- c('pdb', 'sos', 'sfb', 'elk', 'tjr', 'kac')
+
+    # Get reserve locations for plotting
+  res_locations <- reserve_locs(incl = incl)
+
+
+  # Define fill colors as needed, colors 1 & 2 are for states, 3 and 4 are for reserve locations:
+  fill_colors  <-  c('#f8f8f8', '#cccccc', '#444e65', 'yellow')
   line_color  <-  '#999999'
+  res_point_size <- c(2, 3)
+  res_point_shape <- c(21, 21)
 
-  if(is.null(highlight_states)) {
-    conus$flag <- FALSE
-    ak_fill <-  fill_colors[[1]]
-    hi_fill <-  fill_colors[[1]]
-    pr_fill <-  fill_colors[[1]]
+  # Add fields for reserve point color and size, depending on highlight value
+  if(is.null(highlight_reserves)) {
+    res_locations$flag <- FALSE
   } else {
-    conus$flag <- ifelse(conus$fips %in% highlight_states, TRUE, FALSE)
-    ak_fill <-  ifelse("02" %in% highlight_states, fill_colors[[2]], fill_colors[[1]])
-    hi_fill <-  ifelse("15" %in% highlight_states, fill_colors[[2]], fill_colors[[1]])
-    pr_fill <-  ifelse("72" %in% highlight_states, fill_colors[[2]], fill_colors[[1]])
-
-    # gg <- gg + geom_map(data = map, map = map
-    #                     , aes_string('long', 'lat', map_id = 'id', fill = 'flag')
-    #                     , color = '#999999', size = 0.15, show.legend = FALSE) +
-    #   scale_fill_manual(values = c('#f8f8f8', '#cccccc'))
+    res_locations$flag <- ifelse(res_locations$NERR.Site.ID
+                                          %in% highlight_reserves, "4", "3")
   }
 
+  if(is.null(highlight_states)) {
+    conus$flag <- "0"
+    usa$ak_flag <- "0"
+    usa$hi_flag <- "0"
+    puertorico$flag <- "0"
+  } else {
+    conus$flag <- ifelse(conus$fips %in% highlight_states, "1", "0")
+    usa$ak_flag <-  ifelse("02" %in% highlight_states, "1", "0")
+    usa$hi_flag <-  ifelse("15" %in% highlight_states, "1", "0")
+    puertorico$flag <-  ifelse("72" %in% highlight_states, "1", "0")
+  }
 
-  # Project as needed and create area-appropriate maps
+    # Now we have the data in lat/lon, WGS84, EPSG=4326.  We can plot
+  # using that data and project and crop to desired projection as the
+  # final ggplot step for each map.
+
+  # Create area-appropriate maps using WGS84 = EPSG:4326
+  # These will be projected and properly bounded once Reserve locations are added
 
   mainland <- ggplot(data = conus) +
     geom_sf(aes(fill = flag), color = line_color, size = 0.15, show.legend = FALSE) +
+    ggthemes::theme_map() +
+    geom_sf(data = res_locations, aes(fill = flag, shape = flag, size = flag), show.legend = FALSE) +
     scale_fill_manual(values = fill_colors) +
-    coord_sf(crs = st_crs(2163), xlim = c(-2500000, 2500000),
-               ylim = c(-2300000, 730000))
+    scale_size_manual(values = res_point_size) +
+    scale_shape_manual(values = res_point_shape) +
+    coord_sf(crs = sf::st_crs(2163), xlim = c(-2500000, 2500000),
+              ylim = c(-2300000, 730000))
 
   alaska <- ggplot(data = usa) +
-      geom_sf(fill = ak_fill) +
-      coord_sf(crs = st_crs(3467), xlim = c(-2400000, 1600000),
-               ylim = c(200000, 2500000), expand = FALSE, datum = NA)
+    geom_sf(aes(fill = ak_flag), color = line_color, size = 0.15, show.legend = FALSE) +
+    ggthemes::theme_map() +
+    geom_sf(data = res_locations, aes(fill = flag, shape = flag, size = flag), show.legend = FALSE) +
+    scale_fill_manual(values = fill_colors) +
+    scale_size_manual(values = res_point_size) +
+    scale_shape_manual(values = res_point_shape) +
+    coord_sf(crs = sf::st_crs(3467), xlim = c(-2400000, 1600000),
+             ylim = c(200000, 2500000), expand = FALSE, datum = NA)
 
   hawaii  <- ggplot(data = usa) +
-      geom_sf(fill = hi_fill) +
-      coord_sf(crs = st_crs(4135), xlim = c(-161, -154),
+    geom_sf(aes(fill = hi_flag), color = line_color, size = 0.15, show.legend = FALSE) +
+    ggthemes::theme_map() +
+    geom_sf(data = res_locations, aes(fill = flag, shape = flag, size = flag), show.legend = FALSE) +
+    scale_fill_manual(values = fill_colors) +
+    scale_size_manual(values = res_point_size) +
+    scale_shape_manual(values = res_point_shape) +
+    coord_sf(crs = sf::st_crs(4135), xlim = c(-161, -154),
                ylim = c(18, 23), expand = FALSE, datum = NA)
 
-
   pr <- ggplot(data = puertorico) +
-    geom_sf(fill = pr_fill) +
-    coord_sf(crs = st_crs(4437),xlim = c(12000,350000),
+    geom_sf(aes(fill = flag), color = line_color, size = 0.15, show.legend = FALSE) +
+    ggthemes::theme_map() +
+    geom_sf(data = res_locations, aes(fill = flag, shape = flag, size = flag), show.legend = FALSE) +
+    scale_fill_manual(values = fill_colors) +
+    scale_size_manual(values = res_point_size) +
+    scale_shape_manual(values = res_point_shape) +
+    coord_sf(crs = sf::st_crs(4437),xlim = c(12000,350000),
              ylim = c(160000, 320000), expand = FALSE, datum = NA)
 
-  # -------------------------------------
-  # get ready for ggplotting it... this takes a cpl seconds ----
-  # us_laea_mod$id <- us_laea_mod$STATEFP
-  # map <- ggplot2::fortify(us_laea_mod, region = "GEOID")
+  #
+  # # add reserve locations and project with final projection & boundaries
+  #
+  # res_main <- sf::st_transform(
+  #   res_locations[!res_locations$State %in%
+  #                       c("ak", "hi", "pr"), ], 2163)
+  # mainland +
+  #   geom_sf(data = res_main, shape = 21, size = 2) +
+  #   coord_sf(crs = sf::st_crs(2163), xlim = c(-2500000, 2500000),
+  #            ylim = c(-2300000, 730000))
 
-  # Prep reserve locations for plotting
-  reserve_locations <- reserve_locs(incl = incl)
 
-  # plot it----
-
-  # highlight some states
-  gg <- ggplot()
-  gg <- gg + coord_equal()
-  gg <- gg + ggthemes::theme_map()
-  gg <- gg + theme(plot.margin = unit(c(0, 0, 0, 0), "points")) #trbl
-
-  # add reserve locations
-  # return(reserve_locations)
-  gg <- gg +
-    geom_point(data = reserve_locations, aes_string(x = 'Longitude', y = 'Latitude')
-               , fill = '#444e65', shape = 21, size = 2)
-
-  # add highlighted reserves, if specified
-  if(!is.null(highlight_reserves)) {
-    highlight_locations <- reserve_locs(incl = incl, subset_reserve =  highlight_reserves)
-
-    gg <- gg + geom_point(data = highlight_locations, aes_string(x = 'Longitude', y = 'Latitude')
-                          , fill = 'yellow', shape = 21, size = 3)
-  }
 
   return(gg)
 }

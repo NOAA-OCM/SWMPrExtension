@@ -5,7 +5,7 @@
 #' @param incl Str vector to include AK, HI, and PR
 #' @param subset_reserve chr string of 3 letter reserve IDs to include as data points. To include He'eia use the reserve code 'HEA'.
 #'
-#' @importFrom sp CRS proj4string spTransform
+#' @importFrom sf st_as_sf st_transform
 #'
 #' @export
 #'
@@ -33,38 +33,39 @@ reserve_locs <- function(incl = c('contig', 'AK', 'HI', 'PR'), subset_reserve = 
   loc$Longitude <- as.numeric(loc$Longitude)
   loc$Longitude <- loc$Longitude * -1
 
-  sp::coordinates(loc) <- ~Longitude + Latitude
+  # Convert to {sf} object in WGS84 lat/lon projection.  Keep coordinate fields just in case.
+  loc <- sf::st_as_sf(loc, coords = c("Longitude", "Latitude"), crs = 4236, remove = FALSE)
 
-  # remove select states
-  sp::proj4string(loc) <- sp::CRS("+proj=longlat +datum=WGS84")
-  loc <- sp::spTransform(loc, CRS("+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs"))
-  loc <- data.frame(loc)
 
-  loc_mod <- loc[!loc$State %in% c("ak", "hi", "pr"), ]
+  # #  Project to our mainland projection, epsg = 2163
+  # loc <- sf::st_transform(loc, 2163)
+  #
+  # # remove select states
+  # loc_mod <- loc[!loc$State %in% c("ak", "hi", "pr"), ]
 
-  if('AK' %in% incl) {
-    loc_add <- loc[loc$State == 'ak', ]
-    loc_add$Latitude[1] <- -2100000
-    loc_add$Longitude[1] <- -1200000
+    # Keep ak, hi and pr, filter in plotting routine  loc_mod <- loc
+   loc_mod <- loc
 
-    loc_mod <- rbind(loc_mod, loc_add)
-  }
 
-  if('HI' %in% incl) {
-    loc_add <- loc[loc$State == 'hi', ]
-    loc_add$Latitude[1] <- -2010000
-    loc_add$Longitude[1] <- -450000
-
-    loc_mod <- rbind(loc_mod, loc_add)
-  }
-
-  if('PR' %in% incl) {
-    loc_add <- loc[loc$State == 'pr', ]
-    loc_add$Latitude[1] <- -2310000
-    loc_add$Longitude[1] <- 2160000
-
-    loc_mod <- rbind(loc_mod, loc_add)
-  }
+     #
+  # # reproject and add back in AK, HI, and PR individually as needed:
+   # # DOesn't work, can't rbind multiple CRS's together.
+  # if('AK' %in% incl) {
+  #   loc_add <- sf::st_transform(loc[loc$State == 'ak', ], 3467)
+  #   loc_mod <- rbind(loc_mod, loc_add)
+  # }
+  #
+  # if('HI' %in% incl) {
+  #   loc_add <- loc[loc$State == 'hi', ]
+  #   loc_add <- sf::st_transform(loc[loc$State == 'ak', ], 4135)
+  #   loc_mod <- rbind(loc_mod, loc_add)
+  # }
+  #
+  # if('PR' %in% incl) {
+  #   loc_add <- loc[loc$State == 'pr', ]
+  #   loc_add <- sf::st_transform(loc[loc$State == 'ak', ], 4437)
+  #   loc_mod <- rbind(loc_mod, loc_add)
+  # }
 
   if(!is.null(subset_reserve)) loc_mod <- loc_mod[(loc_mod$NERR.Site.ID %in% subset_reserve), ]
 
