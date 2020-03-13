@@ -9,7 +9,7 @@ national_sk_map(
   highlight_states = NULL,
   sk_reserves = NULL,
   sk_results = NULL,
-  sk_fill_colors = c("#247BA0", "#A3DFFF", "#444E65", "#595959"),
+  sk_fill_colors = c("#444E65", "#A3DFFF", "#247BA0", "#0a0a0a"),
   agg_county = TRUE
 )
 }
@@ -34,7 +34,8 @@ Create a base map for NERRS reserves in ggplot with seasonal kendall results
 }
 \details{
 Create a base map of the US with options for including AK, HI, and PR. The user can choose which states and NERRS reserves to highlight.
-This function was developed, in part, from a blog post by Bob Rudis.
+An early {sp}-based version of this function by Julie Padilla was developed, in part, from a blog post by Bob Rudis. The current {sf}-based version,
+by Dave Eslinger,  uses an approach from the r-spatial tutorial by Mel Moreno and Mathieu Basille.
 
 To ensure the proper plotting of results, the order of the results vector for \code{sk_results} should match the order of the reserves vector for \code{sk_reserves}.
 }
@@ -43,16 +44,19 @@ To ensure the proper plotting of results, the order of the results vector for \c
 nerr_states_west <- c('02', '06', '41', '53')
 
 nerrs_codes <- c('pdb', 'sos', 'sfb', 'elk', 'tjr', 'kac')
+
 nerrs_sk_results <- c('inc', 'inc', 'dec', 'insig', 'insuff', 'dec')
 
-national_sk_map(sk_reserve = nerrs_codes, sk_results = nerrs_sk_results)
+national_sk_map(highlight_states = nerr_states_west,
+                sk_reserve = nerrs_codes, sk_results = nerrs_sk_results)
 
 }
 \references{
 Rudis, Bob. 2014. "Moving The Earth (well, Alaska & Hawaii) With R". rud.is (blog). November 16, 2014. https://rud.is/b/2014/11/16/moving-the-earth-well-alaska-hawaii-with-r/
+Moreno, Mel, and Basille, Mathieu Basille. 2018. "Drawing beautiful maps programmatically with R, sf and ggplot2 — Part 3: Layouts" r-spatial (blog). October 25, 2018. https://www.r-spatial.org/r/2018/10/25/ggplot2-sf-3.html
 }
 \author{
-Bob Rudis, Julie Padilla
-Maintainer: Julie Padilla
+Julie Padilla, Dave Eslinger
+Maintainer: Dave Eslinger
 }
 \concept{analyze}

@@ -9,10 +9,10 @@
 #'
 #' @import ggplot2
 #'
-#' @importFrom dplyr filter left_join transmute
+#' @importFrom dplyr filter left_join summarise transmute
 #' @importFrom ggthemes theme_map
 #' @importFrom magrittr "%>%"
-#' @importFrom maps county map state state.fips world
+#' @importFrom maps map
 #' @importFrom rlang .data
 #' @importFrom sf st_as_sf st_crs
 #' @importFrom tidyr separate
@@ -22,7 +22,7 @@
 #'
 #' @details Create a base map of the US with options for including AK, HI, and PR. The user can choose which states and NERRS reserves to highlight.
 #' An early {sp}-based version of this function by Julie Padilla was developed, in part, from a blog post by Bob Rudis. The current {sf}-based version,
-#' by Dave Eslinger,  uses the approach in the r-spatial tutorial by Mel Moreno and Mathieu Basille.
+#' by Dave Eslinger, uses an approach from  the r-spatial tutorial by Mel Moreno and Mathieu Basille.
 #'
 #' @author Julie Padilla, Dave Eslinger
 #' Maintainer: Dave Eslinger
@@ -78,14 +78,13 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   # save(us_4269, file = "data/us_4269.rda")
   # ========================================================================================================
 
-  # read in saved US Census geometry {sf} object
+  # read in saved US Census geometry {sf} object and merge counties if needed
   us_4269 <- get('us_4269')
 
-  # -----------------------------------------------------
   if(agg_county) {
     usa <- us_4269 %>%
-      dplyr::group_by(fips) %>%
-      dplyr::summarise()
+      dplyr::group_by(.data$fips) %>%
+      dplyr::summarise(area = sum(.data$area))
   } else {
     usa <- us_4269
   }
@@ -111,7 +110,7 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   if(is.null(highlight_states)) {
     usa$flag <- ("0")
   } else {
-    usa$flag <- ifelse(conus$fips %in% highlight_states, "1", "0")
+    usa$flag <- ifelse(usa$fips %in% highlight_states, "1", "0")
  }
 
   if(is.null(highlight_reserves)) {
@@ -123,68 +122,41 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
 
   # Create area-appropriate maps using the lat lon data.  These will
   # be projected and properly bounded once Reserve locations are added
-  mainland <- ggplot(data = usa) +
-    geom_sf(aes(fill = flag), color = line_color, size = 0.15, show.legend = FALSE) +
+  us_base <- ggplot(data = usa) +
+    geom_sf(aes(fill = .data$flag), color = line_color, size = 0.15, show.legend = FALSE) +
     ggthemes::theme_map() +
-    geom_sf(data = res_locations, aes(color = rfilag, fill = rfilag, shape = rfilag, size = rfilag), show.legend = FALSE) +
+    geom_sf(data = res_locations, aes(color = .data$rflag, fill = .data$rflag, shape = .data$rflag,
+                                      size = .data$rflag), show.legend = FALSE) +
     scale_color_manual(values = fill_colors, breaks = break_vals) +
     scale_fill_manual(values = fill_colors, breaks = break_vals) +
     scale_size_manual(values = res_point_size, breaks = break_vals) +
-    scale_shape_manual(values = res_point_shape, breaks = break_vals) +
+    scale_shape_manual(values = res_point_shape, breaks = break_vals)
+
+  mainland <- us_base +
     coord_sf(crs = sf::st_crs(2163), xlim = c(-2500000, 2500000), ylim = c(-2300000, 730000))
 
-  alaska <- ggplot(data = usa) +
-    geom_sf(aes(fill = flag), color = line_color, size = 0.15, show.legend = FALSE) +
-    ggthemes::theme_map() +
-    geom_sf(data = res_locations, aes(color = rfilag, fill = rfilag, shape = rfilag, size = rfilag), show.legend = FALSE) +
-    scale_color_manual(values = fill_colors, breaks = break_vals) +
-    scale_fill_manual(values = fill_colors, breaks = break_vals) +
-    scale_size_manual(values = res_point_size, breaks = break_vals) +
-    scale_shape_manual(values = res_point_shape, breaks = break_vals) +
+  alaska <- us_base +
     coord_sf(crs = sf::st_crs(3467), xlim = c(-2400000, 1600000), ylim = c(200000, 2500000),
              expand = FALSE, datum = NA)
 
-  hawaii  <- ggplot(data = usa) +
-    geom_sf(aes(fill = flag), color = line_color, size = 0.15, show.legend = FALSE) +
-    ggthemes::theme_map() +
-    geom_sf(data = res_locations, aes(color = rfilag, fill = rfilag, shape = rfilag, size = rfilag), show.legend = FALSE) +
-    scale_color_manual(values = fill_colors, breaks = break_vals) +
-    scale_fill_manual(values = fill_colors, breaks = break_vals) +
-    scale_size_manual(values = res_point_size, breaks = break_vals) +
-    scale_shape_manual(values = res_point_shape, breaks = break_vals) +
+  hawaii  <- us_base +
     coord_sf(crs = sf::st_crs(4135), xlim = c(-161, -154), ylim = c(18, 23), expand = FALSE, datum = NA)
 
-  pr <- ggplot(data = usa) +
-    geom_sf(aes(fill = flag), color = line_color, size = 0.15, show.legend = FALSE) +
-    ggthemes::theme_map() +
-    geom_sf(data = res_locations, aes(color = rfilag, fill = rfilag, shape = rfilag, size = rfilag), show.legend = FALSE) +
-    scale_color_manual(values = fill_colors, breaks = break_vals) +
-    scale_fill_manual(values = fill_colors, breaks = break_vals) +
-    scale_size_manual(values = res_point_size, breaks = break_vals) +
-    scale_shape_manual(values = res_point_shape, breaks = break_vals) +
+  pr <- us_base +
     coord_sf(crs = sf::st_crs(4437),xlim = c(12000,350000), ylim = c(160000, 320000),
              expand = FALSE, datum = NA)
 
-  # Now combine maps, as grobs, with annotation_custom into final object "gg"
+  # Now combine the smaller maps, as grobs, with annotation_custom into final object "gg"
   gg <- mainland +
-    annotation_custom(
-      grob = ggplotGrob(alaska),
-      xmin = -2750000,
-      xmax = -2750000 + (1600000 - (-2400000)) / 2.0,
-      ymin = -2450000,
-      ymax = -2450000 + (2500000 - 200000) / 2.0) +
-    annotation_custom(
-      grob = ggplotGrob(hawaii),
-      xmin = -900000,
-      xmax = -900000 + (-154 - (-161)) * 135000,
-      ymin = -2450000,
-      ymax = -2450000 + (23 - 18) * 135000) +
-    annotation_custom(
-      grob = ggplotGrob(pr),
-      xmin = 600000,
-      xmax = 600000 + (350000 - 12000) * 3,
-      ymin = -2390000,
-      ymax = -2390000 + (320000 - 160000) * 3)
+    annotation_custom(grob = ggplotGrob(alaska),
+                      xmin = -2750000, xmax = -2750000 + (1600000 - (-2400000)) / 2.0,
+                      ymin = -2450000, ymax = -2450000 + (2500000 - 200000) / 2.0) +
+    annotation_custom(grob = ggplotGrob(hawaii),
+                      xmin =  -900000, xmax =  -900000 + (-154 - (-161)) * 135000,
+                      ymin = -2450000, ymax = -2450000 + (23 - 18) * 135000) +
+    annotation_custom(grob = ggplotGrob(pr),
+                      xmin =   600000, xmax =   600000 + (350000 - 12000) * 3,
+                      ymin = -2390000, ymax = -2390000 + (320000 - 160000) * 3)
 
   return(gg)
 }
