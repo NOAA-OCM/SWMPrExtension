@@ -33,16 +33,18 @@ Imports:
 	leaflet,
 	lubridate,
 	magrittr,
+	maps,
 	maptools,
 	methods,
 	officer,
-	tidyr,
-	scales,
 	RColorBrewer,
 	rgdal,
   rgeos,
   rlang,
-	sp
+	scales,
+  sf,
+	sp,
+	tidyr
 Authors@R: c(
   person(given = "Julie", family = "Padilla",
     role = c("aut", "ctb"),
