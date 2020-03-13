@@ -9,13 +9,13 @@
 #' @param sk_fill_colors chr vector of colors used to fill seasonal kendall result markers
 #' @param agg_county logical, should counties be aggregated to the state-level? Defaults to \code{TRUE}
 #'
+#' @import dplyr
 #' @import ggplot2
 #'
-#' @importFrom dplyr filter left_join transmute
+#' @importFrom dplyr filter left_join summariz transmute
 #' @importFrom ggthemes theme_map
 #' @importFrom magrittr "%>%"
 #' @importFrom maps county map state state.fips world
-#' @importFrom rgdal readOGR
 #' @importFrom rlang .data
 #' @importFrom sf st_as_sf st_crs
 #' @importFrom tidyr separate
@@ -52,7 +52,7 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
                         , highlight_states = NULL
                         , sk_reserves = NULL
                         , sk_results = NULL
-                        , sk_fill_colors = c('#247BA0', '#A3DFFF', '#444E65', '#0a0a0a')
+                        , sk_fill_colors = c('#444E65', '#A3DFFF', '#247BA0', '#0a0a0a')
                         , agg_county = TRUE) {
 
   if(length(sk_reserves) != length(sk_results))
@@ -78,13 +78,14 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   # ========================================================================================================
 
   # read in saved US Census geometry {sf} object
-  get('us_4269')
-
+  us_4269 <- get('us_4269')
+  # library(dplyr)
   # -----------------------------------------------------
   if(agg_county) {
     usa <- us_4269 %>%
       dplyr::group_by(fips) %>%
-      dplyr::summarise()
+      dplyr::summarise(do_union = TRUE) #%>%
+      # dplyr::mutate(flag = "0")
   } else {
     usa <- us_4269
   }
@@ -93,7 +94,7 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   # highlight_states <- c("02","12","15", "16","06","72")
   # sk_reserves  <- c('pdb', 'sos', 'sfb', 'elk', 'tjr', 'kac')
   # sk_results <- c('inc', 'inc', 'dec', 'insig', 'insuff', 'insuff')
-  # sk_fill_colors = c('#247BA0', '#A3DFFF', '#444E65', '#595959')
+  # sk_fill_colors = c('#444E65', '#A3DFFF', '#247BA0', '#0a0a0a') # c('#247BA0', '#A3DFFF', '#444E65', '#595959')
 
   # Get reserve locations for plotting
   # Prep reserve locations for plotting
@@ -113,11 +114,10 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   #   consistent with the original order.
 
   fill_colors  <-  c( c('#f8f8f8', '#cccccc', '#444e65', 'yellow'), sk_fill_colors)
-  # fill_colors  <-  c('red', 'blue', 'green', 'yellow')
+  # fill_colors  <-  c('red', 'green', 'blue', 'yellow')
   line_color  <-  '#999999'
   res_point_size <-   c(0, 0,  2,  3,  4.9,  4.9,  4.5, 4.2)
   res_point_shape <-  c(0, 0, 21, 21, 24, 25, 21, 13)
- # res_point_stroke <- c(1, 1,  1,  1,  1,  1, 20, 1.5)
 
   # These are the codes for the fill color, size and shape legends.
   break_vals <- c("0", "1", "3", "4", "inc", "dec", "insig", "insuff")
@@ -183,8 +183,8 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
       ymax = -2450000 + (2500000 - 200000) / 2.0) +
     annotation_custom(
       grob = ggplotGrob(hawaii),
-      xmin = -1000000,
-      xmax = -1000000 + (-154 - (-161)) * 135000,
+      xmin = -900000,
+      xmax = -900000 + (-154 - (-161)) * 135000,
       ymin = -2450000,
       ymax = -2450000 + (23 - 18) * 135000) +
     annotation_custom(

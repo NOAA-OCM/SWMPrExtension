@@ -13,7 +13,6 @@
 #' @importFrom ggthemes theme_map
 #' @importFrom magrittr "%>%"
 #' @importFrom maps county map state state.fips world
-#' @importFrom rgdal readOGR
 #' @importFrom rlang .data
 #' @importFrom sf st_as_sf st_crs
 #' @importFrom tidyr separate
@@ -60,38 +59,40 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
                         , highlight_reserves = NULL
                         , agg_county = TRUE) {
 
-    fips <- maps::state.fips %>%
-    tidyr::separate(polyname, sep = ":", into = c("state",NA),
-                    fill = "right", remove = TRUE) %>%
-    dplyr::transmute(fips = sprintf("%02d",fips), state, abb) %>%
-    unique()
+  # ========================================================================================================
+  # Get Census geometry
+  # get_US_county_shape <- function() {
+  #   shape <- "cb_2018_us_county_20m"
+  #   # shape <- "cb_2018_us_state_20m"
+  #   remote <- "https://www2.census.gov/geo/tiger/GENZ2018/shp/"
+  #   zipped <- paste(shape,".zip", sep = "")
+  #   local_dir <- tempdir()
+  #   utils::download.file(paste(remote,shape,".zip",sep = ""),
+  #                        destfile = file.path(local_dir, zipped))
+  #   unzip(file.path(local_dir, zipped), exdir = local_dir)
+  #   sf::st_read(file.path(local_dir, paste(shape,".shp", sep = "") ) )
+  # }
+  # us_4269 <- get_US_county_shape() %>%
+  #   select(fips = STATEFP)
+  # # Keep in native lat/lon, NAD83 projection, EPSG:4269.
+  # save(us_4269, file = "data/us_4269.rda")
+  # ========================================================================================================
 
-    if(agg_county) {
-      conus <- sf::st_as_sf(maps::map("state", plot = FALSE, fill = TRUE)) %>%
-        dplyr::transmute(state = as.character(ID)) %>%
-        dplyr::left_join(fips, by = "state")
-    } else {
-      print("Warning: County names/boundaries only available for CONUS")
-      conus <- sf::st_as_sf(maps::map("county", plot = FALSE, fill = TRUE)) %>%
-        tidyr::separate(ID, sep = ",", into = c("state","county")) %>%
-        dplyr::left_join(fips, by = "state")
+  # read in saved US Census geometry {sf} object
+  us_4269 <- get('us_4269')
+
+  # -----------------------------------------------------
+  if(agg_county) {
+    usa <- us_4269 %>%
+      dplyr::group_by(fips) %>%
+      dplyr::summarise()
+  } else {
+    usa <- us_4269
   }
 
-  # The {maps} state and countylibrary only has data for CONUS, incl. DC
-  # so get a "usa" data set from the world data, which includes HI and AK, but
-  # has CONUS without interior boundaries.
-  usa <- sf::st_as_sf(maps::map("world", plot = FALSE, fill = TRUE)) %>%
-    dplyr::transmute(admin = as.character(ID)) %>%
-    dplyr::filter(admin == "USA")
-
-  # Lastly, grab Puerto Rico from the same world database
-  puertorico <- sf::st_as_sf(maps::map("world", plot = FALSE, fill = TRUE)) %>%
-    dplyr::transmute(admin = as.character(ID)) %>%
-    dplyr::filter(admin == "Puerto Rico")
-
   # debugging highlight_states
-  highlight_states <- c("02","12","15", "16","06","72")
-  highlight_reserves <- c('pdb', 'sos', 'sfb', 'elk', 'tjr', 'kac')
+  # highlight_states <- c("02","12","15", "16","06","72")
+  # highlight_reserves <- c('pdb', 'sos', 'sfb', 'elk', 'tjr', 'kac')
 
   # Get reserve locations for plotting
   res_locations <- reserve_locs(incl = incl)
@@ -108,16 +109,10 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
 
   # Add fields for reserve point color and size, depending on highlight value
   if(is.null(highlight_states)) {
-    conus$flag <- ("0")
-    usa$ak_flag <- ("0")
-    usa$hi_flag <- ("0")
-    puertorico$flag <- ("0")
+    usa$flag <- ("0")
   } else {
-    conus$flag <- ifelse(conus$fips %in% highlight_states, "1", "0")
-    usa$ak_flag <-  ifelse("02" %in% highlight_states, "1", "0")
-    usa$hi_flag <-  ifelse("15" %in% highlight_states, "1", "0")
-    puertorico$flag <-  ifelse("72" %in% highlight_states, "1", "0")
-  }
+    usa$flag <- ifelse(conus$fips %in% highlight_states, "1", "0")
+ }
 
   if(is.null(highlight_reserves)) {
     res_locations$rflag <- "3"
@@ -126,21 +121,23 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
                                   %in% highlight_reserves, "4", "3")
   }
 
-  # Create area-appropriate maps using WGS84 = EPSG:4326
-  # These will be projected and properly bounded once Reserve locations are added
-  mainland <- ggplot(data = conus) +
+  # Create area-appropriate maps using the lat lon data.  These will
+  # be projected and properly bounded once Reserve locations are added
+  mainland <- ggplot(data = usa) +
     geom_sf(aes(fill = flag), color = line_color, size = 0.15, show.legend = FALSE) +
     ggthemes::theme_map() +
-    geom_sf(data = res_locations, aes(fill = rflag, shape = rflag, size = rflag), show.legend = FALSE) +
+    geom_sf(data = res_locations, aes(color = rfilag, fill = rfilag, shape = rfilag, size = rfilag), show.legend = FALSE) +
+    scale_color_manual(values = fill_colors, breaks = break_vals) +
     scale_fill_manual(values = fill_colors, breaks = break_vals) +
     scale_size_manual(values = res_point_size, breaks = break_vals) +
     scale_shape_manual(values = res_point_shape, breaks = break_vals) +
     coord_sf(crs = sf::st_crs(2163), xlim = c(-2500000, 2500000), ylim = c(-2300000, 730000))
 
   alaska <- ggplot(data = usa) +
-    geom_sf(aes(fill = ak_flag), color = line_color, size = 0.15, show.legend = FALSE) +
+    geom_sf(aes(fill = flag), color = line_color, size = 0.15, show.legend = FALSE) +
     ggthemes::theme_map() +
-    geom_sf(data = res_locations, aes(fill = rflag, shape = rflag, size = rflag), show.legend = FALSE) +
+    geom_sf(data = res_locations, aes(color = rfilag, fill = rfilag, shape = rfilag, size = rfilag), show.legend = FALSE) +
+    scale_color_manual(values = fill_colors, breaks = break_vals) +
     scale_fill_manual(values = fill_colors, breaks = break_vals) +
     scale_size_manual(values = res_point_size, breaks = break_vals) +
     scale_shape_manual(values = res_point_shape, breaks = break_vals) +
@@ -148,18 +145,20 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
              expand = FALSE, datum = NA)
 
   hawaii  <- ggplot(data = usa) +
-    geom_sf(aes(fill = hi_flag), color = line_color, size = 0.15, show.legend = FALSE) +
+    geom_sf(aes(fill = flag), color = line_color, size = 0.15, show.legend = FALSE) +
     ggthemes::theme_map() +
-    geom_sf(data = res_locations, aes(fill = rflag, shape = rflag, size = rflag), show.legend = FALSE) +
+    geom_sf(data = res_locations, aes(color = rfilag, fill = rfilag, shape = rfilag, size = rfilag), show.legend = FALSE) +
+    scale_color_manual(values = fill_colors, breaks = break_vals) +
     scale_fill_manual(values = fill_colors, breaks = break_vals) +
     scale_size_manual(values = res_point_size, breaks = break_vals) +
     scale_shape_manual(values = res_point_shape, breaks = break_vals) +
     coord_sf(crs = sf::st_crs(4135), xlim = c(-161, -154), ylim = c(18, 23), expand = FALSE, datum = NA)
 
-  pr <- ggplot(data = puertorico) +
+  pr <- ggplot(data = usa) +
     geom_sf(aes(fill = flag), color = line_color, size = 0.15, show.legend = FALSE) +
     ggthemes::theme_map() +
-    geom_sf(data = res_locations, aes(fill = rflag, shape = rflag, size = rflag), show.legend = FALSE) +
+    geom_sf(data = res_locations, aes(color = rfilag, fill = rfilag, shape = rfilag, size = rfilag), show.legend = FALSE) +
+    scale_color_manual(values = fill_colors, breaks = break_vals) +
     scale_fill_manual(values = fill_colors, breaks = break_vals) +
     scale_size_manual(values = res_point_size, breaks = break_vals) +
     scale_shape_manual(values = res_point_shape, breaks = break_vals) +
@@ -176,8 +175,8 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
       ymax = -2450000 + (2500000 - 200000) / 2.0) +
     annotation_custom(
       grob = ggplotGrob(hawaii),
-      xmin = -1000000,
-      xmax = -1000000 + (-154 - (-161)) * 135000,
+      xmin = -900000,
+      xmax = -900000 + (-154 - (-161)) * 135000,
       ymin = -2450000,
       ymax = -2450000 + (23 - 18) * 135000) +
     annotation_custom(
