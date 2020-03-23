@@ -1,11 +1,11 @@
 #' Load and format shapefile for reserve level map
 #'
-#' Load and format shapefile for use with res_local_map
+#' Load and format shapefile for use with res_local_map. If polygons are dissolved, the only attribute returned will be a count of the number of grouped polygons, otherwise, all attrributes are retained.
 #'
 #' @param path path to shapefile and name
 #' @param dissolve_boundaries logical, should reserve boundaries be dissolved? Defaults to \code{TRUE}
 #'
-#' @importFromdplyr group_by transmute summarise
+#' @importFromdplyr group_by mutate summarise
 #' @importFrom magrittr "%>%"
 #' @importFrom methods slot
 #' @importFrom sf read_sf st_transform
@@ -27,9 +27,9 @@ load_shp_file <- function(path, dissolve_boundaries = TRUE){
 
   if(dissolve_boundaries) shp <- shp %>%
       # create new field, merge on it, and count merged poygons
-      dplyr::transmute(polyval = 1) %>%
+      dplyr::mutate(polyval = 1) %>%
       dplyr::group_by(.data$polyval) %>%
-      dplyr::summarise(polys = sum(.data$polyval))
+      dplyr::summarise(polys_grouped = sum(.data$polyval))
 
   return(shp)
 }
