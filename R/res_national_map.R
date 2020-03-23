@@ -14,7 +14,7 @@
 #' @importFrom magrittr "%>%"
 #' @importFrom maps map
 #' @importFrom rlang .data
-#' @importFrom sf st_as_sf st_crs
+#' @importFrom sf read_sf st_as_sf st_crs
 #' @importFrom tidyr separate
 #' @importFrom utils download.file unzip
 #'
@@ -59,8 +59,8 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
                         , highlight_reserves = NULL
                         , agg_county = TRUE) {
 
-  # ========================================================================================================
-  # Get Census geometry
+  # # ========================================================================================================
+  # # Get Census geometry
   # get_US_county_shape <- function() {
   #   shape <- "cb_2018_us_county_20m"
   #   # shape <- "cb_2018_us_state_20m"
@@ -70,13 +70,13 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   #   utils::download.file(paste(remote,shape,".zip",sep = ""),
   #                        destfile = file.path(local_dir, zipped))
   #   unzip(file.path(local_dir, zipped), exdir = local_dir)
-  #   sf::st_read(file.path(local_dir, paste(shape,".shp", sep = "") ) )
+  #   sf::read_sf(file.path(local_dir, paste(shape,".shp", sep = "") ) )
   # }
-  # us_4269 <- get_US_county_shape() %>%
-  #   select(fips = STATEFP)
+  # us_4269NEW <- get_US_county_shape() %>%
+  #   dplyr::transmute(fips = STATEFP, area = ALAND)
   # # Keep in native lat/lon, NAD83 projection, EPSG:4269.
   # save(us_4269, file = "data/us_4269.rda")
-  # ========================================================================================================
+  # # ========================================================================================================
 
   # read in saved US Census geometry {sf} object and merge counties if needed
   us_4269 <- get('us_4269')
@@ -133,18 +133,20 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
     scale_shape_manual(values = res_point_shape, breaks = break_vals)
 
   mainland <- us_base +
-    coord_sf(crs = sf::st_crs(2163), xlim = c(-2500000, 2500000), ylim = c(-2300000, 730000))
+    coord_sf(crs = sf::st_crs(2163), xlim = c(-2500000, 2500000),
+             ylim = c(-2300000, 730000))
 
   alaska <- us_base +
-    coord_sf(crs = sf::st_crs(3467), xlim = c(-2400000, 1600000), ylim = c(200000, 2500000),
-             expand = FALSE, datum = NA)
+    coord_sf(crs = sf::st_crs(3467), xlim = c(-2400000, 1600000),
+             ylim = c(200000, 2500000), expand = FALSE, datum = NA)
 
   hawaii  <- us_base +
-    coord_sf(crs = sf::st_crs(4135), xlim = c(-161, -154), ylim = c(18, 23), expand = FALSE, datum = NA)
+    coord_sf(crs = sf::st_crs(4135), xlim = c(-161, -154),
+             ylim = c(18, 23), expand = FALSE, datum = NA)
 
   pr <- us_base +
-    coord_sf(crs = sf::st_crs(4437),xlim = c(12000,350000), ylim = c(160000, 320000),
-             expand = FALSE, datum = NA)
+    coord_sf(crs = sf::st_crs(4437),xlim = c(12000,350000),
+             ylim = c(160000, 320000), expand = FALSE, datum = NA)
 
   # Now combine the smaller maps, as grobs, with annotation_custom into final object "gg"
   gg <- mainland +

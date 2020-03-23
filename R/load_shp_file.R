@@ -5,27 +5,31 @@
 #' @param path path to shapefile and name
 #' @param dissolve_boundaries logical, should reserve boundaries be dissolved? Defaults to \code{TRUE}
 #'
-#' @importFrom maptools unionSpatialPolygons
+#' @importFromdplyr group_by transmute summarise
+#' @importFrom magrittr "%>%"
 #' @importFrom methods slot
-#' @importFrom rgdal readOGR
-#' @importFrom sp spTransform
+#' @importFrom sf read_sf st_transform
 #'
 #' @export
 #'
-#' @details This function is intended for internal use with the NERRS reserve level reporting scripts. It loads a NERRS boundary shp file and dissolves unnecessary reserve boundaries. The resulting \code{sp} object is then used with \code{\link{res_sk_map}} and \code{\link{res_local_map}}
+#' @details This function is intended for internal use with the NERRS reserve level reporting scripts. It loads a NERRS boundary shp file and dissolves unnecessary reserve boundaries. The resulting \code{sf} object is then used with \code{\link{res_sk_map}} and \code{\link{res_local_map}}
 #'
-#' @author Julie Padilla
+#' @author Julie Padilla, Dave Eslinger
 #'
 #' @concept reporting
 #'
-#' @return Returns a \code{\link[sp]{sp}} object
+#' @return Returns a \code{\link[sf]{sf}} object
 #'
 load_shp_file <- function(path, dissolve_boundaries = TRUE){
 
-  shp <- rgdal::readOGR(dsn = path) %>%
-    sp::spTransform(CRS("+proj=longlat +datum=WGS84"))
+  shp <- sf::read_sf(dsn = path) %>%
+    sf::st_transform(4269)
 
-  if(dissolve_boundaries) shp <- maptools::unionSpatialPolygons(shp, IDs = rep('x', length(methods::slot(shp, 'polygons'))))
+  if(dissolve_boundaries) shp <- shp %>%
+      # create new field, merge on it, and count merged poygons
+      dplyr::transmute(polyval = 1) %>%
+      dplyr::group_by(.data$polyval) %>%
+      dplyr::summarise(polys = sum(.data$polyval))
 
   return(shp)
 }

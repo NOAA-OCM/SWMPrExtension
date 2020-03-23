@@ -17,7 +17,7 @@
 #' @importFrom magrittr "%>%"
 #' @importFrom maps map
 #' @importFrom rlang .data
-#' @importFrom sf st_as_sf st_crs
+#' @importFrom sf read_sf st_as_sf st_crs
 #' @importFrom tidyr separate
 #' @importFrom utils download.file unzip
 #'
@@ -55,15 +55,16 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
                         , highlight_states = NULL
                         , sk_reserves = NULL
                         , sk_results = NULL
-                        , sk_fill_colors = c('#444E65', '#A3DFFF', '#247BA0', '#0a0a0a')
+                        , sk_fill_colors = c('#444E65', '#A3DFFF',
+                                             '#247BA0', '#0a0a0a')
                         , agg_county = TRUE) {
 
   if(length(sk_reserves) != length(sk_results))
-    stop('A seasonal kendall result is required for each reserve specified in sk_reserve')
+    stop('A seasonal kendall result is required for each reserve in sk_reserve')
 
-  # ========================================================================================================
-  # Get Census geometry
-  # get_US_county_shape <- function() {
+  # # ==========================================================================
+  # # Get Census geometry
+  #  get_US_county_shape <- function() {
   #   shape <- "cb_2018_us_county_20m"
   #   # shape <- "cb_2018_us_state_20m"
   #
@@ -73,13 +74,13 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   #   utils::download.file(paste(remote,shape,".zip",sep = ""),
   #                        destfile = file.path(local_dir, zipped))
   #   unzip(file.path(local_dir, zipped), exdir = local_dir)
-  #   sf::st_read(file.path(local_dir, paste(shape,".shp", sep = "") ) )
+  #   sf::read_sf(file.path(local_dir, paste(shape,".shp", sep = "") ) )
   # }
   # us_4269 <- get_US_county_shape() %>%
-  #   transmute(fips = STATEFP, area = ALAND)
+  #   dplyr::transmute(fips = STATEFP, area = ALAND)
   # # Keep in native lat/lon, NAD83 projection, EPSG:4269.
   # save(us_4269, file = "data/us_4269.rda")
-  # ========================================================================================================
+  # # ==========================================================================
 
   # read in saved US Census geometry {sf} object and merge counties if needed
   us_4269 <- get('us_4269')
@@ -100,7 +101,8 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
 
   # Get reserve locations for plotting
   # Prep reserve locations for plotting
-  df_loc <- data.frame(NERR.Site.ID = sk_reserves, sk_res = sk_results, stringsAsFactors = FALSE)
+  df_loc <- data.frame(NERR.Site.ID = sk_reserves, sk_res = sk_results,
+                       stringsAsFactors = FALSE)
 
   res_locations <- reserve_locs(incl = incl) %>%
     filter(.data$NERR.Site.ID %in% sk_reserves) %>%
@@ -108,14 +110,15 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
 
 
   # Define vectors for the colors, shapes and sizes as needed:
-  #   first and second entries are for states, "regular" and "highlighted" respecitvely;
-  #   third and forth entries are for reserve locations, "regular" and "highlighted" respecitvely;
-  #   5 - 8 are for showing S-K trend results: 5 = increasing trend, 6 = decreasing, 7 = insignificant,
-  #   and 8 = insufficient data.
+  #   first and second entries are for states, "regular" and "highlighted,"
+  #   respectively; third and forth entries are for reserve locations,
+  #   "regular" and "highlighted" respecitvely;
+  #   5 - 8 are for showing S-K trend results: 5 = increasing, 6 = decreasing,
+  #   7 = insignificant, and 8 = insufficient data.
   # This convention holds for colors, shapes and size parameters. The order is
   #   consistent with the original order.
 
-  fill_colors  <-  c( c('#f8f8f8', '#cccccc', '#444e65', 'yellow'), sk_fill_colors)
+  fill_colors <-  c(c('#f8f8f8', '#cccccc', '#444e65', 'yellow'), sk_fill_colors)
   # fill_colors  <-  c('red', 'green', 'blue', 'yellow')
   line_color  <-  '#999999'
   res_point_size <-   c(0, 0,  2,  3,  4.9,  4.9,  4.5, 4.2)
@@ -144,18 +147,20 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
     scale_shape_manual(values = res_point_shape, breaks = break_vals)
 
   mainland <- us_base +
-    coord_sf(crs = sf::st_crs(2163), xlim = c(-2500000, 2500000), ylim = c(-2300000, 730000))
+    coord_sf(crs = sf::st_crs(2163), xlim = c(-2500000, 2500000),
+             ylim = c(-2300000, 730000))
 
   alaska <- us_base +
-    coord_sf(crs = sf::st_crs(3467), xlim = c(-2400000, 1600000), ylim = c(200000, 2500000),
-             expand = FALSE, datum = NA)
+    coord_sf(crs = sf::st_crs(3467), xlim = c(-2400000, 1600000),
+             ylim = c(200000, 2500000), expand = FALSE, datum = NA)
 
   hawaii  <- us_base +
-    coord_sf(crs = sf::st_crs(4135), xlim = c(-161, -154), ylim = c(18, 23), expand = FALSE, datum = NA)
+    coord_sf(crs = sf::st_crs(4135), xlim = c(-161, -154),
+             ylim = c(18, 23), expand = FALSE, datum = NA)
 
   pr <- us_base +
-    coord_sf(crs = sf::st_crs(4437),xlim = c(12000,350000), ylim = c(160000, 320000),
-             expand = FALSE, datum = NA)
+    coord_sf(crs = sf::st_crs(4437),xlim = c(12000,350000),
+             ylim = c(160000, 320000), expand = FALSE, datum = NA)
 
   # Now combine the smaller maps, as grobs, with annotation_custom into final object "gg"
   gg <- mainland +
@@ -170,5 +175,4 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
                       ymin = -2390000, ymax = -2390000 + (320000 - 160000) * 3)
 
   return(gg)
-
 }
