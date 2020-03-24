@@ -202,7 +202,7 @@ res_local_map <- function(nerr_site_id
     tm_shape(shp) +
     tm_polygons(lwd = 2, col = '#B3B300', fill = 'yellow', alpha = .3) +
     tm_shape(loc_sf) +
-    tm_dots(size = 2, col = "color")
+    tm_dots(size = .75, col = "color")
 
 
   if(exists('left_labs')){
