@@ -83,7 +83,7 @@ res_local_map <- function(nerr_site_id
                           , scale_pos = 'bottomleft') {
 
   # ===========================================================================
-  FIRST <- TRUE
+  FIRST <- FALSE
   library(SWMPrExtension)
   library(sf)
   library(dplyr)
@@ -177,9 +177,9 @@ res_local_map <- function(nerr_site_id
   loc$abbrev <- toupper(substr(loc$Station.Code, start = 4, stop = 5))
 
   # Default all labels to left and then change if there is location information
-  loc$align <- -1.5
+  loc$align <- -1.25
   if(!is.null(lab_loc))
-    loc$align[lab_loc == 'R'] <- 1.5
+    loc$align[lab_loc == 'R'] <- 1.25
 
   # # set map label styles
   # label_style <- list(
@@ -212,17 +212,23 @@ res_local_map <- function(nerr_site_id
   m <- tm_shape(bg_etop) +
     tm_rgb() +
     tm_shape(shp) +
-    tm_polygons(lwd = 2, col = '#B3B300', fill = 'yellow', alpha = .3) +
+    tm_polygons(lwd = 2, col = 'yellow', alpha = 0.3,
+                border.col = '#B3B300', border.alpha = 0.8) +
     tm_shape(loc_sf) +
     tm_dots(size = .75, col = "color") +
-    tm_text(text = "abbrev", auto.placement = 0.025)
+    tm_text(text = "abbrev", xmod = "align", just = c("center","top"),
+            bg.color = 'white', bg.alpha = 0.75,
+            fontface = "bold")
 
 
   tm_shape(shp) +
-    tm_polygons(lwd = 2, col = '#B3B300', fill = 'yellow', alpha = .3) +
+    tm_polygons(lwd = 2, col = 'yellow', alpha = 0.3,
+                border.col = '#B3B300', border.alpha = 0.8) +
     tm_shape(loc_sf) +
     tm_dots(size = .75, col = "color") +
-    tm_text(text = "abbrev", xmod = align)
+    tm_text(text = "abbrev", xmod = "align", just = c("center","top"),
+            bg.color = 'white', bg.alpha = 0.75,
+            fontface = "bold")
 
   # if(exists('left_labs')){
   #
