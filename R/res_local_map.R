@@ -10,12 +10,14 @@
 #' @param lab_loc chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.
 #' @param scale_pos scale_pos where should the scale be placed? Options are 'topleft', 'topright', 'bottomleft', or 'bottomright'. Defaults to 'bottomleft'
 #'
+#' @import tmap
+#'
 #' @importFrom dplyr
 #' @importFrom ggthemes theme_map
 #' @importFrom magrittr "%>%"
-#' @importFrom sf as st_transform
-#' @importFrom tmap read_ocm tm_rgb
-#' @importFrom tmaptools
+#' @importFrom sf st_as_sf st_bbox st_crs st_transform
+#' @importFrom tmaptools read_ocm
+# #' @importFrom ocmplotr
 #' @importFrom utils download.file unzip
 #'
 #' @export
@@ -83,81 +85,82 @@ res_local_map <- function(nerr_site_id
                           , scale_pos = 'bottomleft') {
 
   # ===========================================================================
-  FIRST <- FALSE
-  library(SWMPrExtension)
-  library(sf)
-  library(dplyr)
-  library(tmap)
-  library(tmaptools)
-  library(osmplotr)
-    if(FIRST){
-    ### DEBUG variables
-    # Defaults
-    station_labs = TRUE
-    lab_loc = NULL
-    scale_pos = 'bottom_left'
-    # from Example 1
-    stations <-
-    sampling_stations[(sampling_stations$NERR.Site.ID == 'elk'
-    & sampling_stations$Status == 'Active'), ]$Station.Code
-    to_match <- c('wq', 'met')
-    stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
-    shp_fl <- elk_spatial
-    bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
-    lab_dir <- c('L', 'R', 'L', 'L', 'L')
-    labs <- c('ap', 'cw', 'nm', 'sm', 'vm')
-    pos <- 'bottomleft'
-
-    ### plot call, reassign variables
-    ### res_local_map('elk', stations = stns, bbox = bounding_elk,
-    ###               lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
-    nerr_sit_id <- 'elk'
-    stations <- stns
-    bbox <- bounding_elk
-    lab_loc <- lab_dir
-    scale_pos <- pos
-    shp <- shp_fl
-  } else {
-    # ---------------------------------------------------------------------------
-    # Second Example
-    # Defaults
-    station_labs = TRUE
-    lab_loc = NULL
-    scale_pos = 'bottom_left'
-    ## a multicomponent reserve (show two different bounding boxes)
-    ### set plotting parameters
-    stations <-
-    sampling_stations[(sampling_stations$NERR.Site.ID == 'cbm'
-    & sampling_stations$Status == 'Active'), ]$Station.Code
-    to_match <- c('wq', 'met')
-    stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
-    shp_fl <- cbm_spatial
-    bounding_cbm_1 <- c(-77.393, 39.741, -75.553, 38.277)
-    bounding_cbm_2 <- c(-76.862006, 38.811571, -76.596508, 38.642454)
-    lab_dir <- c('L', 'R', 'L', 'L', 'L')
-    labs <- c('ap', 'cw', 'nm', 'sm', 'vm')
-    pos <- 'bottomleft'
-    #'
-    ### plot
-    # res_local_map('cbm', stations = stns, bbox = bounding_cbm_1,
-    # lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
-    nerr_sit_id <- 'cbm'
-    stations <- stns
-    bbox <- bounding_cbm_1
-    lab_loc <- lab_dir
-    scale_pos <- pos
-    shp <- shp_fl
-  }
+  # FIRST <- FALSE
+  # library(SWMPrExtension)
+  # library(sf)
+  # library(dplyr)
+  # library(tmap)
+  # library(tmaptools)
+  # library(osmplotr)
+  #   if(FIRST){
+  #   ### DEBUG variables
+  #   # Defaults
+  #   station_labs = TRUE
+  #   lab_loc = NULL
+  #   scale_pos = 'bottom_left'
+  #   # from Example 1
+  #   stations <-
+  #   sampling_stations[(sampling_stations$NERR.Site.ID == 'elk'
+  #   & sampling_stations$Status == 'Active'), ]$Station.Code
+  #   to_match <- c('wq', 'met')
+  #   stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
+  #   shp_fl <- elk_spatial
+  #   bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
+  #   lab_dir <- c('L', 'R', 'L', 'L', 'L')
+  #   labs <- c('ap', 'cw', 'nm', 'sm', 'vm')
+  #   pos <- 'bottomleft'
+  #
+  #   ### plot call, reassign variables
+  #   ### res_local_map('elk', stations = stns, bbox = bounding_elk,
+  #   ###               lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
+  #   nerr_sit_id <- 'elk'
+  #   stations <- stns
+  #   bbox <- bounding_elk
+  #   lab_loc <- lab_dir
+  #   scale_pos <- pos
+  #   shp <- shp_fl
+  # } else {
+  #   # ---------------------------------------------------------------------------
+  #   # Second Example
+  #   # Defaults
+  #   station_labs = TRUE
+  #   lab_loc = NULL
+  #   scale_pos = 'bottom_left'
+  #   ## a multicomponent reserve (show two different bounding boxes)
+  #   ### set plotting parameters
+  #   stations <-
+  #   sampling_stations[(sampling_stations$NERR.Site.ID == 'cbm'
+  #   & sampling_stations$Status == 'Active'), ]$Station.Code
+  #   to_match <- c('wq', 'met')
+  #   stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
+  #   shp_fl <- cbm_spatial
+  #   bounding_cbm_1 <- c(-77.393, 39.741, -75.553, 38.277)
+  #   bounding_cbm_2 <- c(-76.862006, 38.811571, -76.596508, 38.642454)
+  #   lab_dir <- c('L', 'R', 'L', 'L', 'L')
+  #   labs <- c('ap', 'cw', 'nm', 'sm', 'vm')
+  #   pos <- 'bottomleft'
+  #   #
+  #   ### plot
+  #   # res_local_map('cbm', stations = stns, bbox = bounding_cbm_1,
+  #   # lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
+  #   nerr_sit_id <- 'cbm'
+  #   stations <- stns
+  #   bbox <- bounding_cbm_2
+  #   lab_loc <- lab_dir
+  #   scale_pos <- pos
+  #   shp <- shp_fl
+  # }
   # ===========================================================================
 
   # check that a shape file exists
   if(class(shp) != 'SpatialPolygons') {
-    if(class(shp) != 'sf')
+    if(class(shp) != 'sf') {
       stop('shapefile (shp) must be sf (preferred) or SpatialPolygons object')
+    }
   } else {
-    # convert SpatialPolygons to sf
-    shp <- as(shp, "sf")
+    shp <- as(shp, "sf")   # convert SpatialPolygons to sf
   }
+
   # check that length(lab_loc) = length(stations)
   if(!is.null(station_labs) && length(lab_loc) != length(stations))
     stop('Incorrect number of label location identifiers specified. R or L designation must be made for each station.' )
@@ -196,10 +199,10 @@ res_local_map <- function(nerr_site_id
   loc$Longitude <- -loc$Longitude
   # convert location info to sf object
   # use lat/lon, WGS84 projection, EPSG:4326.
-  loc_sf <- st_as_sf(loc, coords = c("Longitude","Latitude"))
-  st_crs(loc_sf) <- 4326
+  loc_sf <- sf::st_as_sf(loc, coords = c("Longitude","Latitude"))
+  sf::st_crs(loc_sf) <- 4326
   # Now transform into the projected web-mercator projection EPSG:3857
-  #loc_sf <- st_transform(loc_sf, 3857)
+  #loc_sf <- sf::st_transform(loc_sf, 3857)
 
   # Plot map
   # m <- leaflet(loc, options = leafletOptions(zoomControl = FALSE), width = 500, height = 500) %>%
@@ -207,8 +210,8 @@ res_local_map <- function(nerr_site_id
   #   addPolygons(data = shp, weight = 2, color = '#B3B300', fillColor = 'yellow')
   #
   #library(osmplotr)
-  bg_etop <- read_osm(bbox, type = "esri-topo") # st_bbox(shp), type = "osm")
-  # bg_bing <- read_osm(bbox, type = "bing")
+  bg_etop <- tmaptools::read_osm(bbox, type = "esri-topo") # sf::st_bbox(shp), type = "osm")
+  # bg_bing <- tmaptools::read_osm(bbox, type = "bing")
   m <- tm_shape(bg_etop) +
     tm_rgb() +
     tm_shape(shp) +
@@ -221,14 +224,14 @@ res_local_map <- function(nerr_site_id
             fontface = "bold")
 
 
-  tm_shape(shp) +
-    tm_polygons(lwd = 2, col = 'yellow', alpha = 0.3,
-                border.col = '#B3B300', border.alpha = 0.8) +
-    tm_shape(loc_sf) +
-    tm_dots(size = .75, col = "color") +
-    tm_text(text = "abbrev", xmod = "align", just = c("center","top"),
-            bg.color = 'white', bg.alpha = 0.75,
-            fontface = "bold")
+  # tm_shape(shp) +
+  #   tm_polygons(lwd = 2, col = 'yellow', alpha = 0.3,
+  #               border.col = '#B3B300', border.alpha = 0.8) +
+  #   tm_shape(loc_sf) +
+  #   tm_dots(size = .75, col = "color") +
+  #   tm_text(text = "abbrev", xmod = "align", just = c("center","top"),
+  #           bg.color = 'white', bg.alpha = 0.75,
+  #           fontface = "bold")
 
   # if(exists('left_labs')){
   #
