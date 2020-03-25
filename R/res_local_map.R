@@ -83,62 +83,71 @@ res_local_map <- function(nerr_site_id
                           , scale_pos = 'bottomleft') {
 
   # ===========================================================================
-  ### DEBUG variables
-  # Defaults
-  station_labs = TRUE
-  lab_loc = NULL
-  scale_pos = 'bottom_left'
-  # from Example 1
-  stations <-
-  sampling_stations[(sampling_stations$NERR.Site.ID == 'elk'
-  & sampling_stations$Status == 'Active'), ]$Station.Code
-  to_match <- c('wq', 'met')
-  stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
-  shp_fl <- elk_spatial
-  bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
-  lab_dir <- c('L', 'R', 'L', 'L', 'L')
-  labs <- c('ap', 'cw', 'nm', 'sm', 'vm')
-  pos <- 'bottomleft'
+  FIRST <- TRUE
+  library(SWMPrExtension)
+  library(sf)
+  library(dplyr)
+  library(tmap)
+  library(tmaptools)
+  library(osmplotr)
+    if(FIRST){
+    ### DEBUG variables
+    # Defaults
+    station_labs = TRUE
+    lab_loc = NULL
+    scale_pos = 'bottom_left'
+    # from Example 1
+    stations <-
+    sampling_stations[(sampling_stations$NERR.Site.ID == 'elk'
+    & sampling_stations$Status == 'Active'), ]$Station.Code
+    to_match <- c('wq', 'met')
+    stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
+    shp_fl <- elk_spatial
+    bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
+    lab_dir <- c('L', 'R', 'L', 'L', 'L')
+    labs <- c('ap', 'cw', 'nm', 'sm', 'vm')
+    pos <- 'bottomleft'
 
-  ### plot call, reassign variables
-  ### res_local_map('elk', stations = stns, bbox = bounding_elk,
-  ###               lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
-  nerr_sit_id <- 'elk'
-  stations <- stns
-  bbox <- bounding_elk
-  lab_loc <- lab_dir
-  scale_pos <- pos
-  shp <- shp_fl
-
-  # ---------------------------------------------------------------------------
-  # Second Example
-  # Defaults
-  station_labs = TRUE
-  lab_loc = NULL
-  scale_pos = 'bottom_left'
-  ## a multicomponent reserve (show two different bounding boxes)
-  ### set plotting parameters
-  stations <-
-  sampling_stations[(sampling_stations$NERR.Site.ID == 'cbm'
-  & sampling_stations$Status == 'Active'), ]$Station.Code
-  to_match <- c('wq', 'met')
-  stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
-  shp_fl <- cbm_spatial
-  bounding_cbm_1 <- c(-77.393, 39.741, -75.553, 38.277)
-  bounding_cbm_2 <- c(-76.862006, 38.811571, -76.596508, 38.642454)
-  lab_dir <- c('L', 'R', 'L', 'L', 'L')
-  labs <- c('ap', 'cw', 'nm', 'sm', 'vm')
-  pos <- 'bottomleft'
-  #'
-  ### plot
-  res_local_map('cbm', stations = stns, bbox = bounding_cbm_1,
-  lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
-  nerr_sit_id <- 'cbm'
-  stations <- stns
-  bbox <- bounding_cbm_1
-  lab_loc <- lab_dir
-  scale_pos <- pos
-  shp <- shp_fl
+    ### plot call, reassign variables
+    ### res_local_map('elk', stations = stns, bbox = bounding_elk,
+    ###               lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
+    nerr_sit_id <- 'elk'
+    stations <- stns
+    bbox <- bounding_elk
+    lab_loc <- lab_dir
+    scale_pos <- pos
+    shp <- shp_fl
+  } else {
+    # ---------------------------------------------------------------------------
+    # Second Example
+    # Defaults
+    station_labs = TRUE
+    lab_loc = NULL
+    scale_pos = 'bottom_left'
+    ## a multicomponent reserve (show two different bounding boxes)
+    ### set plotting parameters
+    stations <-
+    sampling_stations[(sampling_stations$NERR.Site.ID == 'cbm'
+    & sampling_stations$Status == 'Active'), ]$Station.Code
+    to_match <- c('wq', 'met')
+    stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
+    shp_fl <- cbm_spatial
+    bounding_cbm_1 <- c(-77.393, 39.741, -75.553, 38.277)
+    bounding_cbm_2 <- c(-76.862006, 38.811571, -76.596508, 38.642454)
+    lab_dir <- c('L', 'R', 'L', 'L', 'L')
+    labs <- c('ap', 'cw', 'nm', 'sm', 'vm')
+    pos <- 'bottomleft'
+    #'
+    ### plot
+    # res_local_map('cbm', stations = stns, bbox = bounding_cbm_1,
+    # lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
+    nerr_sit_id <- 'cbm'
+    stations <- stns
+    bbox <- bounding_cbm_1
+    lab_loc <- lab_dir
+    scale_pos <- pos
+    shp <- shp_fl
+  }
   # ===========================================================================
 
   # check that a shape file exists
@@ -158,6 +167,9 @@ res_local_map <- function(nerr_site_id
     stop('Specify a bounding box (bbox) in the form of c(X1, Y1, X2, Y2)')
   if(length(bbox) != 4)
     stop('Incorrect number of elements specified for bbox. Specify a bounding box (bbox) in the form of c(X1, Y1, X2, Y2)')
+  # Get min-max bounding coordinates:
+  xminmax <- c(min(bbox[c(1,3)]), max(bbox[c(1,3)]))
+  yminmax <- c(min(bbox[c(2,4)]), max(bbox[c(2,4)]))
 
   # generate location labels
   loc <- get('sampling_stations')
@@ -165,9 +177,9 @@ res_local_map <- function(nerr_site_id
   loc$abbrev <- toupper(substr(loc$Station.Code, start = 4, stop = 5))
 
   # Default all labels to left and then change if there is location information
-  loc$align <- "left"
+  loc$align <- -1.5
   if(!is.null(lab_loc))
-    loc$align[lab_loc == 'R'] <- "right"
+    loc$align[lab_loc == 'R'] <- 1.5
 
   # # set map label styles
   # label_style <- list(
@@ -194,7 +206,7 @@ res_local_map <- function(nerr_site_id
   #   addProviderTiles(leaflet::providers$Esri.WorldGrayCanvas) %>%  # Add default OpenStreetMap map tiles, CartoDB.Positron
   #   addPolygons(data = shp, weight = 2, color = '#B3B300', fillColor = 'yellow')
   #
-  library(osmplotr)
+  #library(osmplotr)
   bg_etop <- read_osm(bbox, type = "esri-topo") # st_bbox(shp), type = "osm")
   # bg_bing <- read_osm(bbox, type = "bing")
   m <- tm_shape(bg_etop) +
@@ -202,38 +214,45 @@ res_local_map <- function(nerr_site_id
     tm_shape(shp) +
     tm_polygons(lwd = 2, col = '#B3B300', fill = 'yellow', alpha = .3) +
     tm_shape(loc_sf) +
-    tm_dots(size = .75, col = "color")
+    tm_dots(size = .75, col = "color") +
+    tm_text(text = "abbrev", auto.placement = 0.025)
 
 
-  if(exists('left_labs')){
+  tm_shape(shp) +
+    tm_polygons(lwd = 2, col = '#B3B300', fill = 'yellow', alpha = .3) +
+    tm_shape(loc_sf) +
+    tm_dots(size = .75, col = "color") +
+    tm_text(text = "abbrev", xmod = align)
 
-      addCircleMarkers(lng = ~Longitude[left_labs] * -1, lat = ~Latitude[left_labs], radius = 5
-                       , weight = 0, fillOpacity = 1
-                       , color = loc$color[left_labs]
-                       , label = loc$abbrev[left_labs]
-                       , labelOptions = labelOptions(noHide = station_labs
-                                                     , direction = c('left')
-                                                     , opacity = 1
-                                                     , offset = c(-5, 0)
-                                                     , style = label_style))
-  }
-
-  if(exists('right_labs')){
-    m <- m %>%
-      addCircleMarkers(lng = ~Longitude[right_labs] * -1, lat = ~Latitude[right_labs], radius = 5
-                       , weight = 0, fillOpacity = 1
-                       , color = loc$color[right_labs]
-                       , label = loc$abbrev[right_labs]
-                       , labelOptions = labelOptions(noHide = station_labs
-                                                     , direction = c('right')
-                                                     , opacity = 1
-                                                     , offset = c(5, 0)
-                                                     , style = label_style))
-  }
-
-  m <- m %>%
-    addScaleBar(position = scale_pos) %>%
-    fitBounds(bbox[1], bbox[2], bbox[3], bbox[4])
+  # if(exists('left_labs')){
+  #
+  #     addCircleMarkers(lng = ~Longitude[left_labs] * -1, lat = ~Latitude[left_labs], radius = 5
+  #                      , weight = 0, fillOpacity = 1
+  #                      , color = loc$color[left_labs]
+  #                      , label = loc$abbrev[left_labs]
+  #                      , labelOptions = labelOptions(noHide = station_labs
+  #                                                    , direction = c('left')
+  #                                                    , opacity = 1
+  #                                                    , offset = c(-5, 0)
+  #                                                    , style = label_style))
+  # }
+  #
+  # if(exists('right_labs')){
+  #   m <- m %>%
+  #     addCircleMarkers(lng = ~Longitude[right_labs] * -1, lat = ~Latitude[right_labs], radius = 5
+  #                      , weight = 0, fillOpacity = 1
+  #                      , color = loc$color[right_labs]
+  #                      , label = loc$abbrev[right_labs]
+  #                      , labelOptions = labelOptions(noHide = station_labs
+  #                                                    , direction = c('right')
+  #                                                    , opacity = 1
+  #                                                    , offset = c(5, 0)
+  #                                                    , style = label_style))
+  # }
+  #
+  # m <- m %>%
+  #   addScaleBar(position = scale_pos) %>%
+  #   fitBounds(bbox[1], bbox[2], bbox[3], bbox[4])
 
   return(m)
 }
