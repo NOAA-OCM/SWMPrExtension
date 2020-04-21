@@ -10,14 +10,12 @@
 #' @param lab_loc chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.
 #' @param scale_pos scale_pos where should the scale be placed? Options are 'topleft', 'topright', 'bottomleft', or 'bottomright'. Defaults to 'bottomleft'
 #'
-#' @import tmap
 #'
-#' @importFrom dplyr
 #' @importFrom ggthemes theme_map
 #' @importFrom magrittr "%>%"
-#' @importFrom sf st_as_sf st_bbox st_crs st_transform
-#' @importFrom tmaptools read_ocm
-# #' @importFrom ocmplotr
+#' @importFrom as sf st_as_sf st_bbox st_crs st_transform
+#' @importFrom tmap tmdots tm_polygons tm_rgb tm_shape tm_text
+#' @importFrom tmaptools read_osm
 #' @importFrom utils download.file unzip
 #'
 #' @export
@@ -84,7 +82,7 @@ res_local_map <- function(nerr_site_id
                           , lab_loc = NULL
                           , scale_pos = 'bottomleft') {
 
-  # ===========================================================================
+  # ====Uncomment for debugging=====================================
   # FIRST <- FALSE
   # library(SWMPrExtension)
   # library(sf)
@@ -158,7 +156,7 @@ res_local_map <- function(nerr_site_id
       stop('shapefile (shp) must be sf (preferred) or SpatialPolygons object')
     }
   } else {
-    shp <- as(shp, "sf")   # convert SpatialPolygons to sf
+    shp <- sf::as(shp, "sf")   # convert SpatialPolygons to sf
   }
 
   # check that length(lab_loc) = length(stations)
@@ -212,14 +210,14 @@ res_local_map <- function(nerr_site_id
   #library(osmplotr)
   bg_etop <- tmaptools::read_osm(bbox, type = "esri-topo") # sf::st_bbox(shp), type = "osm")
   # bg_bing <- tmaptools::read_osm(bbox, type = "bing")
-  m <- tm_shape(bg_etop) +
-    tm_rgb() +
-    tm_shape(shp) +
-    tm_polygons(lwd = 2, col = 'yellow', alpha = 0.3,
+  m <- tmap::tm_shape(bg_etop) +
+    tmap::tm_rgb() +
+    tmap::tm_shape(shp) +
+    tmap::tm_polygons(lwd = 2, col = 'yellow', alpha = 0.3,
                 border.col = '#B3B300', border.alpha = 0.8) +
-    tm_shape(loc_sf) +
-    tm_dots(size = .75, col = "color") +
-    tm_text(text = "abbrev", xmod = "align", just = c("center","top"),
+    tmap::tm_shape(loc_sf) +
+    tmap::tm_dots(size = .75, col = "color") +
+    tmap::tm_text(text = "abbrev", xmod = "align", just = c("center","top"),
             bg.color = 'white', bg.alpha = 0.75,
             fontface = "bold")
 

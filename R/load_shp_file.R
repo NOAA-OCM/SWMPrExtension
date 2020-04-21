@@ -5,7 +5,7 @@
 #' @param path path to shapefile and name
 #' @param dissolve_boundaries logical, should reserve boundaries be dissolved? Defaults to \code{TRUE}
 #'
-#' @importFromdplyr group_by mutate summarise
+#' @importFrom dplyr group_by mutate summarise
 #' @importFrom magrittr "%>%"
 #' @importFrom methods slot
 #' @importFrom sf read_sf st_transform
