@@ -4,7 +4,9 @@
 \name{us_laea}
 \alias{us_laea}
 \title{US County Map}
-\format{A \code{\link[sp]{SpatialPolygonsDataFrame}} object}
+\format{
+A \code{\link[sp]{SpatialPolygonsDataFrame}} object
+}
 \source{
 \href{https://www.census.gov/geographies/mapping-files.html}{US Census Bureau}
 }

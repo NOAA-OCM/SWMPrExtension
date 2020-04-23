@@ -22,7 +22,7 @@
 #' @importFrom magrittr "%>%"
 #' @importFrom tidyr complete gather
 #' @importFrom rlang .data
-#' @importFrom scales format_format pretty_breaks
+#' @importFrom scales format_format breaks_pretty
 #' @importFrom stats median
 #'
 #' @export
@@ -107,6 +107,23 @@ seasonal_dot.swmpr <- function(swmpr_in
                                , plot_title = FALSE
                                , plot = TRUE
                                , ...) {
+
+  # #------------FOR DEBUGGING--------------------------------------------------
+  library(dplyr)
+  dat_wq <- elksmwq
+  dat_wq <- qaqc(dat_wq, qaqc_keep = c(0, 3, 5))
+  swmpr_in <- dat_wq
+  param = 'do_mgl'
+  lm_trend = TRUE
+  lm_lab = TRUE
+  plot_title = TRUE
+  free_y = FALSE
+  log_trans = FALSE
+  converted = FALSE
+  plot_title = FALSE
+  plot = TRUE
+
+  # #--------------END DEBUGGING------------------------------------------------
 
   dat <- swmpr_in
   parm <- sym(param)
@@ -193,16 +210,16 @@ seasonal_dot.swmpr <- function(swmpr_in
     if(!log_trans) {
 
       plt <- plt +
-        scale_y_continuous(labels = format_format(digits = 2, big.mark = ",", decimal.mark = ".", scientific = FALSE)
-                           , breaks = pretty_breaks(n = 8))
+        scale_y_continuous(labels = scales::format_format(digits = 2, big.mark = ",", decimal.mark = ".", scientific = FALSE)
+                           , breaks = scales::breaks_pretty(n = 8))
 
       if(!free_y){plt <- plt + expand_limits(y = mn)}
 
     } else {
       plt <- plt +
         scale_y_continuous(trans = y_trans
-                                , labels = format_format(digits = 2, big.mark = ",", decimal.mark = ".", scientific = FALSE)
-                                , breaks = pretty_breaks(n = 8))
+                                , labels = scales::format_format(digits = 2, big.mark = ",", decimal.mark = ".", scientific = FALSE)
+                                , breaks = scales::breaks_pretty(n = 8))
 
       if(!free_y) {plt <- plt + expand_limits(y = mn)}
     }

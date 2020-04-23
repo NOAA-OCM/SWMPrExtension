@@ -4,7 +4,9 @@
 \name{elknmnut}
 \alias{elknmnut}
 \title{Nutrient Data from Elkhorn Slough - North Marsh Station}
-\format{A \code{\link[base]{data.frame}} object}
+\format{
+A \code{\link[base]{data.frame}} object
+}
 \source{
 \href{http://cdmo.baruch.sc.edu/}{CDMO}
 }

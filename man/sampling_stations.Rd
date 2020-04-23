@@ -4,7 +4,9 @@
 \name{sampling_stations}
 \alias{sampling_stations}
 \title{Detailed of NERRS site data}
-\format{A \code{\link[base]{data.frame}} object}
+\format{
+A \code{\link[base]{data.frame}} object
+}
 \source{
 \href{http://cdmo.baruch.sc.edu/}{CDMO}
 }
