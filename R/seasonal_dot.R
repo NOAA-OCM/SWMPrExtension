@@ -109,19 +109,19 @@ seasonal_dot.swmpr <- function(swmpr_in
                                , ...) {
 
   # #------------FOR DEBUGGING--------------------------------------------------
-  library(dplyr)
-  dat_wq <- elksmwq
-  dat_wq <- qaqc(dat_wq, qaqc_keep = c(0, 3, 5))
-  swmpr_in <- dat_wq
-  param = 'do_mgl'
-  lm_trend = TRUE
-  lm_lab = TRUE
-  plot_title = TRUE
-  free_y = FALSE
-  log_trans = FALSE
-  converted = FALSE
-  plot_title = FALSE
-  plot = TRUE
+  # library(dplyr)
+  # dat_wq <- elksmwq
+  # dat_wq <- qaqc(dat_wq, qaqc_keep = c(0, 3, 5))
+  # swmpr_in <- dat_wq
+  # param = 'do_mgl'
+  # lm_trend = TRUE
+  # lm_lab = TRUE
+  # plot_title = TRUE
+  # free_y = FALSE
+  # log_trans = FALSE
+  # converted = FALSE
+  # plot_title = FALSE
+  # plot = TRUE
 
   # #--------------END DEBUGGING------------------------------------------------
 
@@ -156,6 +156,7 @@ seasonal_dot.swmpr <- function(swmpr_in
     warning('QAQC columns present. QAQC not performed before analysis.')
 
   # Assign the seasons and order them
+  # DEBUG dat$season <- assign_season(dat$datetimestamp, abb = TRUE)
   dat$season <- assign_season(dat$datetimestamp, abb = TRUE, ...)
 
   # Assign date for determining daily stat value
@@ -178,7 +179,10 @@ seasonal_dot.swmpr <- function(swmpr_in
   plt_data <- tidyr::complete(plt_data, !! seas)
 
   # remove NaN, -Inf, Inf values
-  plt_data[, c(3:5)] <- remove_inf_and_nan(plt_data[, c(3:5)])
+  # DLE 4/24/2020: Kludge due to tibble change: call individually
+  plt_data[, 3] <- remove_inf_and_nan(plt_data[, 3])
+  plt_data[, 4] <- remove_inf_and_nan(plt_data[, 4])
+  plt_data[, 5] <- remove_inf_and_nan(plt_data[, 5])
 
   if(plot) {
     agg_lab <- ifelse(length(levels(plt_data$season)) == 12, 'Monthly ', 'Seasonal ')
@@ -195,10 +199,10 @@ seasonal_dot.swmpr <- function(swmpr_in
     mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), mn)
 
     plt <-
-      ggplot(data = plt_data, aes_string(x = 'year', y = 'min', color = labs_legend[1])) +
+      ggplot(data = plt_data, aes_string(x = "year", y = "min", color = labs_legend[1])) +
       geom_point() +
-      geom_point(data = plt_data, aes_string(x = 'year', y = 'mean', color = labs_legend[2])) +
-      geom_point(data = plt_data, aes_string(x = 'year', y = 'max', color = labs_legend[3])) +
+      geom_point(data = plt_data, aes_string(x = "year", y = "mean", color = labs_legend[2])) +
+      geom_point(data = plt_data, aes_string(x = "year", y = "max", color = labs_legend[3])) +
       geom_point() +
       scale_color_manual('', values = c('black', 'red', 'blue')) +
       scale_x_continuous(breaks = seq(from = brks[1], to = brks[2], by = 1)) +

@@ -227,8 +227,13 @@ historical_range.swmpr <- function(swmpr_in
   dat_hist <- tidyr::complete(dat_hist, !! seas)
 
   # remove NaN, -Inf, Inf values
-  dat_yr[, c(2:4)] <- remove_inf_and_nan(dat_yr[, c(2:4)])
-  dat_hist[, c(2:4)] <- remove_inf_and_nan(dat_hist[, c(2:4)])
+  # DLE 4/24/2020: Kludge due to tibble change: call individually
+  dat_yr[, 2] <- remove_inf_and_nan(dat_yr[, 2])
+  dat_yr[, 3] <- remove_inf_and_nan(dat_yr[, 3])
+  dat_yr[, 4] <- remove_inf_and_nan(dat_yr[, 4])
+  dat_hist[, 2] <- remove_inf_and_nan(dat_hist[, 2])
+  dat_hist[, 3] <- remove_inf_and_nan(dat_hist[, 3])
+  dat_hist[, 4] <- remove_inf_and_nan(dat_hist[, 4])
 
   if(plot){
     # Set the plot range
