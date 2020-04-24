@@ -1,3 +1,8 @@
+#### SWMPrExtension 1.1.4
+* Updates for R 4.0 and associated changes
+* Fixed {tibble} related issues in seasonal_dot.R and historical_range.R
+* Fixed pre-existing error in threshold_percentile_plot.R if target year is outside of historical range.
+
 #### SWMPrExtension 1.1.3
 * Fixed ISSUE# 46: Addressed {rgdal} & {sp} issues when using PROJ > 6. 
 * Corrected mismatched and mislabeled map projections in national mapping code so that all national-level maps use a Lambert Azimuthal Equal Area projections.  This is the projection that was being used for some shapefiles, but was mislabelled as Albers Equal Area, which then lead to some projection mismatch errors.
@@ -23,7 +28,7 @@
 * license changed to NOAA approved language
 
 #### SWMPrExtension 0.3.16
-* Updates to historical_range and historical_daily_range: analysis now allows for comparisons between a target year and a historical rnage that does not include the target year.
+* Updates to historical_range and historical_daily_range: analysis now allows for comparisons between a target year and a historical range that does not include the target year.
 
 #### SWMPrExtension 0.3.15
 * Updates to y-axis for threshold_percentile_plot
