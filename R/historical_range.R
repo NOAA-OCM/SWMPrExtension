@@ -28,7 +28,7 @@
 #'
 #' @details This function summarizes average daily values and average daily minimums/maximums across user-defined seasons for a target year (\code{target_yr}) and for a historical range (\code{hist_rng}). If \code{hist_rng} is not specified then the minimum and maximum years within the data set will be used. If \code{target_yr} is not specified then only the results for the \code{hist_rng} will be returned.
 #'
-#' The user also has the option to add a threshold hold line using the \code{criteria} argument. Typically, this value is a water quality threshold, which is why \code{criteria_lab} defaults to \code{'WQ Threshold'}. Howver, the user has the option to specify any other type of threshold they wish. when doing so, the value for \code{criteria_lab} should be changed accordingly.
+#' The user also has the option to add a threshold hold line using the \code{criteria} argument. Typically, this value is a water quality threshold, which is why \code{criteria_lab} defaults to \code{'WQ Threshold'}. However, the user has the option to specify any other type of threshold they wish. when doing so, the value for \code{criteria_lab} should be changed accordingly.
 #'
 #' @author Julie Padilla, Kimberly Cressman
 #'
@@ -227,8 +227,13 @@ historical_range.swmpr <- function(swmpr_in
   dat_hist <- tidyr::complete(dat_hist, !! seas)
 
   # remove NaN, -Inf, Inf values
-  dat_yr[, c(2:4)] <- remove_inf_and_nan(dat_yr[, c(2:4)])
-  dat_hist[, c(2:4)] <- remove_inf_and_nan(dat_hist[, c(2:4)])
+  # DLE 4/24/2020: Kludge due to tibble change: call individually
+  dat_yr[, 2] <- remove_inf_and_nan(dat_yr[, 2])
+  dat_yr[, 3] <- remove_inf_and_nan(dat_yr[, 3])
+  dat_yr[, 4] <- remove_inf_and_nan(dat_yr[, 4])
+  dat_hist[, 2] <- remove_inf_and_nan(dat_hist[, 2])
+  dat_hist[, 3] <- remove_inf_and_nan(dat_hist[, 3])
+  dat_hist[, 4] <- remove_inf_and_nan(dat_hist[, 4])
 
   if(plot){
     # Set the plot range
