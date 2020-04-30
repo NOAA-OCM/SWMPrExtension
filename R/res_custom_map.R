@@ -17,9 +17,7 @@
 #' @importFrom ggthemes theme_map
 #' @importFrom magrittr "%>%"
 #' @importFrom maptools elide spRbind unionSpatialPolygons
-#' @importFrom rgdal readOGR
 #' @importFrom rlang .data
-#' @importFrom sp CRS bbox proj4string spTransform
 #' @importFrom utils download.file unzip
 #'
 #' @export

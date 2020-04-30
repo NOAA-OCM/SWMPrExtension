@@ -86,6 +86,6 @@ scale_pos = pos, shp = shp_fl)
 
 }
 \author{
-Julie Padilla
+Julie Padilla, Dave Eslinger
 }
 \concept{analyze}

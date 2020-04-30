@@ -38,12 +38,10 @@ Imports:
 	methods,
 	officer,
 	RColorBrewer,
-	rgdal,
-  rgeos,
   rlang,
 	scales,
   sf,
-	sp,
+	tmap,
 	tmaptools,
 	tidyr
 Authors@R: c(

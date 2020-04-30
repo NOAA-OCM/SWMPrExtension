@@ -17,9 +17,7 @@
 #' @importFrom ggthemes theme_map
 #' @importFrom magrittr "%>%"
 #' @importFrom maptools elide spRbind unionSpatialPolygons
-#' @importFrom rgdal readOGR
 #' @importFrom rlang .data
-#' @importFrom sp CRS bbox proj4string spTransform
 #' @importFrom utils download.file unzip
 #'
 #' @export
@@ -28,7 +26,7 @@
 #'
 #' To display seasonal trends, the user must specify \code{c('inc', 'dec', 'insig')} for each station listed in the \code{stations} argument.
 #'
-#' @author Julie Padilla
+#' @author Julie Padilla, Dave Eslinger
 #'
 #' @concept analyze
 #'

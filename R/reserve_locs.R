@@ -11,7 +11,7 @@
 #'
 #' @details A helper function used to generate a \code{data.frame} of selected reserve locations for use with \code{\link{res_national_map}}.
 #'
-#' @author Julie Padilla
+#' @author Julie Padilla, Dave Eslinger
 #'
 #' @concept miscellaneous
 #'
@@ -36,36 +36,9 @@ reserve_locs <- function(incl = c('contig', 'AK', 'HI', 'PR'), subset_reserve = 
   # Convert to {sf} object in WGS84 lat/lon projection.  Keep coordinate fields just in case.
   loc <- sf::st_as_sf(loc, coords = c("Longitude", "Latitude"), crs = 4236, remove = FALSE)
 
+  # Keep ak, hi and pr, filter & project with ggplot/grob as needed
+  loc_mod <- loc
 
-  # #  Project to our mainland projection, epsg = 2163
-  # loc <- sf::st_transform(loc, 2163)
-  #
-  # # remove select states
-  # loc_mod <- loc[!loc$State %in% c("ak", "hi", "pr"), ]
-
-    # Keep ak, hi and pr, filter in plotting routine  loc_mod <- loc
-   loc_mod <- loc
-
-
-     #
-  # # reproject and add back in AK, HI, and PR individually as needed:
-   # # DOesn't work, can't rbind multiple CRS's together.
-  # if('AK' %in% incl) {
-  #   loc_add <- sf::st_transform(loc[loc$State == 'ak', ], 3467)
-  #   loc_mod <- rbind(loc_mod, loc_add)
-  # }
-  #
-  # if('HI' %in% incl) {
-  #   loc_add <- loc[loc$State == 'hi', ]
-  #   loc_add <- sf::st_transform(loc[loc$State == 'ak', ], 4135)
-  #   loc_mod <- rbind(loc_mod, loc_add)
-  # }
-  #
-  # if('PR' %in% incl) {
-  #   loc_add <- loc[loc$State == 'pr', ]
-  #   loc_add <- sf::st_transform(loc[loc$State == 'ak', ], 4437)
-  #   loc_mod <- rbind(loc_mod, loc_add)
-  # }
 
   if(!is.null(subset_reserve)) loc_mod <- loc_mod[(loc_mod$NERR.Site.ID %in% subset_reserve), ]
 

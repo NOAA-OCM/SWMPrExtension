@@ -93,11 +93,12 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
     usa <- us_4269
   }
 
-  # test values for debugging
-  highlight_states <- c("02","12","15", "16","06","72")
-  sk_reserves  <- c('pdb', 'sos', 'sfb', 'elk', 'tjr', 'kac')
-  sk_results <- c('inc', 'inc', 'dec', 'insig', 'insuff', 'insuff')
-  sk_fill_colors = c('#444E65', '#A3DFFF', '#247BA0', '#0a0a0a') # c('#247BA0', '#A3DFFF', '#444E65', '#595959')
+  # # --------------- FOR DEBUGGING -------------------------------
+  # highlight_states <- c("02","12","15", "16","06","72")
+  # sk_reserves  <- c('pdb', 'sos', 'sfb', 'elk', 'tjr', 'kac')
+  # sk_results <- c('inc', 'inc', 'dec', 'insig', 'insuff', 'insuff')
+  # sk_fill_colors = c('#444E65', '#A3DFFF', '#247BA0', '#0a0a0a') # c('#247BA0', '#A3DFFF', '#444E65', '#595959')
+  # # --------------- END DEBUGGING -------------------------------
 
   # Get reserve locations for plotting
   # Prep reserve locations for plotting

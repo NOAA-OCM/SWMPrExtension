@@ -13,8 +13,9 @@
 #'
 #' @importFrom ggthemes theme_map
 #' @importFrom magrittr "%>%"
-#' @importFrom as sf st_as_sf st_bbox st_crs st_transform
-#' @importFrom tmap tmdots tm_polygons tm_rgb tm_shape tm_text
+#' @importFrom methods as
+#' @importFrom sf st_as_sf st_bbox st_crs st_transform
+#' @importFrom tmap tm_dots tm_polygons tm_rgb tm_shape tm_text
 #' @importFrom tmaptools read_osm
 #' @importFrom utils download.file unzip
 #'
@@ -156,7 +157,7 @@ res_local_map <- function(nerr_site_id
       stop('shapefile (shp) must be sf (preferred) or SpatialPolygons object')
     }
   } else {
-    shp <- sf::as(shp, "sf")   # convert SpatialPolygons to sf
+    shp <- methods::as(shp, "sf")   # convert SpatialPolygons to sf
   }
 
   # check that length(lab_loc) = length(stations)
