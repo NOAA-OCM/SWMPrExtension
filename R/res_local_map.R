@@ -89,13 +89,11 @@ res_local_map <- function(nerr_site_id
   library(dplyr)
   library(tmap)
   library(tmaptools)
-  library(osmplotr)
+  # library(osmplotr)
     if(FIRST){
     ### DEBUG variables
     # Defaults
     station_labs = TRUE
-    lab_loc = NULL
-    scale_pos = 'bottom_left'
     # from Example 1
     stations <-
     sampling_stations[(sampling_stations$NERR.Site.ID == 'elk'
@@ -121,9 +119,8 @@ res_local_map <- function(nerr_site_id
     # ---------------------------------------------------------------------------
     # Second Example
     # Defaults
-    station_labs = TRUE
-    lab_loc = NULL
-    scale_pos = 'bottom_left'
+    station_labs <- TRUE
+    scale_pos <- 'bottom_left'
     ## a multicomponent reserve (show two different bounding boxes)
     ### set plotting parameters
     stations <-
@@ -143,7 +140,7 @@ res_local_map <- function(nerr_site_id
     # lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
     nerr_sit_id <- 'cbm'
     stations <- stns
-    bbox <- bounding_cbm_2
+    bbox <- bounding_cbm_1
     lab_loc <- lab_dir
     scale_pos <- pos
     shp <- shp_fl
@@ -168,10 +165,12 @@ res_local_map <- function(nerr_site_id
     stop('Specify a bounding box (bbox) in the form of c(X1, Y1, X2, Y2)')
   if(length(bbox) != 4)
     stop('Incorrect number of elements specified for bbox. Specify a bounding box (bbox) in the form of c(X1, Y1, X2, Y2)')
-  # Get min-max bounding coordinates:
-  xminmax <- c(min(bbox[c(1,3)]), max(bbox[c(1,3)]))
-  yminmax <- c(min(bbox[c(2,4)]), max(bbox[c(2,4)]))
-
+  # Get min-max bounding coordinates, and format bbox correctly:
+  xmin <- min(bbox[c(1,3)])
+  xmax <- max(bbox[c(1,3)])
+  ymin <- min(bbox[c(2,4)])
+  ymax <- max(bbox[c(2,4)])
+  bbox <- c(xmin, ymin, xmax, ymax)
   # generate location labels
   loc <- get('sampling_stations')
   loc <- loc[(loc$Station.Code %in% stations), ]

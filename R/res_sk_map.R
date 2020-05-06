@@ -82,9 +82,81 @@ res_sk_map <- function(nerr_site_id
                        , lab_loc = NULL
                        , scale_pos = 'bottomleft') {
 
+  #------------------Uncomment for debugging------------------------------------
+  FIRST <- TRUE
+  library(SWMPrExtension)
+  library(sf)
+  library(dplyr)
+  library(tmap)
+  library(tmaptools)
+  # library(osmplotr)
+  if(FIRST){
+    ### DEBUG variables
+    # Defaults
+    station_labs = TRUE
+    # from Example 1, a compact reserve
+    stations <-
+    sampling_stations[(sampling_stations$NERR.Site.ID == 'elk'
+                       & sampling_stations$Status == 'Active'), ]$Station.Code
+    to_match <- c('wq')
+    stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
+    shp_fl <- elk_spatial
+    bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
+    pos <- 'bottomleft'
+    sk_res <- c('inc', 'dec', 'dec', 'insig')
+
+    ### plot call, reassign variables
+    ### res_sk_map('elk', stations = stns, sk_result = sk_res,
+    ###            bbox = bounding_elk, scale_pos = pos, shp = shp_fl)
+    nerr_sit_id <- 'elk'
+    stations <- stns
+    sk_result <- sk_res
+    bbox <- bounding_elk
+    lab_loc <- NULL
+    scale_pos <- pos
+    shp <- shp_fl
+    } else {
+    # ---------------------------------------------------------------------------
+    # Second Example
+    # Defaults
+    station_labs <- TRUE
+    scale_pos <- 'bottom_left'
+    ## a multicomponent reserve (showing two different bounding boxes)
+    ### set plotting parameters
+    stations <-
+      sampling_stations[(sampling_stations$NERR.Site.ID == 'cbm'
+                         & sampling_stations$Status == 'Active'), ]$Station.Code
+    to_match <- c('wq')
+    stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
+    shp_fl <- cbm_spatial
+    bounding_cbm_1 <- c(-77.393, 39.741, -75.553, 38.277)
+    bounding_cbm_2 <- c(-76.862006, 38.811571, -76.596508, 38.642454)
+    pos <- 'bottomleft'
+    sk_res <- c('inc', 'dec', 'dec', 'insig')
+
+    ### plot
+    # res_sk_map('cbm', stations = stns, sk_result = sk_res, bbox = bounding_cbm_1,
+    #            scale_pos = pos, shp = shp_fl)
+    #
+    # res_sk_map('cbm', stations = stns, sk_result = sk_res, bbox = bounding_cbm_2,
+    #            scale_pos = pos, shp = shp_fl)
+    nerr_sit_id <- 'cbm'
+    stations <- stns
+    bbox <- bounding_cbm_2
+    lab_loc <- NULL
+    scale_pos <- pos
+    shp <- shp_fl
+
+    }
+  #---------------end debugging-----------------------------------------------
   # check that a shape file exists
-  if(class(shp) != 'SpatialPolygons')
-    stop('shapefile (shp) must be SpatialPolygons object')
+    if(class(shp) != 'SpatialPolygons') {
+    if(class(shp) != 'sf') {
+      stop('shapefile (shp) must be sf (preferred) or SpatialPolygons object')
+    }
+  } else {
+    shp <- as(shp, "sf")   # convert SpatialPolygons to sf
+  }
 
   # check that sk results correspond to station results
   if(length(stations) != length(sk_result))
@@ -95,6 +167,13 @@ res_sk_map <- function(nerr_site_id
     stop('Specify a bounding box (bbox) in the form of c(X1, Y1, X2, Y2)')
   if(length(bbox) != 4)
     stop('Incorrect number of elements specified for bbox. Specify a bounding box (bbox) in the form of c(X1, Y1, X2, Y2)')
+  # Get min-max bounding coordinates, and format bbox correctly:
+  xmin <- min(bbox[c(1,3)])
+  xmax <- max(bbox[c(1,3)])
+  ymin <- min(bbox[c(2,4)])
+  ymax <- max(bbox[c(2,4)])
+  bbox <- c(xmin, ymin, xmax, ymax)
+
 
   # generate location labels
   loc <- get('sampling_stations')
@@ -102,22 +181,18 @@ res_sk_map <- function(nerr_site_id
   loc$abbrev <- toupper(substr(loc$Station.Code, start = 4, stop = 5))
   loc$sk_result <- sk_result
 
-  # Determine if r and l labs exist
-  if(!is.null(lab_loc)){
-    if('L' %in% lab_loc){left_labs <- grep('L', lab_loc)}
-    if('R' %in% lab_loc){right_labs <- grep('R', lab_loc)}
-  } else {
-    #default to left labels
-    left_labs <- c(1:4)
-  }
+  # Default all labels to left and then change if there is location information
+  loc$align <- -1.25
+  if(!is.null(lab_loc))
+    loc$align[lab_loc == 'R'] <- 1.25
 
-  # set map label styles
-  label_style <- list(
-    "box-shadow" = "none",
-    "border-radius" = "5px",
-    "font" = "bold 16px/1.5 'Helvetica Neue', Arial, Helvetica, sans-serif",
-    "padding" = "1px 5px 1px 5px"
-  )
+  # # set map label styles
+  # label_style <- list(
+  #   "box-shadow" = "none",
+  #   "border-radius" = "5px",
+  #   "font" = "bold 16px/1.5 'Helvetica Neue', Arial, Helvetica, sans-serif",
+  #   "padding" = "1px 5px 1px 5px"
+  # )
 
   # order selected stations alphabetically
   loc <- loc[order(loc$Station.Code), ]
