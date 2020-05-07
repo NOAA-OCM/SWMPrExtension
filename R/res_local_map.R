@@ -83,7 +83,7 @@ res_local_map <- function(nerr_site_id
                           , scale_pos = 'bottomleft') {
 
   # ====Uncomment for debugging=====================================
-  FIRST <- FALSE
+  FIRST <- TRUE
   library(SWMPrExtension)
   library(sf)
   library(dplyr)
@@ -145,7 +145,7 @@ res_local_map <- function(nerr_site_id
     scale_pos <- pos
     shp <- shp_fl
   }
-  # # ===========================================================================
+  # # ===============End debugging==============================================
 
   # check that a shape file exists
   if(class(shp) != 'SpatialPolygons') {
