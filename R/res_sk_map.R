@@ -222,7 +222,8 @@ res_sk_map <- function(nerr_site_id
   #   consistent with the original order.
 
   fill_colors <-  c('#444E65', '#A3DFFF', '#247BA0', '#0a0a0a')
-  res_point_size <-   c(4.9,  4.9,  4.5, 4.2)
+#  res_point_size <-   c(4.9,  4.9,  4.5, 4.2)
+  res_point_size <-   c(5,5,5,5)
   res_point_shape <-  c(24, 25, 21, 13)
 
   # These are the codes for the fill color, size and shape legends.
