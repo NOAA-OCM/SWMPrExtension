@@ -47,7 +47,7 @@
 #' sk_res <- c('inc', 'dec', 'dec', 'insig')
 #'
 #' ### plot
-#' res_sk_map('elk', stations = stns, sk_result = sk_res,
+#' res_sk_map('elk', stations = stns, sk_result = sk_result,
 #' bbox = bounding_elk, scale_pos = pos, shp = shp_fl)
 #'
 #' \donttest{
@@ -65,10 +65,10 @@
 #' sk_res <- c('inc', 'dec', 'dec', 'insig')
 #'
 #' ### plot
-#' res_sk_map('cbm', stations = stns, sk_result = sk_res, bbox = bounding_cbm_1,
+#' res_sk_map('cbm', stations = stns, sk_result = sk_result, bbox = bounding_cbm_1,
 #' scale_pos = pos, shp = shp_fl)
 #'
-#' res_sk_map('cbm', stations = stns, sk_result = sk_res, bbox = bounding_cbm_2,
+#' res_sk_map('cbm', stations = stns, sk_result = sk_result, bbox = bounding_cbm_2,
 #' scale_pos = pos, shp = shp_fl)
 #'
 #' }
@@ -83,13 +83,14 @@ res_sk_map <- function(nerr_site_id
                        , scale_pos = 'bottomleft') {
 
   #------------------Uncomment for debugging------------------------------------
-  FIRST <- TRUE
   library(SWMPrExtension)
   library(sf)
   library(dplyr)
   library(tmap)
   library(tmaptools)
+  library(ggmap)
   # library(osmplotr)
+  FIRST <- TRUE
   if(FIRST){
     ### DEBUG variables
     # Defaults
@@ -106,7 +107,7 @@ res_sk_map <- function(nerr_site_id
     sk_res <- c('inc', 'dec', 'dec', 'insig')
 
     ### plot call, reassign variables
-    ### res_sk_map('elk', stations = stns, sk_result = sk_res,
+    ### res_sk_map('elk', stations = stns, sk_result = sk_result,
     ###            bbox = bounding_elk, scale_pos = pos, shp = shp_fl)
     nerr_sit_id <- 'elk'
     stations <- stns
@@ -135,10 +136,10 @@ res_sk_map <- function(nerr_site_id
     sk_res <- c('inc', 'dec', 'dec', 'insig')
 
     ### plot
-    # res_sk_map('cbm', stations = stns, sk_result = sk_res, bbox = bounding_cbm_1,
+    # res_sk_map('cbm', stations = stns, sk_result = sk_result, bbox = bounding_cbm_1,
     #            scale_pos = pos, shp = shp_fl)
     #
-    # res_sk_map('cbm', stations = stns, sk_result = sk_res, bbox = bounding_cbm_2,
+    # res_sk_map('cbm', stations = stns, sk_result = sk_result, bbox = bounding_cbm_2,
     #            scale_pos = pos, shp = shp_fl)
     nerr_sit_id <- 'cbm'
     stations <- stns
@@ -174,7 +175,6 @@ res_sk_map <- function(nerr_site_id
   ymax <- max(bbox[c(2,4)])
   bbox <- c(xmin, ymin, xmax, ymax)
 
-
   # generate location labels
   loc <- get('sampling_stations')
   loc <- loc[(loc$Station.Code %in% stations), ]
@@ -192,12 +192,19 @@ res_sk_map <- function(nerr_site_id
   #   "border-radius" = "5px",
   #   "font" = "bold 16px/1.5 'Helvetica Neue', Arial, Helvetica, sans-serif",
   #   "padding" = "1px 5px 1px 5px"
-  # )
+  #   )
 
   # order selected stations alphabetically
   loc <- loc[order(loc$Station.Code), ]
 
-  # return(left_labs)
+  # Swap sign of longitudes, which seem to be positive in the data!
+  loc$Longitude <- -loc$Longitude
+  # convert location info to sf object
+  # use lat/lon, WGS84 projection, EPSG:4326.
+  loc_sf <- sf::st_as_sf(loc, coords = c("Longitude","Latitude"))
+  sf::st_crs(loc_sf) <- 4326
+  # Now transform into the projected web-mercator projection EPSG:3857
+  #loc_sf <- sf::st_transform(loc_sf, 3857)
 
   # Determine the types of results
   if('inc' %in% loc$sk_result){inc_icons <- grep('inc', loc$sk_result)}
@@ -205,107 +212,44 @@ res_sk_map <- function(nerr_site_id
   if('insig' %in% loc$sk_result){insig_icons <- grep('insig', loc$sk_result)}
   if('insuff' %in% loc$sk_result){insuff_icons <- grep('insuff', loc$sk_result)}
 
-  # Plot map
-  m <- leaflet(loc, options = leafletOptions(zoomControl = FALSE), width = 500, height = 500) %>%
-    addProviderTiles(leaflet::providers$Esri.WorldGrayCanvas) %>%  # Add default OpenStreetMap map tiles, CartoDB.Positron
-    addPolygons(data = shp, weight = 2, color = '#B3B300', fillColor = 'yellow')
+  # Define vectors for the colors, shapes and sizes as needed:
+  #   first and second entries are for states, "regular" and "highlighted,"
+  #   respectively; third and forth entries are for reserve locations,
+  #   "regular" and "highlighted" respecitvely;
+  #   5 - 8 are for showing S-K trend results: 5 = increasing, 6 = decreasing,
+  #   7 = insignificant, and 8 = insufficient data.
+  # This convention holds for colors, shapes and size parameters. The order is
+  #   consistent with the original order.
 
-  if(exists('left_labs')){
-    m <- m %>%
-      addLabelOnlyMarkers(lng = ~Longitude[left_labs] * -1, lat = ~Latitude[left_labs]
-                          , label = loc$abbrev[left_labs]
-                          , labelOptions = labelOptions(noHide = station_labs
-                                                        , direction = c('left')
-                                                        , opacity = 1
-                                                        , offset = c(-10, 0)
-                                                        , style = label_style))
-  }
+  fill_colors <-  c('#444E65', '#A3DFFF', '#247BA0', '#0a0a0a')
+  res_point_size <-   c(4.9,  4.9,  4.5, 4.2)
+  res_point_shape <-  c(24, 25, 21, 13)
 
+  # These are the codes for the fill color, size and shape legends.
+  break_vals <- c("inc", "dec", "insig", "insuff")
 
-  if(exists('right_labs')){
-    m <- m %>%
-      addLabelOnlyMarkers(lng = ~Longitude[right_labs] * -1, lat = ~Latitude[right_labs]
-                          , label = loc$abbrev[right_labs]
-                          , labelOptions = labelOptions(noHide = station_labs
-                                                        , direction = c('right')
-                                                        , opacity = 1
-                                                        , offset = c(10, 0)
-                                                        , style = label_style))
-  }
+  bg_map <- ggmap::get_stamenmap(bbox,
+                                 maptype = "toner-lite",
+                                 source = "stamen",
+                                 zoom = 13,
+                                 urlonly = FALSE)
 
-  if(exists('inc_icons')){
-    # create file path for icon image
-    ico_loc <- system.file('extdata', 'arrow_inc.png', package = 'SWMPrExtension')
+  m <- ggmap(bg_map) +
+    geom_sf(data = shp, aes(), inherit.aes = FALSE,
+            fill = "yellow", col = '#B3B300', alpha = 0.3) +
+    ggthemes::theme_map() +
+#    geom_sf_text(data = loc_sf, aes(), inherit.aes = FALSE) +
+    geom_sf(data = loc_sf, inherit.aes = FALSE,
+            aes(color = .data$sk_result,
+                fill = .data$sk_result,
+                shape = .data$sk_result,
+                size = .data$sk_result),
+            show.legend = FALSE) +
+    scale_color_manual(values = fill_colors, breaks = break_vals) +
+    scale_fill_manual(values = fill_colors, breaks = break_vals) +
+    scale_size_manual(values = res_point_size, breaks = break_vals) +
+    scale_shape_manual(values = res_point_shape, breaks = break_vals)
 
-    # make icon
-    icon_img <- makeIcon(iconUrl = ico_loc
-                     , iconWidth = 30
-                     , iconHeight = 40
-                     , iconAnchorX = 15
-                     , iconAnchorY = 15)
-
-    # plot custom icon
-    m <- m %>%
-      addMarkers(lng = ~Longitude[inc_icons] * -1, lat = ~Latitude[inc_icons]
-                 , icon = icon_img)
-  }
-
-  if(exists('dec_icons')){
-    # create file path for icon image
-    ico_loc <- system.file('extdata', 'arrow_dec.png', package = 'SWMPrExtension')
-
-    # make icon
-    icon_img <- makeIcon(iconUrl = ico_loc
-                         , iconWidth = 30
-                         , iconHeight = 40
-                         , iconAnchorX = 15
-                         , iconAnchorY = 15)
-
-    # plot custom icon
-    m <- m %>%
-      addMarkers(lng = ~Longitude[dec_icons] * -1, lat = ~Latitude[dec_icons]
-                 , icon = icon_img)
-  }
-
-  if(exists('insig_icons')){
-    # create file path for icon image
-    ico_loc <- system.file('extdata', 'bar_insig.png', package = 'SWMPrExtension')
-
-    # make icon
-    icon_img <- makeIcon(iconUrl = ico_loc
-                         , iconWidth = 30 #40
-                         , iconHeight = 15
-                         , iconAnchorX = 15 #20
-                         , iconAnchorY = 7)
-
-    # plot custom icon
-    m <- m %>%
-      addMarkers(lng = ~Longitude[insig_icons] * -1, lat = ~Latitude[insig_icons]
-                 , icon = icon_img)
-  }
-
-  if(exists('insuff_icons')){
-    # create file path for icon image
-    ico_loc <- system.file('extdata', 'x_insuff.png', package = 'SWMPrExtension')
-
-    # make icon
-    icon_img <- makeIcon(iconUrl = ico_loc
-                         , iconWidth = 25 #40
-                         , iconHeight = 25
-                         , iconAnchorX = 12.5
-                         , iconAnchorY = 12.5)
-
-    # plot custom icon
-    m <- m %>%
-      addMarkers(lng = ~Longitude[insuff_icons] * -1, lat = ~Latitude[insuff_icons]
-                 , icon = icon_img)
-  }
-
-
-
-  m <- m %>%
-    addScaleBar(position = scale_pos) %>%
-    fitBounds(bbox[1], bbox[2], bbox[3], bbox[4])
 
   return(m)
 }

@@ -83,14 +83,14 @@ res_local_map <- function(nerr_site_id
                           , scale_pos = 'bottomleft') {
 
   # ====Uncomment for debugging=====================================
-  FIRST <- TRUE
   library(SWMPrExtension)
   library(sf)
   library(dplyr)
   library(tmap)
   library(tmaptools)
   # library(osmplotr)
-    if(FIRST){
+  FIRST <- TRUE
+  if(FIRST){
     ### DEBUG variables
     # Defaults
     station_labs = TRUE
@@ -171,7 +171,8 @@ res_local_map <- function(nerr_site_id
   ymin <- min(bbox[c(2,4)])
   ymax <- max(bbox[c(2,4)])
   bbox <- c(xmin, ymin, xmax, ymax)
-  # generate location labels
+
+    # generate location labels
   loc <- get('sampling_stations')
   loc <- loc[(loc$Station.Code %in% stations), ]
   loc$abbrev <- toupper(substr(loc$Station.Code, start = 4, stop = 5))
@@ -205,8 +206,7 @@ res_local_map <- function(nerr_site_id
   # m <- leaflet(loc, options = leafletOptions(zoomControl = FALSE), width = 500, height = 500) %>%
   #   addProviderTiles(leaflet::providers$Esri.WorldGrayCanvas) %>%  # Add default OpenStreetMap map tiles, CartoDB.Positron
   #   addPolygons(data = shp, weight = 2, color = '#B3B300', fillColor = 'yellow')
-  #
-  #library(osmplotr)
+
   bg_map <- tmaptools::read_osm(bbox, type = "stamen-toner", refsys = 4326) # sf::st_bbox(shp), type = "osm")
   # bg_bing <- tmaptools::read_osm(bbox, type = "bing")
   m <- tmap::tm_shape(bg_map) +
