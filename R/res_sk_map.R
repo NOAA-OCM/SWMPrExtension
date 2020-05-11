@@ -215,7 +215,7 @@ res_sk_map <- function(nerr_site_id
   # Set background map zoom level automatically if not specified
   if(is.null(zoom)) {
     diag_size <- sqrt((xmax-xmin)^2 +(ymax-ymin)^2)
-    zoom <- 13 - ceiling(sqrt(10*diag_size))
+    zoom <- 14 - ceiling(sqrt(10*diag_size))
     print(paste("Zoom level calculated as", zoom, sep = " "))
   }
   print(paste("maptype is ",maptype))
@@ -224,9 +224,10 @@ res_sk_map <- function(nerr_site_id
                                  maptype = maptype,
                                  source = "stamen",
                                  zoom = zoom,
+                                 epsg = 3785,
                                  urlonly = FALSE)
 
-  m <- ggmap(bg_map) +
+  m <- ggmap::ggmap(bg_map) +
     geom_sf(data = shp, aes(), inherit.aes = FALSE,
             fill = "yellow", col = '#B3B300', alpha = 0.3) +
     ggthemes::theme_map() +
