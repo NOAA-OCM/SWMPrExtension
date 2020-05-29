@@ -8,25 +8,24 @@
 #' @param agg_county logical, should counties be aggregated to the state-level? Defaults to \code{TRUE}
 #'
 #' @import ggplot2
-#' @import dplyr
 #'
+#' @importFrom dplyr filter left_join summarise transmute
 #' @importFrom ggthemes theme_map
-##' @importFrom maptools elide spRbind unionSpatialPolygons
-#' @importFrom rgdal readOGR
+#' @importFrom magrittr "%>%"
+#' @importFrom maps map
 #' @importFrom rlang .data
-##' @importFrom sp CRS bbox proj4string spTransform
-#' @importFrom utils download.file unzip
+#' @importFrom sf read_sf st_as_sf st_crs
 #' @importFrom tidyr separate
-#' @importFrom sf st_crs st_as_sf
-#' @importFrom maps map county state world
+#' @importFrom utils download.file unzip
 #'
 #' @export
 #'
 #' @details Create a base map of the US with options for including AK, HI, and PR. The user can choose which states and NERRS reserves to highlight.
-#' This function was developed, in part, from a blog post by Bob Rudis.
+#' An early {sp}-based version of this function by Julie Padilla was developed, in part, from a blog post by Bob Rudis. The current {sf}-based version,
+#' by Dave Eslinger, uses an approach from  the r-spatial tutorial by Mel Moreno and Mathieu Basille.
 #'
-#' @author Bob Rudis, Julie Padilla
-#' Maintainer: Julie Padilla
+#' @author Julie Padilla, Dave Eslinger
+#' Maintainer: Dave Eslinger
 #'
 #' @concept analyze
 #'
@@ -34,6 +33,7 @@
 #'
 #' @references
 #' Rudis, Bob. 2014. "Moving The Earth (well, Alaska & Hawaii) With R". rud.is (blog). November 16, 2014. https://rud.is/b/2014/11/16/moving-the-earth-well-alaska-hawaii-with-r/
+#' Moreno, Mel, and Basille, Mathieu Basille. 2018. "Drawing beautiful maps programmatically with R, sf and ggplot2 — Part 3: Layouts" r-spatial (blog). October 25, 2018. https://www.r-spatial.org/r/2018/10/25/ggplot2-sf-3.html
 #'
 #' @examples
 #' ##National map highlighting states with NERRS
@@ -59,14 +59,8 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
                         , highlight_reserves = NULL
                         , agg_county = TRUE) {
 
-  # Function used to rotate geometry of {sf} objects
-  # rot = function(a) matrix(c(cos(a), sin(a), -sin(a), cos(a)), 2, 2)
-
-  # Projection used is that used by the US National Atlas, which is a North American
-  #   Lambert Azimuthal Equal Area projection, EPSG = 2163,
-  #   (https://spatialreference.org/ref/epsg/2163/)
-  # epsg = 2163
-
+  # # ========================================================================================================
+  # # Get Census geometry
   # get_US_county_shape <- function() {
   #   shape <- "cb_2018_us_county_20m"
   #   # shape <- "cb_2018_us_state_20m"
@@ -76,186 +70,95 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   #   utils::download.file(paste(remote,shape,".zip",sep = ""),
   #                        destfile = file.path(local_dir, zipped))
   #   unzip(file.path(local_dir, zipped), exdir = local_dir)
-  #   sf::st_read(file.path(local_dir, paste(shape,".shp", sep = "") ) )
+  #   sf::read_sf(file.path(local_dir, paste(shape,".shp", sep = "") ) )
   # }
-  # us <- get_US_county_shape()
-  # # project it to Lambert Azimuthal Equal Area, EPSG:2163
-  # us_laea <- sf::st_transform(us, epsg)
-  # save(us_laea,file = "data/us_laea.rda")
+  # us_4269NEW <- get_US_county_shape() %>%
+  #   dplyr::transmute(fips = STATEFP, area = ALAND)
+  # # Keep in native lat/lon, NAD83 projection, EPSG:4269.
+  # save(us_4269, file = "data/us_4269.rda")
+  # # ========================================================================================================
 
-  # us_laea <- get('us_laea')
-  #
-  # # remove old states and put new ones back in
-  # us_laea_mod <- filter(us_laea, ! STATEFP %in% c("02", "15", "72") )
-  #
-  # # usc_laea_mod <- usc_laea %>%
-  # #   filter(! STATEFP %in% c("02", "15", "72") )
-  #
-  #
-  # if('AK' %in% incl) {
-  #   # extract, then rotate, shrink & move alaska (and reset projection)
-  #   # need to use state IDs via # https://www.census.gov/geo/reference/ansi_statetables.html
-  #   alaska <- us_laea[us_laea$STATEFP == "02", ] %>%
-  #     sf::st_simplify(preserveTopology = TRUE, dTolerance = 5e3 )
-  #   shift = c(1.2e6, -4.9e6)
-  #   shift = c(0.6e6, -2.e6)
-  #   alaska$geometry = (alaska$geometry) * rot(-50 * pi/180) * .45
-  #   sf::st_crs(alaska) <- sf::st_crs(us_laea)
-  #   alaska$geometry[[1]] <- alaska$geometry[[1]] + sf::st_point(shift)
-  #   sf::st_crs(alaska) <- sf::st_crs(us_laea)
-  #   us_laea_mod <- sf::st_union(us_laea_mod, alaska)
-  #   # plot(sf::st_geometry(us_laea_mod2), border = "green")
-  #  }
-  #
-  # if('HI' %in% incl) {
-  #   hawaii <- us_laea[us_laea$STATEFP == "15", ]
-  #   shift = c(3.8e6, 1.8e6)
-  #   hawaii$geometry = (hawaii$geometry ) * rot(-35 * pi/180)
-  #   sf::st_crs(hawaii) <- sf::st_crs(us_laea)
-  #   hawaii$geometry[[1]] <- hawaii$geometry[[1]] + sf::st_point(shift)
-  #   # Can add some offsets directly to the $geometry list to #  move the feature
-  #   sf::st_crs(hawaii) <- sf::st_crs(us_laea)
-  #   us_laea_mod <- sf::st_union(us_laea_mod, hawaii)
-  #   # plot(st_geometry(us_laea_mod), border = "blue")
-  # }
-  #
-  # if('PR' %in% incl) {
-  #   # extract, then rotate & shift pr
-  #   pr <- us_laea[us_laea$STATEFP == "72", ]
-  #   shift = c( -1.4e6, 2e3)
-  #   pr$geometry[[1]] <- pr$geometry[[1]] + sf::st_point(shift)
-  #   # Can add some offsets directly to the $geometry list to #  move the feature
-  #   sf::st_crs(pr) <- sf::st_crs(us_laea)
-  #   us_laea_mod <- sf::st_union(us_laea_mod, pr)
-  #   # plot(st_geometry(us_laea_mod), border = "red")
-  # }
-  # -------------------------------------
-  library(maps)
-  library(dplyr)
+  # read in saved US Census geometry {sf} object and merge counties if needed
+  us_4269 <- get('us_4269')
 
-  fips <- state.fips %>%
-    tidyr::separate(polyname, sep = ":", into = c("state",NA),
-                    fill = "right", remove = TRUE) %>%
-    transmute(fips = sprintf("%02d",fips), state, abb) %>%
-    unique()
-
-    if(agg_county) {
-      conus <- sf::st_as_sf(maps::map("state", plot = FALSE, fill = TRUE)) %>%
-        transmute(state = as.character(ID)) %>%
-        left_join(fips, by = "state")
-    } else {
-      print("Warning: County names/boundaries only available for CONUS")
-      conus <- sf::st_as_sf(maps::map("county", plot = FALSE, fill = TRUE)) %>%
-        tidyr::separate(ID, sep = ",", into = c("state","county")) %>%
-        left_join(fips, by = "state")
+  if(agg_county) {
+    usa <- us_4269 %>%
+      dplyr::group_by(.data$fips) %>%
+      dplyr::summarise(area = sum(.data$area))
+  } else {
+    usa <- us_4269
   }
 
-
-  # The {maps} state and countylibrary only has data for CONUS, incl. DC
-  # so get a "usa" data set from the world data, which includes HI and AK, but
-  # has CONUS without interior boundaries.
-  usa <- sf::st_as_sf(maps::map("world", plot = FALSE, fill = TRUE)) %>%
-    transmute(admin = as.character(ID)) %>%
-    filter(admin == "USA")
-
-  # Lastly, grab Puerto Rico from the same world database
-  puertorico <- sf::st_as_sf(maps::map("world", plot = FALSE, fill = TRUE)) %>%
-    transmute(admin = as.character(ID)) %>%
-    filter(admin == "Puerto Rico")
-
   # debugging highlight_states
-  highlight_states <- c("02","12","15", "16","06","72")
-  highlight_reserves <- c('pdb', 'sos', 'sfb', 'elk', 'tjr', 'kac')
+  # highlight_states <- c("02","12","15", "16","06","72")
+  # highlight_reserves <- c('pdb', 'sos', 'sfb', 'elk', 'tjr', 'kac')
 
-    # Get reserve locations for plotting
+  # Get reserve locations for plotting
   res_locations <- reserve_locs(incl = incl)
-
 
   # Define fill colors as needed, colors 1 & 2 are for states, 3 and 4 are for reserve locations:
   fill_colors  <-  c('#f8f8f8', '#cccccc', '#444e65', 'yellow')
+  # fill_colors  <-  c('red', 'blue', 'green', 'yellow')
   line_color  <-  '#999999'
-  res_point_size <- c(2, 3)
-  res_point_shape <- c(21, 21)
+  res_point_size <- c(0, 0, 2, 3)
+  res_point_shape <- c(0, 0, 21, 21)
+
+  # These are the codes for the fill color, size and shape legends.
+  break_vals <- c("0","1","3","4")
 
   # Add fields for reserve point color and size, depending on highlight value
-  if(is.null(highlight_reserves)) {
-    res_locations$flag <- FALSE
-  } else {
-    res_locations$flag <- ifelse(res_locations$NERR.Site.ID
-                                          %in% highlight_reserves, "4", "3")
-  }
-
   if(is.null(highlight_states)) {
-    conus$flag <- "0"
-    usa$ak_flag <- "0"
-    usa$hi_flag <- "0"
-    puertorico$flag <- "0"
+    usa$flag <- ("0")
   } else {
-    conus$flag <- ifelse(conus$fips %in% highlight_states, "1", "0")
-    usa$ak_flag <-  ifelse("02" %in% highlight_states, "1", "0")
-    usa$hi_flag <-  ifelse("15" %in% highlight_states, "1", "0")
-    puertorico$flag <-  ifelse("72" %in% highlight_states, "1", "0")
+    usa$flag <- ifelse(usa$fips %in% highlight_states, "1", "0")
+ }
+
+  if(is.null(highlight_reserves)) {
+    res_locations$rflag <- "3"
+  } else {
+    res_locations$rflag <- ifelse(res_locations$NERR.Site.ID
+                                  %in% highlight_reserves, "4", "3")
   }
 
-    # Now we have the data in lat/lon, WGS84, EPSG=4326.  We can plot
-  # using that data and project and crop to desired projection as the
-  # final ggplot step for each map.
-
-  # Create area-appropriate maps using WGS84 = EPSG:4326
-  # These will be projected and properly bounded once Reserve locations are added
-
-  mainland <- ggplot(data = conus) +
-    geom_sf(aes(fill = flag), color = line_color, size = 0.15, show.legend = FALSE) +
+  # Create area-appropriate maps using the lat lon data.  These will
+  # be projected and properly bounded once Reserve locations are added
+  us_base <- ggplot(data = usa) +
+    geom_sf(aes(fill = .data$flag), color = line_color, size = 0.15, show.legend = FALSE) +
     ggthemes::theme_map() +
-    geom_sf(data = res_locations, aes(fill = flag, shape = flag, size = flag), show.legend = FALSE) +
-    scale_fill_manual(values = fill_colors) +
-    scale_size_manual(values = res_point_size) +
-    scale_shape_manual(values = res_point_shape) +
+    geom_sf(data = res_locations, aes(color = .data$rflag, fill = .data$rflag, shape = .data$rflag,
+                                      size = .data$rflag), show.legend = FALSE) +
+    scale_color_manual(values = fill_colors, breaks = break_vals) +
+    scale_fill_manual(values = fill_colors, breaks = break_vals) +
+    scale_size_manual(values = res_point_size, breaks = break_vals) +
+    scale_shape_manual(values = res_point_shape, breaks = break_vals)
+
+  mainland <- us_base +
     coord_sf(crs = sf::st_crs(2163), xlim = c(-2500000, 2500000),
-              ylim = c(-2300000, 730000))
+             ylim = c(-2300000, 730000))
 
-  alaska <- ggplot(data = usa) +
-    geom_sf(aes(fill = ak_flag), color = line_color, size = 0.15, show.legend = FALSE) +
-    ggthemes::theme_map() +
-    geom_sf(data = res_locations, aes(fill = flag, shape = flag, size = flag), show.legend = FALSE) +
-    scale_fill_manual(values = fill_colors) +
-    scale_size_manual(values = res_point_size) +
-    scale_shape_manual(values = res_point_shape) +
+  alaska <- us_base +
     coord_sf(crs = sf::st_crs(3467), xlim = c(-2400000, 1600000),
              ylim = c(200000, 2500000), expand = FALSE, datum = NA)
 
-  hawaii  <- ggplot(data = usa) +
-    geom_sf(aes(fill = hi_flag), color = line_color, size = 0.15, show.legend = FALSE) +
-    ggthemes::theme_map() +
-    geom_sf(data = res_locations, aes(fill = flag, shape = flag, size = flag), show.legend = FALSE) +
-    scale_fill_manual(values = fill_colors) +
-    scale_size_manual(values = res_point_size) +
-    scale_shape_manual(values = res_point_shape) +
+  hawaii  <- us_base +
     coord_sf(crs = sf::st_crs(4135), xlim = c(-161, -154),
-               ylim = c(18, 23), expand = FALSE, datum = NA)
+             ylim = c(18, 23), expand = FALSE, datum = NA)
 
-  pr <- ggplot(data = puertorico) +
-    geom_sf(aes(fill = flag), color = line_color, size = 0.15, show.legend = FALSE) +
-    ggthemes::theme_map() +
-    geom_sf(data = res_locations, aes(fill = flag, shape = flag, size = flag), show.legend = FALSE) +
-    scale_fill_manual(values = fill_colors) +
-    scale_size_manual(values = res_point_size) +
-    scale_shape_manual(values = res_point_shape) +
+  pr <- us_base +
     coord_sf(crs = sf::st_crs(4437),xlim = c(12000,350000),
              ylim = c(160000, 320000), expand = FALSE, datum = NA)
 
-  #
-  # # add reserve locations and project with final projection & boundaries
-  #
-  # res_main <- sf::st_transform(
-  #   res_locations[!res_locations$State %in%
-  #                       c("ak", "hi", "pr"), ], 2163)
-  # mainland +
-  #   geom_sf(data = res_main, shape = 21, size = 2) +
-  #   coord_sf(crs = sf::st_crs(2163), xlim = c(-2500000, 2500000),
-  #            ylim = c(-2300000, 730000))
-
-
+  # Now combine the smaller maps, as grobs, with annotation_custom into final object "gg"
+  gg <- mainland +
+    annotation_custom(grob = ggplotGrob(alaska),
+                      xmin = -2750000, xmax = -2750000 + (1600000 - (-2400000)) / 2.0,
+                      ymin = -2450000, ymax = -2450000 + (2500000 - 200000) / 2.0) +
+    annotation_custom(grob = ggplotGrob(hawaii),
+                      xmin =  -900000, xmax =  -900000 + (-154 - (-161)) * 135000,
+                      ymin = -2450000, ymax = -2450000 + (23 - 18) * 135000) +
+    annotation_custom(grob = ggplotGrob(pr),
+                      xmin =   600000, xmax =   600000 + (350000 - 12000) * 3,
+                      ymin = -2390000, ymax = -2390000 + (320000 - 160000) * 3)
 
   return(gg)
 }

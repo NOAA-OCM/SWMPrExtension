@@ -21,7 +21,7 @@ res_local_map(
 
 \item{bbox}{a bounding box associated with the reserve. Must be in the format of c(X1, Y1, X2, Y2)}
 
-\item{shp}{SpatialPolygons object}
+\item{shp}{{sf} data frame (preferred) or SpatialPolygons object}
 
 \item{station_labs}{logical, should stations be labeled? Defaults to \code{TRUE}}
 
@@ -30,7 +30,7 @@ res_local_map(
 \item{scale_pos}{scale_pos where should the scale be placed? Options are 'topleft', 'topright', 'bottomleft', or 'bottomright'. Defaults to 'bottomleft'}
 }
 \value{
-returns a leaflet object
+returns a {ggplot} or? {tmap} object
 }
 \description{
 Create a stylized reserve-level map for use with the reserve level reporting template
@@ -86,6 +86,6 @@ lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
 
 }
 \author{
-Julie Padilla
+Julie Padilla, Dave Eslinger
 }
 \concept{analyze}

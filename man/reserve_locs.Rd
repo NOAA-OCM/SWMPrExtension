@@ -21,6 +21,6 @@ Create a data.frame of selected NERRS locations for plotting with \code{res_nati
 A helper function used to generate a \code{data.frame} of selected reserve locations for use with \code{\link{res_national_map}}.
 }
 \author{
-Julie Padilla
+Julie Padilla, Dave Eslinger
 }
 \concept{miscellaneous}

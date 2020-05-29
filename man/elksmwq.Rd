@@ -4,7 +4,9 @@
 \name{elksmwq}
 \alias{elksmwq}
 \title{Water Quality Data from Elkhorn Slough - South Marsh Station}
-\format{A \code{\link[base]{data.frame}} object}
+\format{
+A \code{\link[base]{data.frame}} object
+}
 \source{
 \href{http://cdmo.baruch.sc.edu/}{CDMO}
 }

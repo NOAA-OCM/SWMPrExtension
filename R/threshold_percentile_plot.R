@@ -128,7 +128,7 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
   # determine if target year is present within the data
   if(!is.null(target_yr)) {
     if(!(target_yr %in% unique(year(x$datetimestamp)))) {
-      warning('User-specified target year is not present in the data set. target_yr argument will be set to max year in the data set')
+      warning('User-specified target year is not present in the data set. target_yr argument will be set to max year in the data set.')
       target_yr <- max(year(x$datetimestamp))
     }
   }
@@ -145,20 +145,25 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
   y_trans <- ifelse(log_trans, 'log10', 'identity')
   y_label <- y_labeler(param = param, converted = conv)
 
-  ##filter for range
+  # Keep just needed parameter and datetimestamp in dat
+  dat <- dat[ , c('datetimestamp', param)]
+
+  # add year to dat
+  dat$year <- lubridate::year(dat$datetimestamp)
+
+  # add month if needed
+  if(by_month) {
+    dat$month <- lubridate::month(dat$datetimestamp)
+  }
+
+  # add dummy
+  dat$dummy <- -999
+
+  #filter for historical range
   if(!is.null(hist_rng)) {
-    dat <- dat %>% filter(lubridate::year(.data$datetimestamp) <= max(hist_rng)
+    dat_subset <- dat %>% filter(lubridate::year(.data$datetimestamp) <= max(hist_rng)
                           , lubridate::year(.data$datetimestamp) >= min(hist_rng))
   }
-
-  dat_subset <- dat[ , c('datetimestamp', param)]
-  dat_subset$year <- lubridate::year(dat_subset$datetimestamp)
-
-  if(by_month) {
-    dat_subset$month <- lubridate::month(dat_subset$datetimestamp)
-  }
-
-  dat_subset$dummy <- -999
 
   # calculate percentiles and format for plotting ----
   if(length(percentiles) > 1) {
@@ -173,7 +178,8 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
   }
 
   if(!is.null(target_yr)){
-    dat_subset <- dat_subset %>% filter(year == target_yr)
+  # Get Year data from original dat data, in case target year is outside historical year range
+    dat_subset <- dat %>% filter(year == target_yr)
   }
 
   mn_yr <- min(lubridate::year(dat_subset$datetimestamp))

@@ -9,25 +9,28 @@
 #' @param sk_fill_colors chr vector of colors used to fill seasonal kendall result markers
 #' @param agg_county logical, should counties be aggregated to the state-level? Defaults to \code{TRUE}
 #'
+#' @import dplyr
 #' @import ggplot2
 #'
-#' @importFrom dplyr left_join
+#' @importFrom dplyr filter left_join summarise transmute
 #' @importFrom ggthemes theme_map
-#' @importFrom maptools elide spRbind unionSpatialPolygons
-#' @importFrom rgdal readOGR
+#' @importFrom magrittr "%>%"
+#' @importFrom maps map
 #' @importFrom rlang .data
-#' @importFrom sp CRS bbox proj4string spTransform
+#' @importFrom sf read_sf st_as_sf st_crs
+#' @importFrom tidyr separate
 #' @importFrom utils download.file unzip
 #'
 #' @export
 #'
 #' @details Create a base map of the US with options for including AK, HI, and PR. The user can choose which states and NERRS reserves to highlight.
-#' This function was developed, in part, from a blog post by Bob Rudis.
+#' An early {sp}-based version of this function by Julie Padilla was developed, in part, from a blog post by Bob Rudis. The current {sf}-based version,
+#' by Dave Eslinger,  uses an approach from the r-spatial tutorial by Mel Moreno and Mathieu Basille.
 #'
 #' To ensure the proper plotting of results, the order of the results vector for \code{sk_results} should match the order of the reserves vector for \code{sk_reserves}.
 #'
-#' @author Bob Rudis, Julie Padilla
-#' Maintainer: Julie Padilla
+#' @author Julie Padilla, Dave Eslinger
+#' Maintainer: Dave Eslinger
 #'
 #' @concept analyze
 #'
@@ -35,169 +38,142 @@
 #'
 #' @references
 #' Rudis, Bob. 2014. "Moving The Earth (well, Alaska & Hawaii) With R". rud.is (blog). November 16, 2014. https://rud.is/b/2014/11/16/moving-the-earth-well-alaska-hawaii-with-r/
+#' Moreno, Mel, and Basille, Mathieu Basille. 2018. "Drawing beautiful maps programmatically with R, sf and ggplot2 — Part 3: Layouts" r-spatial (blog). October 25, 2018. https://www.r-spatial.org/r/2018/10/25/ggplot2-sf-3.html
 #'
 #' @examples
 #' ##National map highlighting west coast states and NERRS (including AK)
 #' nerr_states_west <- c('02', '06', '41', '53')
 #'
 #' nerrs_codes <- c('pdb', 'sos', 'sfb', 'elk', 'tjr', 'kac')
+#'
 #' nerrs_sk_results <- c('inc', 'inc', 'dec', 'insig', 'insuff', 'dec')
 #'
-#' national_sk_map(sk_reserve = nerrs_codes, sk_results = nerrs_sk_results)
+#' national_sk_map(highlight_states = nerr_states_west,
+#'                 sk_reserve = nerrs_codes, sk_results = nerrs_sk_results)
 #'
 national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
                         , highlight_states = NULL
                         , sk_reserves = NULL
                         , sk_results = NULL
-                        , sk_fill_colors = c('#247BA0', '#A3DFFF', '#444E65', '#595959')
+                        , sk_fill_colors = c('#444E65', '#A3DFFF',
+                                             '#247BA0', '#0a0a0a')
                         , agg_county = TRUE) {
 
   if(length(sk_reserves) != length(sk_results))
-    stop('A seasonal kendall result is required for each reserve specified in sk_reserve')
+    stop('A seasonal kendall result is required for each reserve in sk_reserve')
 
-  # Projection used is actually a North American Lambert Azimuthal Equal Area projection,
-  #   (https://spatialreference.org/ref/sr-org/north-american-lambert-azimuthal-equal-area-projection/)
-  #   not an Albers Equal Area projection. Changing all "_aea" to "_laea" to correct the
-  #   labelling issue
-
-  # get_US_county_2010_shape <- function() {
-  #   dir <- tempdir()
-  #   utils::download.file("http://www2.census.gov/geo/tiger/GENZ2010/gz_2010_us_050_00_500k.zip", destfile = file.path(dir, "gz_2010_us_050_00_500k.zip"))
-  #   unzip(file.path(dir, "gz_2010_us_050_00_500k.zip"), exdir = dir)
-  #   rgdal::readOGR(file.path(dir, "gz_2010_us_050_00_500k.shp"))
+  # # ==========================================================================
+  # # Get Census geometry
+  #  get_US_county_shape <- function() {
+  #   shape <- "cb_2018_us_county_20m"
+  #   # shape <- "cb_2018_us_state_20m"
+  #
+  #   remote <- "https://www2.census.gov/geo/tiger/GENZ2018/shp/"
+  #   zipped <- paste(shape,".zip", sep = "")
+  #   local_dir <- tempdir()
+  #   utils::download.file(paste(remote,shape,".zip",sep = ""),
+  #                        destfile = file.path(local_dir, zipped))
+  #   unzip(file.path(local_dir, zipped), exdir = local_dir)
+  #   sf::read_sf(file.path(local_dir, paste(shape,".shp", sep = "") ) )
   # }
-  #
-  # us <- get_US_county_2010_shape()
-  # # loc <- get('sampling_stations')
-  #
-  # # project it to Lambert Azimuthal Equal Area, EPSG:2163
-  # # projString <- "+init=epsg:2163"
-  # NOTE BENE: Actually using non-standard WGS84 LAEA, no EPSG code
-  # # projString <- "+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs"
-  # us_laea <- sp::spTransform(us, sp::CRS(projString))
-  # us_laea@data$id <- rownames(us_laea@data)
-  # save(us_laea,file = "data/us_laea.rda")
+  # us_4269 <- get_US_county_shape() %>%
+  #   dplyr::transmute(fips = STATEFP, area = ALAND)
+  # # Keep in native lat/lon, NAD83 projection, EPSG:4269.
+  # save(us_4269, file = "data/us_4269.rda")
+  # # ==========================================================================
 
-  us_laea <- get('us_laea')
-
-  # remove old states and put new ones back in
-  us_laea_mod <- us_laea[!us_laea$STATE %in% c("02", "15", "72"),]
-  sp::proj4string(us_laea_mod) <- sp::proj4string(us_laea)
-
-  if('AK' %in% incl) {
-    # extract, then rotate, shrink & move alaska (and reset projection)
-    # need to use state IDs via # https://www.census.gov/geo/reference/ansi_statetables.html
-    alaska <- us_laea[us_laea$STATE == "02", ]
-    alaska <- maptools::elide(alaska, rotate = -50)
-    alaska <- maptools::elide(alaska, scale = max(apply(sp::bbox(alaska), 1, diff)) / 2.3)
-    alaska <- maptools::elide(alaska, shift = c(-2100000, -2500000))
-    sp::proj4string(alaska) <- sp::proj4string(us_laea_mod)
-
-    us_laea_mod <- maptools::spRbind(us_laea_mod, alaska)
-  }
-
-  if('HI' %in% incl) {
-    # extract, then rotate & shift hawaii
-    hawaii <- us_laea[us_laea$STATE == "15",]
-    hawaii <- maptools::elide(hawaii, rotate = -35)
-    hawaii <- maptools::elide(hawaii, shift=c(5400000, -1400000))
-    sp::proj4string(hawaii) <- sp::proj4string(us_laea_mod)
-
-    us_laea_mod <- maptools::spRbind(us_laea_mod, hawaii)
-  }
-
-  if('PR' %in% incl) {
-    # extract, then rotate & shift pr
-    pr <- us_laea[us_laea$STATE == "72", ]
-    pr <- maptools::elide(pr, shift = c(-1400000,2000))
-    sp::proj4string(pr) <- sp::proj4string(us_laea_mod)
-
-    us_laea_mod <- maptools::spRbind(us_laea_mod, pr)
-  }
+  # read in saved US Census geometry {sf} object and merge counties if needed
+  us_4269 <- get('us_4269')
 
   if(agg_county) {
-    us_laea.diss <- maptools::unionSpatialPolygons(us_laea_mod, IDs = us_laea_mod@data$STATE)
-    us_laea_mod <- us_laea.diss
-  }
-
-  # get ready for ggplotting it... this takes a cpl seconds ----
-  map <- ggplot2::fortify(us_laea_mod, region = "GEO_ID")
-
-  # Prep reserve locations for plotting
-  df_loc <- data.frame(NERR.Site.ID = sk_reserves, sk_res = sk_results, stringsAsFactors = FALSE)
-
-  reserve_locations <- reserve_locs(incl = incl)
-  reserve_locations <- reserve_locations[reserve_locations$NERR.Site.ID %in% sk_reserves, ]
-  reserve_locations <- dplyr::left_join(reserve_locations, df_loc)
-
-  # plot it----
-  # highlight some states
-  gg <- ggplot()
-  gg <- gg + coord_equal()
-  gg <- gg + ggthemes::theme_map()
-  gg <- gg + theme(plot.margin = unit(c(0, 0, 0, 0), "points")) #trbl
-
-  if(is.null(highlight_states)) {
-    gg <- gg + geom_map(data = map, map = map
-                        , aes_string('long', 'lat', map_id = 'id')
-                        , fill = '#f8f8f8', color = '#999999'
-                        , size = 0.15, show.legend = FALSE)
+    usa <- us_4269 %>%
+      dplyr::group_by(.data$fips) %>%
+      dplyr::summarise(area = sum(.data$area))
   } else {
-    map$flag <- ifelse(map$id %in% highlight_states, TRUE, FALSE)
-
-    gg <- gg + geom_map(data = map, map = map
-                        , aes_string('long', 'lat', map_id = 'id', fill = 'flag')
-                        , color = '#999999', size = 0.15, show.legend = FALSE) +
-      scale_fill_manual(values = c('#f8f8f8', '#BBBBBB'))
+    usa <- us_4269
   }
 
-  # add reserves with insufficient data for trend
-  if('insuff' %in% sk_results) {
+  # # --------------- FOR DEBUGGING -------------------------------
+  # highlight_states <- c("02","12","15", "16","06","72")
+  # sk_reserves  <- c('pdb', 'sos', 'sfb', 'elk', 'tjr', 'kac')
+  # sk_results <- c('inc', 'inc', 'dec', 'insig', 'insuff', 'insuff')
+  # sk_fill_colors = c('#444E65', '#A3DFFF', '#247BA0', '#0a0a0a') # c('#247BA0', '#A3DFFF', '#444E65', '#595959')
+  # # --------------- END DEBUGGING -------------------------------
 
-    df <- reserve_locations[reserve_locations$sk_res == 'insuff', ]
+  # Get reserve locations for plotting
+  # Prep reserve locations for plotting
+  df_loc <- data.frame(NERR.Site.ID = sk_reserves, sk_res = sk_results,
+                       stringsAsFactors = FALSE)
 
-    gg <-
-      gg +
-      geom_point(data = df
-                 , aes_string(x = 'Longitude', y = 'Latitude'), shape = 4
-                 , color = sk_fill_colors[4], size = 3, stroke = 1.5)
+  res_locations <- reserve_locs(incl = incl) %>%
+    filter(.data$NERR.Site.ID %in% sk_reserves) %>%
+    dplyr::left_join(df_loc)
+
+
+  # Define vectors for the colors, shapes and sizes as needed:
+  #   first and second entries are for states, "regular" and "highlighted,"
+  #   respectively; third and forth entries are for reserve locations,
+  #   "regular" and "highlighted" respecitvely;
+  #   5 - 8 are for showing S-K trend results: 5 = increasing, 6 = decreasing,
+  #   7 = insignificant, and 8 = insufficient data.
+  # This convention holds for colors, shapes and size parameters. The order is
+  #   consistent with the original order.
+
+  fill_colors <-  c(c('#f8f8f8', '#cccccc', '#444e65', 'yellow'), sk_fill_colors)
+  # fill_colors  <-  c('red', 'green', 'blue', 'yellow')
+  line_color  <-  '#999999'
+  res_point_size <-   c(0, 0,  2,  3,  4.9,  4.9,  4.5, 4.2)
+  res_point_shape <-  c(0, 0, 21, 21, 24, 25, 21, 13)
+
+  # These are the codes for the fill color, size and shape legends.
+  break_vals <- c("0", "1", "3", "4", "inc", "dec", "insig", "insuff")
+
+  # Add fields for reserve point color and size, depending on highlight value
+  if(is.null(highlight_states)) {
+    usa$flag <- ("0")
+  } else {
+    usa$flag <- ifelse(usa$fips %in% highlight_states, "1", "0")
   }
 
-  # add reserves with insignificant trend
-  if('insig' %in% sk_results) {
+  # Create master map with appropriate styles in lat-lon space.  Then create smaller maps
+  # projected and properly bounded for their region.
+  us_base <- ggplot(data = usa) +
+    geom_sf(aes(fill = .data$flag), color = line_color, size = 0.15, show.legend = FALSE) +
+    ggthemes::theme_map() +
+    geom_sf(data = res_locations, aes(color = .data$sk_res, fill = .data$sk_res, shape = .data$sk_res,
+                                      size = .data$sk_res), show.legend = FALSE) +
+    scale_color_manual(values = fill_colors, breaks = break_vals) +
+    scale_fill_manual(values = fill_colors, breaks = break_vals) +
+    scale_size_manual(values = res_point_size, breaks = break_vals) +
+    scale_shape_manual(values = res_point_shape, breaks = break_vals)
 
-    df <- reserve_locations[reserve_locations$sk_res == 'insig', ]
+  mainland <- us_base +
+    coord_sf(crs = sf::st_crs(2163), xlim = c(-2500000, 2500000),
+             ylim = c(-2300000, 730000))
 
-    gg <-
-      gg +
-      geom_point(data = df
-                 , aes_string(x = 'Longitude', y = 'Latitude'), shape = 45
-                 , color = sk_fill_colors[3], size = 4, stroke = 20)
-  }
+  alaska <- us_base +
+    coord_sf(crs = sf::st_crs(3467), xlim = c(-2400000, 1600000),
+             ylim = c(200000, 2500000), expand = FALSE, datum = NA)
 
-  # add reserves with increasing trend
-  if('inc' %in% sk_results) {
+  hawaii  <- us_base +
+    coord_sf(crs = sf::st_crs(4135), xlim = c(-161, -154),
+             ylim = c(18, 23), expand = FALSE, datum = NA)
 
-    df <- reserve_locations[reserve_locations$sk_res == 'inc', ]
+  pr <- us_base +
+    coord_sf(crs = sf::st_crs(4437),xlim = c(12000,350000),
+             ylim = c(160000, 320000), expand = FALSE, datum = NA)
 
-    gg <-
-      gg +
-      geom_point(data = df
-                 , aes_string(x = 'Longitude', y = 'Latitude'), shape = 24
-                 , color = sk_fill_colors[1] , fill = sk_fill_colors[1], size = 5)
-  }
-
-  # add reserves with decreasing trend
-  if('dec' %in% sk_results) {
-
-    df <- reserve_locations[reserve_locations$sk_res == 'dec', ]
-
-    gg <-
-      gg +
-      geom_point(data = df
-                 , aes_string(x = 'Longitude', y = 'Latitude'), shape = 25
-                 , color = sk_fill_colors[2] , fill = sk_fill_colors[2], size = 5)
-  }
+  # Now combine the smaller maps, as grobs, with annotation_custom into final object "gg"
+  gg <- mainland +
+    annotation_custom(grob = ggplotGrob(alaska),
+                      xmin = -2750000, xmax = -2750000 + (1600000 - (-2400000)) / 2.0,
+                      ymin = -2450000, ymax = -2450000 + (2500000 - 200000) / 2.0) +
+    annotation_custom(grob = ggplotGrob(hawaii),
+                      xmin =  -900000, xmax =  -900000 + (-154 - (-161)) * 135000,
+                      ymin = -2450000, ymax = -2450000 + (23 - 18) * 135000) +
+    annotation_custom(grob = ggplotGrob(pr),
+                      xmin =   600000, xmax =   600000 + (350000 - 12000) * 3,
+                      ymin = -2390000, ymax = -2390000 + (320000 - 160000) * 3)
 
   return(gg)
 }

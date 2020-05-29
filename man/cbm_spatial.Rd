@@ -4,7 +4,9 @@
 \name{cbm_spatial}
 \alias{cbm_spatial}
 \title{Spatial Data from Chesapeake Bay - Maryland}
-\format{A \code{\link[sp]{SpatialPolygons}} object}
+\format{
+A \code{\link[sp]{SpatialPolygons}} object
+}
 \source{
 \href{http://cdmo.baruch.sc.edu/get/gis.cfm}{CDMO}
 }

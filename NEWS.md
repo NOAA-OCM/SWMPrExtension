@@ -1,6 +1,10 @@
-#### SWMPrExtension 1.1.3.1
+#### SWMPrExtension 1.1.4.1
 * Addressing ISSUE #29: replacing {sp} with {sf}
 * Switch national map projection to EPSG=2163, a standard (i.e., has an EPSG code), spherical Lambert Azimuthal Equal Area projection.
+#### SWMPrExtension 1.1.4
+* Updates for R 4.0 and associated changes
+* Fixed {tibble} related issues in seasonal_dot.R and historical_range.R
+* Fixed pre-existing error in threshold_percentile_plot.R if target year is outside of historical range.
 
 #### SWMPrExtension 1.1.3
 * Fixed ISSUE# 46: Addressed {rgdal} & {sp} issues when using PROJ > 6. 
@@ -27,7 +31,7 @@
 * license changed to NOAA approved language
 
 #### SWMPrExtension 0.3.16
-* Updates to historical_range and historical_daily_range: analysis now allows for comparisons between a target year and a historical rnage that does not include the target year.
+* Updates to historical_range and historical_daily_range: analysis now allows for comparisons between a target year and a historical range that does not include the target year.
 
 #### SWMPrExtension 0.3.15
 * Updates to y-axis for threshold_percentile_plot
