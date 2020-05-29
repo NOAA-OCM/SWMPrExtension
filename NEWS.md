@@ -1,3 +1,6 @@
+#### SWMPrExtestion 1.1.5
+* Changes in lm_pLlabs.R to prepare for upcoming release of {broom} 0.7, which removed rowise tidier functions.
+
 #### SWMPrExtension 1.1.4
 * Updates for R 4.0 and associated changes
 * Fixed {tibble} related issues in seasonal_dot.R and historical_range.R

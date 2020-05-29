@@ -31,7 +31,7 @@
 #'
 #' \code{lm_trend = TRUE} adds a linear regression to the plot, and \code{lm_lab = TRUE} will add p-values from the linear regression to the plot. If the p-values are significant (p < 0.05) then the text will appear in bold. \code{lm_lab} text is color coded to match with the corresponding dots.
 #'
-#' @author Julie Padilla
+#' @author Julie Padilla, Dave Eslinger
 #'
 #' @return Returns a \code{\link[ggplot2]{ggplot}} object
 #'
