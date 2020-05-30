@@ -9,15 +9,16 @@
 #' @importFrom broom tidy
 #' @importFrom dplyr do filter group_by
 #' @importFrom magrittr "%>%"
+#' @importFrom purrr map
 #' @importFrom rlang .data
 #' @importFrom stats lm
-#' @importFrom tidyr complete
+#' @importFrom tidyr complete nest unnest
 #'
 #' @export
 #'
 #' @details A helper function that returns a \code{data.frame} of p-value labels for use with the \code{\link{seasonal_dot}}. P-values are taken from linear regression \code{lm}.
 #'
-#' @author Julie Padilla
+#' @author Julie Padilla, Dave Eslinger
 #'
 #' @concept miscellaneous
 #'
@@ -26,33 +27,68 @@
 #' @seealso \code{\link[stats]{lm}}
 #'
 lm_p_labs <- function(dat_in) {
-
   # remove seasons with out results
-  dat_in <- dat_in[complete.cases(dat_in), ]
+  dat_in <- dat_in[complete.cases(dat_in),]
 
-  sample_check <- dat_in %>% group_by(.data$season) %>% summarise(count = n())
+  sample_check <-
+    dat_in %>% group_by(.data$season) %>% summarise(count = n())
   sample_check <- sample_check[, 2]
 
-  if(max(sample_check, na.rm = TRUE) > 1) {
-  # if(dat_in %>% group_by(.data$season) %>% summarise(count = n()) %>% .data[, 2] %>% max(.data) > 1) {
-    lm_results <- dat_in %>%
+  if (max(sample_check, na.rm = TRUE) > 1) {
+    # if(dat_in %>% group_by(.data$season) %>% summarise(count = n()) %>% .data[, 2] %>% max(.data) > 1) {
+
+    lm_min_tidy <- dat_in %>%
+      select(year, season, stat = min) %>%
       group_by(.data$season) %>%
-      do(reg_min = lm(.data$min ~ .data$year, data = .data)
-         , reg_mean = lm(.data$mean ~ .data$year, data = .data)
-         , reg_max = lm(.data$max ~ .data$year), data = .data)
+      tidyr::nest() %>%
+      mutate(
+        reg = purrr::map(.data$data, ~ lm(stat ~ year, data = .x)),
+        lm_tidy = purrr::map(.data$reg, tidy)
+      ) %>%
+      tidyr::unnest(.data$lm_tidy) %>%
+      select(-.data$data,-.data$reg) %>%
+      filter(.data$term == 'year')
 
-    lm_min_tidy <- tidy(lm_results, reg_min) %>%
-      filter(.data$term == '.data$year')
-    lm_mean_tidy <- tidy(lm_results, reg_mean) %>%
-      filter(.data$term == '.data$year')
-    lm_max_tidy <- tidy(lm_results, reg_max) %>%
-      filter(.data$term == '.data$year')
 
-    lm_min_tidy$lab <- ifelse(lm_min_tidy$p.value < 0.05, 'p < 0.05', 'p > 0.05')
-    lm_mean_tidy$lab <- ifelse(lm_mean_tidy$p.value < 0.05, 'p < 0.05', 'p > 0.05')
-    lm_max_tidy$lab <- ifelse(lm_max_tidy$p.value < 0.05, 'p < 0.05', 'p > 0.05')
+    lm_mean_tidy <- dat_in %>%
+      select(year, season, stat = mean) %>%
+      group_by(.data$season) %>%
+      tidyr::nest() %>%
+      mutate(
+        reg = purrr::map(.data$data, ~ lm(stat ~ year, data = .x)),
+        lm_tidy = purrr::map(.data$reg, tidy)
+      ) %>%
+      tidyr::unnest(.data$lm_tidy) %>%
+      select(-.data$data,-.data$reg) %>%
+      filter(.data$term == 'year')
 
-    df_lab <- data.frame(season = lm_min_tidy$season, min = lm_min_tidy$lab, mean = lm_mean_tidy$lab, max = lm_max_tidy$lab, stringsAsFactors = FALSE)
+    lm_max_tidy <- dat_in %>%
+      select(year, season, stat = max) %>%
+      group_by(.data$season) %>%
+      tidyr::nest() %>%
+      mutate(
+        reg = purrr::map(.data$data, ~ lm(stat ~ year, data = .x)),
+        lm_tidy = purrr::map(.data$reg, tidy)
+      ) %>%
+      tidyr::unnest(.data$lm_tidy) %>%
+      select(-.data$data,-.data$reg) %>%
+      filter(.data$term == 'year')
+
+    lm_min_tidy$lab <-
+      ifelse(lm_min_tidy$p.value < 0.05, 'p < 0.05', 'p > 0.05')
+    lm_mean_tidy$lab <-
+      ifelse(lm_mean_tidy$p.value < 0.05, 'p < 0.05', 'p > 0.05')
+    lm_max_tidy$lab <-
+      ifelse(lm_max_tidy$p.value < 0.05, 'p < 0.05', 'p > 0.05')
+
+    df_lab <-
+      data.frame(
+        season = lm_min_tidy$season,
+        min = lm_min_tidy$lab,
+        mean = lm_mean_tidy$lab,
+        max = lm_max_tidy$lab,
+        stringsAsFactors = FALSE
+      )
 
     # reinsert missing levels
     df_lab <- tidyr::complete(df_lab, season)
@@ -66,4 +102,3 @@ lm_p_labs <- function(dat_in) {
   }
   return(df_lab)
 }
-
