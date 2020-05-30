@@ -1,7 +1,7 @@
 Package: SWMPrExtension
 Type: Package
 Title: Functions for Analyzing and Plotting Estuary Monitoring Data
-Version: 1.1.5
+Version: 1.1.5.1
 Maintainer: Dave Eslinger <dave.eslinger@noaa.gov>
 Description: Tools for performing routine analysis and plotting tasks with environmental
     data from the System Wide Monitoring Program of the National Estuarine
@@ -27,6 +27,7 @@ Imports:
   dplyr,
 	EnvStats,
 	flextable,
+	ggmap,
 	ggplot2,
 	ggthemes,
 	grDevices,

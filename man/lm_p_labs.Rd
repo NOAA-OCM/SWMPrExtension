@@ -22,6 +22,6 @@ A helper function that returns a \code{data.frame} of p-value labels for use wit
 \code{\link[stats]{lm}}
 }
 \author{
-Julie Padilla
+Julie Padilla, Dave Eslinger
 }
 \concept{miscellaneous}

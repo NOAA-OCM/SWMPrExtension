@@ -12,7 +12,9 @@ res_sk_map(
   shp,
   station_labs = TRUE,
   lab_loc = NULL,
-  scale_pos = "bottomleft"
+  scale_pos = "bottomleft",
+  zoom = NULL,
+  maptype = "toner-lite"
 )
 }
 \arguments{
@@ -31,6 +33,10 @@ res_sk_map(
 \item{lab_loc}{chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.}
 
 \item{scale_pos}{scale_pos where should the scale be placed? Options are 'topleft', 'topright', 'bottomleft', or 'bottomright'. Defaults to 'bottomleft'}
+
+\item{zoom}{zoom level, 1-21 for stamen maps. Default is to autoscale based on bbox.}
+
+\item{maptype}{stamen map type from ggmap::get_stamenmap.  One of c("terrain", "terrain-background", "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011", "toner-background", "toner-hybrid", "toner-labels", "toner-lines", "toner-lite", "watercolor")}
 }
 \value{
 returns a leaflet object. This function is intended to be used with mapshot to generate a png
@@ -58,7 +64,7 @@ pos <- 'bottomleft'
 sk_res <- c('inc', 'dec', 'dec', 'insig')
 
 ### plot
-res_sk_map('elk', stations = stns, sk_result = sk_res,
+res_sk_map('elk', stations = stns, sk_result = sk_result,
 bbox = bounding_elk, scale_pos = pos, shp = shp_fl)
 
 \donttest{
@@ -76,10 +82,10 @@ pos <- 'bottomleft'
 sk_res <- c('inc', 'dec', 'dec', 'insig')
 
 ### plot
-res_sk_map('cbm', stations = stns, sk_result = sk_res, bbox = bounding_cbm_1,
+res_sk_map('cbm', stations = stns, sk_result = sk_result, bbox = bounding_cbm_1,
 scale_pos = pos, shp = shp_fl)
 
-res_sk_map('cbm', stations = stns, sk_result = sk_res, bbox = bounding_cbm_2,
+res_sk_map('cbm', stations = stns, sk_result = sk_result, bbox = bounding_cbm_2,
 scale_pos = pos, shp = shp_fl)
 
 }

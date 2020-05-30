@@ -207,7 +207,7 @@ res_local_map <- function(nerr_site_id
   #   addProviderTiles(leaflet::providers$Esri.WorldGrayCanvas) %>%  # Add default OpenStreetMap map tiles, CartoDB.Positron
   #   addPolygons(data = shp, weight = 2, color = '#B3B300', fillColor = 'yellow')
 
-  bg_map <- tmaptools::read_osm(bbox, type = "stamen-toner", refsys = 4326) # sf::st_bbox(shp), type = "osm")
+  bg_map <- tmaptools::read_osm(bbox, type = "stamen-toner", refsys = 4326)
   # bg_bing <- tmaptools::read_osm(bbox, type = "bing")
   m <- tmap::tm_shape(bg_map) +
     tmap::tm_rgb(alpha = 0.25) +

@@ -1,8 +1,9 @@
 #### SWMPrExtension 1.1.5.1
 * Addressing ISSUE #29: replacing {sp} with {sf}
 * Switch national map projection to EPSG=2163, a standard (i.e., has an EPSG code), spherical Lambert Azimuthal Equal Area projection.
+
 #### SWMPrExtestion 1.1.5
-* Changes in lm_pLlabs.R to prepare for upcoming release of {broom} 0.7, which removed rowise tidier functions.
+* Changes in lm_p_labs.R to prepare for upcoming release of {broom} 0.7, which removed rowise tidier functions.
 
 #### SWMPrExtension 1.1.4
 * Updates for R 4.0 and associated changes
