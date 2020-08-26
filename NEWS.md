@@ -1,3 +1,6 @@
+#### SWMPrExtestion 1.1.6
+* Changes to most dplyr::summarise calls to add '.groups = "drop_last"'. In previous versions of {dplyr}, this was the default, but with changes in dplyr 1.0, it broke the threshold_summary code.  To stay consistent with previous default behaviour, all instances of group_by on more than one group had the "drop_last added if summarise was invoked.
+
 #### SWMPrExtestion 1.1.5
 * Changes in lm_pLlabs.R to prepare for upcoming release of {broom} 0.7, which removed rowise tidier functions.
 

@@ -160,7 +160,8 @@ historical_range.swmpr <- function(swmpr_in
     dplyr::group_by(!! dt) %>%
     dplyr::summarise(mean = mean(!! parm, na.rm = TRUE)
                      , min = min(!! parm, na.rm = TRUE)
-                     , max = max(!! parm, na.rm = TRUE))
+                     , max = max(!! parm, na.rm = TRUE)
+                     , .groups = "drop_last")
 
   # Assign seasons
   dat_all$season <- assign_season(dat_all$date, ...)
@@ -177,7 +178,8 @@ historical_range.swmpr <- function(swmpr_in
     dplyr::group_by(!! seas) %>%
     dplyr::summarise(mean = mean(!! avg, na.rm = TRUE)
                      , min = mean(!!  mini, na.rm = TRUE)
-                     , max = mean(!! maxi, na.rm = TRUE))
+                     , max = mean(!! maxi, na.rm = TRUE)
+                     , .groups = "drop_last")
 
   # Determine average min/max/mean for each month (for all years together)
   if(data_type != 'nut') {
@@ -185,7 +187,8 @@ historical_range.swmpr <- function(swmpr_in
       dplyr::group_by(!! seas) %>%
       dplyr::summarise(mean = mean(!! avg, na.rm = TRUE)
                        , min = mean(!!  mini, na.rm = TRUE)
-                       , max = mean(!! maxi, na.rm = TRUE))
+                       , max = mean(!! maxi, na.rm = TRUE)
+                       , .groups = "drop_last")
 
     # Make some labels
     lab_hist_rng <- paste('Daily Avg Range \n(', rng[[1]], '-', rng[[2]], ')', sep = '')
@@ -198,7 +201,8 @@ historical_range.swmpr <- function(swmpr_in
       dplyr::group_by(!! seas) %>%
       dplyr::summarise(mean = mean(!! avg, na.rm = TRUE)
                        , min = min(!!  mini, na.rm = TRUE)
-                       , max = max(!! maxi, na.rm = TRUE))
+                       , max = max(!! maxi, na.rm = TRUE)
+                       , .groups = "drop_last")
 
     # Make some labels
     lab_hist_rng <- paste('Seasonal Range \n(', rng[[1]], '-', rng[[2]], ')', sep = '')
@@ -213,13 +217,15 @@ historical_range.swmpr <- function(swmpr_in
       dplyr::group_by(!! seas) %>%
       dplyr::summarise(mean = mean(!! avg, na.rm = TRUE)
                        , min = mean(!!  mini, na.rm = TRUE)
-                       , max = mean(!! maxi, na.rm = TRUE))
+                       , max = mean(!! maxi, na.rm = TRUE)
+                       , .groups = "drop_last")
   } else {
     dat_yr <- dat_yr %>%
       dplyr::group_by(!! seas) %>%
       dplyr::summarise(mean = mean(!! avg, na.rm = TRUE)
                        , min = min(!!  mini, na.rm = TRUE)
-                       , max = max(!! maxi, na.rm = TRUE))
+                       , max = max(!! maxi, na.rm = TRUE)
+                       , .groups = "drop_last")
   }
 
   # ensure all factor levels are accounted for, even if there is no data

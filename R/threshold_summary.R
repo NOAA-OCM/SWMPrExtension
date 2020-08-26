@@ -23,6 +23,7 @@
 #' @importFrom lubridate  month year
 #' @importFrom rlang .data
 #' @importFrom scales comma
+#' @importFrom SWMPr apacpwq qaqc setstep
 #'
 #' @export
 #'
@@ -44,8 +45,8 @@
 #'
 #' @examples
 #' ## Water quality examples
-#' dat_wq <- qaqc(apacpwq, qaqc_keep = c(0, 3, 5))
-#' dat_wq <- setstep(dat_wq)
+#' dat_wq <- SWMPr::qaqc(SWMPr::apacpwq, qaqc_keep = c(0, 3, 5))
+#' dat_wq <- SWMPr::setstep(dat_wq)
 #'
 #' x <-
 #'   threshold_summary(dat_wq, param = 'do_mgl', parameter_threshold = 2
@@ -102,7 +103,8 @@ threshold_summary.swmpr <- function(swmpr_in
                                     , plot_title = FALSE
                                     , plot = TRUE
                                     , label_y_axis = TRUE
-                                    , ...) {
+                                    , ...)
+{
   # ================== BEGIN DEBUG VARIBLE DEFS ==========================================
   debug = FALSE
   if(debug) {
@@ -193,17 +195,17 @@ threshold_summary.swmpr <- function(swmpr_in
                                         abb = TRUE, ...)
   }
 
-  # # if(grp == seas) {
+  # if(grp == seas) {
   #   summary <- dat_threshold %>%
   #   # group_by(!! yr, !! grp) %>%
   #   group_by(!! yr, !! grp) %>%
-  #   summarise(count = n())
+  #   summarise(count = n(), .groups = "drop_last")
   # } else {
-    summary <- dat_threshold %>%
-      # group_by(!! yr, !! grp) %>%
-      #group_by(!! yr, !! grp, !! seas) %>%
-      group_by(!! grp) %>%
-      summarise(count = n(), .groups = "drop_last")
+  #   summary <- dat_threshold %>%
+  #     # group_by(!! yr, !! grp) %>%
+  #     group_by(!! yr, !! grp, !! seas) %>%
+  #     # group_by(!! grp) %>%
+  #     summarise(count = n(), .groups = "drop_last")
   # }
 
   mn_yr <- min(lubridate::year(dat$datetimestamp))
@@ -228,19 +230,19 @@ threshold_summary.swmpr <- function(swmpr_in
 
   } else {
 
-    # return(dat_threshold)
-    # if(grp == seas) {
-    #   summary <- dat_threshold %>%
-    #     # group_by(!! yr, !! grp) %>%
-    #     group_by(!! yr, !! grp) %>%
-    #     summarise(count = n())
-    # } else {
+    #return(dat_threshold)
+    if(grp == seas) {
       summary <- dat_threshold %>%
         # group_by(!! yr, !! grp) %>%
-        group_by(!! grp) %>%
-        # group_by(!! yr, !! grp, !! seas) %>%
+        group_by(!! yr, !! grp) %>%
         summarise(count = n(), .groups = "drop_last")
-    # }
+    } else {
+      summary <- dat_threshold %>%
+        # group_by(!! yr, !! grp) %>%
+        # group_by(!! grp) %>%
+        group_by(!! yr, !! grp, !! seas) %>%
+        summarise(count = n(), .groups = "drop_last")
+    }
     # summary <- dat_threshold %>%
     #   # group_by(!! yr, !! grp) %>%
     #   group_by(!! yr, !! grp, !! seas) %>%

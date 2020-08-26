@@ -148,7 +148,8 @@ annual_range.swmpr <- function(swmpr_in
     group_by(!! seas, !! dt) %>%
     summarise(mean = mean(!! parm, na.rm = TRUE)
               , min = min(!! parm, na.rm = TRUE)
-              , max = max(!! parm, na.rm = TRUE))
+              , max = max(!! parm, na.rm = TRUE)
+              , .groups = "drop_last")
 
   dat_month <- dat_day %>%
     group_by(!! seas) %>%
@@ -156,7 +157,8 @@ annual_range.swmpr <- function(swmpr_in
               , min_avg = mean(!! mini, na.rm = TRUE)
               , max_avg = mean(!! maxi, na.rm = TRUE)
               , min = min(!! mini, na.rm = TRUE)
-              , max = max(!! maxi, na.rm = TRUE))
+              , max = max(!! maxi, na.rm = TRUE)
+              , .groups = "drop_last")
 
   # ensure all factor levels are accounted for, even if there is no data
   dat_month <- tidyr::complete(dat_month, !! seas)
