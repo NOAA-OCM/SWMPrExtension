@@ -56,7 +56,7 @@
 #' y <-
 #'   threshold_summary(dat_wq, param = 'do_mgl', parameter_threshold = 2,
 #'   threshold_type = '<', time_threshold = 2, summary_type = 'season',
-#'   season = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12)),
+#'   season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12)),
 #'   season_names = c('Winter', 'Spring', 'Summer', 'Fall'),
 #'   season_start = 'Winter',
 #'   plot_title = TRUE)
@@ -73,7 +73,7 @@
 #' y <-
 #'   threshold_summary(dat_nut, param = 'chla_n', parameter_threshold = 10,
 #'   threshold_type = '>', summary_type = 'season',
-#'   season = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12)),
+#'   season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12)),
 #'   season_names = c('Winter', 'Spring', 'Summer', 'Fall'),
 #'   season_start = 'Winter', plot_title = TRUE)
 #'
@@ -103,13 +103,51 @@ threshold_summary.swmpr <- function(swmpr_in
                                     , plot = TRUE
                                     , label_y_axis = TRUE
                                     , ...) {
+  # ================== BEGIN DEBUG VARIBLE DEFS ==========================================
+  debug = FALSE
+  if(debug) {
+    library(SWMPrExtension)
+    library(magrittr)
+    library(ggplot2)
+    library(dplyr)
+    # USE Variables from SEASON do_mgl example
+    ## Water quality examples
+    # dat_wq <- qaqc(apacpwq, qaqc_keep = c(0, 3, 5))
+    # dat_wq <- setstep(dat_wq)
+    #
+    # y <-
+    #   threshold_summary(dat_wq, param = 'do_mgl', parameter_threshold = 2,
+    #                     threshold_type = '<', time_threshold = 2, summary_type = 'season',
+    #                     season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12)),
+    #                     season_names = c('Winter', 'Spring', 'Summer', 'Fall'),
+    #                     season_start = 'Winter',
+    #                     plot_title = TRUE)
+    swmpr_in <- qaqc(apacpwq, qaqc_keep = c(0, 3, 5))
+    swmpr_in <- setstep(swmpr_in)
+    param = 'do_mgl'
+    parameter_threshold = 2
+    threshold_type = '<'
+    time_threshold = 2
+    summary_type = 'season'
+    season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
+    season_names = c('Winter', 'Spring', 'Summer', 'Fall')
+    season_start = 'Winter'
+    plot_title = TRUE
+    converted = FALSE
+    pal = 'Set3'
+    plot = TRUE
+    label_y_axis = TRUE
+  }
+  # =================== END DEBUG  VARIBLE DEFS===========================================
+  #
 
   dat <- swmpr_in
   parm <- sym(param)
   grp <- sym(summary_type)
   conv <- converted
 
-  seas <- sym('season')
+ seas <- sym('season')
+#  seas <- sym('season')
   yr <- sym('year')
 
   # attributes
@@ -144,11 +182,29 @@ threshold_summary.swmpr <- function(swmpr_in
 
 
   # Assign the seasons and order them
-  dat_threshold$season <- assign_season(dat_threshold$starttime, abb = TRUE, ...)
+  if(debug) {
+    dat_threshold$season <- assign_season(dat_threshold$starttime,
+                                        season_grps = season_grps,
+                                        season_names = season_names,
+                                        season_start = season_start,
+                                        abb = TRUE)#, ...)
+  } else {
+    dat_threshold$season <- assign_season(dat_threshold$starttime,
+                                        abb = TRUE, ...)
+  }
 
-  summary <- dat_threshold %>%
-    group_by(!! yr, !! grp, !! seas) %>%
-    summarise(count = n())
+  # # if(grp == seas) {
+  #   summary <- dat_threshold %>%
+  #   # group_by(!! yr, !! grp) %>%
+  #   group_by(!! yr, !! grp) %>%
+  #   summarise(count = n())
+  # } else {
+    summary <- dat_threshold %>%
+      # group_by(!! yr, !! grp) %>%
+      #group_by(!! yr, !! grp, !! seas) %>%
+      group_by(!! grp) %>%
+      summarise(count = n(), .groups = "drop_last")
+  # }
 
   mn_yr <- min(lubridate::year(dat$datetimestamp))
   mx_yr <- max(lubridate::year(dat$datetimestamp))
@@ -173,9 +229,22 @@ threshold_summary.swmpr <- function(swmpr_in
   } else {
 
     # return(dat_threshold)
-    summary <- dat_threshold %>%
-      group_by(!! yr, !! grp, !! seas) %>%
-      summarise(count = n())
+    # if(grp == seas) {
+    #   summary <- dat_threshold %>%
+    #     # group_by(!! yr, !! grp) %>%
+    #     group_by(!! yr, !! grp) %>%
+    #     summarise(count = n())
+    # } else {
+      summary <- dat_threshold %>%
+        # group_by(!! yr, !! grp) %>%
+        group_by(!! grp) %>%
+        # group_by(!! yr, !! grp, !! seas) %>%
+        summarise(count = n(), .groups = "drop_last")
+    # }
+    # summary <- dat_threshold %>%
+    #   # group_by(!! yr, !! grp) %>%
+    #   group_by(!! yr, !! grp, !! seas) %>%
+    #   summarise(count = n())
 
     grp_ct <- as.numeric(length(unique(levels(summary$season))))
     grp_nm <- as.character(unique(levels(summary$season)))

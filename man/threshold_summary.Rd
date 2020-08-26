@@ -72,7 +72,7 @@ x <-
 y <-
   threshold_summary(dat_wq, param = 'do_mgl', parameter_threshold = 2,
   threshold_type = '<', time_threshold = 2, summary_type = 'season',
-  season = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12)),
+  season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12)),
   season_names = c('Winter', 'Spring', 'Summer', 'Fall'),
   season_start = 'Winter',
   plot_title = TRUE)
@@ -89,7 +89,7 @@ x <-
 y <-
   threshold_summary(dat_nut, param = 'chla_n', parameter_threshold = 10,
   threshold_type = '>', summary_type = 'season',
-  season = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12)),
+  season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12)),
   season_names = c('Winter', 'Spring', 'Summer', 'Fall'),
   season_start = 'Winter', plot_title = TRUE)
 
