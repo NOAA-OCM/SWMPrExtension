@@ -60,8 +60,9 @@ Recommended thresholds for chlorophyll-a, dissolved inorganic nitrogen, dissolve
 }
 \examples{
 ## Water quality examples
+data(apacpwq)
 dat_wq <- qaqc(apacpwq, qaqc_keep = c(0, 3, 5))
-dat_wq <- setstep(dat_wq)
+dat_wq <- SWMPr::setstep(dat_wq)
 
 x <-
   threshold_summary(dat_wq, param = 'do_mgl', parameter_threshold = 2

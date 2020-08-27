@@ -64,7 +64,7 @@ data(apacpwq)
 
 dat <- qaqc(apacpwq, qaqc_keep = c('0', '3', '5'))
 
-y <- historical_range(dat, param = 'do_mgl')
+x <- historical_range(dat, param = 'do_mgl')
 }
 
 \donttest{
@@ -75,10 +75,10 @@ dat <- qaqc(elksmwq, qaqc_keep = c('0', '3', '5'))
 y <- historical_range(dat, param = 'do_mgl', target_yr = 2013, criteria = 2)
 
 # w/o criteria
-x <- historical_range(dat, param = 'do_mgl', target_yr = 2013)
+z <- historical_range(dat, param = 'do_mgl', target_yr = 2013)
 
 # add a y label
-x <- x + labs(x = NULL, y = "Dissolved Oxygen (mg/L)")
+zz <- z + labs(x = NULL, y = "Dissolved Oxygen (mg/L)")
 }
 }
 \seealso{
