@@ -23,7 +23,6 @@
 #' @importFrom lubridate  month year
 #' @importFrom rlang .data
 #' @importFrom scales comma
-#' @importFrom SWMPr apacpwq qaqc setstep
 #'
 #' @export
 #'
@@ -45,7 +44,8 @@
 #'
 #' @examples
 #' ## Water quality examples
-#' dat_wq <- SWMPr::qaqc(SWMPr::apacpwq, qaqc_keep = c(0, 3, 5))
+#' data(apacpwq)
+#' dat_wq <- qaqc(apacpwq, qaqc_keep = c(0, 3, 5))
 #' dat_wq <- SWMPr::setstep(dat_wq)
 #'
 #' x <-
@@ -105,42 +105,43 @@ threshold_summary.swmpr <- function(swmpr_in
                                     , label_y_axis = TRUE
                                     , ...)
 {
-  # ================== BEGIN DEBUG VARIBLE DEFS ==========================================
-  debug = FALSE
-  if(debug) {
-    library(SWMPrExtension)
-    library(magrittr)
-    library(ggplot2)
-    library(dplyr)
-    # USE Variables from SEASON do_mgl example
-    ## Water quality examples
-    # dat_wq <- qaqc(apacpwq, qaqc_keep = c(0, 3, 5))
-    # dat_wq <- setstep(dat_wq)
-    #
-    # y <-
-    #   threshold_summary(dat_wq, param = 'do_mgl', parameter_threshold = 2,
-    #                     threshold_type = '<', time_threshold = 2, summary_type = 'season',
-    #                     season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12)),
-    #                     season_names = c('Winter', 'Spring', 'Summer', 'Fall'),
-    #                     season_start = 'Winter',
-    #                     plot_title = TRUE)
-    swmpr_in <- qaqc(apacpwq, qaqc_keep = c(0, 3, 5))
-    swmpr_in <- setstep(swmpr_in)
-    param = 'do_mgl'
-    parameter_threshold = 2
-    threshold_type = '<'
-    time_threshold = 2
-    summary_type = 'season'
-    season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
-    season_names = c('Winter', 'Spring', 'Summer', 'Fall')
-    season_start = 'Winter'
-    plot_title = TRUE
-    converted = FALSE
-    pal = 'Set3'
-    plot = TRUE
-    label_y_axis = TRUE
-  }
-  # =================== END DEBUG  VARIBLE DEFS===========================================
+  # # ================== BEGIN DEBUG VARIBLE DEFS ==========================================
+  # debug = FALSE
+  # if(debug) {
+  #   library(SWMPrExtension)
+  #   library(magrittr)
+  #   library(ggplot2)
+  #   library(dplyr)
+  #   # USE Variables from SEASON do_mgl example
+  #   ## Water quality examples
+  #   # dat_wq <- qaqc(apacpwq, qaqc_keep = c(0, 3, 5))
+  #   # dat_wq <- setstep(dat_wq)
+  #   #
+  #   # y <-
+  #   #   threshold_summary(dat_wq, param = 'do_mgl', parameter_threshold = 2,
+  #   #                     threshold_type = '<', time_threshold = 2, summary_type = 'season',
+  #   #                     season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12)),
+  #   #                     season_names = c('Winter', 'Spring', 'Summer', 'Fall'),
+  #   #                     season_start = 'Winter',
+  #   #                     plot_title = TRUE)
+  #   data("apacpwq")
+  #   swmpr_in <- SWMPr::qaqc(apacpwq, qaqc_keep = c(0, 3, 5))
+  #   swmpr_in <- SWMPr::setstep(swmpr_in)
+  #   param = 'do_mgl'
+  #   parameter_threshold = 2
+  #   threshold_type = '<'
+  #   time_threshold = 2
+  #   summary_type = 'season'
+  #   season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
+  #   season_names = c('Winter', 'Spring', 'Summer', 'Fall')
+  #   season_start = 'Winter'
+  #   plot_title = TRUE
+  #   converted = FALSE
+  #   pal = 'Set3'
+  #   plot = TRUE
+  #   label_y_axis = TRUE
+  # }
+  # # =================== END DEBUG  VARIBLE DEFS===========================================
   #
 
   dat <- swmpr_in
@@ -184,16 +185,16 @@ threshold_summary.swmpr <- function(swmpr_in
 
 
   # Assign the seasons and order them
-  if(debug) {
-    dat_threshold$season <- assign_season(dat_threshold$starttime,
-                                        season_grps = season_grps,
-                                        season_names = season_names,
-                                        season_start = season_start,
-                                        abb = TRUE)#, ...)
-  } else {
+  # if(debug) {
+  #   dat_threshold$season <- assign_season(dat_threshold$starttime,
+  #                                       season_grps = season_grps,
+  #                                       season_names = season_names,
+  #                                       season_start = season_start,
+  #                                       abb = TRUE)#, ...)
+  # } else {
     dat_threshold$season <- assign_season(dat_threshold$starttime,
                                         abb = TRUE, ...)
-  }
+  # }
 
   # if(grp == seas) {
   #   summary <- dat_threshold %>%

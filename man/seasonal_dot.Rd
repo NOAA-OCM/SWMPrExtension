@@ -64,13 +64,13 @@ x <-
                , plot_title = TRUE)
 
 \donttest{
-x <-
+y <-
   seasonal_dot(dat_wq, param = 'do_mgl'
                , lm_trend = FALSE
                , lm_lab = FALSE
                , plot_title = TRUE)
 
-x <-
+z <-
   seasonal_dot(dat_wq, param = 'do_mgl'
                , lm_trend = TRUE
                , lm_lab = FALSE
@@ -81,7 +81,7 @@ dat_nut <- elknmnut
 dat_nut <- subset(dat_nut, subset = c('2007-01-01 0:00', '2017-01-01 0:00'))
 dat_nut <- qaqc(dat_nut, qaqc_keep = c(0, 3, 5))
 
-x <-
+x1 <-
   seasonal_dot(dat_nut
                , param = 'chla_n'
                , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
@@ -91,13 +91,13 @@ x <-
                , lm_lab = FALSE
                , plot_title = TRUE)
 
-x <-
+y1 <-
   seasonal_dot(dat_nut, param = 'chla_n'
                , lm_trend = TRUE
                , lm_lab = FALSE
                , plot_title = TRUE)
 
-x <-
+z1 <-
   seasonal_dot(dat_nut, param = 'chla_n'
                , lm_trend = TRUE
                , lm_lab = TRUE
