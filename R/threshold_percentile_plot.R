@@ -38,7 +38,7 @@
 #'
 #' @references
 #' United States Environmental Protection Agency (USEPA). 2015. "National Coastal Condition Assessment 2010". EPA 841-R-15-006.
-#' https://cfpub.epa.gov/si/si_public_record_Report.cfm?dirEntryId=327030
+#' https://cfpub.epa.gov/si/si_public_record_Report.cfm?Lab=OWOW&dirEntryId=327030
 #'
 #' @seealso \code{\link[ggplot2]{ggplot}}
 #'
