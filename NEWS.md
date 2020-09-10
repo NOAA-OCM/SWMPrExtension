@@ -1,9 +1,17 @@
-#### SWMPrExtension 1.1.5.1
+#### SWMPrExtension 1.1.6.1
 * Addressing ISSUE #29: replacing {sp} with {sf}
-* Switch national map projection to EPSG=2163, a standard (i.e., has an EPSG code), spherical Lambert Azimuthal Equal Area projection.
+* Changed source file for national map to Long/Lat, NAD83, i.e., EPSG = 4269.
+* Switch national map projection used in mapping to EPSG=2163, a standard (i.e., has an EPSG code), spherical Lambert Azimuthal Equal Area projection. Note that HI, PR, and AK all us different projections, as approptiate.
 
-#### SWMPrExtestion 1.1.5
-* Changes in lm_p_labs.R to prepare for upcoming release of {broom} 0.7, which removed rowise tidier functions.
+#### SWMPrExtension 1.1.6
+* Fixed bug in threshold_identification.R with multi-variable nutrient calls
+* Changes to most `dplyr::summarise` calls to add `.groups = "drop_last"`. In previous versions of {dplyr}, this was the default, but with changes in dplyr 1.0, it broke the threshold_summary code.  To stay consistent with previous default behavior, all instances of `group_by` on more than one group had the `.groups = "drop_last"` argument added if summarise was invoked.
+* Changes to CRS definitions in spatial data files to add a comment containing
+a WKT2 CRS representation.
+* Changes to examples to make naming more consistent and less duplicative within the same function.
+
+#### SWMPrExtension 1.1.5
+* Changes in lm_pLlabs.R to prepare for upcoming release of {broom} 0.7, which removed rowise tidier functions.
 
 #### SWMPrExtension 1.1.4
 * Updates for R 4.0 and associated changes
@@ -15,13 +23,13 @@
 * Corrected mismatched and mislabeled map projections in national mapping code so that all national-level maps use a Lambert Azimuthal Equal Area projections.  This is the projection that was being used for some shapefiles, but was mislabelled as Albers Equal Area, which then lead to some projection mismatch errors.
 
 #### SWMPrExtension 1.1.2
-* Fixed annotation error in seasonal_dot.R; changed from annotate() to geom_text().
+* Fixed annotation error in seasonal_dot.R; changed from `annotate()` to `geom_text()`.
 
 #### SWMPrExtension 1.1.1
 * Updates to allow user to specify trend colors for `create_sk_flextable_list` function
 * Additional updates to compensate for changes in Officer 0.3.3 flextable structure
 * adding `free_y` argument to `threshold_percentile_plot`
-* Minor fix to help files if searching by concept, e.g., `help.search('analyze', package = "SWMPrExtension")
+* Minor fix to help files if searching by concept, e.g., `help.search('analyze', package = "SWMPrExtension")`
 
 #### SWMPrExtension 1.1.0
 * Updates to plot legends for compatibility with ggplot2 3.0.0

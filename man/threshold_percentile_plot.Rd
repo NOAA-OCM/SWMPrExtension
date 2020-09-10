@@ -63,39 +63,42 @@ dat_wq <- subset(dat_wq, subset = '2007-01-01 0:00', operator = '>=')
 
 x <-
   threshold_percentile_plot(dat_wq, param = 'do_mgl'
-  , hist_rng = c(2007, 2014), by_month = FALSE)
+                           , hist_rng = c(2007, 2014), by_month = FALSE)
 
 \donttest{
 y <-
   threshold_percentile_plot(dat_wq, param = 'do_mgl', percentiles = c(0.95)
-  , hist_rng = c(2007, 2014), target_yr = 2014, by_month = FALSE)
+                           , hist_rng = c(2007, 2014), target_yr = 2014
+                           , by_month = FALSE)
 
 x2 <-
   threshold_percentile_plot(dat_wq, param = 'do_mgl'
-  , hist_rng = c(2007, 2014), by_month = TRUE)
+                           , hist_rng = c(2007, 2014), by_month = TRUE)
 
 y2 <-
   threshold_percentile_plot(dat_wq, param = 'do_mgl'
-  , hist_rng = c(2007, 2014), target_yr = 2014, by_month = TRUE)
+                           , hist_rng = c(2007, 2014), by_month = TRUE
+                           , target_yr = 2014)
 
 
 dat_nut <- qaqc(elknmnut, qaqc_keep = c(0, 3, 5))
 dat_nut <- subset(dat_nut, subset = '2007-01-01 0:00', operator = '>=')
 dat_nut <- rem_reps(dat_nut)
 
-x <-
+x3 <-
   threshold_percentile_plot(dat_nut, param = 'chla_n'
-  , hist_rng = c(2007, 2014), by_month = FALSE)
+                           , hist_rng = c(2007, 2014), by_month = FALSE)
 
-y <-
+y3 <-
   threshold_percentile_plot(dat_nut, param = 'chla_n'
-  , hist_rng = c(2007, 2014), target_yr = 2016, by_month = FALSE)
+                           , hist_rng = c(2007, 2014), by_month = FALSE
+                           , target_yr = 2016)
 }
 
 }
 \references{
 United States Environmental Protection Agency (USEPA). 2015. "National Coastal Condition Assessment 2010". EPA 841-R-15-006.
-https://cfpub.epa.gov/si/si_public_record_Report.cfm?dirEntryId=327030
+https://cfpub.epa.gov/si/si_public_record_Report.cfm?Lab=OWOW&dirEntryId=327030
 }
 \seealso{
 \code{\link[ggplot2]{ggplot}}

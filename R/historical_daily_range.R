@@ -44,7 +44,7 @@
 #'
 #' dat <- qaqc(apacpwq, qaqc_keep = c('0', '3', '5'))
 #'
-#' y <- historical_daily_range(dat, param = 'do_mgl', target_yr = 2012)
+#' x <- historical_daily_range(dat, param = 'do_mgl', target_yr = 2012)
 #' }
 #'
 #' \donttest{
@@ -57,10 +57,10 @@
 #' y <- historical_daily_range(dat, param = 'do_mgl', target_yr = 2013, criteria = 2)
 #'
 #' # w/o criteria
-#' x <- historical_daily_range(dat, param = 'do_mgl', target_yr = 2013)
+#' z <- historical_daily_range(dat, param = 'do_mgl', target_yr = 2013)
 #'
 #' # add a y label
-#' x <- x + labs(x = NULL, y = "Dissolved Oxygen (mg/L)")
+#' zz <- z + labs(x = NULL, y = "Dissolved Oxygen (mg/L)")
 #' }
 
 historical_daily_range <- function(swmpr_in, ...) UseMethod('historical_daily_range')
@@ -153,7 +153,8 @@ historical_daily_range.swmpr <- function(swmpr_in
     dplyr::group_by(!! dt) %>%
     dplyr::summarise(mean = mean(!! parm, na.rm = TRUE)
                      , min = min(!! parm, na.rm = TRUE)
-                     , max = max(!! parm, na.rm = TRUE))
+                     , max = max(!! parm, na.rm = TRUE)
+                     , .groups = "drop_last")
 
   dat_all$julian_day <- lubridate::yday(dat_all$date)
 
@@ -167,13 +168,15 @@ historical_daily_range.swmpr <- function(swmpr_in
     dplyr::group_by(!! jd) %>%
     dplyr::summarise(mean = mean(!! avg, na.rm = TRUE)
                      , min = mean(!!  mini, na.rm = TRUE)
-                     , max = mean(!! maxi, na.rm = TRUE))
+                     , max = mean(!! maxi, na.rm = TRUE)
+                     , .groups = "drop_last")
 
   dat_hist_obs <- dat_all %>%
     dplyr::group_by(!! jd) %>%
     dplyr::summarise(mean = mean(!! avg, na.rm = TRUE)
                      , min = min(!!  mini, na.rm = TRUE)
-                     , max = max(!! maxi, na.rm = TRUE))
+                     , max = max(!! maxi, na.rm = TRUE)
+                     , .groups = "drop_last")
 
   # account for missing julian days
   if(length(dat_yr[1, ] < 365)){

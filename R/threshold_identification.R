@@ -31,9 +31,10 @@
 #'
 #' @references
 #' United States Environmental Protection Agency (USEPA). 2015. "National Coastal Condition Assessment 2010". EPA 841-R-15-006.
-#' https://cfpub.epa.gov/si/si_public_record_Report.cfm?dirEntryId=327030
+#' https://cfpub.epa.gov/si/si_public_record_Report.cfm?Lab=OWOW&dirEntryId=327030
 #'
 #' @examples
+#' data("apacpwq")
 #' wq <- apacpwq
 #'
 #' dat_wq <- qaqc(wq, qaqc_keep = c(0, 3, 5))
@@ -50,6 +51,7 @@
 #'
 #'
 #' ## time_threshold and setstep are not necessary for monthly parameters
+#' data("apacpnut")
 #' nut <- apacpnut
 #'
 #' dat_nut <- qaqc(nut, qaqc_keep = c(0, 3, 5))
@@ -81,6 +83,25 @@ threshold_identification.swmpr <- function(swmpr_in
                                            , threshold_type
                                            , time_threshold = NULL
                                            , ...){
+  # ================== BEGIN DEBUG VARIBLE DEFS ==========================================
+  # debug = TRUE
+  # if(debug) {
+  #     library(SWMPrExtension)
+  #     library(magrittr)
+  #     library(ggplot2)
+  #     library(dplyr)
+  #   # nut <- apacpnut
+  #   # dat_nut <- qaqc(nut, qaqc_keep = c(0, 3, 5))
+  #   # nut_pars <- threshold_identification(dat_nut, param = c('chla_n', 'po4f')
+  #   #                                      , parameter_threshold = c(10, 0.01)
+  #   #                                      , threshold_type = c('>', '>'))
+  #   swmpr_in <- apacpnut
+  #   swmpr_in <- qaqc(swmpr_in, qaqc_keep = c(0, 3, 5))
+  #   param = c('chla_n', 'po4f')
+  #   parameter_threshold = c(10, 0.01)
+  #   threshold_type = c('>', '>')
+  #   }
+  # ==================  END DEBUG VARIBLE DEFS  ==========================================
 
   dat <- swmpr_in
 
@@ -112,10 +133,6 @@ threshold_identification.swmpr <- function(swmpr_in
   # if(!is.null(params)) parameters <- parameters[parameters %in% params]
   dat <- dat[, c('datetimestamp', param)]
 
-  # Set threshold time (in hrs)
-  ts <- as.numeric(difftime(dat[, 'datetimestamp'][2], dat[, 'datetimestamp'][1], units = 'mins'))
-  thr <- time_threshold * 60 / ts
-
   # Set parameters and parameter thresholds
   par <- param
   thresholds <- parameter_threshold
@@ -130,6 +147,11 @@ threshold_identification.swmpr <- function(swmpr_in
     chk_step <- unique(diff(dat[, 'datetimestamp']))
     if(length(chk_step) > 1)
       stop('The time step is not standardized, use setstep')
+
+        # Set threshold time (in hrs)
+    ts <- as.numeric(difftime(dat[, 'datetimestamp'][2], dat[, 'datetimestamp'][1], units = 'mins'))
+    thr <- time_threshold * 60 / ts
+
 
     # Helper functions (used for analysis) ----
     # Create a vector of TRUE/FALSE flags based on a data frame and
@@ -197,7 +219,8 @@ threshold_identification.swmpr <- function(swmpr_in
     }
 
     if(length(param) > 1){
-      ls <- list(rep(dat, length(param)))
+      # ls <- list(rep(dat, length(param)))
+      ls <- list(dat)
 
       x <- mapply(generate_nut_flags, ls, statements, SIMPLIFY = FALSE)
       names(x) <- param

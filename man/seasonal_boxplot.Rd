@@ -77,22 +77,24 @@ y <- seasonal_boxplot(dat, param = 'do_mgl', target_yr = 2012)
 
 \donttest{
 dat <- elksmwq
-
 dat <- qaqc(dat, qaqc_keep = c('0', '3', '5'))
 
-do_plt <- seasonal_boxplot(dat, param = 'do_mgl')
+x <-
+  seasonal_boxplot(dat, param = 'do_mgl')
 
-do_plt <- seasonal_boxplot(dat, param = 'do_mgl',
-target_yr = 2015,
-season = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12)),
-season_names = c('Winter', 'Spring', 'Summer', 'Fall'),
-season_start = 'Spring')
+y <-
+    seasonal_boxplot(dat, param = 'do_mgl', target_yr = 2015,
+    season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12)),
+    season_names = c('Winter', 'Spring', 'Summer', 'Fall'),
+    season_start = 'Spring')
 
-do_plt_min <- seasonal_boxplot(dat, param = 'do_mgl',
-stat_lab = 'Minimum', FUN = function(x) min(x, na.rm = TRUE))
+z_min <-
+   seasonal_boxplot(dat, param = 'do_mgl',
+   stat_lab = 'Minimum', FUN = function(x) min(x, na.rm = TRUE))
 
-do_plt_max <- seasonal_boxplot(dat, param = 'do_mgl',
-stat_lab = 'Maximum', FUN = function(x) max(x, na.rm = TRUE))
+z_max <-
+   seasonal_boxplot(dat, param = 'do_mgl',
+   stat_lab = 'Maximum', FUN = function(x) max(x, na.rm = TRUE))
 }
 }
 \seealso{

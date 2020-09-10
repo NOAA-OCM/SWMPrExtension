@@ -57,7 +57,7 @@
 #'                       , plot = FALSE)
 #'
 #' ## divide plot into seasonal facets
-#' x <- seasonal_barplot(dat, param = 'totprcp'
+#' z <- seasonal_barplot(dat, param = 'totprcp'
 #'                       , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
 #'                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
 #'                       , season_facet = TRUE
@@ -67,12 +67,11 @@
 #' ## convert from mm to in
 #' dat$totprcp <- dat$totprcp / 25.4
 #'
-#' x <- seasonal_barplot(dat, param = 'totprcp'
+#' x1 <- seasonal_barplot(dat, param = 'totprcp'
 #'                       , season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
 #'                       , season_names = c('Winter', 'Spring', 'Summer', 'Fall')
 #'                       , hist_avg = TRUE
-#'                       , converted
-#'                        = TRUE)
+#'                       , converted = TRUE)
 #' }
 #"
 seasonal_barplot <- function(swmpr_in, ...) UseMethod('seasonal_barplot')
@@ -155,15 +154,17 @@ seasonal_barplot.swmpr <- function(swmpr_in
 
   dat_hist <- dat_hist %>%
     dplyr::group_by(!! yr, !! seas) %>%
-    dplyr::summarise(result = sum(!! parm, na.rm = TRUE))
+    dplyr::summarise(result = sum(!! parm, na.rm = TRUE), .groups = "drop_last")
 
   if(plot){
     seas_col <- cols
 
     if(season_facet) {
-      yr_mx <- dat_hist %>% group_by(!! yr, !! seas) %>% summarise(max_val = sum(!! res, na.rm = TRUE))
+      yr_mx <- dat_hist %>% group_by(!! yr, !! seas) %>%
+        summarise(max_val = sum(!! res, na.rm = TRUE), .groups = "drop_last")
     } else {
-      yr_mx <- dat_hist %>% group_by(!! yr) %>% summarise(max_val = sum(!! res, na.rm = TRUE))
+      yr_mx <- dat_hist %>% group_by(!! yr) %>%
+        summarise(max_val = sum(!! res, na.rm = TRUE), .groups = "drop_last")
     }
 
     mx <- ceiling(max(yr_mx$max_val) / 10) * 10 * 1.1

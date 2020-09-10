@@ -60,8 +60,9 @@ Recommended thresholds for chlorophyll-a, dissolved inorganic nitrogen, dissolve
 }
 \examples{
 ## Water quality examples
+data(apacpwq)
 dat_wq <- qaqc(apacpwq, qaqc_keep = c(0, 3, 5))
-dat_wq <- setstep(dat_wq)
+dat_wq <- SWMPr::setstep(dat_wq)
 
 x <-
   threshold_summary(dat_wq, param = 'do_mgl', parameter_threshold = 2
@@ -72,7 +73,7 @@ x <-
 y <-
   threshold_summary(dat_wq, param = 'do_mgl', parameter_threshold = 2,
   threshold_type = '<', time_threshold = 2, summary_type = 'season',
-  season = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12)),
+  season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12)),
   season_names = c('Winter', 'Spring', 'Summer', 'Fall'),
   season_start = 'Winter',
   plot_title = TRUE)
@@ -89,7 +90,7 @@ x <-
 y <-
   threshold_summary(dat_nut, param = 'chla_n', parameter_threshold = 10,
   threshold_type = '>', summary_type = 'season',
-  season = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12)),
+  season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12)),
   season_names = c('Winter', 'Spring', 'Summer', 'Fall'),
   season_start = 'Winter', plot_title = TRUE)
 
@@ -101,7 +102,7 @@ y <-
 }
 \references{
 United States Environmental Protection Agency (USEPA). 2015. "National Coastal Condition Assessment 2010". EPA 841-R-15-006.
-https://cfpub.epa.gov/si/si_public_record_Report.cfm?dirEntryId=327030
+https://cfpub.epa.gov/si/si_public_record_Report.cfm?Lab=OWOW&dirEntryId=327030
 }
 \seealso{
 \code{\link{assign_season}}, \code{\link[ggplot2]{ggplot}}, \code{\link{threshold_identification}}, \code{\link[ggplot2]{scale_fill_brewer}}

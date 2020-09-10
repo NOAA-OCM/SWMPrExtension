@@ -34,7 +34,7 @@ get_site_coordinates <- function(data.file, active = TRUE){
   sites <- res_data %>%
     dplyr::group_by(.data$nerr_site_id, .data$station_name
              , .data$latitude, .data$longitude) %>%
-    dplyr::summarise()
+    dplyr::summarise(.groups = "drop_last")
 
   sites$latitude <- as.numeric(as.character(sites$latitude))
   sites$longitude <- -as.numeric(as.character(sites$longitude))

@@ -72,7 +72,7 @@
 #'                  , monthly_smooth = TRUE)
 #'
 #' ## A few examples with only two thresholds
-#' xx <-
+#' x1 <-
 #'   threshold_criteria_plot(dat_wq, param = 'do_mgl'
 #'                  , rng = 2012
 #'                  , thresholds = c(2, 2)
@@ -82,7 +82,7 @@
 #'                  , threshold_cols = c('#FEC596', '#FFFFCC', '#ABD9E9')
 #'                  , monthly_smooth = TRUE)
 #'
-#' xy <-
+#' y1 <-
 #'   threshold_criteria_plot(dat_wq, param = 'do_mgl'
 #'                  , rng = 2012
 #'                  , thresholds = c(5, 5)
@@ -92,7 +92,7 @@
 #'                  , threshold_cols = c('#FEC596', '#FEC596', '#ABD9E9')
 #'                  , monthly_smooth = TRUE)
 #'
-#' xz <-
+#' z1 <-
 #'   threshold_criteria_plot(dat_wq, param = 'do_mgl'
 #'                  , rng = 2012
 #'                  , thresholds = c(2, 5)
@@ -107,20 +107,20 @@
 #' dat_nut <- qaqc(dat_nut, qaqc_keep = c(0, 3, 5))
 #' dat_nut <- rem_reps(dat_nut)
 #'
-#' x <-
+#' x2 <-
 #'   threshold_criteria_plot(dat_nut, param = 'chla_n'
 #'                  , thresholds = c(2, 5)
 #'                  , threshold_labs = c('Good', 'Fair', 'Poor'))
 #'
 #'
-#' y <-
+#' y2 <-
 #'   threshold_criteria_plot(dat_nut, param = 'chla_n'
 #'                  , rng = 2012
 #'                  , thresholds = c(2, 5)
 #'                  , threshold_labs = c('Good', 'Fair', 'Poor'))
 #'
 #' ## Nutrient plots are not capable of accidentally displaying any kind of smooth
-#' z <-
+#' z2 <-
 #'   threshold_criteria_plot(dat_nut, param = 'chla_n'
 #'                  , rng = 2012
 #'                  , thresholds = c(2, 5)
@@ -299,7 +299,7 @@ threshold_criteria_plot.swmpr <- function(swmpr_in
 
     df_smooth <- dat %>%
       group_by(year = lubridate::year(!! dt), month = lubridate::month(!! dt)) %>%
-      summarise(mean = mean(!! parm, na.rm = TRUE)) %>%
+      summarise(mean = mean(!! parm, na.rm = TRUE), .groups = "drop_last") %>%
       mutate(datetimestamp = paste(year, '-', month, '-', '01', ' ', '0:00', sep = ''))
 
     df_smooth$datetimestamp <- as.POSIXct(df_smooth$datetimestamp)
