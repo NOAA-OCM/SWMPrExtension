@@ -16,8 +16,6 @@
 #'
 #' @importFrom ggthemes theme_map
 #' @importFrom magrittr "%>%"
-#' @importFrom maptools elide spRbind unionSpatialPolygons
-#' @importFrom rlang .data
 #' @importFrom utils download.file unzip
 #'
 #' @export
@@ -46,9 +44,9 @@
 #'
 #' ### plot
 #' res_custom_sk_map(stations = stns, x_loc = x_coords,
-#' sk_result = trnds, y_loc = y_coords,
-#' bbox = bounding_elk, lab_loc = lab_dir,
-#' scale_pos = pos, shp = shp_fl)
+#'                   sk_result = trnds, y_loc = y_coords,
+#'                   bbox = bounding_elk, lab_loc = lab_dir,
+#'                   scale_pos = pos, shp = shp_fl)
 #'
 res_custom_sk_map <- function(stations
                               , x_loc

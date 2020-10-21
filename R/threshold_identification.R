@@ -11,6 +11,7 @@
 #'
 #' @importFrom dplyr filter left_join mutate select
 #' @importFrom magrittr "%>%"
+#' @importFrom rlang .data
 #' @importFrom stats complete.cases
 #'
 #' @export

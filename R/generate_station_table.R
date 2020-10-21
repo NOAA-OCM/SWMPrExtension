@@ -6,7 +6,6 @@
 #' @param stations chr, vector of stations listed in \code{sk_result} that should be displayed in the NERRS reserve level report
 #'
 #' @importFrom magrittr "%>%"
-#' @importFrom rlang .data
 #'
 #' @export
 #'

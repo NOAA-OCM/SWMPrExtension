@@ -21,7 +21,6 @@
 #' @importFrom dplyr filter group_by left_join n summarise
 #' @importFrom magrittr "%>%"
 #' @importFrom lubridate  month year
-#' @importFrom rlang .data
 #' @importFrom scales comma
 #'
 #' @export

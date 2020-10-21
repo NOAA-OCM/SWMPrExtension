@@ -57,16 +57,16 @@ labs <- c('ap', 'cw', 'nm', 'sm', 'vm')
 pos <- 'bottomleft'
 
 ### plot
-res_local_map('elk', stations = stns, bbox = bounding_elk,
-lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
+x <- res_local_map('elk', stations = stns, bbox = bounding_elk,
+                   lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
 
 \donttest{
 ## a multicomponent reserve (show two different bounding boxes)
 ### set plotting parameters
 stations <-
-sampling_stations[(sampling_stations$NERR.Site.ID == 'cbm'
-& sampling_stations$Status == 'Active'), ]$Station.Code
-to_match <- c('wq', 'met')
+            sampling_stations[(sampling_stations$NERR.Site.ID == 'cbm'
+            & sampling_stations$Status == 'Active'), ]$Station.Code
+            to_match <- c('wq', 'met')
 stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
 shp_fl <- cbm_spatial
 bounding_cbm_1 <- c(-77.393, 39.741, -75.553, 38.277)
@@ -76,11 +76,11 @@ labs <- c('ap', 'cw', 'nm', 'sm', 'vm')
 pos <- 'bottomleft'
 
 ### plot
-res_local_map('cbm', stations = stns, bbox = bounding_cbm_1,
-lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
+y <- res_local_map('cbm', stations = stns, bbox = bounding_cbm_1,
+                   lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
 
-res_local_map('cbm', stations = stns, bbox = bounding_cbm_2,
-lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
+z <- res_local_map('cbm', stations = stns, bbox = bounding_cbm_2,
+                   lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
 
 }
 

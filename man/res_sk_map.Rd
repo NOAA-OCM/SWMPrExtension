@@ -61,11 +61,11 @@ stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
 shp_fl <- elk_spatial
 bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
 pos <- 'bottomleft'
-sk_res <- c('inc', 'dec', 'dec', 'insig')
+trnds <- c('inc', 'dec', 'dec', 'insig')
 
 ### plot
-res_sk_map('elk', stations = stns, sk_result = sk_result,
-bbox = bounding_elk, scale_pos = pos, shp = shp_fl)
+x <- res_sk_map('elk', stations = stns, sk_result = trnds,
+                 bbox = bounding_elk, scale_pos = pos, shp = shp_fl)
 
 \donttest{
 ## a multicomponent reserve (showing two different bounding boxes)
@@ -79,17 +79,15 @@ shp_fl <- cbm_spatial
 bounding_cbm_1 <- c(-77.393, 39.741, -75.553, 38.277)
 bounding_cbm_2 <- c(-76.862006, 38.811571, -76.596508, 38.642454)
 pos <- 'bottomleft'
-sk_res <- c('inc', 'dec', 'dec', 'insig')
+trnds <- c('inc', 'dec', 'dec', 'insig')
 
 ### plot
-res_sk_map('cbm', stations = stns, sk_result = sk_result, bbox = bounding_cbm_1,
-scale_pos = pos, shp = shp_fl)
+y <- res_sk_map('cbm', stations = stns, sk_result = trnds, bbox = bounding_cbm_1,
+                 scale_pos = pos, shp = shp_fl)
 
-res_sk_map('cbm', stations = stns, sk_result = sk_result, bbox = bounding_cbm_2,
-scale_pos = pos, shp = shp_fl)
-
+z <- res_sk_map('cbm', stations = stns, sk_result = trnds, bbox = bounding_cbm_2,
+                 scale_pos = pos, shp = shp_fl)
 }
-
 }
 \author{
 Julie Padilla, Dave Eslinger

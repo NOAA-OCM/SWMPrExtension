@@ -9,13 +9,12 @@
 #' @param sk_fill_colors chr vector of colors used to fill seasonal kendall result markers
 #' @param agg_county logical, should counties be aggregated to the state-level? Defaults to \code{TRUE}
 #'
-#' @import dplyr
+## @import dplyr
 #' @import ggplot2
 #'
 #' @importFrom dplyr filter left_join summarise transmute
 #' @importFrom ggthemes theme_map
 #' @importFrom magrittr "%>%"
-#' @importFrom maps map
 #' @importFrom rlang .data
 #' @importFrom sf read_sf st_as_sf st_crs
 #' @importFrom tidyr separate
@@ -106,7 +105,7 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
                        stringsAsFactors = FALSE)
 
   res_locations <- reserve_locs(incl = incl) %>%
-    filter(.data$NERR.Site.ID %in% sk_reserves) %>%
+    dplyr::filter(.data$NERR.Site.ID %in% sk_reserves) %>%
     dplyr::left_join(df_loc)
 
 

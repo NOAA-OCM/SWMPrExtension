@@ -16,8 +16,6 @@
 #'
 #' @importFrom ggthemes theme_map
 #' @importFrom magrittr "%>%"
-#' @importFrom maptools elide spRbind unionSpatialPolygons
-#' @importFrom rlang .data
 #' @importFrom utils download.file unzip
 #'
 #' @export

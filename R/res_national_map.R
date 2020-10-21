@@ -12,7 +12,6 @@
 #' @importFrom dplyr filter left_join summarise transmute
 #' @importFrom ggthemes theme_map
 #' @importFrom magrittr "%>%"
-#' @importFrom maps map
 #' @importFrom rlang .data
 #' @importFrom sf read_sf st_as_sf st_crs
 #' @importFrom tidyr separate

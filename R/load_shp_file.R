@@ -8,6 +8,7 @@
 #' @importFrom dplyr group_by mutate summarise
 #' @importFrom magrittr "%>%"
 #' @importFrom methods slot
+#' @importFrom rlang .data
 #' @importFrom sf read_sf st_transform
 #'
 #' @export

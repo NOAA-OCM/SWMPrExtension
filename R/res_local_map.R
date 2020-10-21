@@ -13,6 +13,7 @@
 #'
 #' @importFrom ggthemes theme_map
 #' @importFrom magrittr "%>%"
+#' @importFrom methods as
 #' @importFrom sf st_as_sf st_bbox st_crs st_transform
 #' @importFrom tmap tm_dots tm_polygons tm_rgb tm_shape tm_text
 #' @importFrom tmaptools read_osm
@@ -47,16 +48,16 @@
 #' pos <- 'bottomleft'
 #'
 #' ### plot
-#' res_local_map('elk', stations = stns, bbox = bounding_elk,
-#' lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
+#' x <- res_local_map('elk', stations = stns, bbox = bounding_elk,
+#'                    lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
 #'
 #' \donttest{
 #' ## a multicomponent reserve (show two different bounding boxes)
 #' ### set plotting parameters
 #' stations <-
-#' sampling_stations[(sampling_stations$NERR.Site.ID == 'cbm'
-#' & sampling_stations$Status == 'Active'), ]$Station.Code
-#' to_match <- c('wq', 'met')
+#'             sampling_stations[(sampling_stations$NERR.Site.ID == 'cbm'
+#'             & sampling_stations$Status == 'Active'), ]$Station.Code
+#'             to_match <- c('wq', 'met')
 #' stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
 #' shp_fl <- cbm_spatial
 #' bounding_cbm_1 <- c(-77.393, 39.741, -75.553, 38.277)
@@ -66,11 +67,11 @@
 #' pos <- 'bottomleft'
 #'
 #' ### plot
-#' res_local_map('cbm', stations = stns, bbox = bounding_cbm_1,
-#' lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
+#' y <- res_local_map('cbm', stations = stns, bbox = bounding_cbm_1,
+#'                    lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
 #'
-#' res_local_map('cbm', stations = stns, bbox = bounding_cbm_2,
-#' lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
+#' z <- res_local_map('cbm', stations = stns, bbox = bounding_cbm_2,
+#'                    lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
 #'
 #' }
 #'
@@ -82,69 +83,69 @@ res_local_map <- function(nerr_site_id
                           , lab_loc = NULL
                           , scale_pos = 'bottomleft') {
 
-  # ====Uncomment for debugging=====================================
-  library(SWMPrExtension)
-  library(sf)
-  library(dplyr)
-  library(tmap)
-  library(tmaptools)
-  # library(osmplotr)
-  FIRST <- TRUE
-  if(FIRST){
-    ### DEBUG variables
-    # Defaults
-    station_labs = TRUE
-    # from Example 1
-    stations <-
-    sampling_stations[(sampling_stations$NERR.Site.ID == 'elk'
-    & sampling_stations$Status == 'Active'), ]$Station.Code
-    to_match <- c('wq', 'met')
-    stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
-    shp_fl <- elk_spatial
-    bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
-    lab_dir <- c('L', 'R', 'L', 'L', 'L')
-    labs <- c('ap', 'cw', 'nm', 'sm', 'vm')
-    pos <- 'bottomleft'
-
-    ### plot call, reassign variables
-    ### res_local_map('elk', stations = stns, bbox = bounding_elk,
-    ###               lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
-    nerr_sit_id <- 'elk'
-    stations <- stns
-    bbox <- bounding_elk
-    lab_loc <- lab_dir
-    scale_pos <- pos
-    shp <- shp_fl
-  } else {
-    # ---------------------------------------------------------------------------
-    # Second Example
-    # Defaults
-    station_labs <- TRUE
-    scale_pos <- 'bottom_left'
-    ## a multicomponent reserve (show two different bounding boxes)
-    ### set plotting parameters
-    stations <-
-    sampling_stations[(sampling_stations$NERR.Site.ID == 'cbm'
-    & sampling_stations$Status == 'Active'), ]$Station.Code
-    to_match <- c('wq', 'met')
-    stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
-    shp_fl <- cbm_spatial
-    bounding_cbm_1 <- c(-77.393, 39.741, -75.553, 38.277)
-    bounding_cbm_2 <- c(-76.862006, 38.811571, -76.596508, 38.642454)
-    lab_dir <- c('L', 'R', 'L', 'L', 'L')
-    labs <- c('ap', 'cw', 'nm', 'sm', 'vm')
-    pos <- 'bottomleft'
-    #
-    ### plot
-    # res_local_map('cbm', stations = stns, bbox = bounding_cbm_1,
-    # lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
-    nerr_sit_id <- 'cbm'
-    stations <- stns
-    bbox <- bounding_cbm_1
-    lab_loc <- lab_dir
-    scale_pos <- pos
-    shp <- shp_fl
-  }
+  # # ====Uncomment for debugging=====================================
+  # library(SWMPrExtension)
+  # library(sf)
+  # library(dplyr)
+  # library(tmap)
+  # library(tmaptools)
+  # # library(osmplotr)
+  # FIRST <- TRUE
+  # if(FIRST){
+  #   ### DEBUG variables
+  #   # Defaults
+  #   station_labs = TRUE
+  #   # from Example 1
+  #   stations <-
+  #   sampling_stations[(sampling_stations$NERR.Site.ID == 'elk'
+  #   & sampling_stations$Status == 'Active'), ]$Station.Code
+  #   to_match <- c('wq', 'met')
+  #   stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
+  #   shp_fl <- elk_spatial
+  #   bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
+  #   lab_dir <- c('L', 'R', 'L', 'L', 'L')
+  #   labs <- c('ap', 'cw', 'nm', 'sm', 'vm')
+  #   pos <- 'bottomleft'
+  #
+  #   ### plot call, reassign variables
+  #   ### res_local_map('elk', stations = stns, bbox = bounding_elk,
+  #   ###               lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
+  #   nerr_sit_id <- 'elk'
+  #   stations <- stns
+  #   bbox <- bounding_elk
+  #   lab_loc <- lab_dir
+  #   scale_pos <- pos
+  #   shp <- shp_fl
+  # } else {
+  #   # ---------------------------------------------------------------------------
+  #   # Second Example
+  #   # Defaults
+  #   station_labs <- TRUE
+  #   scale_pos <- 'bottom_left'
+  #   ## a multicomponent reserve (show two different bounding boxes)
+  #   ### set plotting parameters
+  #   stations <-
+  #   sampling_stations[(sampling_stations$NERR.Site.ID == 'cbm'
+  #   & sampling_stations$Status == 'Active'), ]$Station.Code
+  #   to_match <- c('wq', 'met')
+  #   stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
+  #   shp_fl <- cbm_spatial
+  #   bounding_cbm_1 <- c(-77.393, 39.741, -75.553, 38.277)
+  #   bounding_cbm_2 <- c(-76.862006, 38.811571, -76.596508, 38.642454)
+  #   lab_dir <- c('L', 'R', 'L', 'L', 'L')
+  #   labs <- c('ap', 'cw', 'nm', 'sm', 'vm')
+  #   pos <- 'bottomleft'
+  #   #
+  #   ### plot
+  #   # res_local_map('cbm', stations = stns, bbox = bounding_cbm_1,
+  #   # lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
+  #   nerr_sit_id <- 'cbm'
+  #   stations <- stns
+  #   bbox <- bounding_cbm_1
+  #   lab_loc <- lab_dir
+  #   scale_pos <- pos
+  #   shp <- shp_fl
+  # }
   # # ===============End debugging==============================================
 
   # check that a shape file exists
