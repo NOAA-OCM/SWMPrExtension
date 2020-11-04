@@ -224,7 +224,7 @@ threshold_summary.swmpr <- function(swmpr_in
                         , year = c(mn_yr:mx_yr)
                         , stringsAsFactors = FALSE)
 
-    dat_grp <- left_join(dummy, summary)
+    dat_grp <- left_join(dummy, summary, by = "dummy")
     dat_grp$count[is.na(dat_grp$count)] <- 0
 
     dat_grp$grp_join <- factor(dat_grp$grp_join)
@@ -259,7 +259,7 @@ threshold_summary.swmpr <- function(swmpr_in
                         , year = rep(c(mn_yr:mx_yr), each = grp_ct)
                         , stringsAsFactors = FALSE)
 
-    dat_grp <- left_join(dummy, summary)
+    dat_grp <- suppressMessages(left_join(dummy, summary))
     dat_grp$count[is.na(dat_grp$count)] <- 0
 
     dat_grp$grp_join <- factor(dat_grp$grp_join, levels = levels(dat_grp$season))

@@ -254,17 +254,29 @@ seasonal_dot.swmpr <- function(swmpr_in
     if(lm_trend) {
       plt <-
         plt +
-        geom_smooth(method = 'lm', se = FALSE, lwd = 0.5) +
+        geom_smooth(aes_string(x = 'year', y = 'min', color = labs_legend[1])
+                    , method = 'lm', se = FALSE, lwd = 0.5
+                    , formula = y ~ x) +
         geom_smooth(aes_string(x = 'year', y = 'mean', color = labs_legend[2])
-                    , method = 'lm', se = FALSE, lwd = 0.5) +
+                    , method = 'lm', se = FALSE, lwd = 0.5
+                    , formula = y ~ x) +
         geom_smooth(aes_string(x = 'year', y = 'max', color = labs_legend[3])
-                    , method = 'lm', se = FALSE, lwd = 0.5)
+                    , method = 'lm', se = FALSE, lwd = 0.5
+                    , formula = y ~ x)
     }
 
     # add regression p-values if specified
     if(lm_lab) {
 
-      p_labs <- lm_p_labs(plt_data)
+      tryCatch(p_labs <- lm_p_labs(plt_data),
+               error = function(c) {
+                 print('Regression label error, continuing')
+                 p_labs <- ''
+               },
+               warning = function(c) "warning",
+               message = function(c) "message"
+    )
+      # p_labs <- lm_p_labs(plt_data)
 
       if(nrow(p_labs) > 0) {
         # return max & min y-value from ggplot object

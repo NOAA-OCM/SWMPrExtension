@@ -1,3 +1,6 @@
+### SWMPrExtension 1.1.6.1
+* Specify extra keys to reduce informational messages from joins and geom_smooth.
+
 #### SWMPrExtension 1.1.6
 * Fixed bug in threshold_identification.R with multi-variable nutrient calls
 * Changes to most `dplyr::summarise` calls to add `.groups = "drop_last"`. In previous versions of {dplyr}, this was the default, but with changes in dplyr 1.0, it broke the threshold_summary code.  To stay consistent with previous default behavior, all instances of `group_by` on more than one group had the `.groups = "drop_last"` argument added if summarise was invoked.

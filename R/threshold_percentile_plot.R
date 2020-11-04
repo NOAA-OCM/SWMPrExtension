@@ -194,7 +194,7 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
   dummy <- data.frame(month = rep(c(1:12), yr_ct), year = rep(c(mn_yr:mx_yr), each = 12), dummy = -999, stringsAsFactors = FALSE)
   dummy[nrow(dummy) + 1 , ] <- c(1, max(dummy$year) + 1, -999)
 
-  bar_plt <- left_join(dummy, bars)
+  bar_plt <- left_join(dummy, bars, by = "dummy")
   bar_plt$datetimestamp <- lubridate::ymd_hms(paste(bar_plt$year, bar_plt$month, '1 00:00:00', sep = '-'))
 
   # set a few labels and colors ----
