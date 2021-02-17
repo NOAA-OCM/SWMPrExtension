@@ -1,5 +1,6 @@
 ### SWMPrExtension 1.1.6.2.3
 * Specify extra keys to reduce informational messages from joins and geom_smooth.
+* Change units for converted wind speed
 
 #### SWMPrExtension 1.1.6
 * Fixed bug in threshold_identification.R with multi-variable nutrient calls
