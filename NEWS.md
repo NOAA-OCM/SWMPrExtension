@@ -1,4 +1,4 @@
-### SWMPrExtension 1.1.6.1
+### SWMPrExtension 1.1.6.2.3
 * Specify extra keys to reduce informational messages from joins and geom_smooth.
 
 #### SWMPrExtension 1.1.6
