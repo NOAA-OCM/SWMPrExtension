@@ -55,12 +55,12 @@ y_labeler <- function(param, converted = FALSE) {
     names(labs) <- all_params
 
     if(converted){
-      # Create labels for select parameters in english units
+      # Create labels for select parameters in English units
       converted_param <- c('temp', 'depth', 'cdepth', 'level', 'clevel'
                            , 'atemp', 'wspd', 'maxwspd', 'totprcp')
       converted_labs <- c(quote(expression(paste('Water Temperature (', ~degree, 'F)'))), 'Sonde Depth (ft)', 'Depth, Corrected for Barometric Pressure (ft)', 'Level (ft)'
-                          , 'Level, corrected for Barometric Pressure (ft)', quote(expression(paste('Air Temperature (', ~degree, 'F)'))), 'Wind Speed (ft/s)'
-                          , 'Maximum Wind Speed (ft/s)','Precipitiation (in)')
+                          , 'Level, corrected for Barometric Pressure (ft)', quote(expression(paste('Air Temperature (', ~degree, 'F)'))), 'Wind Speed (mph)'
+                          , 'Maximum Wind Speed (mph)','Precipitiation (in)')
 
       names(converted_labs) <- converted_param
 

@@ -1,3 +1,6 @@
+### SWMPrExtension 1.1.6.4
+* Change units for converted wind speed
+
 ### SWMPrExtension 1.1.6.3
 * Specify extra keys to reduce informational messages from joins and geom_smooth.
 * Changed NA test and replacement for lm_p_labs.R p-value labeling.
