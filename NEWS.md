@@ -1,3 +1,6 @@
+### SWMPrExtension 1.1.6.5
+* Changed gather() to pivot_longer in summarise_handoff_files.R
+
 ### SWMPrExtension 1.1.6.4
 * Change units for converted wind speed
 
