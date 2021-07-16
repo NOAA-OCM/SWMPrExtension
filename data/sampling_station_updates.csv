@@ -1,0 +1,10 @@
+Row,NERR.Site.ID,Station.Code,Station.Name,Latitude,Longitude,Status,Active.Dates,State,Reserve.Name,Real.Time,HADS.ID,GMT.Offset,Station.Type,Region,isSWMP,color
+1,hee,heer9nut,Reef 9,21.44628,157.80183,Active,Feb 2020-,hi,He'eia,,,-10,2,7,P,#444E65
+2,hee,heer9wq,Reef 9,21.44628,157.80183,Active,Feb 2020-,hi,He'eia,,,-10,1,7,P,#444E65
+3,hee,heew2nut,Wai 2,21.4381,157.81093,Active,Sep 2020-,hi,He'eia,,,-10,2,7,P,#444E65
+4,hee,heew2wq,Wai 2,21.4381,157.81093,Active,Sep 2020-,hi,He'eia,,,-10,1,7,P,#444E65
+5,hee,heekknut,Kaho’okele,21.43582,157.80524,Active,Sep 2020-,hi,He'eia,,,-10,2,7,P,#444E65
+6,hee,heekkwq,Kaho’okele,21.43582,157.80524,Active,Sep 2020-,hi,He'eia,,,-10,1,7,P,#444E65
+7,hee,heehtnut,Haptuk,21.42845,157.81372,Inactive,Dec 2021-,hi,He'eia,,,-10,2,7,P,#444E65
+8,hee,heehtwq,Haptuk,21.42845,157.81372,Inactive,Dec 2021-,hi,He'eia,,,-10,1,7,P,#444E65
+9,hee,heelcwq,Lono Circle,21.431345,157.815278,Inactive,Aug 2021-,hi,He'eia,,,-10,0,7,P,#BF9000
