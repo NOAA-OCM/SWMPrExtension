@@ -47,7 +47,7 @@ This function is intended to be used with \code{mapview::mapshot} to generate a 
 ### set plotting parameters
 stations <-
 sampling_stations[(sampling_stations$NERR.Site.ID == 'elk'
-& sampling_stations$Status == 'Active'), ]$Station.Code
+& sampling_stations$Status == 'Active' & sampling_stations$isSWMP == "P"), ]$Station.Code
 to_match <- c('wq', 'met')
 stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
 shp_fl <- elk_spatial
@@ -65,7 +65,7 @@ lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
 ### set plotting parameters
 stations <-
 sampling_stations[(sampling_stations$NERR.Site.ID == 'cbm'
-& sampling_stations$Status == 'Active'), ]$Station.Code
+& sampling_stations$Status == 'Active' & sampling_stations$isSWMP == "P"), ]$Station.Code
 to_match <- c('wq', 'met')
 stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
 shp_fl <- cbm_spatial

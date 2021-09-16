@@ -213,7 +213,7 @@ annual_range.swmpr <- function(swmpr_in
 
     plt <-
       plt +
-      scale_fill_manual('', values = c(rep('steelblue3', 3)), guide = FALSE) +
+      scale_fill_manual('', values = c(rep('steelblue3', 3)), guide = "none") +
       scale_shape_manual('', values = c(21)) +
       scale_alpha_manual('', values = c(0.4, 0.15))
 

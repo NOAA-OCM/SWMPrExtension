@@ -7,9 +7,9 @@
 #' @param res_region a \code{data.frame} of look-up values that match 3-letter NERR site ids with regions
 #'
 #' @importFrom dplyr bind_rows group_by summarise
-#' @importFrom magrittr "%>%"
+#' @importFrom magrittr %>%
 #' @importFrom rlang .data
-#' @importFrom tidyr gather
+#' @importFrom tidyr pivot_longer
 #'
 #' @export
 #'

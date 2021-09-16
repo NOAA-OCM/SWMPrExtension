@@ -63,21 +63,21 @@ dat_wq <- subset(dat_wq, subset = '2007-01-01 0:00', operator = '>=')
 
 x <-
   threshold_percentile_plot(dat_wq, param = 'do_mgl'
-                           , hist_rng = c(2007, 2014), by_month = FALSE)
+                           , hist_rng = c(2013, 2014), by_month = FALSE)
 
 \donttest{
 y <-
   threshold_percentile_plot(dat_wq, param = 'do_mgl', percentiles = c(0.95)
-                           , hist_rng = c(2007, 2014), target_yr = 2014
+                           , hist_rng = c(2013, 2014), target_yr = 2014
                            , by_month = FALSE)
 
 x2 <-
   threshold_percentile_plot(dat_wq, param = 'do_mgl'
-                           , hist_rng = c(2007, 2014), by_month = TRUE)
+                           , hist_rng = c(2013, 2014), by_month = TRUE)
 
 y2 <-
   threshold_percentile_plot(dat_wq, param = 'do_mgl'
-                           , hist_rng = c(2007, 2014), by_month = TRUE
+                           , hist_rng = c(2013, 2014), by_month = TRUE
                            , target_yr = 2014)
 
 

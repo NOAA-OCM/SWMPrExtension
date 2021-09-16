@@ -1,6 +1,6 @@
-#' Detailed NERRS site data
+#' A Backup of Detailed NERRS site data
 #'
-#' Metadata on NERRS stations provided by the Central Data Management Office (CDMO) when data is downloaded
+#' A backup of the current metadata on NERRS stations provided by the Central Data Management Office (CDMO) created when new data is loaded
 #'
 #' @format A \code{\link[base]{data.frame}} object
 #'
@@ -8,9 +8,9 @@
 #'
 #' @docType data
 #' @keywords datasets
-#' @name sampling_stations
-#' @usage data(sampling_stations)
+#' @name sampling_stations_backup
+#' @usage data(sampling_stations_backup)
 #' @source \href{http://cdmo.baruch.sc.edu/}{CDMO}
 #'
 
-"sampling_stations"
+"sampling_stations_backup"

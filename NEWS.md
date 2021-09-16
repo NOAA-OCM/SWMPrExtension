@@ -1,3 +1,9 @@
+### SWMPrExtension 1.1.7
+* Added update_sampling_stations.R function to update reserve-specific station data when a new reserve is added, or SWMP stations are moved.
+* Description files for the data files needed for the above change.
+* Changes to left_join() calls
+* changes to "guide = " values
+
 ### SWMPrExtension 1.1.6.5
 * Changed gather() to pivot_longer in summarise_handoff_files.R
 
