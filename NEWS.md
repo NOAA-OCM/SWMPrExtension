@@ -1,3 +1,6 @@
+### SWMPrExtension 1.1.7.1
+* Fixing issue with x-axis labels overwriting themselves.  Adding a variable major tick capability.
+
 ### SWMPrExtension 1.1.7
 * Added update_sampling_stations.R function to update reserve-specific station data when a new reserve is added, or SWMP stations are moved.
 * Description files for the data files needed for the above change.

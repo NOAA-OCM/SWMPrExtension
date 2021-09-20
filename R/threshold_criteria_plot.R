@@ -204,7 +204,9 @@ threshold_criteria_plot.swmpr <- function(swmpr_in
   smooth_ln <- ifelse(length(unique(rng)) > 1, 'solid', 'dashed')
 
   brks <- set_date_breaks(rng)
+  minor_brks <- set_date_breaks_minor(rng)
   lab_brks <- set_date_break_labs(rng)
+
 
   # set y axis range
   mx <- max(dat[, grep(param, colnames(dat))], na.rm = TRUE)
@@ -238,10 +240,12 @@ threshold_criteria_plot.swmpr <- function(swmpr_in
   plt <-
     plt +
     geom_line(aes(color = lab_dat, linetype = lab_dat), lwd = 1) +
-    scale_x_datetime(date_breaks = brks, date_labels = lab_brks) +
+    # scale_x_datetime(date_breaks = brks, date_labels = lab_brks) +
+    scale_x_datetime(date_breaks = brks, date_labels = lab_brks,
+                     date_minor_breaks = minor_brks) +
     scale_y_continuous(limits = c(mn, mx)) +
-    scale_color_manual('', values = c(ts_col)) +
-    scale_linetype_manual('', values = c(ts_ln)) +
+    # scale_color_manual('', values = c(ts_col)) +
+    # scale_linetype_manual('', values = c(ts_ln)) +
     labs(x = NULL, y = eval(y_label)) +
     theme_bw() +
     theme(legend.position = 'top'
@@ -307,8 +311,8 @@ threshold_criteria_plot.swmpr <- function(swmpr_in
     plt <-
       plt +
       geom_line(data = df_smooth, aes_(x = dt, y = avg, color = lab_smooth, linetype = lab_smooth), lwd = 1) +
-      scale_color_manual('', values = c(ts_col, smooth_col)) +
-      scale_linetype_manual('', values = c(ts_ln, smooth_ln))
+      suppressWarnings(scale_color_manual('', values = c(ts_col, smooth_col))) +
+      suppressMessages(scale_linetype_manual('', values = c(ts_ln, smooth_ln)))
 
   }
 

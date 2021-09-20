@@ -213,8 +213,12 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
   lab_tgt <- ifelse(is.null(target_yr), lab_yr, paste('\n(', target_yr, ')', sep = ''))
   lab_dat <- paste('Obs Data ', lab_tgt, sep = '')
 
-  brks <- ifelse(is.null(target_yr), set_date_breaks(hist_rng), set_date_breaks(target_yr))
-  lab_brks <- ifelse(is.null(target_yr), set_date_break_labs(hist_rng), set_date_break_labs(target_yr))
+  brks <- ifelse(is.null(target_yr), set_date_breaks(hist_rng),
+                 set_date_breaks(target_yr))
+  minor_brks<- ifelse(is.null(target_yr), set_date_breaks_minor(hist_rng),
+                      set_date_breaks(target_yr))
+  lab_brks <- ifelse(is.null(target_yr), set_date_break_labs(hist_rng),
+                     set_date_break_labs(target_yr))
 
   mx <- ifelse(max(dat_subset[ , 2], na.rm = TRUE) > max(bars$perc_hi), max(dat_subset[ , 2], na.rm = TRUE), max(bars$perc_hi))
   mx <- ifelse(data_type == 'nut' && param != 'chla_n', ceiling(mx/0.01) * 0.01, ceiling(mx))
@@ -232,7 +236,8 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
   # plot ----
   plt <- ggplot(dat_subset, aes_(x = dt, y = parm, color = lab_dat)) +
     geom_line(lwd = 1) +
-    scale_x_datetime(date_breaks = brks, date_labels = lab_brks)
+    scale_x_datetime(date_breaks = brks, date_labels = lab_brks,
+                     date_minor_breaks = minor_brks)
 
   # add a log transformed access if log_trans = TRUE
   if(!log_trans) {

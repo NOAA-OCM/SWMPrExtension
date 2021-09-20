@@ -193,7 +193,7 @@ seasonal_dot.swmpr <- function(swmpr_in
     mx <- max(plt_data[ , c(3:5)], na.rm = TRUE) * 1.2
     mx <- ifelse(data_type == 'nut' && param != 'chla_n', ceiling(mx/0.01) * 0.01, ceiling(mx))
 
-    # assign a minimum of zero unles there are values < 0
+    # assign a minimum of zero unless there are values < 0
     mn <- min(plt_data[ , c(3:5)], na.rm = TRUE)
     mn <- ifelse(mn < 0 , min(pretty(mn)), 0)
     mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), mn)
