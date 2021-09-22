@@ -1,7 +1,8 @@
 #### SWMPrExtension 1.1.8.1
 * Addressing ISSUE #29: replacing {sp} with {sf}
 * Changed source file for national map to Long/Lat, NAD83, i.e., EPSG = 4269.
-* Switch national map projection used in mapping to EPSG=2163, a standard (i.e., has an EPSG code), spherical Lambert Azimuthal Equal Area projection. Note that HI, PR, and AK all us different projections, as approptiate.
+* Switch national map projection used in mapping to EPSG=2163, a standard (i.e., has an EPSG code), spherical Lambert Azimuthal Equal Area projection. Note that HI, PR, and AK all us different projections, as appropriate.
+
 ### SWMPrExtension 1.1.8
 * Fixing issue with x-axis labels overwriting themselves.  Adding a variable major tick capability.
 
