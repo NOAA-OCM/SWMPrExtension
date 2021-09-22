@@ -1,4 +1,4 @@
-### SWMPrExtension 1.1.7.1
+### SWMPrExtension 1.1.8
 * Fixing issue with x-axis labels overwriting themselves.  Adding a variable major tick capability.
 
 ### SWMPrExtension 1.1.7

@@ -188,7 +188,12 @@ seasonal_dot.swmpr <- function(swmpr_in
     agg_lab <- ifelse(length(levels(plt_data$season)) == 12, 'Monthly ', 'Seasonal ')
 
     labs_legend <- factor(paste0(agg_lab, c('Minimum', 'Average', 'Maximum'), sep = ''))
+
     brks <- range(plt_data$year)
+    tick_interval <- case_when(
+      diff(brks) > 20  ~ 4,
+      diff(brks) > 10  ~ 2,
+      TRUE            ~ 1)
 
     mx <- max(plt_data[ , c(3:5)], na.rm = TRUE) * 1.2
     mx <- ifelse(data_type == 'nut' && param != 'chla_n', ceiling(mx/0.01) * 0.01, ceiling(mx))
@@ -205,7 +210,8 @@ seasonal_dot.swmpr <- function(swmpr_in
       geom_point(data = plt_data, aes_string(x = "year", y = "max", color = labs_legend[3])) +
       geom_point() +
       scale_color_manual('', values = c('black', 'red', 'blue')) +
-      scale_x_continuous(breaks = seq(from = brks[1], to = brks[2], by = 1)) +
+      scale_x_continuous(breaks = seq(from = brks[1], to = brks[2],
+                                      by = tick_interval)) +
       facet_wrap(~ season) +
       labs(x = NULL, y = eval(y_label))
 
