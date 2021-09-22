@@ -299,7 +299,7 @@ historical_range.swmpr <- function(swmpr_in
     plt <-
       plt +
       scale_color_manual('', values = c('gray40')) +
-      scale_fill_manual('', values = ribbon_fill, guide = FALSE) +
+      scale_fill_manual('', values = ribbon_fill, guide = "none") +
       scale_shape_manual('', values = c(21)) +
       scale_alpha_manual('', values = rep(0.25, 2))
 

@@ -1,7 +1,26 @@
-#### SWMPrExtension 1.1.6.1
+#### SWMPrExtension 1.1.8.1
 * Addressing ISSUE #29: replacing {sp} with {sf}
 * Changed source file for national map to Long/Lat, NAD83, i.e., EPSG = 4269.
 * Switch national map projection used in mapping to EPSG=2163, a standard (i.e., has an EPSG code), spherical Lambert Azimuthal Equal Area projection. Note that HI, PR, and AK all us different projections, as approptiate.
+### SWMPrExtension 1.1.8
+* Fixing issue with x-axis labels overwriting themselves.  Adding a variable major tick capability.
+
+### SWMPrExtension 1.1.7
+* Added update_sampling_stations.R function to update reserve-specific station data when a new reserve is added, or SWMP stations are moved.
+* Description files for the data files needed for the above change.
+* Changes to left_join() calls
+* changes to "guide = " values
+
+### SWMPrExtension 1.1.6.5
+* Changed gather() to pivot_longer in summarise_handoff_files.R
+
+### SWMPrExtension 1.1.6.4
+* Change units for converted wind speed
+
+### SWMPrExtension 1.1.6.3
+* Specify extra keys to reduce informational messages from joins and geom_smooth.
+* Changed NA test and replacement for lm_p_labs.R p-value labeling.
+* Fixed errors in threshold_percentile_plot.R when using `by_month = TRUE`. Also changed example times to remove error messages.
 
 #### SWMPrExtension 1.1.6
 * Fixed bug in threshold_identification.R with multi-variable nutrient calls
@@ -11,7 +30,7 @@ a WKT2 CRS representation.
 * Changes to examples to make naming more consistent and less duplicative within the same function.
 
 #### SWMPrExtension 1.1.5
-* Changes in lm_pLlabs.R to prepare for upcoming release of {broom} 0.7, which removed rowise tidier functions.
+* Changes in lm_pLlabs.R to prepare for upcoming release of {broom} 0.7, which removed rowwise tidier functions.
 
 #### SWMPrExtension 1.1.4
 * Updates for R 4.0 and associated changes

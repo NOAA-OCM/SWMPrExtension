@@ -75,11 +75,14 @@ lm_p_labs <- function(dat_in) {
       filter(.data$term == 'year')
 
     lm_min_tidy$lab <-
-      ifelse(lm_min_tidy$p.value < 0.05, 'p < 0.05', 'p > 0.05')
+      ifelse(is.na(lm_min_tidy$p.value), '',
+                   ifelse(lm_min_tidy$p.value < 0.05, 'p < 0.05', 'p > 0.05'))
     lm_mean_tidy$lab <-
-      ifelse(lm_mean_tidy$p.value < 0.05, 'p < 0.05', 'p > 0.05')
+      ifelse(is.na(lm_mean_tidy$p.value), '',
+             ifelse(lm_mean_tidy$p.value < 0.05, 'p < 0.05', 'p > 0.05'))
     lm_max_tidy$lab <-
-      ifelse(lm_max_tidy$p.value < 0.05, 'p < 0.05', 'p > 0.05')
+      ifelse(is.na(lm_max_tidy$p.value), '',
+             ifelse(lm_max_tidy$p.value < 0.05, 'p < 0.05', 'p > 0.05'))
 
     df_lab <-
       data.frame(

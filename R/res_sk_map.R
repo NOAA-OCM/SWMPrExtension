@@ -39,7 +39,7 @@
 #' ### set plotting parameters
 #' stations <-
 #' sampling_stations[(sampling_stations$NERR.Site.ID == 'elk'
-#' & sampling_stations$Status == 'Active'), ]$Station.Code
+#' & sampling_stations$Status == 'Active' & sampling_stations$isSWMP == "P"), ]$Station.Code
 #' to_match <- c('wq')
 #' stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
 #' shp_fl <- elk_spatial
@@ -56,7 +56,7 @@
 #' ### set plotting parameters
 #' stations <-
 #' sampling_stations[(sampling_stations$NERR.Site.ID == 'cbm'
-#' & sampling_stations$Status == 'Active'), ]$Station.Code
+#' & sampling_stations$Status == 'Active' & sampling_stations$isSWMP == "P"), ]$Station.Code
 #' to_match <- c('wq')
 #' stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
 #' shp_fl <- cbm_spatial

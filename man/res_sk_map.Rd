@@ -55,7 +55,7 @@ To display seasonal trends, the user must specify \code{c('inc', 'dec', 'insig')
 ### set plotting parameters
 stations <-
 sampling_stations[(sampling_stations$NERR.Site.ID == 'elk'
-& sampling_stations$Status == 'Active'), ]$Station.Code
+& sampling_stations$Status == 'Active' & sampling_stations$isSWMP == "P"), ]$Station.Code
 to_match <- c('wq')
 stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
 shp_fl <- elk_spatial
@@ -72,7 +72,7 @@ x <- res_sk_map('elk', stations = stns, sk_result = trnds,
 ### set plotting parameters
 stations <-
 sampling_stations[(sampling_stations$NERR.Site.ID == 'cbm'
-& sampling_stations$Status == 'Active'), ]$Station.Code
+& sampling_stations$Status == 'Active' & sampling_stations$isSWMP == "P"), ]$Station.Code
 to_match <- c('wq')
 stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
 shp_fl <- cbm_spatial

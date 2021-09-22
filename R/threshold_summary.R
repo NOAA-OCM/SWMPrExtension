@@ -223,7 +223,8 @@ threshold_summary.swmpr <- function(swmpr_in
                         , year = c(mn_yr:mx_yr)
                         , stringsAsFactors = FALSE)
 
-    dat_grp <- left_join(dummy, summary)
+    # dat_grp <- left_join(dummy, summary, by = "dummy")
+    dat_grp <- left_join(dummy, summary, by = summary_type)
     dat_grp$count[is.na(dat_grp$count)] <- 0
 
     dat_grp$grp_join <- factor(dat_grp$grp_join)
@@ -258,7 +259,7 @@ threshold_summary.swmpr <- function(swmpr_in
                         , year = rep(c(mn_yr:mx_yr), each = grp_ct)
                         , stringsAsFactors = FALSE)
 
-    dat_grp <- left_join(dummy, summary)
+    dat_grp <- suppressMessages(left_join(dummy, summary))
     dat_grp$count[is.na(dat_grp$count)] <- 0
 
     dat_grp$grp_join <- factor(dat_grp$grp_join, levels = levels(dat_grp$season))
@@ -272,9 +273,18 @@ threshold_summary.swmpr <- function(swmpr_in
 
 
     brks <- seq(from = 1, to = max(dat_grp$x_lab), by = by_arg)
-    brk_labs <- seq(from = mn_yr, to = mx_yr, by = 1)
+    label_spacing <- case_when(
+        mx_yr - mn_yr > 20 ~ 4,
+        mx_yr - mn_yr > 10 ~ 2,
+        TRUE               ~ 1)
 
-    plt <-
+    dummy_labs <- seq(from = mn_yr, to = mx_yr, by = 1)
+    brk_labs <- rep("", length(dummy_labs))
+    label_indx <- seq(1, length(dummy_labs), label_spacing)
+    brk_labs[label_indx] <- dummy_labs[label_indx]
+
+
+plt <-
       ggplot(dat_grp, aes_string(x = 'x_lab', y = 'count', fill = 'grp_join')) +
       geom_bar(stat = 'identity', position = 'dodge') +
       scale_x_continuous(breaks = brks, labels = brk_labs) +

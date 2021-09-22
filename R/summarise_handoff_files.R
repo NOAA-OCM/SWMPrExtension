@@ -7,9 +7,9 @@
 #' @param res_region a \code{data.frame} of look-up values that match 3-letter NERR site ids with regions
 #'
 #' @importFrom dplyr bind_rows group_by summarise
-#' @importFrom magrittr "%>%"
+#' @importFrom magrittr %>%
 #' @importFrom rlang .data
-#' @importFrom tidyr gather
+#' @importFrom tidyr pivot_longer
 #'
 #' @export
 #'
@@ -42,9 +42,10 @@ summarise_handoff_files <- function(path, param, res_region = NULL) {
   x <- left_join(res_region, x)
 
   # convert to tidy format
-  x <- gather(x, key = .data$station, value = .data$trend, 4:length(names(x)))
-
-  names(x)[c(4:5)] <- c('station', 'trend')
+  # x <- gather(x, key = .data$station, value = .data$trend, 4:length(names(x)))
+  # names(x)[c(4:5)] <- c('station', 'trend') # no longer needed with pivot_longer
+  x <- pivot_longer(x, 4:length(names(x)),
+                    names_to = 'station', values_to = 'trend')
 
   # remove results where trend is NA
   x <- x[!is.na(x$trend), ]

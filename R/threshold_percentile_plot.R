@@ -49,21 +49,21 @@
 #'
 #' x <-
 #'   threshold_percentile_plot(dat_wq, param = 'do_mgl'
-#'                            , hist_rng = c(2007, 2014), by_month = FALSE)
+#'                            , hist_rng = c(2013, 2014), by_month = FALSE)
 #'
 #' \donttest{
 #' y <-
 #'   threshold_percentile_plot(dat_wq, param = 'do_mgl', percentiles = c(0.95)
-#'                            , hist_rng = c(2007, 2014), target_yr = 2014
+#'                            , hist_rng = c(2013, 2014), target_yr = 2014
 #'                            , by_month = FALSE)
 #'
 #' x2 <-
 #'   threshold_percentile_plot(dat_wq, param = 'do_mgl'
-#'                            , hist_rng = c(2007, 2014), by_month = TRUE)
+#'                            , hist_rng = c(2013, 2014), by_month = TRUE)
 #'
 #' y2 <-
 #'   threshold_percentile_plot(dat_wq, param = 'do_mgl'
-#'                            , hist_rng = c(2007, 2014), by_month = TRUE
+#'                            , hist_rng = c(2013, 2014), by_month = TRUE
 #'                            , target_yr = 2014)
 #'
 #'
@@ -195,7 +195,13 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
   dummy <- data.frame(month = rep(c(1:12), yr_ct), year = rep(c(mn_yr:mx_yr), each = 12), dummy = -999, stringsAsFactors = FALSE)
   dummy[nrow(dummy) + 1 , ] <- c(1, max(dummy$year) + 1, -999)
 
-  bar_plt <- left_join(dummy, bars)
+  if(by_month) {
+    join_var = "month"
+  }  else {
+
+    join_var = "dummy"
+  }
+  bar_plt <- left_join(dummy, bars, by = join_var)
   bar_plt$datetimestamp <- lubridate::ymd_hms(paste(bar_plt$year, bar_plt$month, '1 00:00:00', sep = '-'))
 
   # set a few labels and colors ----
@@ -208,8 +214,12 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
   lab_tgt <- ifelse(is.null(target_yr), lab_yr, paste('\n(', target_yr, ')', sep = ''))
   lab_dat <- paste('Obs Data ', lab_tgt, sep = '')
 
-  brks <- ifelse(is.null(target_yr), set_date_breaks(hist_rng), set_date_breaks(target_yr))
-  lab_brks <- ifelse(is.null(target_yr), set_date_break_labs(hist_rng), set_date_break_labs(target_yr))
+  brks <- ifelse(is.null(target_yr), set_date_breaks(hist_rng),
+                 set_date_breaks(target_yr))
+  minor_brks<- ifelse(is.null(target_yr), set_date_breaks_minor(hist_rng),
+                      set_date_breaks(target_yr))
+  lab_brks <- ifelse(is.null(target_yr), set_date_break_labs(hist_rng),
+                     set_date_break_labs(target_yr))
 
   mx <- ifelse(max(dat_subset[ , 2], na.rm = TRUE) > max(bars$perc_hi), max(dat_subset[ , 2], na.rm = TRUE), max(bars$perc_hi))
   mx <- ifelse(data_type == 'nut' && param != 'chla_n', ceiling(mx/0.01) * 0.01, ceiling(mx))
@@ -227,7 +237,8 @@ threshold_percentile_plot.swmpr <- function(swmpr_in
   # plot ----
   plt <- ggplot(dat_subset, aes_(x = dt, y = parm, color = lab_dat)) +
     geom_line(lwd = 1) +
-    scale_x_datetime(date_breaks = brks, date_labels = lab_brks)
+    scale_x_datetime(date_breaks = brks, date_labels = lab_brks,
+                     date_minor_breaks = minor_brks)
 
   # add a log transformed access if log_trans = TRUE
   if(!log_trans) {

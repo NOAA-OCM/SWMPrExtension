@@ -188,12 +188,17 @@ seasonal_dot.swmpr <- function(swmpr_in
     agg_lab <- ifelse(length(levels(plt_data$season)) == 12, 'Monthly ', 'Seasonal ')
 
     labs_legend <- factor(paste0(agg_lab, c('Minimum', 'Average', 'Maximum'), sep = ''))
+
     brks <- range(plt_data$year)
+    tick_interval <- case_when(
+      diff(brks) > 20  ~ 4,
+      diff(brks) > 10  ~ 2,
+      TRUE            ~ 1)
 
     mx <- max(plt_data[ , c(3:5)], na.rm = TRUE) * 1.2
     mx <- ifelse(data_type == 'nut' && param != 'chla_n', ceiling(mx/0.01) * 0.01, ceiling(mx))
 
-    # assign a minimum of zero unles there are values < 0
+    # assign a minimum of zero unless there are values < 0
     mn <- min(plt_data[ , c(3:5)], na.rm = TRUE)
     mn <- ifelse(mn < 0 , min(pretty(mn)), 0)
     mn <- ifelse(log_trans, ifelse(substr(station, 6, nchar(station)) == 'nut', 0.001, 0.1), mn)
@@ -205,7 +210,8 @@ seasonal_dot.swmpr <- function(swmpr_in
       geom_point(data = plt_data, aes_string(x = "year", y = "max", color = labs_legend[3])) +
       geom_point() +
       scale_color_manual('', values = c('black', 'red', 'blue')) +
-      scale_x_continuous(breaks = seq(from = brks[1], to = brks[2], by = 1)) +
+      scale_x_continuous(breaks = seq(from = brks[1], to = brks[2],
+                                      by = tick_interval)) +
       facet_wrap(~ season) +
       labs(x = NULL, y = eval(y_label))
 
@@ -254,16 +260,28 @@ seasonal_dot.swmpr <- function(swmpr_in
     if(lm_trend) {
       plt <-
         plt +
-        geom_smooth(method = 'lm', se = FALSE, lwd = 0.5) +
+        geom_smooth(aes_string(x = 'year', y = 'min', color = labs_legend[1])
+                    , method = 'lm', se = FALSE, lwd = 0.5
+                    , formula = y ~ x) +
         geom_smooth(aes_string(x = 'year', y = 'mean', color = labs_legend[2])
-                    , method = 'lm', se = FALSE, lwd = 0.5) +
+                    , method = 'lm', se = FALSE, lwd = 0.5
+                    , formula = y ~ x) +
         geom_smooth(aes_string(x = 'year', y = 'max', color = labs_legend[3])
-                    , method = 'lm', se = FALSE, lwd = 0.5)
+                    , method = 'lm', se = FALSE, lwd = 0.5
+                    , formula = y ~ x)
     }
 
     # add regression p-values if specified
     if(lm_lab) {
 
+    #   tryCatch(p_labs <- lm_p_labs(plt_data),
+    #            error = function(c) {
+    #              print('Regression label error, continuing')
+    #              p_labs <- ''
+    #            },
+    #            warning = function(c) "warning",
+    #            message = function(c) "message"
+    #            )
       p_labs <- lm_p_labs(plt_data)
 
       if(nrow(p_labs) > 0) {
