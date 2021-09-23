@@ -58,31 +58,12 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
                         , highlight_reserves = NULL
                         , agg_county = TRUE) {
 
-  # # ========================================================================================================
-  # # Get Census geometry
-  # get_US_county_shape <- function() {
-  #   shape <- "cb_2018_us_county_20m"
-  #   # shape <- "cb_2018_us_state_20m"
-  #   remote <- "https://www2.census.gov/geo/tiger/GENZ2018/shp/"
-  #   zipped <- paste(shape,".zip", sep = "")
-  #   local_dir <- tempdir()
-  #   utils::download.file(paste(remote,shape,".zip",sep = ""),
-  #                        destfile = file.path(local_dir, zipped))
-  #   unzip(file.path(local_dir, zipped), exdir = local_dir)
-  #   sf::read_sf(file.path(local_dir, paste(shape,".shp", sep = "") ) )
-  # }
-  # us_4269NEW <- get_US_county_shape() %>%
-  #   dplyr::transmute(fips = STATEFP, area = ALAND)
-  # # Keep in native lat/lon, NAD83 projection, EPSG:4269.
-  # save(us_4269, file = "data/us_4269.rda")
-  # # ========================================================================================================
-
   # read in saved US Census geometry {sf} object and merge counties if needed
   us_4269 <- get('us_4269')
 
   if(agg_county) {
     usa <- us_4269 %>%
-      dplyr::group_by(.data$fips) %>%
+      dplyr::group_by(.data$state_fips) %>%
       dplyr::summarise(area = sum(.data$area))
   } else {
     usa <- us_4269
