@@ -4,6 +4,7 @@
 * Switch national map projection used in mapping to EPSG=2163, a standard (i.e., has an EPSG code), spherical Lambert Azimuthal Equal Area projection. Note that HI, PR, and AK all us different projections, as appropriate.
 * Removed all {sp}, {leaflet} and {tmap} uses.  Replaced with {sf} and {ggmap}.
 * Added ability to use stamen maps for local maps.
+* Lost ability to put a scalebar on reserve-level maps.
 
 ### SWMPrExtension 1.1.8
 * Fixing issue with x-axis labels overwriting themselves.  Adding a variable major tick capability.

@@ -12,7 +12,6 @@ res_sk_map(
   shp,
   station_labs = TRUE,
   lab_loc = NULL,
-  scale_pos = "bottomleft",
   zoom = NULL,
   maptype = "toner-lite"
 )
@@ -32,11 +31,11 @@ res_sk_map(
 
 \item{lab_loc}{chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.}
 
-\item{scale_pos}{scale_pos where should the scale be placed? Options are 'topleft', 'topright', 'bottomleft', or 'bottomright'. Defaults to 'bottomleft'}
-
 \item{zoom}{zoom level, 1-21 for stamen maps. Default is to autoscale based on bbox.}
 
 \item{maptype}{stamen map type from ggmap::get_stamenmap.  One of c("terrain", "terrain-background", "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011", "toner-background", "toner-hybrid", "toner-labels", "toner-lines", "toner-lite", "watercolor")}
+
+\item{scale_pos}{scale_pos where should the scale be placed? Options are 'topleft', 'topright', 'bottomleft', or 'bottomright'. Defaults to 'bottomleft'}
 }
 \value{
 returns a {ggplot} object.
@@ -81,7 +80,7 @@ x_11 <- res_sk_map('elk', stations = stns, sk_result = trnds,
 ### Different maptypes may be used.  All may not be available.
 #    Note that zoom and maptype interact, so some experiemtation may be
 #    required.
-x_11 <- res_sk_map('elk', stations = stns, sk_result = trnds,
+x_terrain <- res_sk_map('elk', stations = stns, sk_result = trnds,
                  bbox = bounding_elk, scale_pos = pos, shp = shp_fl,
                  maptype = 'terrain')
 ### A multicomponent reserve (showing two different bounding boxes)
@@ -93,16 +92,16 @@ to_match <- c('wq')
 stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
 shp_fl <- cbm_spatial
 bounding_cbm_1 <- c(-77.393, 39.741, -75.553, 38.277)
-bounding_cbm_2 <- c(-76.862006, 38.811571, -76.596508, 38.642454)
+bounding_cbm_2 <- c(-76.8,  38.7, -76.62,  38.85)
 pos <- 'bottomleft'
 trnds <- c('inc', 'dec', 'dec', 'insig')
 
 #   plot
 y <- res_sk_map('cbm', stations = stns, sk_result = trnds, bbox = bounding_cbm_1,
-                 scale_pos = pos, shp = shp_fl)
+                 shp = shp_fl)
 
 z <- res_sk_map('cbm', stations = stns, sk_result = trnds, bbox = bounding_cbm_2,
-                 scale_pos = pos, shp = shp_fl)
+                 shp = shp_fl)
 }
 }
 \author{

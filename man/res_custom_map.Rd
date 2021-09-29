@@ -13,7 +13,6 @@ res_custom_map(
   station_labs = TRUE,
   station_col = NULL,
   lab_loc = NULL,
-  scale_pos = "bottomleft",
   zoom = NULL,
   maptype = "toner-lite"
 )
@@ -35,11 +34,11 @@ res_custom_map(
 
 \item{lab_loc}{chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.}
 
-\item{scale_pos}{scale_pos where should the scale be placed? Options are 'topleft', 'topright', 'bottomleft', or 'bottomright'. Defaults to 'bottomleft'}
-
 \item{zoom}{zoom level, 1-21 for stamen maps. Default is to autoscale based on bbox.}
 
 \item{maptype}{stamen map type from ggmap::get_stamenmap.  One of c("terrain", "terrain-background", "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011", "toner-background", "toner-hybrid", "toner-labels", "toner-lines", "toner-lite", "watercolor")}
+
+\item{scale_pos}{scale_pos where should the scale be placed? Options are 'topleft', 'topright', 'bottomleft', or 'bottomright'. Defaults to 'bottomleft'}
 }
 \value{
 returns a {ggplot} object
@@ -53,27 +52,6 @@ Creates a stylized, reserve-level base map. The user can specify the reserve and
 This function does not automatically detect conflicts between station labels. The \code{lab_loc} argument allows the user to specify "R" or "L" for each station to prevent labels from conflicting with each other.
 
 This function is intended to be used with \code{mapview::mapshot} to generate a png for the reserve-level report.
-}
-\examples{
-### set plotting parameters
-stns <- c('custom stn 1', 'custom stn 2')
-x_coords <- c(-121.735281, -121.750369)
-y_coords <- c(36.850377, 36.806667)
-shp_fl <- elk_spatial
-bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
-lab_dir <- c('L', 'R')
-pos <- 'bottomleft'
-
-### plot
-res_custom_map(stations = stns, x_loc = x_coords, y_loc = y_coords,
-bbox = bounding_elk, lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
-
-\donttest{
-res_custom_map(stations = stns, x_loc = x_coords, y_loc = y_coords,
-bbox = bounding_elk, lab_loc = lab_dir, scale_pos = pos,
-shp = shp_fl, station_col = c('red', 'green'))
-}
-
 }
 \author{
 Julie Padilla, Dave Eslinger

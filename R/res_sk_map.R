@@ -9,7 +9,7 @@
 #' @param shp SpatialPolygons object
 #' @param station_labs logical, should stations be labeled? Defaults to \code{TRUE}
 #' @param lab_loc chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.
-#' @param scale_pos scale_pos where should the scale be placed? Options are 'topleft', 'topright', 'bottomleft', or 'bottomright'. Defaults to 'bottomleft'
+###' @param scale_pos scale_pos where should the scale be placed? Options are 'topleft', 'topright', 'bottomleft', or 'bottomright'. Defaults to 'bottomleft'
 #' @param zoom zoom level, 1-21 for stamen maps. Default is to autoscale based on bbox.
 #' @param maptype stamen map type from ggmap::get_stamenmap.  One of c("terrain", "terrain-background", "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011", "toner-background", "toner-hybrid", "toner-labels", "toner-lines", "toner-lite", "watercolor")
 #'
@@ -43,7 +43,7 @@
 #' stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
 #' shp_fl <- elk_spatial
 #' bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
-#' pos <- 'bottomleft'
+###' pos <- 'bottomleft'
 #' trnds <- c('inc', 'dec', 'dec', 'insig')
 #'
 #' ### plot
@@ -65,7 +65,7 @@
 #' ### Different maptypes may be used.  All may not be available.
 #' #    Note that zoom and maptype interact, so some experiemtation may be
 #' #    required.
-#' x_11 <- res_sk_map('elk', stations = stns, sk_result = trnds,
+#' x_terrain <- res_sk_map('elk', stations = stns, sk_result = trnds,
 #'                  bbox = bounding_elk, scale_pos = pos, shp = shp_fl,
 #'                  maptype = 'terrain')
 
@@ -78,16 +78,16 @@
 #' stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
 #' shp_fl <- cbm_spatial
 #' bounding_cbm_1 <- c(-77.393, 39.741, -75.553, 38.277)
-#' bounding_cbm_2 <- c(-76.862006, 38.811571, -76.596508, 38.642454)
-#' pos <- 'bottomleft'
+#' bounding_cbm_2 <- c(-76.8,  38.7, -76.62,  38.85)
+###' pos <- 'bottomleft'
 #' trnds <- c('inc', 'dec', 'dec', 'insig')
 #'
 #' #   plot
 #' y <- res_sk_map('cbm', stations = stns, sk_result = trnds, bbox = bounding_cbm_1,
-#'                  scale_pos = pos, shp = shp_fl)
+#'                  shp = shp_fl)
 #'
 #' z <- res_sk_map('cbm', stations = stns, sk_result = trnds, bbox = bounding_cbm_2,
-#'                  scale_pos = pos, shp = shp_fl)
+#'                  shp = shp_fl)
 #' }
 
 res_sk_map <- function(nerr_site_id
@@ -97,7 +97,7 @@ res_sk_map <- function(nerr_site_id
                        , shp
                        , station_labs = TRUE
                        , lab_loc = NULL
-                       , scale_pos = 'bottomleft'
+                       # , scale_pos = 'bottomleft'
                        , zoom = NULL
                        , maptype = 'toner-lite') {
 
@@ -194,6 +194,22 @@ res_sk_map <- function(nerr_site_id
     scale_fill_manual(values = fill_colors, breaks = break_vals) +
     scale_size_manual(values = res_point_size, breaks = break_vals) +
     scale_shape_manual(values = res_point_shape, breaks = break_vals)
+
+  if(station_labs) {
+    # Define lat/long for labels, based on stations, alignment, and bbox
+    loc$lab_long <- loc$Longitude + 0.045* loc$align * (bbox[3] - bbox[1])
+    loc$lab_lat <- loc$Latitude + 0.015 * (bbox[4] - bbox[2])
+
+    # convert Labels info to sf object, use lat/lon, WGS84 projection, EPSG:4326.
+    labels_sf <- loc %>%
+      select(abbrev, lab_long, lab_lat) %>%
+      sf::st_as_sf(coords = c("lab_long","lab_lat"))
+    sf::st_crs(labels_sf) <- 4326
+
+    m <- m +
+      geom_sf_label(data = labels_sf, inherit.aes = FALSE,
+                    aes(label = abbrev))
+  }
 
   return(m)
 }
