@@ -24,15 +24,14 @@
 #'
 #' @details Creates a stylized, reserve-level base map for displaying seasonal kendall results from \code{\link{sk_seasonal}}. The user can specify the reserve and stations to plot. The user can also specify a bounding box. For multi-component reserves, the user should specify a bounding box that highlights the component of interest.
 #'
-#' To display seasonal trends, the user must specify \code{c('inc', 'dec', 'insig')} for each station listed in the \code{stations} argument.
+#' To display seasonal trends, the user must specify \code{c('inc', 'dec', 'insig', 'insuff')} for each station listed in the \code{stations} argument.
 #'
 #'
 #' @author Julie Padilla, Dave Eslinger
 #'
 #' @concept analyze
 #'
-#' @return returns a leaflet object. This function is intended to be used with mapshot to generate a png
-#' for the reserve level report
+#' @return returns a {ggplot} object.
 #'
 #' @examples
 #' ## a compact reserve
@@ -52,8 +51,26 @@
 #'                  bbox = bounding_elk, scale_pos = pos, shp = shp_fl)
 #'
 #' \donttest{
-#' ## a multicomponent reserve (showing two different bounding boxes)
-#' ### set plotting parameters
+#'
+#' ### Higher zoom number gives more details, but may not be visible
+#' x_13 <- res_sk_map('elk', stations = stns, sk_result = trnds,
+#'                  bbox = bounding_elk, scale_pos = pos, shp = shp_fl,
+#'                  zoom = 13)
+#'
+#' ### Lower zoom number gives coarser text and fewer features
+#' x_11 <- res_sk_map('elk', stations = stns, sk_result = trnds,
+#'                  bbox = bounding_elk, scale_pos = pos, shp = shp_fl,
+#'                  zoom = 11)
+#'
+#' ### Different maptypes may be used.  All may not be available.
+#' #    Note that zoom and maptype interact, so some experiemtation may be
+#' #    required.
+#' x_11 <- res_sk_map('elk', stations = stns, sk_result = trnds,
+#'                  bbox = bounding_elk, scale_pos = pos, shp = shp_fl,
+#'                  maptype = 'terrain')
+
+#' ### A multicomponent reserve (showing two different bounding boxes)
+#' #    set plotting parameters
 #' stations <-
 #' sampling_stations[(sampling_stations$NERR.Site.ID == 'cbm'
 #' & sampling_stations$Status == 'Active' & sampling_stations$isSWMP == "P"), ]$Station.Code
@@ -65,7 +82,7 @@
 #' pos <- 'bottomleft'
 #' trnds <- c('inc', 'dec', 'dec', 'insig')
 #'
-#' ### plot
+#' #   plot
 #' y <- res_sk_map('cbm', stations = stns, sk_result = trnds, bbox = bounding_cbm_1,
 #'                  scale_pos = pos, shp = shp_fl)
 #'
@@ -84,74 +101,9 @@ res_sk_map <- function(nerr_site_id
                        , zoom = NULL
                        , maptype = 'toner-lite') {
 
-  #------------------Uncomment for debugging------------------------------------
-  # library(SWMPrExtension)
-  # library(sf)
-  # library(dplyr)
-  # library(ggmap)
-  # # library(osmplotr)
-  # FIRST <- FALSE
-  # if(FIRST){
-  #   ### DEBUG variables
-  #   # Defaults
-  #   station_labs = TRUE
-  #   # from Example 1, a compact reserve
-  #   stations <-
-  #   sampling_stations[(sampling_stations$NERR.Site.ID == 'elk'
-  #                      & sampling_stations$Status == 'Active'), ]$Station.Code
-  #   to_match <- c('wq')
-  #   stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
-  #   shp_fl <- elk_spatial
-  #   bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
-  #   pos <- 'bottomleft'
-  #   sk_res <- c('inc', 'dec', 'dec', 'insig')
-  #
-  #   ### plot call, reassign variables
-  #   ### res_sk_map('elk', stations = stns, sk_result = sk_result,
-  #   ###            bbox = bounding_elk, scale_pos = pos, shp = shp_fl)
-  #   nerr_sit_id <- 'elk'
-  #   stations <- stns
-  #   sk_result <- sk_res
-  #   bbox <- bounding_elk
-  #   lab_loc <- NULL
-  #   scale_pos <- pos
-  #   shp <- shp_fl
-  #   } else {
-  #   # ---------------------------------------------------------------------------
-  #   # Second Example
-  #   # Defaults
-  #   station_labs <- TRUE
-  #   scale_pos <- 'bottom_left'
-  #   ## a multicomponent reserve (showing two different bounding boxes)
-  #   ### set plotting parameters
-  #   stations <-
-  #     sampling_stations[(sampling_stations$NERR.Site.ID == 'cbm'
-  #                        & sampling_stations$Status == 'Active'), ]$Station.Code
-  #   to_match <- c('wq')
-  #   stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
-  #   shp_fl <- cbm_spatial
-  #   bounding_cbm_1 <- c(-77.393, 39.741, -75.553, 38.277)
-  #   bounding_cbm_2 <- c(-76.862006, 38.811571, -76.596508, 38.642454)
-  #   pos <- 'bottomleft'
-  #   sk_res <- c('inc', 'dec', 'dec', 'insig')
-  #
-  #   ### plot
-  #   # res_sk_map('cbm', stations = stns, sk_result = sk_result, bbox = bounding_cbm_1,
-  #   #            scale_pos = pos, shp = shp_fl)
-  #   #
-  #   # res_sk_map('cbm', stations = stns, sk_result = sk_result, bbox = bounding_cbm_2,
-  #   #            scale_pos = pos, shp = shp_fl)
-  #   nerr_sit_id <- 'cbm'
-  #   stations <- stns
-  #   bbox <- bounding_cbm_2
-  #   lab_loc <- NULL
-  #   scale_pos <- pos
-  #   shp <- shp_fl
-  #
-  #   }
-  # #---------------end debugging-----------------------------------------------
+
   # check that a shape file exists
-    if(class(shp) != 'SpatialPolygons') {
+  if(class(shp) != 'SpatialPolygons') {
     if(class(shp) != 'sf') {
       stop('shapefile (shp) must be sf (preferred) or SpatialPolygons object')
     }
@@ -231,7 +183,7 @@ res_sk_map <- function(nerr_site_id
     geom_sf(data = shp, aes(), inherit.aes = FALSE,
             fill = "yellow", col = '#B3B300', alpha = 0.3) +
     ggthemes::theme_map() +
-#    geom_sf_text(data = loc_sf, aes(), inherit.aes = FALSE) +
+    #    geom_sf_text(data = loc_sf, aes(), inherit.aes = FALSE) +
     geom_sf(data = loc_sf, inherit.aes = FALSE,
             aes(color = .data$sk_result,
                 fill = .data$sk_result,

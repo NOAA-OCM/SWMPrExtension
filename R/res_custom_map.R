@@ -11,9 +11,11 @@
 #' @param station_col chr vector of colors used to color station points. Defaults to 'black'.
 #' @param lab_loc chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.
 #' @param scale_pos scale_pos where should the scale be placed? Options are 'topleft', 'topright', 'bottomleft', or 'bottomright'. Defaults to 'bottomleft'
+#' @param zoom zoom level, 1-21 for stamen maps. Default is to autoscale based on bbox.
+#' @param maptype stamen map type from ggmap::get_stamenmap.  One of c("terrain", "terrain-background", "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011", "toner-background", "toner-hybrid", "toner-labels", "toner-lines", "toner-lite", "watercolor")
 #'
-#' @import leaflet
 #'
+#' @importFrom ggmap get_stamenmap ggmap
 #' @importFrom ggthemes theme_map
 #' @importFrom magrittr "%>%"
 #' @importFrom utils download.file unzip
@@ -26,11 +28,11 @@
 #'
 #' This function is intended to be used with \code{mapview::mapshot} to generate a png for the reserve-level report.
 #'
-#' @author Julie Padilla
+#' @author Julie Padilla, Dave Eslinger
 #'
 #' @concept analyze
 #'
-#' @return Returns a leaflet object
+#' @return returns a {ggplot} object
 #'
 #' @examples
 #' ### set plotting parameters
@@ -60,11 +62,18 @@ res_custom_map <- function(stations
                            , station_labs = TRUE
                            , station_col = NULL
                            , lab_loc = NULL
-                           , scale_pos = 'bottomleft') {
+                           , scale_pos = 'bottomleft'
+                           , zoom = NULL
+                           , maptype = 'toner-lite') {
 
   # check that a shape file exists
-  if(class(shp) != 'SpatialPolygons')
-    stop('shapefile (shp) must be SpatialPolygons object')
+  if(class(shp) != 'SpatialPolygons') {
+    if(class(shp) != 'sf') {
+      stop('shapefile (shp) must be sf (preferred) or SpatialPolygons object')
+    }
+  } else {
+    shp <- as(shp, "sf")   # convert SpatialPolygons to sf
+  }
 
   # check that stations were specified
   if(is.null(stations))

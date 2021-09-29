@@ -39,8 +39,7 @@ res_sk_map(
 \item{maptype}{stamen map type from ggmap::get_stamenmap.  One of c("terrain", "terrain-background", "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011", "toner-background", "toner-hybrid", "toner-labels", "toner-lines", "toner-lite", "watercolor")}
 }
 \value{
-returns a leaflet object. This function is intended to be used with mapshot to generate a png
-for the reserve level report
+returns a {ggplot} object.
 }
 \description{
 Create a stylized reserve-level map of seasonal kendall results for use with the reserve level reporting template
@@ -48,7 +47,7 @@ Create a stylized reserve-level map of seasonal kendall results for use with the
 \details{
 Creates a stylized, reserve-level base map for displaying seasonal kendall results from \code{\link{sk_seasonal}}. The user can specify the reserve and stations to plot. The user can also specify a bounding box. For multi-component reserves, the user should specify a bounding box that highlights the component of interest.
 
-To display seasonal trends, the user must specify \code{c('inc', 'dec', 'insig')} for each station listed in the \code{stations} argument.
+To display seasonal trends, the user must specify \code{c('inc', 'dec', 'insig', 'insuff')} for each station listed in the \code{stations} argument.
 }
 \examples{
 ## a compact reserve
@@ -68,8 +67,25 @@ x <- res_sk_map('elk', stations = stns, sk_result = trnds,
                  bbox = bounding_elk, scale_pos = pos, shp = shp_fl)
 
 \donttest{
-## a multicomponent reserve (showing two different bounding boxes)
-### set plotting parameters
+
+### Higher zoom number gives more details, but may not be visible
+x_13 <- res_sk_map('elk', stations = stns, sk_result = trnds,
+                 bbox = bounding_elk, scale_pos = pos, shp = shp_fl,
+                 zoom = 13)
+
+### Lower zoom number gives coarser text and fewer features
+x_11 <- res_sk_map('elk', stations = stns, sk_result = trnds,
+                 bbox = bounding_elk, scale_pos = pos, shp = shp_fl,
+                 zoom = 11)
+
+### Different maptypes may be used.  All may not be available.
+#    Note that zoom and maptype interact, so some experiemtation may be
+#    required.
+x_11 <- res_sk_map('elk', stations = stns, sk_result = trnds,
+                 bbox = bounding_elk, scale_pos = pos, shp = shp_fl,
+                 maptype = 'terrain')
+### A multicomponent reserve (showing two different bounding boxes)
+#    set plotting parameters
 stations <-
 sampling_stations[(sampling_stations$NERR.Site.ID == 'cbm'
 & sampling_stations$Status == 'Active' & sampling_stations$isSWMP == "P"), ]$Station.Code
@@ -81,7 +97,7 @@ bounding_cbm_2 <- c(-76.862006, 38.811571, -76.596508, 38.642454)
 pos <- 'bottomleft'
 trnds <- c('inc', 'dec', 'dec', 'insig')
 
-### plot
+#   plot
 y <- res_sk_map('cbm', stations = stns, sk_result = trnds, bbox = bounding_cbm_1,
                  scale_pos = pos, shp = shp_fl)
 

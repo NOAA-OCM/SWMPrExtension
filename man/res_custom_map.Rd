@@ -13,7 +13,9 @@ res_custom_map(
   station_labs = TRUE,
   station_col = NULL,
   lab_loc = NULL,
-  scale_pos = "bottomleft"
+  scale_pos = "bottomleft",
+  zoom = NULL,
+  maptype = "toner-lite"
 )
 }
 \arguments{
@@ -34,9 +36,13 @@ res_custom_map(
 \item{lab_loc}{chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.}
 
 \item{scale_pos}{scale_pos where should the scale be placed? Options are 'topleft', 'topright', 'bottomleft', or 'bottomright'. Defaults to 'bottomleft'}
+
+\item{zoom}{zoom level, 1-21 for stamen maps. Default is to autoscale based on bbox.}
+
+\item{maptype}{stamen map type from ggmap::get_stamenmap.  One of c("terrain", "terrain-background", "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011", "toner-background", "toner-hybrid", "toner-labels", "toner-lines", "toner-lite", "watercolor")}
 }
 \value{
-Returns a leaflet object
+returns a {ggplot} object
 }
 \description{
 Create a stylized reserve-level map of custom station locations for use with the reserve level reporting template
@@ -70,6 +76,6 @@ shp = shp_fl, station_col = c('red', 'green'))
 
 }
 \author{
-Julie Padilla
+Julie Padilla, Dave Eslinger
 }
 \concept{analyze}
