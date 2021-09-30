@@ -81,6 +81,9 @@ res_local_map <- function(nerr_site_id
                           , zoom = NULL
                           , maptype = 'toner-lite') {
 
+  # define local variables  to remove `check()` warnings
+  abbrev <- lab_long <- lab_lat <- NULL
+
 
   # check that a shape file exists
   if(class(shp) != 'SpatialPolygons') {

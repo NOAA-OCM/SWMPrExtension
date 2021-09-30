@@ -17,7 +17,7 @@
 #'
 #' @import ggplot2
 #'
-#' @importFrom dplyr filter group_by summarise
+#' @importFrom dplyr case_when filter group_by summarise
 #' @importFrom lubridate  year floor_date
 #' @importFrom magrittr "%>%"
 #' @importFrom tidyr complete gather

@@ -18,7 +18,7 @@
 #'
 #' @import ggplot2
 #'
-#' @importFrom dplyr filter group_by left_join n summarise
+#' @importFrom dplyr case_when filter group_by left_join n summarise
 #' @importFrom magrittr "%>%"
 #' @importFrom lubridate  month year
 #' @importFrom scales comma
@@ -104,44 +104,8 @@ threshold_summary.swmpr <- function(swmpr_in
                                     , label_y_axis = TRUE
                                     , ...)
 {
-  # # ================== BEGIN DEBUG VARIBLE DEFS ==========================================
-  # debug = FALSE
-  # if(debug) {
-  #   library(SWMPrExtension)
-  #   library(magrittr)
-  #   library(ggplot2)
-  #   library(dplyr)
-  #   # USE Variables from SEASON do_mgl example
-  #   ## Water quality examples
-  #   # dat_wq <- qaqc(apacpwq, qaqc_keep = c(0, 3, 5))
-  #   # dat_wq <- setstep(dat_wq)
-  #   #
-  #   # y <-
-  #   #   threshold_summary(dat_wq, param = 'do_mgl', parameter_threshold = 2,
-  #   #                     threshold_type = '<', time_threshold = 2, summary_type = 'season',
-  #   #                     season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12)),
-  #   #                     season_names = c('Winter', 'Spring', 'Summer', 'Fall'),
-  #   #                     season_start = 'Winter',
-  #   #                     plot_title = TRUE)
-  #   data("apacpwq")
-  #   swmpr_in <- SWMPr::qaqc(apacpwq, qaqc_keep = c(0, 3, 5))
-  #   swmpr_in <- SWMPr::setstep(swmpr_in)
-  #   param = 'do_mgl'
-  #   parameter_threshold = 2
-  #   threshold_type = '<'
-  #   time_threshold = 2
-  #   summary_type = 'season'
-  #   season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12))
-  #   season_names = c('Winter', 'Spring', 'Summer', 'Fall')
-  #   season_start = 'Winter'
-  #   plot_title = TRUE
-  #   converted = FALSE
-  #   pal = 'Set3'
-  #   plot = TRUE
-  #   label_y_axis = TRUE
-  # }
-  # # =================== END DEBUG  VARIBLE DEFS===========================================
-  #
+  # define local variables  to remove `check()` warnings
+  count <- NULL
 
   dat <- swmpr_in
   parm <- sym(param)
