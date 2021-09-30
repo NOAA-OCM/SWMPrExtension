@@ -45,6 +45,7 @@ Imports:
   sf,
 	tmap,
 	tmaptools,
+	tidyselect,
 	tidyr
 Authors@R: c(
   person(given = "Julie", family = "Padilla",

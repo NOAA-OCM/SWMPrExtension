@@ -10,7 +10,6 @@
 #' @param station_labs logical, should stations be labeled? Defaults to \code{TRUE}
 #' @param station_col chr vector of colors used to color station points. Defaults to 'black'.
 #' @param lab_loc chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.
-###' @param scale_pos scale_pos where should the scale be placed? Options are 'topleft', 'topright', 'bottomleft', or 'bottomright'. Defaults to 'bottomleft'
 #' @param zoom zoom level, 1-21 for stamen maps. Default is to autoscale based on bbox.
 #' @param maptype stamen map type from ggmap::get_stamenmap.  One of c("terrain", "terrain-background", "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011", "toner-background", "toner-hybrid", "toner-labels", "toner-lines", "toner-lite", "watercolor")
 #'
@@ -42,7 +41,6 @@
 #' shp_fl <- elk_spatial
 #' bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
 #' lab_dir <- c('L', 'R')
-###' pos <- 'bottomleft'
 #'
 #' ' ### Default zoom and maptype plot
 #' x <- res_custom_map(stations = stns, x_loc = x_coords, y_loc = y_coords,
@@ -62,7 +60,6 @@ res_custom_map <- function(stations
                            , station_labs = TRUE
                            , station_col = NULL
                            , lab_loc = NULL
-                           # , scale_pos = 'bottomleft'
                            , zoom = NULL
                            , maptype = 'toner-lite') {
 

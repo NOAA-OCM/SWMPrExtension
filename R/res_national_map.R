@@ -69,10 +69,6 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
     usa <- us_4269
   }
 
-  # debugging highlight_states
-  # highlight_states <- c("02","12","15", "16","06","72")
-  # highlight_reserves <- c('pdb', 'sos', 'sfb', 'elk', 'tjr', 'kac')
-
   # Get reserve locations for plotting
   res_locations <- reserve_locs(incl = incl)
 

@@ -38,8 +38,6 @@ res_custom_sk_map(
 
 \item{maptype}{stamen map type from ggmap::get_stamenmap.  One of c("terrain", "terrain-background", "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011", "toner-background", "toner-hybrid", "toner-labels", "toner-lines", "toner-lite", "watercolor")
 #'}
-
-\item{scale_pos}{scale_pos where should the scale be placed? Options are 'topleft', 'topright', 'bottomleft', or 'bottomright'. Defaults to 'bottomleft'}
 }
 \value{
 returns a {ggplot} object
@@ -61,7 +59,6 @@ shp_fl <- elk_spatial
 bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
 lab_dir <- c('R', 'L')
 trnds <- c('inc', 'dec')
-pos <- 'bottomleft'
 
 ### Default zoom and maptype plot
 x <- res_custom_sk_map(stations = stns, x_loc = x_coords,
@@ -88,7 +85,7 @@ x_11 <- res_custom_sk_map(stations = stns, x_loc = x_coords,
 x_11 <- res_custom_sk_map(stations = stns, x_loc = x_coords,
                   sk_result = trnds, y_loc = y_coords,
                   bbox = bounding_elk, lab_loc = lab_dir,
-                  scale_pos = pos, shp = shp_fl, maptype = 'terrain')
+                  shp = shp_fl, maptype = 'terrain')
 }
 \author{
 Julie Padilla, Dave Eslinger

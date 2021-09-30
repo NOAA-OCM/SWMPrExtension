@@ -8,7 +8,6 @@
 #' @param shp {sf} data frame (preferred) or SpatialPolygons object
 #' @param station_labs logical, should stations be labeled? Defaults to \code{TRUE}
 #' @param lab_loc chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.
-###' @param scale_pos scale_pos where should the scale be placed? Options are 'topleft', 'topright', 'bottomleft', or 'bottomright'. Defaults to 'bottomleft'
 #' @param zoom zoom level, 1-21 for stamen maps. Default is to autoscale based on bbox.
 #' @param maptype stamen map type from ggmap::get_stamenmap.  One of c("terrain", "terrain-background", "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011", "toner-background", "toner-hybrid", "toner-labels", "toner-lines", "toner-lite", "watercolor")#'
 #'
@@ -46,7 +45,6 @@
 #' bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
 #' lab_dir <- c('L', 'R', 'L', 'L', 'L')
 #' labs <- c('ap', 'cw', 'nm', 'sm', 'vm')
-###' pos <- 'bottomleft'
 #'
 #' ### plot
 #' x <- res_local_map('elk', stations = stns, bbox = bounding_elk,
@@ -64,7 +62,6 @@
 #' bounding_cbm_1 <- c(-77.393, 39.741, -75.553, 38.277)
 #' bounding_cbm_2 <- c(-76.8,  38.7, -76.62,  38.85)
 #' labs <- c('ap', 'cw', 'nm', 'sm', 'vm')
-####' pos <- 'bottomleft'
 #'
 #' ### plot
 #' y <- res_local_map('cbm', stations = stns, bbox = bounding_cbm_1,
@@ -81,7 +78,6 @@ res_local_map <- function(nerr_site_id
                           , shp
                           , station_labs = TRUE
                           , lab_loc = NULL
-                          # , scale_pos = 'bottomleft'
                           , zoom = NULL
                           , maptype = 'toner-lite') {
 

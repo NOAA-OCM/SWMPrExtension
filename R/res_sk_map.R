@@ -9,7 +9,6 @@
 #' @param shp SpatialPolygons object
 #' @param station_labs logical, should stations be labeled? Defaults to \code{TRUE}
 #' @param lab_loc chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.
-###' @param scale_pos scale_pos where should the scale be placed? Options are 'topleft', 'topright', 'bottomleft', or 'bottomright'. Defaults to 'bottomleft'
 #' @param zoom zoom level, 1-21 for stamen maps. Default is to autoscale based on bbox.
 #' @param maptype stamen map type from ggmap::get_stamenmap.  One of c("terrain", "terrain-background", "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011", "toner-background", "toner-hybrid", "toner-labels", "toner-lines", "toner-lite", "watercolor")
 #'
@@ -43,30 +42,29 @@
 #' stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
 #' shp_fl <- elk_spatial
 #' bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
-###' pos <- 'bottomleft'
 #' trnds <- c('inc', 'dec', 'dec', 'insig')
 #'
 #' ### plot
 #' x <- res_sk_map('elk', stations = stns, sk_result = trnds,
-#'                  bbox = bounding_elk, scale_pos = pos, shp = shp_fl)
+#'                  bbox = bounding_elk, shp = shp_fl)
 #'
 #' \donttest{
 #'
 #' ### Higher zoom number gives more details, but may not be visible
 #' x_13 <- res_sk_map('elk', stations = stns, sk_result = trnds,
-#'                  bbox = bounding_elk, scale_pos = pos, shp = shp_fl,
+#'                  bbox = bounding_elk, shp = shp_fl,
 #'                  zoom = 13)
 #'
 #' ### Lower zoom number gives coarser text and fewer features
 #' x_11 <- res_sk_map('elk', stations = stns, sk_result = trnds,
-#'                  bbox = bounding_elk, scale_pos = pos, shp = shp_fl,
+#'                  bbox = bounding_elk, shp = shp_fl,
 #'                  zoom = 11)
 #'
 #' ### Different maptypes may be used.  All may not be available.
 #' #    Note that zoom and maptype interact, so some experiemtation may be
 #' #    required.
 #' x_terrain <- res_sk_map('elk', stations = stns, sk_result = trnds,
-#'                  bbox = bounding_elk, scale_pos = pos, shp = shp_fl,
+#'                  bbox = bounding_elk, shp = shp_fl,
 #'                  maptype = 'terrain')
 
 #' ### A multicomponent reserve (showing two different bounding boxes)
@@ -79,7 +77,6 @@
 #' shp_fl <- cbm_spatial
 #' bounding_cbm_1 <- c(-77.393, 39.741, -75.553, 38.277)
 #' bounding_cbm_2 <- c(-76.8,  38.7, -76.62,  38.85)
-###' pos <- 'bottomleft'
 #' trnds <- c('inc', 'dec', 'dec', 'insig')
 #'
 #' #   plot
@@ -97,7 +94,6 @@ res_sk_map <- function(nerr_site_id
                        , shp
                        , station_labs = TRUE
                        , lab_loc = NULL
-                       # , scale_pos = 'bottomleft'
                        , zoom = NULL
                        , maptype = 'toner-lite') {
 

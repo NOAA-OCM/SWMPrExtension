@@ -37,8 +37,6 @@ res_custom_map(
 \item{zoom}{zoom level, 1-21 for stamen maps. Default is to autoscale based on bbox.}
 
 \item{maptype}{stamen map type from ggmap::get_stamenmap.  One of c("terrain", "terrain-background", "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011", "toner-background", "toner-hybrid", "toner-labels", "toner-lines", "toner-lite", "watercolor")}
-
-\item{scale_pos}{scale_pos where should the scale be placed? Options are 'topleft', 'topright', 'bottomleft', or 'bottomright'. Defaults to 'bottomleft'}
 }
 \value{
 returns a {ggplot} object
