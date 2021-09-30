@@ -13,13 +13,14 @@ res_custom_sk_map(
   shp,
   station_labs = TRUE,
   lab_loc = NULL,
-  scale_pos = "bottomleft"
+  zoom = NULL,
+  maptype = "stamen-toner"
 )
 }
 \arguments{
 \item{stations}{chr string of the reserve stations to include in the map}
 
-\item{x_loc}{num vector of x coordinates for \code{stations}}
+\item{x_loc}{num vector of x coordinates for \code{stations}. East longitudes must be negative.}
 
 \item{y_loc}{num vector of y coordinates for \code{stations}}
 
@@ -27,17 +28,18 @@ res_custom_sk_map(
 
 \item{bbox}{a bounding box associated with the reserve. Must be in the format of c(X1, Y1, X2, Y2)}
 
-\item{shp}{SpatialPolygons object}
+\item{shp}{{sf} data frame (preferred) or SpatialPolygons object}
 
 \item{station_labs}{logical, should stations be labeled? Defaults to \code{TRUE}}
 
 \item{lab_loc}{chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.}
 
-\item{scale_pos}{scale_pos where should the scale be placed? Options are 'topleft', 'topright', 'bottomleft', or 'bottomright'. Defaults to 'bottomleft'}
+\item{zoom}{zoom level, 1-21 for OpenStreetMaps maps. Default is to autoscale based on bbox. Higher numbers give more detail.}
+
+\item{maptype}{stamen map type from OpenStreetMap::openmap. Theoretically one of c("osm", "osm-bw","maptoolkit-topo", "waze", "bing", "stamen-toner", "stamen-terrain", "stamen-watercolor", "osm-german", "osm-wanderreitkarte", "mapbox", "esri", "esri-topo", "nps", "apple-iphoto", "skobbler", "hillshade", "opencyclemap", "osm-transport", "osm-public-transport", "osm-bbike", "osm-bbike-german").  However, many of these may not work. "stamen-toner", "stamen-terrain", and "bing" seem to work well.}
 }
 \value{
-returns a leaflet object. This function is intended to be used with mapshot to generate a png
-for the reserve level report
+returns a {ggplot} object
 }
 \description{
 Create a stylized reserve-level map of seasonal kendall results from custom station locations for use with the reserve level reporting template
@@ -45,7 +47,7 @@ Create a stylized reserve-level map of seasonal kendall results from custom stat
 \details{
 Creates a stylized, reserve-level base map for displaying seasonal kendall results from \code{\link{sk_seasonal}}. The user can specify the reserve and stations to plot. The user can also specify a bounding box. For multi-component reserves, the user should specify a bounding box that highlights the component of interest.
 
-To display seasonal trends, the user must specify \code{c('inc', 'dec', 'insig')} for each station listed in the \code{stations} argument.
+To display seasonal trends, the user must specify \code{c('inc', 'dec', 'insig', 'insuff')} for each station listed in the \code{stations} argument.
 }
 \examples{
 ### set plotting parameters
@@ -56,16 +58,35 @@ shp_fl <- elk_spatial
 bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
 lab_dir <- c('R', 'L')
 trnds <- c('inc', 'dec')
-pos <- 'bottomleft'
 
-### plot
-res_custom_sk_map(stations = stns, x_loc = x_coords,
-sk_result = trnds, y_loc = y_coords,
-bbox = bounding_elk, lab_loc = lab_dir,
-scale_pos = pos, shp = shp_fl)
+### Default zoom and maptype plot
+x <- res_custom_sk_map(stations = stns, x_loc = x_coords,
+                  sk_result = trnds, y_loc = y_coords,
+                  bbox = bounding_elk, lab_loc = lab_dir,
+                  shp = shp_fl)
 
+### Higher zoom number gives more details, but may not be visible
+x_14 <- res_custom_sk_map(stations = stns, x_loc = x_coords,
+                  sk_result = trnds, y_loc = y_coords,
+                  bbox = bounding_elk, lab_loc = lab_dir,
+                  shp = shp_fl, zoom = 14)
+
+### Lower zoom number gives coarser text and fewer features
+x_11 <- res_custom_sk_map(stations = stns, x_loc = x_coords,
+                  sk_result = trnds, y_loc = y_coords,
+                  bbox = bounding_elk, lab_loc = lab_dir,
+                   shp = shp_fl, zoom = 11)
+
+
+### Different maptypes may be used.  All may not be available.
+#   Note that zoom and maptype interact, so some experimentation may be
+#   required.
+x_terrain <- res_custom_sk_map(stations = stns, x_loc = x_coords,
+                  sk_result = trnds, y_loc = y_coords,
+                  bbox = bounding_elk, lab_loc = lab_dir,
+                  shp = shp_fl, maptype = 'stamen-terrain')
 }
 \author{
-Julie Padilla
+Julie Padilla, Dave Eslinger
 }
 \concept{analyze}

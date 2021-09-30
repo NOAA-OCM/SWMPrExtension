@@ -5,7 +5,7 @@
 #' @param file_path path to directory with new file
 #' @param file_name name of new csv file
 #'
-#' @importFrom dplyr mutate select
+#' @importFrom dplyr across case_when everything mutate select
 #' @importFrom magrittr %>%
 #' @importFrom tidyselect all_of
 #'

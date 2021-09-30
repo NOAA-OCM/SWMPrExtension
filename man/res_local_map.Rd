@@ -11,7 +11,8 @@ res_local_map(
   shp,
   station_labs = TRUE,
   lab_loc = NULL,
-  scale_pos = "bottomleft"
+  zoom = NULL,
+  maptype = "stamen-toner"
 )
 }
 \arguments{
@@ -21,16 +22,18 @@ res_local_map(
 
 \item{bbox}{a bounding box associated with the reserve. Must be in the format of c(X1, Y1, X2, Y2)}
 
-\item{shp}{SpatialPolygons object}
+\item{shp}{{sf} data frame (preferred) or SpatialPolygons object}
 
 \item{station_labs}{logical, should stations be labeled? Defaults to \code{TRUE}}
 
 \item{lab_loc}{chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.}
 
-\item{scale_pos}{scale_pos where should the scale be placed? Options are 'topleft', 'topright', 'bottomleft', or 'bottomright'. Defaults to 'bottomleft'}
+\item{zoom}{zoom level, 1-21 for OpenStreetMaps maps. Default is to autoscale based on bbox.}
+
+\item{maptype}{stamen map type from OpenStreetMap::openmap. Theoretically one of c("osm", "osm-bw","maptoolkit-topo", "waze", "bing", "stamen-toner", "stamen-terrain", "stamen-watercolor", "osm-german", "osm-wanderreitkarte", "mapbox", "esri", "esri-topo", "nps", "apple-iphoto", "skobbler", "hillshade", "opencyclemap", "osm-transport", "osm-public-transport", "osm-bbike", "osm-bbike-german").  However, many of these may not work. "stamen-toner", "stamen-terrain", and "bing" seem to work well.}
 }
 \value{
-returns a leaflet object
+returns a {ggplot} object
 }
 \description{
 Create a stylized reserve-level map for use with the reserve level reporting template
@@ -47,45 +50,44 @@ This function is intended to be used with \code{mapview::mapshot} to generate a 
 ### set plotting parameters
 stations <-
 sampling_stations[(sampling_stations$NERR.Site.ID == 'elk'
-& sampling_stations$Status == 'Active' & sampling_stations$isSWMP == "P"), ]$Station.Code
-to_match <- c('wq', 'met')
+          & sampling_stations$Status == 'Active'
+          & sampling_stations$isSWMP == "P"), ]$Station.Code
+          to_match <- c('wq', 'met')
 stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
 shp_fl <- elk_spatial
 bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
 lab_dir <- c('L', 'R', 'L', 'L', 'L')
 labs <- c('ap', 'cw', 'nm', 'sm', 'vm')
-pos <- 'bottomleft'
 
 ### plot
-res_local_map('elk', stations = stns, bbox = bounding_elk,
-lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
+x <- res_local_map('elk', stations = stns, bbox = bounding_elk,
+                   lab_loc = lab_dir, shp = shp_fl)
 
 \donttest{
 ## a multicomponent reserve (show two different bounding boxes)
 ### set plotting parameters
-stations <-
-sampling_stations[(sampling_stations$NERR.Site.ID == 'cbm'
-& sampling_stations$Status == 'Active' & sampling_stations$isSWMP == "P"), ]$Station.Code
-to_match <- c('wq', 'met')
+stations <- sampling_stations[(sampling_stations$NERR.Site.ID == 'cbm'
+            & sampling_stations$Status == 'Active'
+            & sampling_stations$isSWMP == "P"), ]$Station.Code
+            to_match <- c('wq', 'met')
 stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
 shp_fl <- cbm_spatial
 bounding_cbm_1 <- c(-77.393, 39.741, -75.553, 38.277)
-bounding_cbm_2 <- c(-76.862006, 38.811571, -76.596508, 38.642454)
+bounding_cbm_2 <- c(-76.8,  38.7, -76.62,  38.85)
 lab_dir <- c('L', 'R', 'L', 'L', 'L')
 labs <- c('ap', 'cw', 'nm', 'sm', 'vm')
-pos <- 'bottomleft'
 
 ### plot
-res_local_map('cbm', stations = stns, bbox = bounding_cbm_1,
-lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
+y <- res_local_map('cbm', stations = stns, bbox = bounding_cbm_1,
+                   lab_loc = lab_dir, shp = shp_fl)
 
-res_local_map('cbm', stations = stns, bbox = bounding_cbm_2,
-lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
+z <- res_local_map('cbm', stations = stns, bbox = bounding_cbm_2,
+                   lab_loc = lab_dir, shp = shp_fl)
 
 }
 
 }
 \author{
-Julie Padilla
+Julie Padilla, Dave Eslinger
 }
 \concept{analyze}

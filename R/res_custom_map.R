@@ -6,20 +6,19 @@
 #' @param x_loc num vector of x coordinates for \code{stations}
 #' @param y_loc num vector of y coordinates for \code{stations}
 #' @param bbox a bounding box associated with the reserve. Must be in the format of c(X1, Y1, X2, Y2)
-#' @param shp SpatialPolygons object
+#' @param shp {sf} data frame (preferred) or SpatialPolygons object
 #' @param station_labs logical, should stations be labeled? Defaults to \code{TRUE}
 #' @param station_col chr vector of colors used to color station points. Defaults to 'black'.
 #' @param lab_loc chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.
-#' @param scale_pos scale_pos where should the scale be placed? Options are 'topleft', 'topright', 'bottomleft', or 'bottomright'. Defaults to 'bottomleft'
+#' @param zoom zoom level, 1-21 for stamen maps. Default is to autoscale based on bbox.
+#' @param maptype stamen map type from OpenStreetMap::openmap. Theoretically one of c("osm", "osm-bw","maptoolkit-topo", "waze", "bing", "stamen-toner", "stamen-terrain", "stamen-watercolor", "osm-german", "osm-wanderreitkarte", "mapbox", "esri", "esri-topo", "nps", "apple-iphoto", "skobbler", "hillshade", "opencyclemap", "osm-transport", "osm-public-transport", "osm-bbike", "osm-bbike-german").  However, many of these may not work. "stamen-toner", "stamen-terrain", and "bing" seem to work well.
 #'
-#' @import leaflet
-#'
-#' @importFrom ggthemes theme_map
+#' @importFrom OpenStreetMap openmap
 #' @importFrom magrittr "%>%"
-#' @importFrom maptools elide spRbind unionSpatialPolygons
-#' @importFrom rgdal readOGR
-#' @importFrom rlang .data
-#' @importFrom sp CRS bbox proj4string spTransform
+#' @importFrom methods as
+#' @importFrom sf st_as_sf st_bbox st_crs st_transform
+#' @importFrom tmap tm_dots tm_polygons tm_rgb tm_scale_bar tm_shape tm_text
+#' @importFrom tmaptools read_osm
 #' @importFrom utils download.file unzip
 #'
 #' @export
@@ -30,11 +29,11 @@
 #'
 #' This function is intended to be used with \code{mapview::mapshot} to generate a png for the reserve-level report.
 #'
-#' @author Julie Padilla
+#' @author Julie Padilla, Dave Eslinger
 #'
 #' @concept analyze
 #'
-#' @return Returns a leaflet object
+#' @return returns a {ggplot} object
 #'
 #' @examples
 #' ### set plotting parameters
@@ -44,16 +43,15 @@
 #' shp_fl <- elk_spatial
 #' bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
 #' lab_dir <- c('L', 'R')
-#' pos <- 'bottomleft'
 #'
-#' ### plot
-#' res_custom_map(stations = stns, x_loc = x_coords, y_loc = y_coords,
-#' bbox = bounding_elk, lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
+#' ### Default zoom and maptype plot
+#' x <- res_custom_map(stations = stns, x_loc = x_coords, y_loc = y_coords,
+#'                     bbox = bounding_elk, lab_loc = lab_dir, shp = shp_fl)
 #'
 #' \donttest{
 #' res_custom_map(stations = stns, x_loc = x_coords, y_loc = y_coords,
-#' bbox = bounding_elk, lab_loc = lab_dir, scale_pos = pos,
-#' shp = shp_fl, station_col = c('red', 'green'))
+#'                bbox = bounding_elk, lab_loc = lab_dir,
+#'                shp = shp_fl, station_col = c('red', 'green'))
 #' }
 #'
 res_custom_map <- function(stations
@@ -64,11 +62,20 @@ res_custom_map <- function(stations
                            , station_labs = TRUE
                            , station_col = NULL
                            , lab_loc = NULL
-                           , scale_pos = 'bottomleft') {
+                           , zoom = NULL
+                           , maptype = "stamen-toner") {
+
+  # define local variables  to remove `check()` warnings
+  abbrev <- lab_long <- lab_lat <- NULL
 
   # check that a shape file exists
-  if(class(shp) != 'SpatialPolygons')
-    stop('shapefile (shp) must be SpatialPolygons object')
+  if(class(shp) != 'SpatialPolygons') {
+    if(class(shp) != 'sf') {
+      stop('shapefile (shp) must be sf (preferred) or SpatialPolygons object')
+    }
+  } else {
+    shp <- as(shp, "sf")   # convert SpatialPolygons to sf
+  }
 
   # check that stations were specified
   if(is.null(stations))
@@ -83,6 +90,12 @@ res_custom_map <- function(stations
     stop('Specify a bounding box (bbox) in the form of c(X1, Y1, X2, Y2)')
   if(length(bbox) != 4)
     stop('Incorrect number of elements specified for bbox. Specify a bounding box (bbox) in the form of c(X1, Y1, X2, Y2)')
+  # Get min-max bounding coordinates, and format bbox correctly:
+  xmin <- min(bbox[c(1,3)])
+  xmax <- max(bbox[c(1,3)])
+  ymin <- min(bbox[c(2,4)])
+  ymax <- max(bbox[c(2,4)])
+  bbox <- c(xmin, ymin, xmax, ymax)
 
   #check that stations, x_loc, and y_loc match
   if(length(stations) != length(x_loc))
@@ -94,60 +107,56 @@ res_custom_map <- function(stations
     station_col <- 'black'
   }
 
-  # set map label styles
-  label_style <- list(
-    "box-shadow" = "none",
-    "border-radius" = "5px",
-    "font" = "bold 16px/1.5 'Helvetica Neue', Arial, Helvetica, sans-serif",
-    "padding" = "1px 5px 1px 5px"
-  )
-
   # generate location labels
-  loc <- data.frame(abbrev = stations, Latitude = y_loc, Longitude = -1 * x_loc, color = station_col, stringsAsFactors = FALSE)
+  loc <- data.frame(abbrev = stations, Latitude = y_loc, Longitude = x_loc,
+                    color = station_col, stringsAsFactors = FALSE)
 
-  # Determine if r and l labs exist
-  if(!is.null(lab_loc)){
-    if('L' %in% lab_loc){left_labs <- grep('L', lab_loc)}
-    if('R' %in% lab_loc){right_labs <- grep('R', lab_loc)}
-  } else {
-    #default to left labels
-    left_labs <- c(1:4)
+  # Default all labels to left and then change if there is location information
+  loc$align <- -1.25
+  if(!is.null(lab_loc))
+    loc$align[lab_loc == 'R'] <- 1.25
+
+  # If longitudes are positive and print warning
+  if(sum(loc$Longitude > 0) > 0) {
+    # loc$Longitude[loc$Longitude > 0] <- -loc$Longitude[loc$Longitude > 0]
+    warning("Positive longitudes given, please double check")
   }
+  # convert location info to sf object
+  # use lat/lon, WGS84 projection, EPSG:4326.
+  loc_sf <- sf::st_as_sf(loc, coords = c("Longitude","Latitude"))
+  sf::st_crs(loc_sf) <- 4326
 
-  # Plot map
-  m <- leaflet(loc, options = leafletOptions(zoomControl = FALSE), width = 500, height = 500) %>%
-    addProviderTiles(leaflet::providers$Esri.WorldGrayCanvas) %>%  # Add default OpenStreetMap map tiles, CartoDB.Positron
-    addPolygons(data = shp, weight = 2, color = '#B3B300', fillColor = 'yellow')
 
-  if(exists('left_labs')){
-    m <- m %>%
-      addCircleMarkers(lng = ~Longitude[left_labs] * -1, lat = ~Latitude[left_labs], radius = 5
-                       , weight = 0, fillOpacity = 1
-                       , color = loc$color[left_labs]
-                       , label = loc$abbrev[left_labs]
-                       , labelOptions = labelOptions(noHide = station_labs
-                                                     , direction = c('left')
-                                                     , opacity = 1
-                                                     , offset = c(-5, 0)
-                                                     , style = label_style))
+  fill_colors <-  loc_sf$color #  c('#444E65', '#A3DFFF', '#247BA0', '#0a0a0a')
+  break_vals <- loc_sf$abbrev #c("inc", "dec", "insig", "insuff")
+
+  # Set background map zoom level automatically if not specified
+  if(is.null(zoom)) {
+    diag_size <- sqrt((xmax-xmin)^2 +(ymax-ymin)^2)
+    zoom <- 15 - ceiling(sqrt(10*diag_size))
+    print(paste("Zoom level calculated as", zoom, sep = " "))
   }
+  print(paste("maptype is ",maptype))
 
-  if(exists('right_labs')){
-    m <- m %>%
-      addCircleMarkers(lng = ~Longitude[right_labs] * -1, lat = ~Latitude[right_labs], radius = 5
-                       , weight = 0, fillOpacity = 1
-                       , color = loc$color[right_labs]
-                       , label = loc$abbrev[right_labs]
-                       , labelOptions = labelOptions(noHide = station_labs
-                                                     , direction = c('right')
-                                                     , opacity = 1
-                                                     , offset = c(5, 0)
-                                                     , style = label_style))
-  }
+  bg_map <- tmaptools::read_osm(bbox, type = maptype, zoom = zoom)
+  # bg_bing <- tmaptools::read_osm(bbox, type = "bing")
+  m <- tmap::tm_shape(bg_map) +
+    tmap::tm_rgb(alpha = 0.5) +
+    tmap::tm_shape(shp) +
+    tmap::tm_polygons(lwd = 2, col = 'yellow', alpha = 0.3,
+                      border.col = '#B3B300', border.alpha = 0.8) +
+    tmap::tm_shape(loc_sf) +
+    tmap::tm_dots(size = .75, col = "color")
 
-  m <- m %>%
-    addScaleBar(position = scale_pos) %>%
-    fitBounds(bbox[1], bbox[2], bbox[3], bbox[4])
+    m <- m +
+      tmap::tm_text(text = "abbrev", xmod = "align", just = c("center","top"),
+                    bg.color = 'white', bg.alpha = 0.75,
+                    fontface = "bold")
+
+  # if(!is.null(scale_pos)) {
+  #   m <- m +
+  #     tmap::tm_scale_bar(shp)
+  # }
 
   return(m)
 }

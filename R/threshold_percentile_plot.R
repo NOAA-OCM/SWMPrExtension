@@ -14,11 +14,12 @@
 #' @param plot_title logical, should the station name be included as the plot title? Defaults to \code{FALSE}
 #' @param ... additional arguments passed to other methods (not used for this function).
 #'
-#' @import ggplot2 dplyr rlang
+#' @import ggplot2
 #'
 #' @importFrom dplyr filter group_by left_join summarise
 #' @importFrom magrittr "%>%"
 #' @importFrom lubridate  ymd_hms month year
+#' @importFrom rlang .data
 #' @importFrom scales format_format
 #' @importFrom stats quantile
 #'

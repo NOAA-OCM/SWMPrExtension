@@ -4,10 +4,10 @@
 #'
 #' @param dat_in \code{data.frame} with year, season, min, mean, max columns
 #'
-#' @import dplyr
+## @import dplyr
 #'
 #' @importFrom broom tidy
-#' @importFrom dplyr do filter group_by
+#' @importFrom dplyr do filter group_by mutate select
 #' @importFrom magrittr "%>%"
 #' @importFrom purrr map
 #' @importFrom rlang .data

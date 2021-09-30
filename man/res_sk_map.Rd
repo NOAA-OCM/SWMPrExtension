@@ -12,7 +12,8 @@ res_sk_map(
   shp,
   station_labs = TRUE,
   lab_loc = NULL,
-  scale_pos = "bottomleft"
+  zoom = NULL,
+  maptype = "stamen-toner"
 )
 }
 \arguments{
@@ -24,17 +25,18 @@ res_sk_map(
 
 \item{bbox}{a bounding box associated with the reserve. Must be in the format of c(X1, Y1, X2, Y2)}
 
-\item{shp}{SpatialPolygons object}
+\item{shp}{{sf} data frame (preferred) or SpatialPolygons object}
 
 \item{station_labs}{logical, should stations be labeled? Defaults to \code{TRUE}}
 
 \item{lab_loc}{chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.}
 
-\item{scale_pos}{scale_pos where should the scale be placed? Options are 'topleft', 'topright', 'bottomleft', or 'bottomright'. Defaults to 'bottomleft'}
+\item{zoom}{zoom level, 1-21 for OpenStreetMaps maps. Default is to autoscale based on bbox. Higher numbers give more detail.}
+
+\item{maptype}{stamen map type from OpenStreetMap::openmap. Theoretically one of c("osm", "osm-bw","maptoolkit-topo", "waze", "bing", "stamen-toner", "stamen-terrain", "stamen-watercolor", "osm-german", "osm-wanderreitkarte", "mapbox", "esri", "esri-topo", "nps", "apple-iphoto", "skobbler", "hillshade", "opencyclemap", "osm-transport", "osm-public-transport", "osm-bbike", "osm-bbike-german").  However, many of these may not work. "stamen-toner", "stamen-terrain", and "bing" seem to work well.}
 }
 \value{
-returns a leaflet object. This function is intended to be used with mapshot to generate a png
-for the reserve level report
+returns a {ggplot} object.
 }
 \description{
 Create a stylized reserve-level map of seasonal kendall results for use with the reserve level reporting template
@@ -42,50 +44,65 @@ Create a stylized reserve-level map of seasonal kendall results for use with the
 \details{
 Creates a stylized, reserve-level base map for displaying seasonal kendall results from \code{\link{sk_seasonal}}. The user can specify the reserve and stations to plot. The user can also specify a bounding box. For multi-component reserves, the user should specify a bounding box that highlights the component of interest.
 
-To display seasonal trends, the user must specify \code{c('inc', 'dec', 'insig')} for each station listed in the \code{stations} argument.
+To display seasonal trends, the user must specify \code{c('inc', 'dec', 'insig', 'insuff')} for each station listed in the \code{stations} argument.
 }
 \examples{
-## a compact reserve
+## A compact reserve
+
 ### set plotting parameters
-stations <-
-sampling_stations[(sampling_stations$NERR.Site.ID == 'elk'
-& sampling_stations$Status == 'Active' & sampling_stations$isSWMP == "P"), ]$Station.Code
-to_match <- c('wq')
+stations <- sampling_stations[(sampling_stations$NERR.Site.ID == 'elk'
+     & sampling_stations$Status == 'Active'
+     & sampling_stations$isSWMP == "P"), ]$Station.Code
+     to_match <- c('wq')
 stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
 shp_fl <- elk_spatial
 bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
-pos <- 'bottomleft'
-sk_res <- c('inc', 'dec', 'dec', 'insig')
+trnds <- c('inc', 'dec', 'insuff', 'insig')
 
 ### plot
-res_sk_map('elk', stations = stns, sk_result = sk_res,
-bbox = bounding_elk, scale_pos = pos, shp = shp_fl)
+x <- res_sk_map('elk', stations = stns, sk_result = trnds,
+                 bbox = bounding_elk, shp = shp_fl)
 
 \donttest{
-## a multicomponent reserve (showing two different bounding boxes)
-### set plotting parameters
-stations <-
-sampling_stations[(sampling_stations$NERR.Site.ID == 'cbm'
-& sampling_stations$Status == 'Active' & sampling_stations$isSWMP == "P"), ]$Station.Code
-to_match <- c('wq')
+
+### Higher zoom number gives more details, but those may not be visible
+x_14 <- res_sk_map('elk', stations = stns, sk_result = trnds,
+                 bbox = bounding_elk, shp = shp_fl,
+                 zoom = 14)
+
+### Lower zoom number gives coarser text and fewer features
+x_11 <- res_sk_map('elk', stations = stns, sk_result = trnds,
+                 bbox = bounding_elk, shp = shp_fl,
+                 zoom = 11)
+
+### Different maptypes may be used.  All may not be available.
+#    Note that zoom and maptype interact, so some experimentation may be
+#    required.
+x_terrain <- res_sk_map('elk', stations = stns, sk_result = trnds,
+                 bbox = bounding_elk, shp = shp_fl,
+                 maptype = 'stamen-terrain')
+### A multicomponent reserve (showing two different bounding boxes)
+
+#  set plotting parameters
+stations <- sampling_stations[(sampling_stations$NERR.Site.ID == 'cbm'
+         & sampling_stations$Status == 'Active'
+         & sampling_stations$isSWMP == "P"), ]$Station.Code
+         to_match <- c('wq')
 stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
 shp_fl <- cbm_spatial
 bounding_cbm_1 <- c(-77.393, 39.741, -75.553, 38.277)
-bounding_cbm_2 <- c(-76.862006, 38.811571, -76.596508, 38.642454)
-pos <- 'bottomleft'
-sk_res <- c('inc', 'dec', 'dec', 'insig')
+bounding_cbm_2 <- c(-76.8,  38.7, -76.62,  38.85)
+trnds <- c('inc', 'insuff', 'dec', 'insig')
 
-### plot
-res_sk_map('cbm', stations = stns, sk_result = sk_res, bbox = bounding_cbm_1,
-scale_pos = pos, shp = shp_fl)
+#   plot
+y <- res_sk_map('cbm', stations = stns, sk_result = trnds,
+                 bbox = bounding_cbm_1, shp = shp_fl)
 
-res_sk_map('cbm', stations = stns, sk_result = sk_res, bbox = bounding_cbm_2,
-scale_pos = pos, shp = shp_fl)
-
+z <- res_sk_map('cbm', stations = stns, sk_result = trnds,
+                 bbox = bounding_cbm_2, shp = shp_fl)
 }
-
 }
 \author{
-Julie Padilla
+Julie Padilla, Dave Eslinger
 }
 \concept{analyze}

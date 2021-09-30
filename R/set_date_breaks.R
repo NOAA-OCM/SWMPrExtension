@@ -4,6 +4,8 @@
 #'
 #' @param rng date range years
 #'
+#' @importFrom dplyr case_when
+
 #' @export
 #'
 #' @details A helper function for easier date label setting

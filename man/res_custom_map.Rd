@@ -13,7 +13,8 @@ res_custom_map(
   station_labs = TRUE,
   station_col = NULL,
   lab_loc = NULL,
-  scale_pos = "bottomleft"
+  zoom = NULL,
+  maptype = "stamen-toner"
 )
 }
 \arguments{
@@ -25,7 +26,7 @@ res_custom_map(
 
 \item{bbox}{a bounding box associated with the reserve. Must be in the format of c(X1, Y1, X2, Y2)}
 
-\item{shp}{SpatialPolygons object}
+\item{shp}{{sf} data frame (preferred) or SpatialPolygons object}
 
 \item{station_labs}{logical, should stations be labeled? Defaults to \code{TRUE}}
 
@@ -33,10 +34,12 @@ res_custom_map(
 
 \item{lab_loc}{chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.}
 
-\item{scale_pos}{scale_pos where should the scale be placed? Options are 'topleft', 'topright', 'bottomleft', or 'bottomright'. Defaults to 'bottomleft'}
+\item{zoom}{zoom level, 1-21 for stamen maps. Default is to autoscale based on bbox.}
+
+\item{maptype}{stamen map type from OpenStreetMap::openmap. Theoretically one of c("osm", "osm-bw","maptoolkit-topo", "waze", "bing", "stamen-toner", "stamen-terrain", "stamen-watercolor", "osm-german", "osm-wanderreitkarte", "mapbox", "esri", "esri-topo", "nps", "apple-iphoto", "skobbler", "hillshade", "opencyclemap", "osm-transport", "osm-public-transport", "osm-bbike", "osm-bbike-german").  However, many of these may not work. "stamen-toner", "stamen-terrain", and "bing" seem to work well.}
 }
 \value{
-Returns a leaflet object
+returns a {ggplot} object
 }
 \description{
 Create a stylized reserve-level map of custom station locations for use with the reserve level reporting template
@@ -56,20 +59,19 @@ y_coords <- c(36.850377, 36.806667)
 shp_fl <- elk_spatial
 bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
 lab_dir <- c('L', 'R')
-pos <- 'bottomleft'
 
-### plot
-res_custom_map(stations = stns, x_loc = x_coords, y_loc = y_coords,
-bbox = bounding_elk, lab_loc = lab_dir, scale_pos = pos, shp = shp_fl)
+### Default zoom and maptype plot
+x <- res_custom_map(stations = stns, x_loc = x_coords, y_loc = y_coords,
+                    bbox = bounding_elk, lab_loc = lab_dir, shp = shp_fl)
 
 \donttest{
 res_custom_map(stations = stns, x_loc = x_coords, y_loc = y_coords,
-bbox = bounding_elk, lab_loc = lab_dir, scale_pos = pos,
-shp = shp_fl, station_col = c('red', 'green'))
+               bbox = bounding_elk, lab_loc = lab_dir,
+               shp = shp_fl, station_col = c('red', 'green'))
 }
 
 }
 \author{
-Julie Padilla
+Julie Padilla, Dave Eslinger
 }
 \concept{analyze}

@@ -17,7 +17,7 @@
 #'
 #' @import ggplot2
 #'
-#' @importFrom dplyr filter group_by summarise
+#' @importFrom dplyr case_when filter group_by summarise
 #' @importFrom lubridate  year floor_date
 #' @importFrom magrittr "%>%"
 #' @importFrom tidyr complete gather
@@ -107,23 +107,6 @@ seasonal_dot.swmpr <- function(swmpr_in
                                , plot_title = FALSE
                                , plot = TRUE
                                , ...) {
-
-  # #------------FOR DEBUGGING--------------------------------------------------
-  # library(dplyr)
-  # dat_wq <- elksmwq
-  # dat_wq <- qaqc(dat_wq, qaqc_keep = c(0, 3, 5))
-  # swmpr_in <- dat_wq
-  # param = 'do_mgl'
-  # lm_trend = TRUE
-  # lm_lab = TRUE
-  # plot_title = TRUE
-  # free_y = FALSE
-  # log_trans = FALSE
-  # converted = FALSE
-  # plot_title = FALSE
-  # plot = TRUE
-
-  # #--------------END DEBUGGING------------------------------------------------
 
   dat <- swmpr_in
   parm <- sym(param)
