@@ -63,7 +63,7 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
 
   if(agg_county) {
     usa <- us_4269 %>%
-      dplyr::group_by(.data$state_fips) %>%
+      dplyr::group_by(.data$fips) %>%
       dplyr::summarise(area = sum(.data$area))
   } else {
     usa <- us_4269

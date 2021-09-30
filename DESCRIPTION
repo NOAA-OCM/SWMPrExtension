@@ -31,11 +31,8 @@ Imports:
 	ggplot2,
 	ggthemes,
 	grDevices,
-	leaflet,
 	lubridate,
 	magrittr,
-	maps,
-	maptools,
 	methods,
 	officer,
 	purrr,
@@ -43,10 +40,10 @@ Imports:
   rlang,
 	scales,
   sf,
-	tmap,
-	tmaptools,
+  stats,
 	tidyselect,
-	tidyr
+	tidyr,
+	utils
 Authors@R: c(
   person(given = "Julie", family = "Padilla",
     role = c("aut", "ctb"),

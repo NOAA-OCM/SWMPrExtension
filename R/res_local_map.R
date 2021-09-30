@@ -15,8 +15,6 @@
 #' @importFrom magrittr "%>%"
 #' @importFrom methods as
 #' @importFrom sf st_as_sf st_bbox st_crs st_transform
-#' @importFrom tmap tm_dots tm_polygons tm_rgb tm_shape tm_text
-#' @importFrom tmaptools read_osm
 #' @importFrom utils download.file unzip
 #'
 #' @export
