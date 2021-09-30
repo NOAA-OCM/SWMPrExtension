@@ -14,7 +14,7 @@ res_custom_sk_map(
   station_labs = TRUE,
   lab_loc = NULL,
   zoom = NULL,
-  maptype = "toner-lite"
+  maptype = "stamen-toner"
 )
 }
 \arguments{
@@ -28,16 +28,15 @@ res_custom_sk_map(
 
 \item{bbox}{a bounding box associated with the reserve. Must be in the format of c(X1, Y1, X2, Y2)}
 
-\item{shp}{SpatialPolygons object}
+\item{shp}{{sf} data frame (preferred) or SpatialPolygons object}
 
 \item{station_labs}{logical, should stations be labeled? Defaults to \code{TRUE}}
 
 \item{lab_loc}{chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.}
 
-\item{zoom}{zoom level, 1-21 for stamen maps. Default is to autoscale based on bbox.}
+\item{zoom}{zoom level, 1-21 for OpenStreetMaps maps. Default is to autoscale based on bbox. Higher numbers give more detail.}
 
-\item{maptype}{stamen map type from ggmap::get_stamenmap.  One of c("terrain", "terrain-background", "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011", "toner-background", "toner-hybrid", "toner-labels", "toner-lines", "toner-lite", "watercolor")
-#'}
+\item{maptype}{stamen map type from OpenStreetMap::openmap. Theoretically one of c("osm", "osm-bw","maptoolkit-topo", "waze", "bing", "stamen-toner", "stamen-terrain", "stamen-watercolor", "osm-german", "osm-wanderreitkarte", "mapbox", "esri", "esri-topo", "nps", "apple-iphoto", "skobbler", "hillshade", "opencyclemap", "osm-transport", "osm-public-transport", "osm-bbike", "osm-bbike-german").  However, many of these may not work. "stamen-toner", "stamen-terrain", and "bing" seem to work well.}
 }
 \value{
 returns a {ggplot} object
@@ -67,10 +66,10 @@ x <- res_custom_sk_map(stations = stns, x_loc = x_coords,
                   shp = shp_fl)
 
 ### Higher zoom number gives more details, but may not be visible
-x_13 <- res_custom_sk_map(stations = stns, x_loc = x_coords,
+x_14 <- res_custom_sk_map(stations = stns, x_loc = x_coords,
                   sk_result = trnds, y_loc = y_coords,
                   bbox = bounding_elk, lab_loc = lab_dir,
-                  shp = shp_fl, zoom = 13)
+                  shp = shp_fl, zoom = 14)
 
 ### Lower zoom number gives coarser text and fewer features
 x_11 <- res_custom_sk_map(stations = stns, x_loc = x_coords,
@@ -80,12 +79,12 @@ x_11 <- res_custom_sk_map(stations = stns, x_loc = x_coords,
 
 
 ### Different maptypes may be used.  All may not be available.
-### Note that zoom and maptype interact, so some experiemtation may be
-### required.
-x_11 <- res_custom_sk_map(stations = stns, x_loc = x_coords,
+#   Note that zoom and maptype interact, so some experimentation may be
+#   required.
+x_terrain <- res_custom_sk_map(stations = stns, x_loc = x_coords,
                   sk_result = trnds, y_loc = y_coords,
                   bbox = bounding_elk, lab_loc = lab_dir,
-                  shp = shp_fl, maptype = 'terrain')
+                  shp = shp_fl, maptype = 'stamen-terrain')
 }
 \author{
 Julie Padilla, Dave Eslinger

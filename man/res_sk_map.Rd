@@ -13,7 +13,7 @@ res_sk_map(
   station_labs = TRUE,
   lab_loc = NULL,
   zoom = NULL,
-  maptype = "toner-lite"
+  maptype = "stamen-toner"
 )
 }
 \arguments{
@@ -25,15 +25,15 @@ res_sk_map(
 
 \item{bbox}{a bounding box associated with the reserve. Must be in the format of c(X1, Y1, X2, Y2)}
 
-\item{shp}{SpatialPolygons object}
+\item{shp}{{sf} data frame (preferred) or SpatialPolygons object}
 
 \item{station_labs}{logical, should stations be labeled? Defaults to \code{TRUE}}
 
 \item{lab_loc}{chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.}
 
-\item{zoom}{zoom level, 1-21 for stamen maps. Default is to autoscale based on bbox.}
+\item{zoom}{zoom level, 1-21 for OpenStreetMaps maps. Default is to autoscale based on bbox. Higher numbers give more detail.}
 
-\item{maptype}{stamen map type from ggmap::get_stamenmap.  One of c("terrain", "terrain-background", "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011", "toner-background", "toner-hybrid", "toner-labels", "toner-lines", "toner-lite", "watercolor")}
+\item{maptype}{stamen map type from OpenStreetMap::openmap. Theoretically one of c("osm", "osm-bw","maptoolkit-topo", "waze", "bing", "stamen-toner", "stamen-terrain", "stamen-watercolor", "osm-german", "osm-wanderreitkarte", "mapbox", "esri", "esri-topo", "nps", "apple-iphoto", "skobbler", "hillshade", "opencyclemap", "osm-transport", "osm-public-transport", "osm-bbike", "osm-bbike-german").  However, many of these may not work. "stamen-toner", "stamen-terrain", and "bing" seem to work well.}
 }
 \value{
 returns a {ggplot} object.
@@ -47,16 +47,17 @@ Creates a stylized, reserve-level base map for displaying seasonal kendall resul
 To display seasonal trends, the user must specify \code{c('inc', 'dec', 'insig', 'insuff')} for each station listed in the \code{stations} argument.
 }
 \examples{
-## a compact reserve
+## A compact reserve
+
 ### set plotting parameters
-stations <-
-sampling_stations[(sampling_stations$NERR.Site.ID == 'elk'
-& sampling_stations$Status == 'Active' & sampling_stations$isSWMP == "P"), ]$Station.Code
-to_match <- c('wq')
+stations <- sampling_stations[(sampling_stations$NERR.Site.ID == 'elk'
+     & sampling_stations$Status == 'Active'
+     & sampling_stations$isSWMP == "P"), ]$Station.Code
+     to_match <- c('wq')
 stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
 shp_fl <- elk_spatial
 bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
-trnds <- c('inc', 'dec', 'dec', 'insig')
+trnds <- c('inc', 'dec', 'insuff', 'insig')
 
 ### plot
 x <- res_sk_map('elk', stations = stns, sk_result = trnds,
@@ -64,10 +65,10 @@ x <- res_sk_map('elk', stations = stns, sk_result = trnds,
 
 \donttest{
 
-### Higher zoom number gives more details, but may not be visible
-x_13 <- res_sk_map('elk', stations = stns, sk_result = trnds,
+### Higher zoom number gives more details, but those may not be visible
+x_14 <- res_sk_map('elk', stations = stns, sk_result = trnds,
                  bbox = bounding_elk, shp = shp_fl,
-                 zoom = 13)
+                 zoom = 14)
 
 ### Lower zoom number gives coarser text and fewer features
 x_11 <- res_sk_map('elk', stations = stns, sk_result = trnds,
@@ -75,29 +76,30 @@ x_11 <- res_sk_map('elk', stations = stns, sk_result = trnds,
                  zoom = 11)
 
 ### Different maptypes may be used.  All may not be available.
-#    Note that zoom and maptype interact, so some experiemtation may be
+#    Note that zoom and maptype interact, so some experimentation may be
 #    required.
 x_terrain <- res_sk_map('elk', stations = stns, sk_result = trnds,
                  bbox = bounding_elk, shp = shp_fl,
-                 maptype = 'terrain')
+                 maptype = 'stamen-terrain')
 ### A multicomponent reserve (showing two different bounding boxes)
-#    set plotting parameters
-stations <-
-sampling_stations[(sampling_stations$NERR.Site.ID == 'cbm'
-& sampling_stations$Status == 'Active' & sampling_stations$isSWMP == "P"), ]$Station.Code
-to_match <- c('wq')
+
+#  set plotting parameters
+stations <- sampling_stations[(sampling_stations$NERR.Site.ID == 'cbm'
+         & sampling_stations$Status == 'Active'
+         & sampling_stations$isSWMP == "P"), ]$Station.Code
+         to_match <- c('wq')
 stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
 shp_fl <- cbm_spatial
 bounding_cbm_1 <- c(-77.393, 39.741, -75.553, 38.277)
 bounding_cbm_2 <- c(-76.8,  38.7, -76.62,  38.85)
-trnds <- c('inc', 'dec', 'dec', 'insig')
+trnds <- c('inc', 'insuff', 'dec', 'insig')
 
 #   plot
-y <- res_sk_map('cbm', stations = stns, sk_result = trnds, bbox = bounding_cbm_1,
-                 shp = shp_fl)
+y <- res_sk_map('cbm', stations = stns, sk_result = trnds,
+                 bbox = bounding_cbm_1, shp = shp_fl)
 
-z <- res_sk_map('cbm', stations = stns, sk_result = trnds, bbox = bounding_cbm_2,
-                 shp = shp_fl)
+z <- res_sk_map('cbm', stations = stns, sk_result = trnds,
+                 bbox = bounding_cbm_2, shp = shp_fl)
 }
 }
 \author{
