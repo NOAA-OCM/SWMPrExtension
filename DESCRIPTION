@@ -23,9 +23,11 @@ Depends:
     R (>= 4.0),
 	SWMPr
 Imports:
+	EnvStats,
+  OpenStreetMap,
+	RColorBrewer,
   broom,
   dplyr,
-	EnvStats,
 	flextable,
 	ggplot2,
 	ggthemes,
@@ -35,7 +37,6 @@ Imports:
 	methods,
 	officer,
 	purrr,
-	RColorBrewer,
   rlang,
 	scales,
   sf,

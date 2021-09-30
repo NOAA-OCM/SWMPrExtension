@@ -50,8 +50,9 @@ This function is intended to be used with \code{mapview::mapshot} to generate a 
 ### set plotting parameters
 stations <-
 sampling_stations[(sampling_stations$NERR.Site.ID == 'elk'
-& sampling_stations$Status == 'Active' & sampling_stations$isSWMP == "P"), ]$Station.Code
-to_match <- c('wq', 'met')
+          & sampling_stations$Status == 'Active'
+          & sampling_stations$isSWMP == "P"), ]$Station.Code
+          to_match <- c('wq', 'met')
 stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
 shp_fl <- elk_spatial
 bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
@@ -66,7 +67,8 @@ x <- res_local_map('elk', stations = stns, bbox = bounding_elk,
 ## a multicomponent reserve (show two different bounding boxes)
 ### set plotting parameters
 stations <- sampling_stations[(sampling_stations$NERR.Site.ID == 'cbm'
-            & sampling_stations$Status == 'Active' & sampling_stations$isSWMP == "P"), ]$Station.Code
+            & sampling_stations$Status == 'Active'
+            & sampling_stations$isSWMP == "P"), ]$Station.Code
             to_match <- c('wq', 'met')
 stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
 shp_fl <- cbm_spatial

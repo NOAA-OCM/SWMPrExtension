@@ -51,8 +51,9 @@ To display seasonal trends, the user must specify \code{c('inc', 'dec', 'insig',
 
 ### set plotting parameters
 stations <- sampling_stations[(sampling_stations$NERR.Site.ID == 'elk'
-            & sampling_stations$Status == 'Active' & sampling_stations$isSWMP == "P"), ]$Station.Code
-to_match <- c('wq')
+     & sampling_stations$Status == 'Active'
+     & sampling_stations$isSWMP == "P"), ]$Station.Code
+     to_match <- c('wq')
 stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
 shp_fl <- elk_spatial
 bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
@@ -84,8 +85,9 @@ x_terrain <- res_sk_map('elk', stations = stns, sk_result = trnds,
 
 #  set plotting parameters
 stations <- sampling_stations[(sampling_stations$NERR.Site.ID == 'cbm'
-                 & sampling_stations$Status == 'Active'
-                 & sampling_stations$isSWMP == "P"), ]$Station.Code to_match <- c('wq')
+         & sampling_stations$Status == 'Active'
+         & sampling_stations$isSWMP == "P"), ]$Station.Code
+         to_match <- c('wq')
 stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
 shp_fl <- cbm_spatial
 bounding_cbm_1 <- c(-77.393, 39.741, -75.553, 38.277)
@@ -93,11 +95,11 @@ bounding_cbm_2 <- c(-76.8,  38.7, -76.62,  38.85)
 trnds <- c('inc', 'insuff', 'dec', 'insig')
 
 #   plot
-y <- res_sk_map('cbm', stations = stns, sk_result = trnds, bbox = bounding_cbm_1,
-                 shp = shp_fl)
+y <- res_sk_map('cbm', stations = stns, sk_result = trnds,
+                 bbox = bounding_cbm_1, shp = shp_fl)
 
-z <- res_sk_map('cbm', stations = stns, sk_result = trnds, bbox = bounding_cbm_2,
-                 shp = shp_fl)
+z <- res_sk_map('cbm', stations = stns, sk_result = trnds,
+                 bbox = bounding_cbm_2, shp = shp_fl)
 }
 }
 \author{

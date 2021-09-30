@@ -13,6 +13,7 @@
 #' @param zoom zoom level, 1-21 for OpenStreetMaps maps. Default is to autoscale based on bbox. Higher numbers give more detail.
 #' @param maptype stamen map type from OpenStreetMap::openmap. Theoretically one of c("osm", "osm-bw","maptoolkit-topo", "waze", "bing", "stamen-toner", "stamen-terrain", "stamen-watercolor", "osm-german", "osm-wanderreitkarte", "mapbox", "esri", "esri-topo", "nps", "apple-iphoto", "skobbler", "hillshade", "opencyclemap", "osm-transport", "osm-public-transport", "osm-bbike", "osm-bbike-german").  However, many of these may not work. "stamen-toner", "stamen-terrain", and "bing" seem to work well.
 #'
+#' @importFrom OpenStreetMap openmap
 #' @importFrom magrittr "%>%"
 #' @importFrom methods as
 #' @importFrom rlang .data
@@ -39,8 +40,9 @@
 #'
 #' ### set plotting parameters
 #' stations <- sampling_stations[(sampling_stations$NERR.Site.ID == 'elk'
-#'             & sampling_stations$Status == 'Active' & sampling_stations$isSWMP == "P"), ]$Station.Code
-#' to_match <- c('wq')
+#'      & sampling_stations$Status == 'Active'
+#'      & sampling_stations$isSWMP == "P"), ]$Station.Code
+#'      to_match <- c('wq')
 #' stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
 #' shp_fl <- elk_spatial
 #' bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
@@ -73,8 +75,9 @@
 #'
 #' #  set plotting parameters
 #' stations <- sampling_stations[(sampling_stations$NERR.Site.ID == 'cbm'
-#'                  & sampling_stations$Status == 'Active'
-#'                  & sampling_stations$isSWMP == "P"), ]$Station.Code to_match <- c('wq')
+#'          & sampling_stations$Status == 'Active'
+#'          & sampling_stations$isSWMP == "P"), ]$Station.Code
+#'          to_match <- c('wq')
 #' stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
 #' shp_fl <- cbm_spatial
 #' bounding_cbm_1 <- c(-77.393, 39.741, -75.553, 38.277)
@@ -82,11 +85,11 @@
 #' trnds <- c('inc', 'insuff', 'dec', 'insig')
 #'
 #' #   plot
-#' y <- res_sk_map('cbm', stations = stns, sk_result = trnds, bbox = bounding_cbm_1,
-#'                  shp = shp_fl)
+#' y <- res_sk_map('cbm', stations = stns, sk_result = trnds,
+#'                  bbox = bounding_cbm_1, shp = shp_fl)
 #'
-#' z <- res_sk_map('cbm', stations = stns, sk_result = trnds, bbox = bounding_cbm_2,
-#'                  shp = shp_fl)
+#' z <- res_sk_map('cbm', stations = stns, sk_result = trnds,
+#'                  bbox = bounding_cbm_2, shp = shp_fl)
 #' }
 
 res_sk_map <- function(nerr_site_id
