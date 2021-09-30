@@ -1,3 +1,8 @@
+### SWMPrExtension 2.0.0
+* Public release after merge of sf_transition and tmap branches. 
+* Addresses issue #29: replacing {sp} with {sf} 
+* Addresses issue #44: PhantomJS replacement
+
 ### SWMPrExtension 1.1.8.2
 * Replacing {ggmap} functionality with {tmap} functionality.
 
