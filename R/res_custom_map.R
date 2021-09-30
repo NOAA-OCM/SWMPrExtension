@@ -6,17 +6,18 @@
 #' @param x_loc num vector of x coordinates for \code{stations}
 #' @param y_loc num vector of y coordinates for \code{stations}
 #' @param bbox a bounding box associated with the reserve. Must be in the format of c(X1, Y1, X2, Y2)
-#' @param shp SpatialPolygons object
+#' @param shp {sf} data frame (preferred) or SpatialPolygons object
 #' @param station_labs logical, should stations be labeled? Defaults to \code{TRUE}
 #' @param station_col chr vector of colors used to color station points. Defaults to 'black'.
 #' @param lab_loc chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.
 #' @param zoom zoom level, 1-21 for stamen maps. Default is to autoscale based on bbox.
-#' @param maptype stamen map type from ggmap::get_stamenmap.  One of c("terrain", "terrain-background", "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011", "toner-background", "toner-hybrid", "toner-labels", "toner-lines", "toner-lite", "watercolor")
+#' @param maptype stamen map type from OpenStreetMap::openmap. Theoretically one of c("osm", "osm-bw","maptoolkit-topo", "waze", "bing", "stamen-toner", "stamen-terrain", "stamen-watercolor", "osm-german", "osm-wanderreitkarte", "mapbox", "esri", "esri-topo", "nps", "apple-iphoto", "skobbler", "hillshade", "opencyclemap", "osm-transport", "osm-public-transport", "osm-bbike", "osm-bbike-german").  However, many of these may not work. "stamen-toner", "stamen-terrain", and "bing" seem to work well.
 #'
-#'
-#' @importFrom ggmap get_stamenmap ggmap
-#' @importFrom ggthemes theme_map
 #' @importFrom magrittr "%>%"
+#' @importFrom methods as
+#' @importFrom sf st_as_sf st_bbox st_crs st_transform
+#' @importFrom tmap tm_dots tm_polygons tm_rgb tm_scale_bar tm_shape tm_text
+#' @importFrom tmaptools read_osm
 #' @importFrom utils download.file unzip
 #'
 #' @export
@@ -61,7 +62,7 @@ res_custom_map <- function(stations
                            , station_col = NULL
                            , lab_loc = NULL
                            , zoom = NULL
-                           , maptype = 'toner-lite') {
+                           , maptype = "stamen-toner") {
 
   # define local variables  to remove `check()` warnings
   abbrev <- lab_long <- lab_lat <- NULL
@@ -131,52 +132,29 @@ res_custom_map <- function(stations
   # Set background map zoom level automatically if not specified
   if(is.null(zoom)) {
     diag_size <- sqrt((xmax-xmin)^2 +(ymax-ymin)^2)
-    zoom <- 14 - ceiling(sqrt(10*diag_size))
+    zoom <- 15 - ceiling(sqrt(10*diag_size))
     print(paste("Zoom level calculated as", zoom, sep = " "))
   }
   print(paste("maptype is ",maptype))
 
-  bg_map <- ggmap::get_stamenmap(bbox,
-                                 maptype = maptype,
-                                 source = "stamen",
-                                 zoom = zoom,
-                                 messaging = FALSE,
-                                 epsg = 3785,
-                                 urlonly = FALSE)
-
-  m <- ggmap::ggmap(bg_map) +
-    geom_sf(data = shp, aes(), inherit.aes = FALSE,
-            fill = "yellow", col = '#B3B300', alpha = 0.3) +
-    ggthemes::theme_map() +
-    #    geom_sf_text(data = loc_sf, aes(), inherit.aes = FALSE) +
-    geom_sf(data = loc_sf, inherit.aes = FALSE,
-            aes(color = .data$abbrev,
-                fill = .data$abbrev),
-            shape = 21,
-            size = 3.8,
-            show.legend = FALSE) +
-    scale_color_manual(values = fill_colors, breaks = break_vals) +
-    scale_fill_manual(values = fill_colors, breaks = break_vals)
-
-  if(station_labs) {
-    # Define lat/long for labels, based on stations, alignment, and bbox
-    loc$lab_long <- loc$Longitude + 0.045* loc$align * (bbox[3] - bbox[1])
-    loc$lab_lat <- loc$Latitude + 0.015 * (bbox[4] - bbox[2])
-
-    # convert Labels info to sf object, use lat/lon, WGS84 projection, EPSG:4326.
-    labels_sf <- loc %>%
-      select(abbrev, lab_long, lab_lat) %>%
-      sf::st_as_sf(coords = c("lab_long","lab_lat"))
-    sf::st_crs(labels_sf) <- 4326
+  bg_map <- tmaptools::read_osm(bbox, type = maptype, zoom = zoom)
+  # bg_bing <- tmaptools::read_osm(bbox, type = "bing")
+  m <- tmap::tm_shape(bg_map) +
+    tmap::tm_rgb(alpha = 0.5) +
+    tmap::tm_shape(shp) +
+    tmap::tm_polygons(lwd = 2, col = 'yellow', alpha = 0.3,
+                      border.col = '#B3B300', border.alpha = 0.8) +
+    tmap::tm_shape(loc_sf) +
+    tmap::tm_dots(size = .75, col = "color")
 
     m <- m +
-      geom_sf_label(data = labels_sf, inherit.aes = FALSE,
-                    aes(label = abbrev))
-  }
+      tmap::tm_text(text = "abbrev", xmod = "align", just = c("center","top"),
+                    bg.color = 'white', bg.alpha = 0.75,
+                    fontface = "bold")
 
   # if(!is.null(scale_pos)) {
   #   m <- m +
-  #     ggsn::scalebar(shp)
+  #     tmap::tm_scale_bar(shp)
   # }
 
   return(m)

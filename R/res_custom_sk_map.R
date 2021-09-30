@@ -7,15 +7,19 @@
 #' @param y_loc num vector of y coordinates for \code{stations}
 #' @param sk_result vector of values denoting direction and significance of seasonal kendall results. Result should be c('inc', 'dec', 'insig') for sig. negative, no sig. results, and sig. positive result
 #' @param bbox a bounding box associated with the reserve. Must be in the format of c(X1, Y1, X2, Y2)
-#' @param shp SpatialPolygons object
+#' @param shp {sf} data frame (preferred) or SpatialPolygons object
 #' @param station_labs logical, should stations be labeled? Defaults to \code{TRUE}
 #' @param lab_loc chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.
-#' @param zoom zoom level, 1-21 for stamen maps. Default is to autoscale based on bbox.
-#' @param maptype stamen map type from ggmap::get_stamenmap.  One of c("terrain", "terrain-background", "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011", "toner-background", "toner-hybrid", "toner-labels", "toner-lines", "toner-lite", "watercolor")
-#' #'
-#' @importFrom ggmap get_stamenmap ggmap
-#' @importFrom ggthemes theme_map
+## #' @param scale_pos a vector of x and y values for scalebar location, *e.g.*, `c( "left", "bottom")`, the default.  Enter `scale_pos = NULL` for none. See `help(tm_scale_bar` for additional options.
+#' @param zoom zoom level, 1-21 for OpenStreetMaps maps. Default is to autoscale based on bbox. Higher numbers give more detail.
+#' @param maptype stamen map type from OpenStreetMap::openmap. Theoretically one of c("osm", "osm-bw","maptoolkit-topo", "waze", "bing", "stamen-toner", "stamen-terrain", "stamen-watercolor", "osm-german", "osm-wanderreitkarte", "mapbox", "esri", "esri-topo", "nps", "apple-iphoto", "skobbler", "hillshade", "opencyclemap", "osm-transport", "osm-public-transport", "osm-bbike", "osm-bbike-german").  However, many of these may not work. "stamen-toner", "stamen-terrain", and "bing" seem to work well.
+#'
 #' @importFrom magrittr "%>%"
+#' @importFrom methods as
+#' @importFrom rlang .data
+#' @importFrom sf st_as_sf st_bbox st_crs st_transform
+#' @importFrom tmap tm_symbols tm_polygons tm_rgb tm_scale_bar tm_shape tm_text
+#' @importFrom tmaptools read_osm
 #' @importFrom utils download.file unzip
 #'
 #' @export
@@ -23,6 +27,7 @@
 #' @details Creates a stylized, reserve-level base map for displaying seasonal kendall results from \code{\link{sk_seasonal}}. The user can specify the reserve and stations to plot. The user can also specify a bounding box. For multi-component reserves, the user should specify a bounding box that highlights the component of interest.
 #'
 #' To display seasonal trends, the user must specify \code{c('inc', 'dec', 'insig', 'insuff')} for each station listed in the \code{stations} argument.
+#'
 #'
 #' @author Julie Padilla, Dave Eslinger
 #'
@@ -47,10 +52,10 @@
 #'                   shp = shp_fl)
 #'
 #' ### Higher zoom number gives more details, but may not be visible
-#' x_13 <- res_custom_sk_map(stations = stns, x_loc = x_coords,
+#' x_14 <- res_custom_sk_map(stations = stns, x_loc = x_coords,
 #'                   sk_result = trnds, y_loc = y_coords,
 #'                   bbox = bounding_elk, lab_loc = lab_dir,
-#'                   shp = shp_fl, zoom = 13)
+#'                   shp = shp_fl, zoom = 14)
 #'
 #'### Lower zoom number gives coarser text and fewer features
 #' x_11 <- res_custom_sk_map(stations = stns, x_loc = x_coords,
@@ -60,12 +65,12 @@
 #'
 #'
 #' ### Different maptypes may be used.  All may not be available.
-#' ### Note that zoom and maptype interact, so some experiemtation may be
-#' ### required.
-#' x_11 <- res_custom_sk_map(stations = stns, x_loc = x_coords,
+#' #   Note that zoom and maptype interact, so some experimentation may be
+#' #   required.
+#' x_terrain <- res_custom_sk_map(stations = stns, x_loc = x_coords,
 #'                   sk_result = trnds, y_loc = y_coords,
 #'                   bbox = bounding_elk, lab_loc = lab_dir,
-#'                   shp = shp_fl, maptype = 'terrain')
+#'                   shp = shp_fl, maptype = 'stamen-terrain')
 #
 res_custom_sk_map <- function(stations
                                    , x_loc
@@ -76,7 +81,7 @@ res_custom_sk_map <- function(stations
                                    , station_labs = TRUE
                                    , lab_loc = NULL
                                    , zoom = NULL
-                                   , maptype = 'toner-lite') {
+                          , maptype = "stamen-toner") {
 
   # define local variables  to remove `check()` warnings
   abbrev <- lab_long <- lab_lat <- NULL
@@ -141,59 +146,49 @@ res_custom_sk_map <- function(stations
   # This convention holds for colors, shapes and size parameters. The order is
   #   consistent with the original order.
 
+  # These are the codes for the fill color, size and shape legends.
+  break_vals <- c("inc", "dec", "insig", "insuff")
   fill_colors <-  c('#444E65', '#A3DFFF', '#247BA0', '#0a0a0a')
   res_point_size <-   c(8,8,8,8)
   res_point_shape <-  c(24, 25, 21, 13)
 
-  # These are the codes for the fill color, size and shape legends.
-  break_vals <- c("inc", "dec", "insig", "insuff")
+  master_key <- as.data.frame(cbind(break_vals, fill_colors, res_point_size, res_point_shape))
+
+  needed_keys <- left_join(loc, master_key, by = c("sk_result" = "break_vals"))
+
+  use_shape <- unique(as.integer(needed_keys$res_point_shape))
+  use_color <- unique(needed_keys$fill_color)
+  # use_size  <- unique(needed_keys$res_point_size)
 
   # Set background map zoom level automatically if not specified
   if(is.null(zoom)) {
     diag_size <- sqrt((xmax-xmin)^2 +(ymax-ymin)^2)
-    zoom <- 14 - ceiling(sqrt(10*diag_size))
+    zoom <- 15 - ceiling(sqrt(10*diag_size))
     print(paste("Zoom level calculated as", zoom, sep = " "))
   }
   print(paste("maptype is ",maptype))
 
-  bg_map <- ggmap::get_stamenmap(bbox,
-                                 maptype = maptype,
-                                 source = "stamen",
-                                 zoom = zoom,
-                                 messaging = FALSE,
-                                 epsg = 3785,
-                                 urlonly = FALSE)
-
-  m <- ggmap::ggmap(bg_map) +
-    geom_sf(data = shp, aes(), inherit.aes = FALSE,
-            fill = "yellow", col = '#B3B300', alpha = 0.3) +
-    ggthemes::theme_map() +
-    #    geom_sf_text(data = loc_sf, aes(), inherit.aes = FALSE) +
-    geom_sf(data = loc_sf, inherit.aes = FALSE,
-            aes(color = .data$sk_result,
-                fill = .data$sk_result,
-                shape = .data$sk_result,
-                size = .data$sk_result),
-            show.legend = FALSE) +
-    scale_color_manual(values = fill_colors, breaks = break_vals) +
-    scale_fill_manual(values = fill_colors, breaks = break_vals) +
-    scale_size_manual(values = res_point_size, breaks = break_vals) +
-    scale_shape_manual(values = res_point_shape, breaks = break_vals)
+  bg_map <- tmaptools::read_osm(bbox, type = maptype)
+  m <- tmap::tm_shape(bg_map) +
+    tmap::tm_rgb(alpha = 0.5) +
+    tmap::tm_shape(shp) +
+    tmap::tm_polygons(lwd = 2, col = 'yellow', alpha = 0.3,
+                      border.col = '#B3B300', border.alpha = 0.8) +
+    tm_shape(loc_sf) +
+    tmap::tm_symbols(size = 1.5,
+                     col = "sk_result",
+                     # border_col = "sk_result",
+                     shape = "sk_result",
+                     shapes = use_shape,
+                     palette = use_color,
+                     legend.col.show = FALSE,
+                     legend.shape.show = FALSE)
 
   if(station_labs) {
-    # Define lat/long for labels, based on stations, alignment, and bbox
-    loc$lab_long <- loc$Longitude + 0.045* loc$align * (bbox[3] - bbox[1])
-    loc$lab_lat <- loc$Latitude + 0.015 * (bbox[4] - bbox[2])
-
-    # convert Labels info to sf object, use lat/lon, WGS84 projection, EPSG:4326.
-    labels_sf <- loc %>%
-      select(abbrev, lab_long, lab_lat) %>%
-      sf::st_as_sf(coords = c("lab_long","lab_lat"))
-    sf::st_crs(labels_sf) <- 4326
-
     m <- m +
-      geom_sf_label(data = labels_sf, inherit.aes = FALSE,
-                    aes(label = abbrev))
+      tmap::tm_text(text = "abbrev", xmod = "align", just = c("center","top"),
+                    bg.color = 'white', bg.alpha = 0.75,
+                    fontface = "bold")
   }
 
   return(m)
