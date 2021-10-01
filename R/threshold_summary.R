@@ -148,29 +148,8 @@ threshold_summary.swmpr <- function(swmpr_in
 
 
   # Assign the seasons and order them
-  # if(debug) {
-  #   dat_threshold$season <- assign_season(dat_threshold$starttime,
-  #                                       season_grps = season_grps,
-  #                                       season_names = season_names,
-  #                                       season_start = season_start,
-  #                                       abb = TRUE)#, ...)
-  # } else {
     dat_threshold$season <- assign_season(dat_threshold$starttime,
                                         abb = TRUE, ...)
-  # }
-
-  # if(grp == seas) {
-  #   summary <- dat_threshold %>%
-  #   # group_by(!! yr, !! grp) %>%
-  #   group_by(!! yr, !! grp) %>%
-  #   summarise(count = n(), .groups = "drop_last")
-  # } else {
-  #   summary <- dat_threshold %>%
-  #     # group_by(!! yr, !! grp) %>%
-  #     group_by(!! yr, !! grp, !! seas) %>%
-  #     # group_by(!! grp) %>%
-  #     summarise(count = n(), .groups = "drop_last")
-  # }
 
   mn_yr <- min(lubridate::year(dat$datetimestamp))
   mx_yr <- max(lubridate::year(dat$datetimestamp))

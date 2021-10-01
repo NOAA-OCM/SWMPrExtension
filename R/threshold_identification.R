@@ -84,25 +84,6 @@ threshold_identification.swmpr <- function(swmpr_in
                                            , threshold_type
                                            , time_threshold = NULL
                                            , ...){
-  # ================== BEGIN DEBUG VARIBLE DEFS ==========================================
-  # debug = TRUE
-  # if(debug) {
-  #     library(SWMPrExtension)
-  #     library(magrittr)
-  #     library(ggplot2)
-  #     library(dplyr)
-  #   # nut <- apacpnut
-  #   # dat_nut <- qaqc(nut, qaqc_keep = c(0, 3, 5))
-  #   # nut_pars <- threshold_identification(dat_nut, param = c('chla_n', 'po4f')
-  #   #                                      , parameter_threshold = c(10, 0.01)
-  #   #                                      , threshold_type = c('>', '>'))
-  #   swmpr_in <- apacpnut
-  #   swmpr_in <- qaqc(swmpr_in, qaqc_keep = c(0, 3, 5))
-  #   param = c('chla_n', 'po4f')
-  #   parameter_threshold = c(10, 0.01)
-  #   threshold_type = c('>', '>')
-  #   }
-  # ==================  END DEBUG VARIBLE DEFS  ==========================================
 
   dat <- swmpr_in
 

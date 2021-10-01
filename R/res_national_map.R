@@ -41,8 +41,8 @@
 #' , '41', '44', '45', '48', '51', '53', '55', '72')
 #'
 #' res_national_map(highlight_states = nerr_states)
-#'
 #' \donttest{
+#'
 #' #' ##Just the national map
 #' res_national_map()
 #'
@@ -58,16 +58,13 @@ res_national_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
                         , highlight_reserves = NULL
                         , agg_county = TRUE) {
 
-  # read in saved US Census geometry {sf} object and merge counties if needed
-  us_4269 <- get('us_4269')
-
+  # read in saved US Census geometry {sf} object
   if(agg_county) {
-    usa <- us_4269 %>%
-      dplyr::group_by(.data$fips) %>%
-      dplyr::summarise(area = sum(.data$area))
+    usa <- get('us_4269')
   } else {
-    usa <- us_4269
+    usa <- get('counties_4269')
   }
+
 
   # Get reserve locations for plotting
   res_locations <- reserve_locs(incl = incl)

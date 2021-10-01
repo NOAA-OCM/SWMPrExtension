@@ -62,7 +62,7 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
     stop('A seasonal kendall result is required for each reserve in sk_reserve')
 
   # # ==========================================================================
-  # # Get Census geometry
+  # Get Census geometry
   #  get_US_county_shape <- function() {
   #   shape <- "cb_2018_us_county_20m"
   #   # shape <- "cb_2018_us_state_20m"
@@ -75,21 +75,22 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   #   unzip(file.path(local_dir, zipped), exdir = local_dir)
   #   sf::read_sf(file.path(local_dir, paste(shape,".shp", sep = "") ) )
   # }
-  # us_4269 <- get_US_county_shape() %>%
+  # counties_4269 <- get_US_county_shape() %>%
   #   dplyr::transmute(fips = STATEFP, county_fips = GEOID, area = ALAND)
   # # Keep in native lat/lon, NAD83 projection, EPSG:4269.
+  # save(counties_4269, file = "data/counties_4269")
+  # us_4269 <- counties_4269 %>%
+  #   dplyr::group_by(.data$fips) %>%
+  #   dplyr::summarise(area = sum(.data$area))
   # save(us_4269, file = "data/us_4269.rda")
+  #
 # # ==========================================================================
 
-  # read in saved US Census geometry {sf} object and merge counties if needed
-  us_4269 <- get('us_4269')
-
+  # read in saved US Census geometry {sf} object
   if(agg_county) {
-    usa <- us_4269 %>%
-      dplyr::group_by(.data$fips) %>%
-      dplyr::summarise(area = sum(.data$area))
+    usa <- get('us_4269')
   } else {
-    usa <- us_4269
+    usa <- get('counties_4269')
   }
 
   # Get reserve locations for plotting

@@ -48,21 +48,22 @@
 #' bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
 #' trnds <- c('inc', 'dec', 'insuff', 'insig')
 #'
-#' ### plot
-#' x <- res_sk_map('elk', stations = stns, sk_result = trnds,
-#'                  bbox = bounding_elk, shp = shp_fl)
+#' ### Low zoom and default maptype plot (for CRAN testing, not recommended)
+#' #    Lower zoom number gives coarser text and fewer features
+#' x_low <- res_sk_map('elk', stations = stns, sk_result = trnds,
+#'                  bbox = bounding_elk, shp = shp_fl,
+#'                  zoom = 10)
 #'
 #' \donttest{
+#'
+#' ### Default zoom and maptype
+#' x_def <- res_sk_map('elk', stations = stns, sk_result = trnds,
+#'                  bbox = bounding_elk, shp = shp_fl)
 #'
 #' ### Higher zoom number gives more details, but those may not be visible
 #' x_14 <- res_sk_map('elk', stations = stns, sk_result = trnds,
 #'                  bbox = bounding_elk, shp = shp_fl,
 #'                  zoom = 14)
-#'
-#' ### Lower zoom number gives coarser text and fewer features
-#' x_11 <- res_sk_map('elk', stations = stns, sk_result = trnds,
-#'                  bbox = bounding_elk, shp = shp_fl,
-#'                  zoom = 11)
 #'
 #' ### Different maptypes may be used.  All may not be available.
 #' #    Note that zoom and maptype interact, so some experimentation may be
@@ -179,7 +180,7 @@ res_sk_map <- function(nerr_site_id
   }
   print(paste("maptype is ",maptype))
 
-   bg_map <- tmaptools::read_osm(bbox, type = maptype)
+   bg_map <- tmaptools::read_osm(bbox, type = maptype, zoom = zoom)
     m <- tmap::tm_shape(bg_map) +
     tmap::tm_rgb(alpha = 0.5) +
     tmap::tm_shape(shp) +

@@ -48,13 +48,20 @@
 #' lab_dir <- c('L', 'R', 'L', 'L', 'L')
 #' labs <- c('ap', 'cw', 'nm', 'sm', 'vm')
 #'
-#' ### plot
-#' x <- res_local_map('elk', stations = stns, bbox = bounding_elk,
-#'                    lab_loc = lab_dir, shp = shp_fl)
+#' ### Low zoom and default maptype plot (for CRAN testing, not recommended)
+#' #    Lower zoom number gives coarser text and fewer features
+#' x_low <- res_local_map('elk', stations = stns, bbox = bounding_elk,
+#'                    lab_loc = lab_dir, shp = shp_fl,
+#'                    zoom = 10)
 #'
 #' \donttest{
-#' ## a multicomponent reserve (show two different bounding boxes)
-#' ### set plotting parameters
+#' ### Default zoom and maptype
+#' x_def  <- res_local_map('elk', stations = stns, bbox = bounding_elk,
+#'                    lab_loc = lab_dir, shp = shp_fl,
+#'                    zoom = 10)
+#'
+#' ### A multicomponent reserve (show two different bounding boxes)
+#' #    set plotting parameters
 #' stations <- sampling_stations[(sampling_stations$NERR.Site.ID == 'cbm'
 #'             & sampling_stations$Status == 'Active'
 #'             & sampling_stations$isSWMP == "P"), ]$Station.Code
@@ -157,7 +164,6 @@ res_local_map <- function(nerr_site_id
   print(paste("maptype is ",maptype))
 
   bg_map <- tmaptools::read_osm(bbox, type = maptype, zoom = zoom)
-  # bg_bing <- tmaptools::read_osm(bbox, type = "bing")
   m <- tmap::tm_shape(bg_map) +
     tmap::tm_rgb(alpha = 0.5) +
     tmap::tm_shape(shp) +

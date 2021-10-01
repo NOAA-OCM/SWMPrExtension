@@ -139,7 +139,6 @@ seasonal_dot.swmpr <- function(swmpr_in
     warning('QAQC columns present. QAQC not performed before analysis.')
 
   # Assign the seasons and order them
-  # DEBUG dat$season <- assign_season(dat$datetimestamp, abb = TRUE)
   dat$season <- assign_season(dat$datetimestamp, abb = TRUE, ...)
 
   # Assign date for determining daily stat value

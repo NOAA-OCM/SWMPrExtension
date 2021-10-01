@@ -1,6 +1,6 @@
-#' US State Map
+#' US County Map
 #'
-#' US state boundaries from the US Census Bureau's MAF/TIGER geographic database in EPSG:4269, with all data except state FIPS codes and land area removed.
+#' US County boundaries from the US Census Bureau's MAF/TIGER geographic database in EPSG:4269, with all data except state FIPS codes and land area removed.
 #'
 #' @format A \code{sf]{DataFrame}} object
 #'
@@ -8,9 +8,9 @@
 #'
 #' @docType data
 #' @keywords datasets
-#' @name us_4269
-#' @usage data('us_4269')
+#' @name counties_4269
+#' @usage data('counties_4269')
 #' @source \href{https://www.census.gov/geographies/mapping-files.html}{US Census Bureau}
 #'
 
-'us_4269'
+'counties_4269'

@@ -59,8 +59,15 @@ bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
 lab_dir <- c('R', 'L')
 trnds <- c('inc', 'dec')
 
+### Low zoom and default maptype plot (for CRAN testing, not recommended)
+#    Lower zoom number gives coarser text and fewer features
+x_low <- res_custom_sk_map(stations = stns, x_loc = x_coords,
+                  sk_result = trnds, y_loc = y_coords,
+                  bbox = bounding_elk, lab_loc = lab_dir,
+                  shp = shp_fl, zoom = 10)
+\donttest{
 ### Default zoom and maptype plot
-x <- res_custom_sk_map(stations = stns, x_loc = x_coords,
+x_def <- res_custom_sk_map(stations = stns, x_loc = x_coords,
                   sk_result = trnds, y_loc = y_coords,
                   bbox = bounding_elk, lab_loc = lab_dir,
                   shp = shp_fl)
@@ -71,12 +78,6 @@ x_14 <- res_custom_sk_map(stations = stns, x_loc = x_coords,
                   bbox = bounding_elk, lab_loc = lab_dir,
                   shp = shp_fl, zoom = 14)
 
-### Lower zoom number gives coarser text and fewer features
-x_11 <- res_custom_sk_map(stations = stns, x_loc = x_coords,
-                  sk_result = trnds, y_loc = y_coords,
-                  bbox = bounding_elk, lab_loc = lab_dir,
-                   shp = shp_fl, zoom = 11)
-
 
 ### Different maptypes may be used.  All may not be available.
 #   Note that zoom and maptype interact, so some experimentation may be
@@ -85,6 +86,7 @@ x_terrain <- res_custom_sk_map(stations = stns, x_loc = x_coords,
                   sk_result = trnds, y_loc = y_coords,
                   bbox = bounding_elk, lab_loc = lab_dir,
                   shp = shp_fl, maptype = 'stamen-terrain')
+}
 }
 \author{
 Julie Padilla, Dave Eslinger

@@ -46,8 +46,15 @@
 #' lab_dir <- c('R', 'L')
 #' trnds <- c('inc', 'dec')
 #'
+#' ### Low zoom and default maptype plot (for CRAN testing, not recommended)
+#' #    Lower zoom number gives coarser text and fewer features
+#' x_low <- res_custom_sk_map(stations = stns, x_loc = x_coords,
+#'                   sk_result = trnds, y_loc = y_coords,
+#'                   bbox = bounding_elk, lab_loc = lab_dir,
+#'                   shp = shp_fl, zoom = 10)
+#' \donttest{
 #' ### Default zoom and maptype plot
-#' x <- res_custom_sk_map(stations = stns, x_loc = x_coords,
+#' x_def <- res_custom_sk_map(stations = stns, x_loc = x_coords,
 #'                   sk_result = trnds, y_loc = y_coords,
 #'                   bbox = bounding_elk, lab_loc = lab_dir,
 #'                   shp = shp_fl)
@@ -58,12 +65,6 @@
 #'                   bbox = bounding_elk, lab_loc = lab_dir,
 #'                   shp = shp_fl, zoom = 14)
 #'
-#'### Lower zoom number gives coarser text and fewer features
-#' x_11 <- res_custom_sk_map(stations = stns, x_loc = x_coords,
-#'                   sk_result = trnds, y_loc = y_coords,
-#'                   bbox = bounding_elk, lab_loc = lab_dir,
-#'                    shp = shp_fl, zoom = 11)
-#'
 #'
 #' ### Different maptypes may be used.  All may not be available.
 #' #   Note that zoom and maptype interact, so some experimentation may be
@@ -72,6 +73,7 @@
 #'                   sk_result = trnds, y_loc = y_coords,
 #'                   bbox = bounding_elk, lab_loc = lab_dir,
 #'                   shp = shp_fl, maptype = 'stamen-terrain')
+#' }
 #
 res_custom_sk_map <- function(stations
                                    , x_loc
@@ -169,7 +171,7 @@ res_custom_sk_map <- function(stations
   }
   print(paste("maptype is ",maptype))
 
-  bg_map <- tmaptools::read_osm(bbox, type = maptype)
+  bg_map <- tmaptools::read_osm(bbox, type = maptype, zoom = zoom)
   m <- tmap::tm_shape(bg_map) +
     tmap::tm_rgb(alpha = 0.5) +
     tmap::tm_shape(shp) +
