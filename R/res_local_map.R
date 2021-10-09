@@ -161,20 +161,20 @@ res_local_map <- function(nerr_site_id
   }
   print(paste("maptype is ",maptype))
 
-  bg_map <- tmaptools::read_osm(bbox, type = maptype, zoom = zoom)
-  m <- tmap::tm_shape(bg_map) +
-    tmap::tm_rgb(alpha = 0.5) +
-    tmap::tm_shape(shp) +
-    tmap::tm_polygons(lwd = 2, col = 'yellow', alpha = 0.3,
-                      border.col = '#B3B300', border.alpha = 0.8) +
-    tmap::tm_shape(loc_sf) +
-    tmap::tm_dots(size = .75, col = "color")
+  bg_map <- bg_map(bbox)
+  m <- bg_map #+
+    # tmap::tm_rgb(alpha = 0.5) +
+    # tmap::tm_shape(shp) +
+    # tmap::tm_polygons(lwd = 2, col = 'yellow', alpha = 0.3,
+    #                   border.col = '#B3B300', border.alpha = 0.8) +
+    # tmap::tm_shape(loc_sf) +
+    # tmap::tm_dots(size = .75, col = "color")
 
   if(station_labs) {
-    m <- m +
-      tmap::tm_text(text = "abbrev", xmod = "align", just = c("center","top"),
-                    bg.color = 'white', bg.alpha = 0.75,
-                    fontface = "bold")
+    # m <- m +
+    #   tmap::tm_text(text = "abbrev", xmod = "align", just = c("center","top"),
+    #                 bg.color = 'white', bg.alpha = 0.75,
+    #                 fontface = "bold")
   }
   # if(!is.null(scale_pos)) {
   #   m <- m +

@@ -169,27 +169,26 @@ res_custom_sk_map <- function(stations
   }
   print(paste("maptype is ",maptype))
 
-  bg_map <- tmaptools::read_osm(bbox, type = maptype, zoom = zoom)
-  m <- tmap::tm_shape(bg_map) +
-    tmap::tm_rgb(alpha = 0.5) +
-    tmap::tm_shape(shp) +
-    tmap::tm_polygons(lwd = 2, col = 'yellow', alpha = 0.3,
-                      border.col = '#B3B300', border.alpha = 0.8) +
-    tm_shape(loc_sf) +
-    tmap::tm_symbols(size = 1.5,
-                     col = "sk_result",
-                     # border_col = "sk_result",
-                     shape = "sk_result",
-                     shapes = use_shape,
-                     palette = use_color,
-                     legend.col.show = FALSE,
-                     legend.shape.show = FALSE)
+  bg_map <- bg_map(bbox)
+  m <- bg_map #+    tmap::tm_rgb(alpha = 0.5) +
+    # tmap::tm_shape(shp) +
+    # tmap::tm_polygons(lwd = 2, col = 'yellow', alpha = 0.3,
+    #                   border.col = '#B3B300', border.alpha = 0.8) +
+    # tm_shape(loc_sf) +
+    # tmap::tm_symbols(size = 1.5,
+    #                  col = "sk_result",
+    #                  # border_col = "sk_result",
+    #                  shape = "sk_result",
+    #                  shapes = use_shape,
+    #                  palette = use_color,
+    #                  legend.col.show = FALSE,
+    #                  legend.shape.show = FALSE)
 
   if(station_labs) {
-    m <- m +
-      tmap::tm_text(text = "abbrev", xmod = "align", just = c("center","top"),
-                    bg.color = 'white', bg.alpha = 0.75,
-                    fontface = "bold")
+    # m <- m +
+    #   tmap::tm_text(text = "abbrev", xmod = "align", just = c("center","top"),
+    #                 bg.color = 'white', bg.alpha = 0.75,
+    #                 fontface = "bold")
   }
 
   return(m)
