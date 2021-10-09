@@ -24,7 +24,6 @@ Depends:
 	SWMPr
 Imports:
 	EnvStats,
-  OpenStreetMap,
 	RColorBrewer,
   broom,
   dplyr,
@@ -43,8 +42,6 @@ Imports:
   stats,
 	tidyselect,
 	tidyr,
-	tmap,
-	tmaptools,
 	utils
 Authors@R: c(
   person(given = "Julie", family = "Padilla",

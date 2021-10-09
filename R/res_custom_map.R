@@ -13,12 +13,10 @@
 #' @param zoom zoom level, 1-21 for stamen maps. Default is to autoscale based on bbox.
 #' @param maptype stamen map type from OpenStreetMap::openmap. Theoretically one of c("osm", "osm-bw","maptoolkit-topo", "waze", "bing", "stamen-toner", "stamen-terrain", "stamen-watercolor", "osm-german", "osm-wanderreitkarte", "mapbox", "esri", "esri-topo", "nps", "apple-iphoto", "skobbler", "hillshade", "opencyclemap", "osm-transport", "osm-public-transport", "osm-bbike", "osm-bbike-german").  However, many of these may not work. "stamen-toner", "stamen-terrain", and "bing" seem to work well.
 #'
-#' @importFrom OpenStreetMap openmap
 #' @importFrom magrittr "%>%"
 #' @importFrom methods as
+#' @importFrom osmdata add_osm_features opq osmdata_sf
 #' @importFrom sf st_as_sf st_bbox st_crs st_transform
-#' @importFrom tmap tm_dots tm_polygons tm_rgb tm_scale_bar tm_shape tm_text
-#' @importFrom tmaptools read_osm
 #' @importFrom utils download.file unzip
 #'
 #' @export
