@@ -1,3 +1,6 @@
+### SWMPrExtension 2.0.0.1
+* remove tmap, add vector based background maps
+
 ### SWMPrExtension 2.0.0
 * Public release after merge of sf_transition and tmap branches. 
 * Addresses issue #29: replacing {sp} with {sf} 

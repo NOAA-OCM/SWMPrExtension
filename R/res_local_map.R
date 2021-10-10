@@ -161,7 +161,7 @@ res_local_map <- function(nerr_site_id
   }
   print(paste("maptype is ",maptype))
 
-  bg_map <- bg_map(bbox)
+  bg_map <- base_map(bbox)
   m <- bg_map #+
     # tmap::tm_rgb(alpha = 0.5) +
     # tmap::tm_shape(shp) +
