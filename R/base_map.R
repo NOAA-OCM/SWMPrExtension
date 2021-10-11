@@ -7,7 +7,7 @@
 #' @importFrom dplyr filter select
 #' @importFrom magrittr "%>%"
 #' @importFrom osmdata add_osm_features opq osmdata_sf
-#' @importFrom sf st_as_sf st_bbox st_crs st_sfc st_transform st_polygon
+#' @importFrom sf st_as_sf st_bbox st_crs sfc st_transform st_polygon
 #' @export
 #'
 #' @details A helper function to create background map based on OpenStreetMap vector layers.
@@ -24,10 +24,10 @@ base_map <- function(bbox, bg_crs) {
 
   # Create polygon from bounding box. ----
   bb_to_poly <- function(bb){
-    pol = st_sfc(st_polygon(
+    polbb = st_sfc(st_polygon(
       list(cbind(c(bb[1],bb[3],bb[3],bb[1],bb[1]),
                  c(bb[2],bb[2],bb[4],bb[4],bb[2])))))
-    pol_sf = st_sf(r = 5, pol)
+    pol_sf = st_sf(bbox = 1, polbb)
     return(pol_sf)
   }
 
