@@ -4,16 +4,20 @@
 \alias{base_map}
 \title{Create background map}
 \usage{
-base_map(bbox, bg_crs)
+base_map(bbox, bg_epsg, ...)
 }
 \arguments{
-\item{bbox}{Bounding box vector,}
+\item{bbox}{Bounding box vector.}
+
+\item{bg_epsg}{EPSG code for}
+
+\item{...}{Additional arguments to be passed to \code{\link[ggmap::get_stamenmap]}}
 }
 \value{
 returns a \code{\link[ggplot2]} object
 }
 \description{
-Create background map based on OpenStreetMap vector layers.
+Create background map based on raster map retrieved with \code{\link[ggmap::get_stamenmap]}.  If \code{\link[ggmap]} is unavailable, creates simple map using OpenStreetMap vector layers.
 }
 \details{
 A helper function to create background map based on OpenStreetMap vector layers.

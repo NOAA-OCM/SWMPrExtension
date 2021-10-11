@@ -12,6 +12,7 @@
 #' @param zoom zoom level, 1-21 for OpenStreetMaps maps. Default is to autoscale based on bbox.
 #' @param maptype stamen map type from OpenStreetMap::openmap. Theoretically one of c("osm", "osm-bw","maptoolkit-topo", "waze", "bing", "stamen-toner", "stamen-terrain", "stamen-watercolor", "osm-german", "osm-wanderreitkarte", "mapbox", "esri", "esri-topo", "nps", "apple-iphoto", "skobbler", "hillshade", "opencyclemap", "osm-transport", "osm-public-transport", "osm-bbike", "osm-bbike-german").  However, many of these may not work. "stamen-toner", "stamen-terrain", and "bing" seem to work well.
 #'
+#' @importFrom ggmap ggmap
 #' @importFrom magrittr "%>%"
 #' @importFrom methods as
 #' @importFrom osmdata add_osm_features opq osmdata_sf
@@ -88,7 +89,7 @@ res_local_map <- function(nerr_site_id
                           , lab_loc = NULL
 #                          , scale_pos = c("lower", "bottom")
                           , zoom = NULL
-                          , maptype = "stamen-toner") {
+                          , maptype = "toner-lite") {
 
   # define local variables  to remove `check()` warnings
   abbrev <- lab_long <- lab_lat <- NULL
@@ -156,13 +157,29 @@ res_local_map <- function(nerr_site_id
   # Set background map zoom level automatically if not specified
   if(is.null(zoom)) {
     diag_size <- sqrt((xmax-xmin)^2 +(ymax-ymin)^2)
-    zoom <- 15 - ceiling(sqrt(10*diag_size))
+    zoom <- 14 - ceiling(sqrt(10*diag_size))
     print(paste("Zoom level calculated as", zoom, sep = " "))
   }
   print(paste("maptype is ",maptype))
 
-  bg_map <- base_map(bbox)
-  m <- bg_map #+
+  bg_map <- base_map(bbox, crs = st_crs(shp),
+                     maptype = maptype,
+                     zoom = zoom)
+  m <- bg_map +
+    geom_sf(data = shp, aes(), inherit.aes = FALSE,
+            fill = "yellow", col = '#B3B300', alpha = 0.3) +
+    ggthemes::theme_map() +
+    #    geom_sf_text(data = loc_sf, aes(), inherit.aes = FALSE) +
+    geom_sf(data = loc_sf, inherit.aes = FALSE,
+            aes(color = .data$abbrev,
+                fill = .data$abbrev),
+            shape = 21,
+            size = 3.8,
+            show.legend = FALSE) +
+    scale_color_manual(values = fill_colors, breaks = break_vals) +
+    scale_fill_manual(values = fill_colors, breaks = break_vals)
+
+  #+
     # tmap::tm_rgb(alpha = 0.5) +
     # tmap::tm_shape(shp) +
     # tmap::tm_polygons(lwd = 2, col = 'yellow', alpha = 0.3,
@@ -171,6 +188,19 @@ res_local_map <- function(nerr_site_id
     # tmap::tm_dots(size = .75, col = "color")
 
   if(station_labs) {
+    # Define lat/long for labels, based on stations, alignment, and bbox
+    loc$lab_long <- loc$Longitude + 0.045* loc$align * (bbox[3] - bbox[1])
+    loc$lab_lat <- loc$Latitude + 0.015 * (bbox[4] - bbox[2])
+
+    # convert Labels info to sf object, use lat/lon, WGS84 projection, EPSG:4326.
+    labels_sf <- loc %>%
+      select(abbrev, lab_long, lab_lat) %>%
+      sf::st_as_sf(coords = c("lab_long","lab_lat"))
+    sf::st_crs(labels_sf) <- 4326
+
+    m <- m +
+      geom_sf_label(data = labels_sf, inherit.aes = FALSE,
+                    aes(label = abbrev))
     # m <- m +
     #   tmap::tm_text(text = "abbrev", xmod = "align", just = c("center","top"),
     #                 bg.color = 'white', bg.alpha = 0.75,
@@ -180,7 +210,21 @@ res_local_map <- function(nerr_site_id
   #   m <- m +
   #     tmap::tm_scale_bar(scale_pos)
   # }
-
+  m <- m +
+    coord_sf(
+      xlim = c(bbox[1], bbox[3]),
+      ylim = c(bbox[2], bbox[4]),
+      expand = FALSE,
+      crs = st_crs(shp),
+      default_crs = NULL,
+      datum = sf::st_crs(4326),
+      # label_graticule = waiver(),
+      # label_axes = waiver(),
+      lims_method = c("cross", "box", "orthogonal", "geometry_bbox"),
+      ndiscr = 100,
+      default = FALSE,
+      clip = "on"
+    )
 
   return(m)
 }

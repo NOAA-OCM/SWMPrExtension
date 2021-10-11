@@ -44,6 +44,8 @@ Imports:
 	tidyselect,
 	tidyr,
 	utils
+Suggests:
+  ggmap
 Authors@R: c(
   person(given = "Julie", family = "Padilla",
     role = c("aut", "ctb"),
