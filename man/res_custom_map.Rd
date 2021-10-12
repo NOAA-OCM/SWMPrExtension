@@ -14,7 +14,7 @@ res_custom_map(
   station_col = NULL,
   lab_loc = NULL,
   zoom = NULL,
-  maptype = "stamen-toner"
+  maptype = "toner-lite"
 )
 }
 \arguments{
@@ -36,7 +36,7 @@ res_custom_map(
 
 \item{zoom}{zoom level, 1-21 for stamen maps. Default is to autoscale based on bbox.}
 
-\item{maptype}{stamen map type from OpenStreetMap::openmap. Theoretically one of c("osm", "osm-bw","maptoolkit-topo", "waze", "bing", "stamen-toner", "stamen-terrain", "stamen-watercolor", "osm-german", "osm-wanderreitkarte", "mapbox", "esri", "esri-topo", "nps", "apple-iphoto", "skobbler", "hillshade", "opencyclemap", "osm-transport", "osm-public-transport", "osm-bbike", "osm-bbike-german").  However, many of these may not work. "stamen-toner", "stamen-terrain", and "bing" seem to work well.}
+\item{maptype}{map type from Stamen Maps (\url{http://maps.stamen.com/}); one of c("terrain", "terrain-background", "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011", "toner-background", "toner-hybrid", "toner-labels", "toner-lines", "toner-lite", "watercolor").}
 }
 \value{
 returns a {ggplot} object
@@ -57,7 +57,7 @@ stns <- c('custom stn 1', 'custom stn 2')
 x_coords <- c(-121.735281, -121.750369)
 y_coords <- c(36.850377, 36.806667)
 shp_fl <- elk_spatial
-bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
+bounding_elk <- c(-121.8005, 36.7779, -121.6966, 36.8799)
 lab_dir <- c('L', 'R')
 
 ### Low zoom and default maptype plot (for CRAN testing, not recommended)

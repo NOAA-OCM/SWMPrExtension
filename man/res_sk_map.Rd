@@ -13,7 +13,7 @@ res_sk_map(
   station_labs = TRUE,
   lab_loc = NULL,
   zoom = NULL,
-  maptype = "stamen-toner"
+  maptype = "toner-lite"
 )
 }
 \arguments{
@@ -31,18 +31,18 @@ res_sk_map(
 
 \item{lab_loc}{chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.}
 
-\item{zoom}{zoom level, 1-21 for OpenStreetMaps maps. Default is to autoscale based on bbox. Higher numbers give more detail.}
+\item{zoom}{zoom level, 1-21 for Stamen maps. Default is to autoscale based on bbox. Higher numbers give more detail.}
 
-\item{maptype}{stamen map type from OpenStreetMap::openmap. Theoretically one of c("osm", "osm-bw","maptoolkit-topo", "waze", "bing", "stamen-toner", "stamen-terrain", "stamen-watercolor", "osm-german", "osm-wanderreitkarte", "mapbox", "esri", "esri-topo", "nps", "apple-iphoto", "skobbler", "hillshade", "opencyclemap", "osm-transport", "osm-public-transport", "osm-bbike", "osm-bbike-german").  However, many of these may not work. "stamen-toner", "stamen-terrain", and "bing" seem to work well.}
+\item{maptype}{map type from Stamen Maps (\url{http://maps.stamen.com/}); one of c("terrain", "terrain-background", "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011", "toner-background", "toner-hybrid", "toner-labels", "toner-lines", "toner-lite", "watercolor").}
 }
 \value{
-returns a {ggplot} object.
+returns a \code{ggplot} object.
 }
 \description{
 Create a stylized reserve-level map of seasonal kendall results for use with the reserve level reporting template
 }
 \details{
-Creates a stylized, reserve-level base map for displaying seasonal kendall results from \code{\link{sk_seasonal}}. The user can specify the reserve and stations to plot. The user can also specify a bounding box. For multi-component reserves, the user should specify a bounding box that highlights the component of interest.
+Creates a stylized, reserve-level base map for displaying seasonal kendall results from \code{sk_seasonal}. The user can specify the reserve and stations to plot. The user can also specify a bounding box. For multi-component reserves, the user should specify a bounding box that highlights the component of interest.
 
 To display seasonal trends, the user must specify \code{c('inc', 'dec', 'insig', 'insuff')} for each station listed in the \code{stations} argument.
 }
@@ -56,7 +56,7 @@ stations <- sampling_stations[(sampling_stations$NERR.Site.ID == 'elk'
      to_match <- c('wq')
 stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
 shp_fl <- elk_spatial
-bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
+bounding_elk <- c(-121.8005, 36.7779, -121.6966, 36.8799)
 trnds <- c('inc', 'dec', 'insuff', 'insig')
 
 ### Low zoom and default maptype plot (for CRAN testing, not recommended)
@@ -76,12 +76,10 @@ x_14 <- res_sk_map('elk', stations = stns, sk_result = trnds,
                  bbox = bounding_elk, shp = shp_fl,
                  zoom = 14)
 
-### Different maptypes may be used.  All may not be available.
-#    Note that zoom and maptype interact, so some experimentation may be
-#    required.
+### Different maptypes may be used.
 x_terrain <- res_sk_map('elk', stations = stns, sk_result = trnds,
                  bbox = bounding_elk, shp = shp_fl,
-                 maptype = 'stamen-terrain')
+                 maptype = 'terrain')
 ### A multicomponent reserve (showing two different bounding boxes)
 
 #  set plotting parameters
