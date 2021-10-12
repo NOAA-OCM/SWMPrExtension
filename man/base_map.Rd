@@ -4,23 +4,23 @@
 \alias{base_map}
 \title{Create background map}
 \usage{
-base_map(bbox, bg_epsg, ...)
+base_map(bbox, bg_crs = 4326, ...)
 }
 \arguments{
 \item{bbox}{Bounding box vector.}
 
-\item{bg_epsg}{EPSG code for}
+\item{...}{Additional arguments to be passed to ggmap::get_stamenmap}
 
-\item{...}{Additional arguments to be passed to \code{\link[ggmap::get_stamenmap]}}
+\item{bg_epsg}{EPSG code for returned map.}
 }
 \value{
-returns a \code{\link[ggplot2]} object
+Returns a \code{\link[ggplot2]{ggplot}} object#'
 }
 \description{
-Create background map based on raster map retrieved with \code{\link[ggmap::get_stamenmap]}.  If \code{\link[ggmap]} is unavailable, creates simple map using OpenStreetMap vector layers.
+Create background map
 }
 \details{
-A helper function to create background map based on OpenStreetMap vector layers.
+A helper function to create background map based on based on raster map tiles retrieved with \code{\link[ggmap::get_stamenmap]}ggmap::get_stamenmap.  If \code{\link[ggmap]}ggmap is unavailable, creates simple map using county-level polygon files.  This will be a pretty coarse resolution map and should be considered a placeholder.
 }
 \author{
 Dave Eslinger

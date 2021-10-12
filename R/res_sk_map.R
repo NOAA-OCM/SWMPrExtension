@@ -11,8 +11,9 @@
 #' @param lab_loc chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.
 ## #' @param scale_pos a vector of x and y values for scalebar location, *e.g.*, `c( "left", "bottom")`, the default.  Enter `scale_pos = NULL` for none. See `help(tm_scale_bar` for additional options.
 #' @param zoom zoom level, 1-21 for OpenStreetMaps maps. Default is to autoscale based on bbox. Higher numbers give more detail.
-#' @param maptype stamen map type from OpenStreetMap::openmap. Theoretically one of c("osm", "osm-bw","maptoolkit-topo", "waze", "bing", "stamen-toner", "stamen-terrain", "stamen-watercolor", "osm-german", "osm-wanderreitkarte", "mapbox", "esri", "esri-topo", "nps", "apple-iphoto", "skobbler", "hillshade", "opencyclemap", "osm-transport", "osm-public-transport", "osm-bbike", "osm-bbike-german").  However, many of these may not work. "stamen-toner", "stamen-terrain", and "bing" seem to work well.
+#' @param maptype stamen map type from OpenStreetMap::openmap. Theoretically one of c(“terrain”, “terrain-background”, “terrain-labels”, “terrain-lines”, “toner”, “toner-2010”, “toner-2011”, “toner-background”, “toner-hybrid”, “toner-labels”, “toner-lines”, “toner-lite”, “watercolor”).
 #'
+#' @importFrom ggmap ggmap
 #' @importFrom magrittr "%>%"
 #' @importFrom methods as
 #' @importFrom osmdata add_osm_features opq osmdata_sf
@@ -22,7 +23,7 @@
 #'
 #' @export
 #'
-#' @details Creates a stylized, reserve-level base map for displaying seasonal kendall results from \code{\link{sk_seasonal}}. The user can specify the reserve and stations to plot. The user can also specify a bounding box. For multi-component reserves, the user should specify a bounding box that highlights the component of interest.
+#' @details Creates a stylized, reserve-level base map for displaying seasonal kendall results from \code{\link[sk_seasonal]}sk_seasonal. The user can specify the reserve and stations to plot. The user can also specify a bounding box. For multi-component reserves, the user should specify a bounding box that highlights the component of interest.
 #'
 #' To display seasonal trends, the user must specify \code{c('inc', 'dec', 'insig', 'insuff')} for each station listed in the \code{stations} argument.
 #'
@@ -68,7 +69,7 @@
 #' #    required.
 #' x_terrain <- res_sk_map('elk', stations = stns, sk_result = trnds,
 #'                  bbox = bounding_elk, shp = shp_fl,
-#'                  maptype = 'stamen-terrain')
+#'                  maptype = 'terrain')
 
 #' ### A multicomponent reserve (showing two different bounding boxes)
 #'
@@ -99,7 +100,7 @@ res_sk_map <- function(nerr_site_id
                        , station_labs = TRUE
                        , lab_loc = NULL
                        , zoom = NULL
-                          , maptype = "stamen-toner") {
+                       , maptype = "toner-lite") {
 
   # define local variables  to remove `check()` warnings
   abbrev <- lab_long <- lab_lat <- NULL
@@ -159,8 +160,9 @@ res_sk_map <- function(nerr_site_id
   # These are the codes for the fill color, size and shape legends.
   break_vals <- c("inc", "dec", "insig", "insuff")
   fill_colors <-  c('#444E65', '#A3DFFF', '#247BA0', '#0a0a0a')
-  res_point_size <-   c(8,8,8,8)
+  res_point_size <-   c(6, 6, 6, 9)
   res_point_shape <-  c(24, 25, 21, 13)
+  # res_stroke <- c(1, 1, 1, 2)
 
   master_key <- as.data.frame(cbind(break_vals, fill_colors, res_point_size, res_point_shape))
 
@@ -173,13 +175,33 @@ res_sk_map <- function(nerr_site_id
   # Set background map zoom level automatically if not specified
   if(is.null(zoom)) {
     diag_size <- sqrt((xmax-xmin)^2 +(ymax-ymin)^2)
-    zoom <- 15 - ceiling(sqrt(10*diag_size))
+    zoom <- 14 - ceiling(sqrt(10*diag_size))
     print(paste("Zoom level calculated as", zoom, sep = " "))
   }
   print(paste("maptype is ",maptype))
 
-  bg_map <- base_map(bbox)
-  m <- bg_map #+
+  bg_map <- base_map(bbox, crs = st_crs(shp),
+                     maptype = maptype,
+                     zoom = zoom)
+  m <- bg_map +
+    geom_sf(data = shp, aes(), inherit.aes = FALSE,
+            fill = "yellow", col = '#B3B300', alpha = 0.3) +
+    ggthemes::theme_map() +
+    #    geom_sf_text(data = loc_sf, aes(), inherit.aes = FALSE) +
+    geom_sf(data = loc_sf, inherit.aes = FALSE,
+            aes(color = .data$sk_result,
+                fill = .data$sk_result,
+                shape = .data$sk_result,
+                size = .data$sk_result),
+            stroke = 2,
+            show.legend = FALSE) +
+    scale_color_manual(values = fill_colors, breaks = break_vals) +
+    scale_fill_manual(values = fill_colors, breaks = break_vals) +
+    scale_size_manual(values = res_point_size, breaks = break_vals) +
+    scale_shape_manual(values = res_point_shape, breaks = break_vals)
+
+
+  #+
   # tmap::tm_rgb(alpha = 0.5) +
   #   tmap::tm_shape(shp) +
   #   tmap::tm_polygons(lwd = 2, col = 'yellow', alpha = 0.3,
@@ -195,11 +217,39 @@ res_sk_map <- function(nerr_site_id
   #                    legend.shape.show = FALSE)
 
   if(station_labs) {
+    # Define lat/long for labels, based on stations, alignment, and bbox
+    loc$lab_long <- loc$Longitude + 0.045* loc$align * (bbox[3] - bbox[1])
+    loc$lab_lat <- loc$Latitude + 0.015 * (bbox[4] - bbox[2])
+
+    # convert Labels info to sf object, use lat/lon, WGS84 projection, EPSG:4326.
+    labels_sf <- loc %>%
+      select(abbrev, lab_long, lab_lat) %>%
+      sf::st_as_sf(coords = c("lab_long","lab_lat"))
+    sf::st_crs(labels_sf) <- 4326
+
+    m <- m +
+      geom_sf_label(data = labels_sf, inherit.aes = FALSE,
+                    aes(label = abbrev))
     # m <- m +
     #   tmap::tm_text(text = "abbrev", xmod = "align", just = c("center","top"),
     #                 bg.color = 'white', bg.alpha = 0.75,
     #                 fontface = "bold")
   }
+   m <- m +
+    coord_sf(
+      xlim = c(bbox[1], bbox[3]),
+      ylim = c(bbox[2], bbox[4]),
+      expand = FALSE,
+      crs = st_crs(shp),
+      default_crs = NULL,
+      datum = sf::st_crs(4326),
+      # label_graticule = waiver(),
+      # label_axes = waiver(),
+      lims_method = c("cross", "box", "orthogonal", "geometry_bbox"),
+      ndiscr = 100,
+      default = FALSE,
+      clip = "on"
+    )
 
   return(m)
 }

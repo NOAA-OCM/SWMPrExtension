@@ -13,7 +13,7 @@ res_sk_map(
   station_labs = TRUE,
   lab_loc = NULL,
   zoom = NULL,
-  maptype = "stamen-toner"
+  maptype = "toner-lite"
 )
 }
 \arguments{
@@ -42,7 +42,7 @@ returns a {ggplot} object.
 Create a stylized reserve-level map of seasonal kendall results for use with the reserve level reporting template
 }
 \details{
-Creates a stylized, reserve-level base map for displaying seasonal kendall results from \code{\link{sk_seasonal}}. The user can specify the reserve and stations to plot. The user can also specify a bounding box. For multi-component reserves, the user should specify a bounding box that highlights the component of interest.
+Creates a stylized, reserve-level base map for displaying seasonal kendall results from \code{\link[sk_seasonal]}sk_seasonal. The user can specify the reserve and stations to plot. The user can also specify a bounding box. For multi-component reserves, the user should specify a bounding box that highlights the component of interest.
 
 To display seasonal trends, the user must specify \code{c('inc', 'dec', 'insig', 'insuff')} for each station listed in the \code{stations} argument.
 }
@@ -81,7 +81,7 @@ x_14 <- res_sk_map('elk', stations = stns, sk_result = trnds,
 #    required.
 x_terrain <- res_sk_map('elk', stations = stns, sk_result = trnds,
                  bbox = bounding_elk, shp = shp_fl,
-                 maptype = 'stamen-terrain')
+                 maptype = 'terrain')
 ### A multicomponent reserve (showing two different bounding boxes)
 
 #  set plotting parameters

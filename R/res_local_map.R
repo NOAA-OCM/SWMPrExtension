@@ -10,13 +10,13 @@
 #' @param lab_loc chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.
 ## #' @param scale_pos a vector of x and y values for scalebar location, *e.g.*, `c( "left", "bottom")`, the default.  Enter `scale_pos = NULL` for none. See `help(tm_scale_bar` for additional options.
 #' @param zoom zoom level, 1-21 for OpenStreetMaps maps. Default is to autoscale based on bbox.
-#' @param maptype stamen map type from OpenStreetMap::openmap. Theoretically one of c("osm", "osm-bw","maptoolkit-topo", "waze", "bing", "stamen-toner", "stamen-terrain", "stamen-watercolor", "osm-german", "osm-wanderreitkarte", "mapbox", "esri", "esri-topo", "nps", "apple-iphoto", "skobbler", "hillshade", "opencyclemap", "osm-transport", "osm-public-transport", "osm-bbike", "osm-bbike-german").  However, many of these may not work. "stamen-toner", "stamen-terrain", and "bing" seem to work well.
+#' @param maptype stamen map type from OpenStreetMap::openmap. Theoretically one of c(“terrain”, “terrain-background”, “terrain-labels”, “terrain-lines”, “toner”, “toner-2010”, “toner-2011”, “toner-background”, “toner-hybrid”, “toner-labels”, “toner-lines”, “toner-lite”, “watercolor”).
 #'
 #' @importFrom ggmap ggmap
 #' @importFrom magrittr "%>%"
 #' @importFrom methods as
 #' @importFrom osmdata add_osm_features opq osmdata_sf
-#' @importFrom sf st_as_sf st_bbox st_crs st_transform
+#' @importFrom sf st_as_sf st_bbox st_crs st_sfc st_transform
 #' @importFrom utils download.file unzip
 #'
 #' @export

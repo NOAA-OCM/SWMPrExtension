@@ -10,7 +10,7 @@
 #' @importFrom ggmap get_stamenmap ggmap
 #' @importFrom magrittr "%>%"
 #' @importFrom osmdata add_osm_features opq osmdata_sf
-#' @importFrom sf st_as_sf st_bbox st_crs sfc st_transform st_polygon
+#' @importFrom sf st_as_sf st_bbox st_crs st_sfc st_transform st_polygon
 #' @export
 #'
 #' @details A helper function to create background map based on based on raster map tiles retrieved with \code{\link[ggmap::get_stamenmap]}ggmap::get_stamenmap.  If \code{\link[ggmap]}ggmap is unavailable, creates simple map using county-level polygon files.  This will be a pretty coarse resolution map and should be considered a placeholder.
