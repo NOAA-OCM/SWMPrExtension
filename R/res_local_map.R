@@ -9,10 +9,9 @@
 #' @param station_labs logical, should stations be labeled? Defaults to \code{TRUE}
 #' @param lab_loc chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.
 ## #' @param scale_pos a vector of x and y values for scalebar location, *e.g.*, `c( "left", "bottom")`, the default.  Enter `scale_pos = NULL` for none. See `help(tm_scale_bar` for additional options.
-#' @param zoom zoom level, 1-21 for OpenStreetMaps maps. Default is to autoscale based on bbox.
-#' @param maptype stamen map type from OpenStreetMap::openmap. Theoretically one of c(“terrain”, “terrain-background”, “terrain-labels”, “terrain-lines”, “toner”, “toner-2010”, “toner-2011”, “toner-background”, “toner-hybrid”, “toner-labels”, “toner-lines”, “toner-lite”, “watercolor”).
+#' @param zoom zoom level, 1-21 for Stamen maps. Default is to autoscale based on bbox. Higher numbers give more detail.
+#' @param maptype map type from Stamen Maps (\url{http://maps.stamen.com/}); one of c("terrain", "terrain-background", "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011", "toner-background", "toner-hybrid", "toner-labels", "toner-lines", "toner-lite", "watercolor").
 #'
-# @importFrom ggmap ggmap
 #' @importFrom magrittr "%>%"
 #' @importFrom methods as
 #' @importFrom sf st_as_sf st_bbox st_crs st_sfc st_transform
@@ -42,7 +41,7 @@
 #'           to_match <- c('wq', 'met')
 #' stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
 #' shp_fl <- elk_spatial
-#' bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
+#' bounding_elk <- c(-121.8005, 36.7779, -121.6966, 36.8799)
 #' lab_dir <- c('L', 'R', 'L', 'L', 'L')
 #' labs <- c('ap', 'cw', 'nm', 'sm', 'vm')
 #'
@@ -86,7 +85,7 @@ res_local_map <- function(nerr_site_id
                           , shp
                           , station_labs = TRUE
                           , lab_loc = NULL
-#                          , scale_pos = c("lower", "bottom")
+                          #                          , scale_pos = c("lower", "bottom")
                           , zoom = NULL
                           , maptype = "toner-lite") {
 
@@ -178,14 +177,6 @@ res_local_map <- function(nerr_site_id
     scale_color_manual(values = fill_colors, breaks = break_vals) +
     scale_fill_manual(values = fill_colors, breaks = break_vals)
 
-  #+
-    # tmap::tm_rgb(alpha = 0.5) +
-    # tmap::tm_shape(shp) +
-    # tmap::tm_polygons(lwd = 2, col = 'yellow', alpha = 0.3,
-    #                   border.col = '#B3B300', border.alpha = 0.8) +
-    # tmap::tm_shape(loc_sf) +
-    # tmap::tm_dots(size = .75, col = "color")
-
   if(station_labs) {
     # Define lat/long for labels, based on stations, alignment, and bbox
     loc$lab_long <- loc$Longitude + 0.045* loc$align * (bbox[3] - bbox[1])
@@ -200,15 +191,8 @@ res_local_map <- function(nerr_site_id
     m <- m +
       geom_sf_label(data = labels_sf, inherit.aes = FALSE,
                     aes(label = abbrev))
-    # m <- m +
-    #   tmap::tm_text(text = "abbrev", xmod = "align", just = c("center","top"),
-    #                 bg.color = 'white', bg.alpha = 0.75,
-    #                 fontface = "bold")
   }
-  # if(!is.null(scale_pos)) {
-  #   m <- m +
-  #     tmap::tm_scale_bar(scale_pos)
-  # }
+
   m <- m +
     coord_sf(
       xlim = c(bbox[1], bbox[3]),

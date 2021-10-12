@@ -11,9 +11,8 @@
 #' @param station_col chr vector of colors used to color station points. Defaults to 'black'.
 #' @param lab_loc chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.
 #' @param zoom zoom level, 1-21 for stamen maps. Default is to autoscale based on bbox.
-#' @param maptype stamen map type from OpenStreetMap::openmap. Theoretically one of c(“terrain”, “terrain-background”, “terrain-labels”, “terrain-lines”, “toner”, “toner-2010”, “toner-2011”, “toner-background”, “toner-hybrid”, “toner-labels”, “toner-lines”, “toner-lite”, “watercolor”).
+#' @param maptype map type from Stamen Maps (\url{http://maps.stamen.com/}); one of c("terrain", "terrain-background", "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011", "toner-background", "toner-hybrid", "toner-labels", "toner-lines", "toner-lite", "watercolor").
 #'
-# @importFrom ggmap ggmap
 #' @importFrom magrittr "%>%"
 #' @importFrom methods as
 #' @importFrom sf st_as_sf st_bbox st_crs st_transform
@@ -39,7 +38,7 @@
 #' x_coords <- c(-121.735281, -121.750369)
 #' y_coords <- c(36.850377, 36.806667)
 #' shp_fl <- elk_spatial
-#' bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
+#' bounding_elk <- c(-121.8005, 36.7779, -121.6966, 36.8799)
 #' lab_dir <- c('L', 'R')
 #'
 #' ### Low zoom and default maptype plot (for CRAN testing, not recommended)
@@ -142,7 +141,7 @@ res_custom_map <- function(stations
   }
   print(paste("maptype is ",maptype))
 
-   bg_map <- base_map(bbox, crs = st_crs(shp),
+  bg_map <- base_map(bbox, crs = st_crs(shp),
                      maptype = maptype,
                      zoom = zoom)
   m <- bg_map +
@@ -158,15 +157,8 @@ res_custom_map <- function(stations
             show.legend = FALSE) +
     scale_color_manual(values = fill_colors, breaks = break_vals) +
     scale_fill_manual(values = fill_colors, breaks = break_vals)
-    # tmap::tm_rgb(alpha = 0.5) +
-    # tmap::tm_shape(shp) +
-    # tmap::tm_polygons(lwd = 2, col = 'yellow', alpha = 0.3,
-    #                   border.col = '#B3B300', border.alpha = 0.8) +
-    # tmap::tm_shape(loc_sf) +
-    # tmap::tm_dots(size = .75, col = "color")
-    #
 
-   if(station_labs) {
+  if(station_labs) {
     # Define lat/long for labels, based on stations, alignment, and bbox
     loc$lab_long <- loc$Longitude + 0.045* loc$align * (bbox[3] - bbox[1])
     loc$lab_lat <- loc$Latitude + 0.015 * (bbox[4] - bbox[2])
@@ -181,15 +173,7 @@ res_custom_map <- function(stations
       geom_sf_label(data = labels_sf, inherit.aes = FALSE,
                     aes(label = abbrev))
   }
-  # m <- m +
-    #   tmap::tm_text(text = "abbrev", xmod = "align", just = c("center","top"),
-    #                 bg.color = 'white', bg.alpha = 0.75,
-    #                 fontface = "bold")
 
-  # if(!is.null(scale_pos)) {
-  #   m <- m +
-  #     tmap::tm_scale_bar(shp)
-  # }
   m <- m +
     coord_sf(
       xlim = c(bbox[1], bbox[3]),

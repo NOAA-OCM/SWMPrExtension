@@ -7,7 +7,6 @@
 #' @param ... Additional arguments to be passed to \code{ggmap::get_stamenmap}
 #'
 #' @importFrom dplyr filter select
-# @importFrom ggmap get_stamenmap ggmap
 #' @importFrom magrittr "%>%"
 #' @importFrom sf st_as_sf st_bbox st_crs st_sfc st_transform st_polygon
 #' @export
@@ -18,7 +17,7 @@
 #'
 #' @concept miscellaneous
 #'
-#' @return Returns a \code{\link[ggplot2]{ggplot}} object.
+#' @return Returns a \code{ggplot2} object.
 #'
 base_map <- function(bbox, bg_crs = 4326, ...) {
   if (requireNamespace("ggmap", quietly=TRUE)) {

@@ -14,7 +14,7 @@ base_map(bbox, bg_crs = 4326, ...)
 \item{...}{Additional arguments to be passed to \code{ggmap::get_stamenmap}}
 }
 \value{
-Returns a \code{\link[ggplot2]{ggplot}} object.
+Returns a \code{ggplot2} object.
 }
 \description{
 Create background map

@@ -34,9 +34,9 @@ res_custom_sk_map(
 
 \item{lab_loc}{chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.}
 
-\item{zoom}{zoom level, 1-21 for OpenStreetMaps maps. Default is to autoscale based on bbox. Higher numbers give more detail.}
+\item{zoom}{zoom level, 1-21 for Stamen maps. Default is to autoscale based on bbox. Higher numbers give more detail.}
 
-\item{maptype}{stamen map type from OpenStreetMap::openmap. Theoretically one of c(“terrain”, “terrain-background”, “terrain-labels”, “terrain-lines”, “toner”, “toner-2010”, “toner-2011”, “toner-background”, “toner-hybrid”, “toner-labels”, “toner-lines”, “toner-lite”, “watercolor”).}
+\item{maptype}{map type from Stamen Maps (\url{http://maps.stamen.com/}); one of c("terrain", "terrain-background", "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011", "toner-background", "toner-hybrid", "toner-labels", "toner-lines", "toner-lite", "watercolor").}
 }
 \value{
 returns a {ggplot} object
@@ -55,7 +55,7 @@ stns <- c('custom stn 1', 'custom stn 2')
 x_coords <- c(-121.735281, -121.750369)
 y_coords <- c(36.850377, 36.806667)
 shp_fl <- elk_spatial
-bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
+bounding_elk <- c(-121.8005, 36.7779, -121.6966, 36.8799)
 lab_dir <- c('R', 'L')
 trnds <- c('inc', 'dec')
 

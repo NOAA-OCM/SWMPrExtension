@@ -28,9 +28,9 @@ res_local_map(
 
 \item{lab_loc}{chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.}
 
-\item{zoom}{zoom level, 1-21 for OpenStreetMaps maps. Default is to autoscale based on bbox.}
+\item{zoom}{zoom level, 1-21 for Stamen maps. Default is to autoscale based on bbox. Higher numbers give more detail.}
 
-\item{maptype}{stamen map type from OpenStreetMap::openmap. Theoretically one of c(“terrain”, “terrain-background”, “terrain-labels”, “terrain-lines”, “toner”, “toner-2010”, “toner-2011”, “toner-background”, “toner-hybrid”, “toner-labels”, “toner-lines”, “toner-lite”, “watercolor”).}
+\item{maptype}{map type from Stamen Maps (\url{http://maps.stamen.com/}); one of c("terrain", "terrain-background", "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011", "toner-background", "toner-hybrid", "toner-labels", "toner-lines", "toner-lite", "watercolor").}
 }
 \value{
 returns a {ggplot} object
@@ -55,7 +55,7 @@ sampling_stations[(sampling_stations$NERR.Site.ID == 'elk'
           to_match <- c('wq', 'met')
 stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
 shp_fl <- elk_spatial
-bounding_elk <- c(-121.810978, 36.868218, -121.708667, 36.764050)
+bounding_elk <- c(-121.8005, 36.7779, -121.6966, 36.8799)
 lab_dir <- c('L', 'R', 'L', 'L', 'L')
 labs <- c('ap', 'cw', 'nm', 'sm', 'vm')
 
