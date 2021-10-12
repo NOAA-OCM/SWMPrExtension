@@ -13,17 +13,16 @@
 #' @param zoom zoom level, 1-21 for OpenStreetMaps maps. Default is to autoscale based on bbox. Higher numbers give more detail.
 #' @param maptype stamen map type from OpenStreetMap::openmap. Theoretically one of c(“terrain”, “terrain-background”, “terrain-labels”, “terrain-lines”, “toner”, “toner-2010”, “toner-2011”, “toner-background”, “toner-hybrid”, “toner-labels”, “toner-lines”, “toner-lite”, “watercolor”).
 #'
-#' @importFrom ggmap ggmap
+# @importFrom ggmap ggmap
 #' @importFrom magrittr "%>%"
 #' @importFrom methods as
-#' @importFrom osmdata add_osm_features opq osmdata_sf
 #' @importFrom rlang .data
 #' @importFrom sf st_as_sf st_bbox st_crs st_transform
 #' @importFrom utils download.file unzip
 #'
 #' @export
 #'
-#' @details Creates a stylized, reserve-level base map for displaying seasonal kendall results from \code{\link[sk_seasonal]}sk_seasonal. The user can specify the reserve and stations to plot. The user can also specify a bounding box. For multi-component reserves, the user should specify a bounding box that highlights the component of interest.
+#' @details Creates a stylized, reserve-level base map for displaying seasonal kendall results from \code{sk_seasonal}. The user can specify the reserve and stations to plot. The user can also specify a bounding box. For multi-component reserves, the user should specify a bounding box that highlights the component of interest.
 #'
 #' To display seasonal trends, the user must specify \code{c('inc', 'dec', 'insig', 'insuff')} for each station listed in the \code{stations} argument.
 #'

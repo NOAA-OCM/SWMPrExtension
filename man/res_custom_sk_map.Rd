@@ -14,7 +14,7 @@ res_custom_sk_map(
   station_labs = TRUE,
   lab_loc = NULL,
   zoom = NULL,
-  maptype = "stamen-toner"
+  maptype = "toner-lite"
 )
 }
 \arguments{
@@ -36,7 +36,7 @@ res_custom_sk_map(
 
 \item{zoom}{zoom level, 1-21 for OpenStreetMaps maps. Default is to autoscale based on bbox. Higher numbers give more detail.}
 
-\item{maptype}{stamen map type from OpenStreetMap::openmap. Theoretically one of c("osm", "osm-bw","maptoolkit-topo", "waze", "bing", "stamen-toner", "stamen-terrain", "stamen-watercolor", "osm-german", "osm-wanderreitkarte", "mapbox", "esri", "esri-topo", "nps", "apple-iphoto", "skobbler", "hillshade", "opencyclemap", "osm-transport", "osm-public-transport", "osm-bbike", "osm-bbike-german").  However, many of these may not work. "stamen-toner", "stamen-terrain", and "bing" seem to work well.}
+\item{maptype}{stamen map type from OpenStreetMap::openmap. Theoretically one of c(“terrain”, “terrain-background”, “terrain-labels”, “terrain-lines”, “toner”, “toner-2010”, “toner-2011”, “toner-background”, “toner-hybrid”, “toner-labels”, “toner-lines”, “toner-lite”, “watercolor”).}
 }
 \value{
 returns a {ggplot} object
@@ -85,7 +85,7 @@ x_14 <- res_custom_sk_map(stations = stns, x_loc = x_coords,
 x_terrain <- res_custom_sk_map(stations = stns, x_loc = x_coords,
                   sk_result = trnds, y_loc = y_coords,
                   bbox = bounding_elk, lab_loc = lab_dir,
-                  shp = shp_fl, maptype = 'stamen-terrain')
+                  shp = shp_fl, maptype = 'terrain')
 }
 }
 \author{

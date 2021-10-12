@@ -9,18 +9,18 @@ base_map(bbox, bg_crs = 4326, ...)
 \arguments{
 \item{bbox}{Bounding box vector.}
 
-\item{...}{Additional arguments to be passed to ggmap::get_stamenmap}
+\item{bg_crs}{EPSG code for returned map.}
 
-\item{bg_epsg}{EPSG code for returned map.}
+\item{...}{Additional arguments to be passed to \code{ggmap::get_stamenmap}}
 }
 \value{
-Returns a \code{\link[ggplot2]{ggplot}} object#'
+Returns a \code{\link[ggplot2]{ggplot}} object.
 }
 \description{
 Create background map
 }
 \details{
-A helper function to create background map based on based on raster map tiles retrieved with \code{\link[ggmap::get_stamenmap]}ggmap::get_stamenmap.  If \code{\link[ggmap]}ggmap is unavailable, creates simple map using county-level polygon files.  This will be a pretty coarse resolution map and should be considered a placeholder.
+A helper function to create background map based on based on raster map tiles retrieved with \code{ggmap::get_stamenmap}.  If \code{ggmap} is unavailable, the function creates a basic map using county-level polygon files.  This map is fairly crude and should be considered a placeholder.
 }
 \author{
 Dave Eslinger

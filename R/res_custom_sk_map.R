@@ -14,10 +14,9 @@
 #' @param zoom zoom level, 1-21 for OpenStreetMaps maps. Default is to autoscale based on bbox. Higher numbers give more detail.
 #' @param maptype stamen map type from OpenStreetMap::openmap. Theoretically one of c(“terrain”, “terrain-background”, “terrain-labels”, “terrain-lines”, “toner”, “toner-2010”, “toner-2011”, “toner-background”, “toner-hybrid”, “toner-labels”, “toner-lines”, “toner-lite”, “watercolor”).
 #'
-#' @importFrom ggmap ggmap
+# @importFrom ggmap ggmap
 #' @importFrom magrittr "%>%"
 #' @importFrom methods as
-#' @importFrom osmdata add_osm_features opq osmdata_sf
 #' @importFrom rlang .data
 #' @importFrom sf st_as_sf st_bbox st_crs st_transform
 #' @importFrom utils download.file unzip
@@ -71,7 +70,7 @@
 #' x_terrain <- res_custom_sk_map(stations = stns, x_loc = x_coords,
 #'                   sk_result = trnds, y_loc = y_coords,
 #'                   bbox = bounding_elk, lab_loc = lab_dir,
-#'                   shp = shp_fl, maptype = 'stamen-terrain')
+#'                   shp = shp_fl, maptype = 'terrain')
 #' }
 #
 res_custom_sk_map <- function(stations

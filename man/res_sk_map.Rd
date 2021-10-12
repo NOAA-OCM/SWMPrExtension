@@ -33,7 +33,7 @@ res_sk_map(
 
 \item{zoom}{zoom level, 1-21 for OpenStreetMaps maps. Default is to autoscale based on bbox. Higher numbers give more detail.}
 
-\item{maptype}{stamen map type from OpenStreetMap::openmap. Theoretically one of c("osm", "osm-bw","maptoolkit-topo", "waze", "bing", "stamen-toner", "stamen-terrain", "stamen-watercolor", "osm-german", "osm-wanderreitkarte", "mapbox", "esri", "esri-topo", "nps", "apple-iphoto", "skobbler", "hillshade", "opencyclemap", "osm-transport", "osm-public-transport", "osm-bbike", "osm-bbike-german").  However, many of these may not work. "stamen-toner", "stamen-terrain", and "bing" seem to work well.}
+\item{maptype}{stamen map type from OpenStreetMap::openmap. Theoretically one of c(“terrain”, “terrain-background”, “terrain-labels”, “terrain-lines”, “toner”, “toner-2010”, “toner-2011”, “toner-background”, “toner-hybrid”, “toner-labels”, “toner-lines”, “toner-lite”, “watercolor”).}
 }
 \value{
 returns a {ggplot} object.
@@ -42,7 +42,7 @@ returns a {ggplot} object.
 Create a stylized reserve-level map of seasonal kendall results for use with the reserve level reporting template
 }
 \details{
-Creates a stylized, reserve-level base map for displaying seasonal kendall results from \code{\link[sk_seasonal]}sk_seasonal. The user can specify the reserve and stations to plot. The user can also specify a bounding box. For multi-component reserves, the user should specify a bounding box that highlights the component of interest.
+Creates a stylized, reserve-level base map for displaying seasonal kendall results from \code{sk_seasonal}. The user can specify the reserve and stations to plot. The user can also specify a bounding box. For multi-component reserves, the user should specify a bounding box that highlights the component of interest.
 
 To display seasonal trends, the user must specify \code{c('inc', 'dec', 'insig', 'insuff')} for each station listed in the \code{stations} argument.
 }

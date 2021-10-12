@@ -12,10 +12,9 @@
 #' @param zoom zoom level, 1-21 for OpenStreetMaps maps. Default is to autoscale based on bbox.
 #' @param maptype stamen map type from OpenStreetMap::openmap. Theoretically one of c(“terrain”, “terrain-background”, “terrain-labels”, “terrain-lines”, “toner”, “toner-2010”, “toner-2011”, “toner-background”, “toner-hybrid”, “toner-labels”, “toner-lines”, “toner-lite”, “watercolor”).
 #'
-#' @importFrom ggmap ggmap
+# @importFrom ggmap ggmap
 #' @importFrom magrittr "%>%"
 #' @importFrom methods as
-#' @importFrom osmdata add_osm_features opq osmdata_sf
 #' @importFrom sf st_as_sf st_bbox st_crs st_sfc st_transform
 #' @importFrom utils download.file unzip
 #'
