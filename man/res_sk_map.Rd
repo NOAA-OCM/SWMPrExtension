@@ -64,9 +64,9 @@ trnds <- c('inc', 'dec', 'insuff', 'insig')
 
 ### Low zoom and default maptype plot (for CRAN testing, not recommended)
 #    Lower zoom number gives coarser text and fewer features
-x_low <- res_sk_map('elk', stations = stns, sk_result = trnds,
+(x_low <- res_sk_map('elk', stations = stns, sk_result = trnds,
                  bbox = bounding_elk, shp = shp_fl,
-                 zoom = 10)
+                 zoom = 10))
 
 \donttest{
 

@@ -63,9 +63,9 @@
 #'
 #' ### Low zoom and default maptype plot (for CRAN testing, not recommended)
 #' #    Lower zoom number gives coarser text and fewer features
-#' x_low <- res_custom_map(stations = stns, x_loc = x_coords, y_loc = y_coords,
+#' (x_low <- res_custom_map(stations = stns, x_loc = x_coords, y_loc = y_coords,
 #'                     bbox = bounding_elk, lab_loc = lab_dir, shp = shp_fl,
-#'                     zoom = 10)
+#'                     zoom = 10))
 #'
 #' \donttest{
 ###  Default zoom and maptype plot

@@ -51,7 +51,7 @@ A helper, or stand-alone, function to create background map based on
 
 # Simple, low-zoom  map for testing
 bound_box <- c(-77.393, 38.277, -75.553, 39.741)
-x <- base_map(bound_box, zoom = 7)
+(x <- base_map(bound_box, zoom = 7))
 
 \donttest{
 # Default zoom map with terrain maptype.

@@ -84,9 +84,9 @@ labs <- c('ap', 'cw', 'nm', 'sm', 'vm')
 
 ### Low zoom and default maptype plot (for CRAN testing, not recommended)
 #    Lower zoom number gives coarser text and fewer features
-x_low <- res_local_map('elk', stations = stns, bbox = bounding_elk,
+(x_low <- res_local_map('elk', stations = stns, bbox = bounding_elk,
                    lab_loc = lab_dir, shp = shp_fl,
-                   zoom = 10)
+                   zoom = 10))
 
 \donttest{
 ### Default zoom and maptype
