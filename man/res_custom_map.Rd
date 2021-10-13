@@ -25,21 +25,34 @@ res_custom_map(
 
 \item{y_loc}{num vector of y coordinates for \code{stations}}
 
-\item{bbox}{a bounding box associated with the reserve. Must be in the format of c(X1, Y1, X2, Y2)}
+\item{bbox}{a bounding box associated with the reserve. Must be in the format
+of c(X1, Y1, X2, Y2)}
 
 \item{shp}{{sf} data frame (preferred) or SpatialPolygons object}
 
-\item{station_labs}{logical, should stations be labeled? Defaults to \code{TRUE}}
+\item{station_labs}{logical, should stations be labeled? Defaults to
+\code{TRUE}}
 
-\item{station_col}{chr vector of colors used to color station points. Defaults to 'black'.}
+\item{station_col}{chr vector of colors used to color station points.
+Defaults to 'black'.}
 
-\item{lab_loc}{chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.}
+\item{lab_loc}{chr vector of 'R' and 'L', one letter for each station. if no
+\code{lab_loc} is specified then labels will default to the left.}
 
-\item{bg_map}{a georeferenced \code{ggmap} or \code{ggplot} object used as a background map, generally provided by a call to \code{\link{base_map}}. If \code{bg_map} is specified, \code{maptype} and \code{zoom} are ignored.}
+\item{bg_map}{a georeferenced \code{ggmap} or \code{ggplot} object used as a
+background map, generally provided by a call to \code{\link{base_map}}. If
+\code{bg_map} is specified, \code{maptype} and \code{zoom} are ignored.}
 
-\item{zoom}{Zoom level for the base map created when \code{bg_map} is not specified.  An integer value, 5 - 15, with higher numbers providing  more detail.  If not provided, a zoom level is autoscaled based on \code{bbox} parameters.}
+\item{zoom}{Zoom level for the base map created when \code{bg_map} is not
+specified.  An integer value, 5 - 15, with higher numbers providing  more
+detail.  If not provided, a zoom level is autoscaled based on \code{bbox}
+parameters.}
 
-\item{maptype}{Background map type from Stamen Maps (\url{http://maps.stamen.com/}); one of c("terrain", "terrain-background", "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011", "toner-background", "toner-hybrid", "toner-labels", "toner-lines", "toner-lite", "watercolor").}
+\item{maptype}{Background map type from Stamen Maps
+(\url{http://maps.stamen.com/}); one of c("terrain", "terrain-background",
+"terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011",
+"toner-background", "toner-hybrid", "toner-labels", "toner-lines",
+"toner-lite", "watercolor").}
 }
 \value{
 returns a {ggplot} object
@@ -48,11 +61,17 @@ returns a {ggplot} object
 Create a stylized reserve-level map of custom station locations for use with the reserve level reporting template
 }
 \details{
-Creates a stylized, reserve-level base map. The user can specify the reserve and stations to plot. The user can also specify a bounding box. For multi-component reserves, the user should specify a bounding box that highlights the component of interest.
+Creates a stylized, reserve-level base map. The user can specify the
+  reserve and stations to plot. The user can also specify a bounding box. For
+  multi-component reserves, the user should specify a bounding box that
+  highlights the component of interest.
 
-This function does not automatically detect conflicts between station labels. The \code{lab_loc} argument allows the user to specify "R" or "L" for each station to prevent labels from conflicting with each other.
+  This function does not automatically detect conflicts between station
+  labels. The \code{lab_loc} argument allows the user to specify "R" or "L"
+  for each station to prevent labels from conflicting with each other.
 
-This function is intended to be used with \code{mapview::mapshot} to generate a png for the reserve-level report.
+  This function is intended to be used with \code{mapview::mapshot} to
+  generate a png for the reserve-level report.
 }
 \examples{
 ### set plotting parameters

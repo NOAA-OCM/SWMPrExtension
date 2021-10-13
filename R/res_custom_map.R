@@ -5,14 +5,27 @@
 #' @param stations chr string of the reserve stations to include in the map
 #' @param x_loc num vector of x coordinates for \code{stations}
 #' @param y_loc num vector of y coordinates for \code{stations}
-#' @param bbox a bounding box associated with the reserve. Must be in the format of c(X1, Y1, X2, Y2)
+#' @param bbox a bounding box associated with the reserve. Must be in the format
+#'   of c(X1, Y1, X2, Y2)
 #' @param shp {sf} data frame (preferred) or SpatialPolygons object
-#' @param station_labs logical, should stations be labeled? Defaults to \code{TRUE}
-#' @param station_col chr vector of colors used to color station points. Defaults to 'black'.
-#' @param lab_loc chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.
-#' @param bg_map a georeferenced \code{ggmap} or \code{ggplot} object used as a background map, generally provided by a call to \code{\link{base_map}}. If \code{bg_map} is specified, \code{maptype} and \code{zoom} are ignored.
-#' @param maptype Background map type from Stamen Maps (\url{http://maps.stamen.com/}); one of c("terrain", "terrain-background", "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011", "toner-background", "toner-hybrid", "toner-labels", "toner-lines", "toner-lite", "watercolor").
-#' @param zoom Zoom level for the base map created when \code{bg_map} is not specified.  An integer value, 5 - 15, with higher numbers providing  more detail.  If not provided, a zoom level is autoscaled based on \code{bbox} parameters.
+#' @param station_labs logical, should stations be labeled? Defaults to
+#'   \code{TRUE}
+#' @param station_col chr vector of colors used to color station points.
+#'   Defaults to 'black'.
+#' @param lab_loc chr vector of 'R' and 'L', one letter for each station. if no
+#'   \code{lab_loc} is specified then labels will default to the left.
+#' @param bg_map a georeferenced \code{ggmap} or \code{ggplot} object used as a
+#'   background map, generally provided by a call to \code{\link{base_map}}. If
+#'   \code{bg_map} is specified, \code{maptype} and \code{zoom} are ignored.
+#' @param maptype Background map type from Stamen Maps
+#'   (\url{http://maps.stamen.com/}); one of c("terrain", "terrain-background",
+#'   "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011",
+#'   "toner-background", "toner-hybrid", "toner-labels", "toner-lines",
+#'   "toner-lite", "watercolor").
+#' @param zoom Zoom level for the base map created when \code{bg_map} is not
+#'   specified.  An integer value, 5 - 15, with higher numbers providing  more
+#'   detail.  If not provided, a zoom level is autoscaled based on \code{bbox}
+#'   parameters.
 #'
 #' @importFrom magrittr "%>%"
 #' @importFrom methods as
@@ -21,11 +34,17 @@
 #'
 #' @export
 #'
-#' @details Creates a stylized, reserve-level base map. The user can specify the reserve and stations to plot. The user can also specify a bounding box. For multi-component reserves, the user should specify a bounding box that highlights the component of interest.
+#' @details Creates a stylized, reserve-level base map. The user can specify the
+#'   reserve and stations to plot. The user can also specify a bounding box. For
+#'   multi-component reserves, the user should specify a bounding box that
+#'   highlights the component of interest.
 #'
-#' This function does not automatically detect conflicts between station labels. The \code{lab_loc} argument allows the user to specify "R" or "L" for each station to prevent labels from conflicting with each other.
+#'   This function does not automatically detect conflicts between station
+#'   labels. The \code{lab_loc} argument allows the user to specify "R" or "L"
+#'   for each station to prevent labels from conflicting with each other.
 #'
-#' This function is intended to be used with \code{mapview::mapshot} to generate a png for the reserve-level report.
+#'   This function is intended to be used with \code{mapview::mapshot} to
+#'   generate a png for the reserve-level report.
 #'
 #' @author Julie Padilla, Dave Eslinger
 #'
@@ -88,13 +107,15 @@ res_custom_map <- function(stations
 
   # check that length(lab_loc) = length(stations)
   if(!is.null(station_labs) && length(lab_loc) != length(stations))
-    stop('Incorrect number of label location identifiers specified. R or L designation must be made for each station.' )
+    stop('Incorrect number of label location identifiers specified.
+         R or L designation must be made for each station.' )
 
   # check that the bb has the right dimensions
   if(is.null(bbox))
     stop('Specify a bounding box (bbox) in the form of c(X1, Y1, X2, Y2)')
   if(length(bbox) != 4)
-    stop('Incorrect number of elements specified for bbox. Specify a bounding box (bbox) in the form of c(X1, Y1, X2, Y2)')
+    stop('Incorrect number of elements specified for bbox.
+         Specify a bounding box (bbox) in the form of c(X1, Y1, X2, Y2)')
   # Get min-max bounding coordinates, and format bbox correctly:
   xmin <- min(bbox[c(1,3)])
   xmax <- max(bbox[c(1,3)])
@@ -104,9 +125,11 @@ res_custom_map <- function(stations
 
   #check that stations, x_loc, and y_loc match
   if(length(stations) != length(x_loc))
-    stop('An incorrect number of x coordinates were specified. One x coordinate must be specified for each station')
+    stop('An incorrect number of x coordinates were specified.
+         One x coordinate must be specified for each station')
   if(length(stations) != length(y_loc))
-    stop('An incorrect number of y coordinates were specified. One y coordinate must be specified for each station')
+    stop('An incorrect number of y coordinates were specified.
+         One y coordinate must be specified for each station')
 
   if(is.null(station_col)) {
     station_col <- 'black'

@@ -92,7 +92,7 @@ stations <- sampling_stations[(sampling_stations$NERR.Site.ID == 'cbm'
          to_match <- c('wq')
 stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
 shp_fl <- cbm_spatial
-bounding_cbm_1 <- c(-77.393, 39.741, -75.553, 38.277)
+bounding_cbm_1 <- c(-77.393, 38.277, -75.553, 39.741)
 bounding_cbm_2 <- c(-76.8,  38.7, -76.62,  38.85)
 trnds <- c('inc', 'insuff', 'dec', 'insig')
 
