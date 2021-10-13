@@ -11,39 +11,62 @@ res_local_map(
   shp,
   station_labs = TRUE,
   lab_loc = NULL,
+  bg_map = NULL,
   zoom = NULL,
   maptype = "toner-lite"
 )
 }
 \arguments{
-\item{nerr_site_id}{chr string of the reserve to make, first three characters used by NERRS}
+\item{nerr_site_id}{chr string of the reserve to make, first three characters
+used by NERRS}
 
 \item{stations}{chr string of the reserve stations to include in the map}
 
-\item{bbox}{a bounding box associated with the reserve. Must be in the format of c(X1, Y1, X2, Y2)}
+\item{bbox}{a bounding box associated with the reserve. Must be in the format
+of c(X1, Y1, X2, Y2)}
 
 \item{shp}{{sf} data frame (preferred) or SpatialPolygons object}
 
-\item{station_labs}{logical, should stations be labeled? Defaults to \code{TRUE}}
+\item{station_labs}{logical, should stations be labeled? Defaults to
+\code{TRUE}}
 
-\item{lab_loc}{chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.}
+\item{lab_loc}{chr vector of 'R' and 'L', one letter for each station. if no
+\code{lab_loc} is specified then labels will default to the left.}
 
-\item{zoom}{zoom level, 1-21 for Stamen maps. Default is to autoscale based on bbox. Higher numbers give more detail.}
+\item{bg_map}{a georeferenced \code{ggmap} or \code{ggplot} object used as a
+background map, generally provided by a call to \code{\link{base_map}}. If
+\code{bg_map} is specified, \code{maptype} and \code{zoom} are ignored.}
 
-\item{maptype}{map type from Stamen Maps (\url{http://maps.stamen.com/}); one of c("terrain", "terrain-background", "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011", "toner-background", "toner-hybrid", "toner-labels", "toner-lines", "toner-lite", "watercolor").}
+\item{zoom}{Zoom level for the base map created when \code{bg_map} is not
+specified.  An integer value, 5 - 15, with higher numbers providing  more
+detail.  If not provided, a zoom level is autoscaled based on \code{bbox}
+parameters.}
+
+\item{maptype}{Background map type from Stamen Maps
+(\url{http://maps.stamen.com/}); one of c("terrain", "terrain-background",
+"terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011",
+"toner-background", "toner-hybrid", "toner-labels", "toner-lines",
+"toner-lite", "watercolor").}
 }
 \value{
 returns a {ggplot} object
 }
 \description{
-Create a stylized reserve-level map for use with the reserve level reporting template
+Create a stylized reserve-level map for use with the reserve level reporting
+template
 }
 \details{
-Creates a stylized, reserve-level base map. The user can specify the reserve and stations to plot. The user can also specify a bounding box. For multi-component reserves, the user should specify a bounding box that highlights the component of interest.
+Creates a stylized, reserve-level base map. The user can specify the
+  reserve and stations to plot. The user can also specify a bounding box. For
+  multi-component reserves, the user should specify a bounding box that
+  highlights the component of interest.
 
-This function does not automatically detect conflicts between station labels. The \code{lab_loc} argument allows the user to specify "R" or "L" for each station to prevent labels from conflicting with each other.
+  This function does not automatically detect conflicts between station
+  labels. The \code{lab_loc} argument allows the user to specify "R" or "L"
+  for each station to prevent labels from conflicting with each other.
 
-This function is intended to be used with \code{mapview::mapshot} to generate a png for the reserve-level report.
+  This function is intended to be used with \code{mapview::mapshot} to
+  generate a png for the reserve-level report.
 }
 \examples{
 ## a compact reserve
@@ -79,7 +102,7 @@ stations <- sampling_stations[(sampling_stations$NERR.Site.ID == 'cbm'
             to_match <- c('wq', 'met')
 stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
 shp_fl <- cbm_spatial
-bounding_cbm_1 <- c(-77.393, 39.741, -75.553, 38.277)
+bounding_cbm_1 <- c(-77.393, 38.277, -75.553, 39.741)
 bounding_cbm_2 <- c(-76.8,  38.7, -76.62,  38.85)
 lab_dir <- c('L', 'R', 'L', 'L', 'L')
 labs <- c('ap', 'cw', 'nm', 'sm', 'vm')

@@ -1,18 +1,34 @@
 #' Local Reserve Map With Seasonal Kendall Results for Custom Stations
 #'
-#' Create a stylized reserve-level map of seasonal kendall results from custom station locations for use with the reserve level reporting template
+#' Create a stylized reserve-level map of seasonal kendall results from custom
+#' station locations for use with the reserve level reporting template
 #'
 #' @param stations chr string of the reserve stations to include in the map
-#' @param x_loc num vector of x coordinates for \code{stations}. East longitudes must be negative.
+#' @param x_loc num vector of x coordinates for \code{stations}. East longitudes
+#'   must be negative.
 #' @param y_loc num vector of y coordinates for \code{stations}
-#' @param sk_result vector of values denoting direction and significance of seasonal kendall results. Result should be c('inc', 'dec', 'insig') for sig. negative, no sig. results, and sig. positive result
-#' @param bbox a bounding box associated with the reserve. Must be in the format of c(X1, Y1, X2, Y2)
+#' @param sk_result vector of values denoting direction and significance of
+#'   seasonal kendall results. Result should be c('inc', 'dec', 'insig') for
+#'   sig. negative, no sig. results, and sig. positive result
+#' @param bbox a bounding box associated with the reserve. Must be in the format
+#'   of c(X1, Y1, X2, Y2)
 #' @param shp {sf} data frame (preferred) or SpatialPolygons object
-#' @param station_labs logical, should stations be labeled? Defaults to \code{TRUE}
-#' @param lab_loc chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.
-## #' @param scale_pos a vector of x and y values for scalebar location, *e.g.*, `c( "left", "bottom")`, the default.  Enter `scale_pos = NULL` for none. See `help(tm_scale_bar` for additional options.
-#' @param zoom zoom level, 1-21 for Stamen maps. Default is to autoscale based on bbox. Higher numbers give more detail.
-#' @param maptype map type from Stamen Maps (\url{http://maps.stamen.com/}); one of c("terrain", "terrain-background", "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011", "toner-background", "toner-hybrid", "toner-labels", "toner-lines", "toner-lite", "watercolor").
+#' @param station_labs logical, should stations be labeled? Defaults to
+#'   \code{TRUE}
+#' @param lab_loc chr vector of 'R' and 'L', one letter for each station. if no
+#'   \code{lab_loc} is specified then labels will default to the left.
+#' @param bg_map a georeferenced \code{ggmap} or \code{ggplot} object used as a
+#'   background map, generally provided by a call to \code{\link{base_map}}. If
+#'   \code{bg_map} is specified, \code{maptype} and \code{zoom} are ignored.
+#' @param maptype Background map type from Stamen Maps
+#'   (\url{http://maps.stamen.com/}); one of c("terrain", "terrain-background",
+#'   "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011",
+#'   "toner-background", "toner-hybrid", "toner-labels", "toner-lines",
+#'   "toner-lite", "watercolor").
+#' @param zoom Zoom level for the base map created when \code{bg_map} is not
+#'   specified.  An integer value, 5 - 15, with higher numbers providing  more
+#'   detail.  If not provided, a zoom level is autoscaled based on \code{bbox}
+#'   parameters.
 #'
 #' @importFrom magrittr "%>%"
 #' @importFrom methods as
@@ -22,9 +38,16 @@
 #'
 #' @export
 #'
-#' @details Creates a stylized, reserve-level base map for displaying seasonal kendall results from \code{\link{sk_seasonal}}. The user can specify the reserve and stations to plot. The user can also specify a bounding box. For multi-component reserves, the user should specify a bounding box that highlights the component of interest.
+#' @details Creates a stylized, reserve-level base map for displaying seasonal
+#'   kendall results from \code{\link{sk_seasonal}}. The user can specify the
+#'   reserve and stations to plot. The user can also specify a bounding box. For
+#'   multi-component reserves, the user should specify a bounding box that
+#'   highlights the component of interest.
 #'
-#' To display seasonal trends, the user must specify \code{c('inc', 'dec', 'insig', 'insuff')} for each station listed in the \code{stations} argument.
+#'   To display seasonal trends, the user must specify \code{c('inc', 'dec',
+#'   'insig', 'insuff')} for each station listed in the \code{stations}
+#'   argument.
+#'
 #'
 #'
 #' @author Julie Padilla, Dave Eslinger
@@ -71,7 +94,7 @@
 #'                   bbox = bounding_elk, lab_loc = lab_dir,
 #'                   shp = shp_fl, maptype = 'terrain')
 #' }
-#
+
 res_custom_sk_map <- function(stations
                               , x_loc
                               , y_loc
@@ -80,6 +103,7 @@ res_custom_sk_map <- function(stations
                               , shp
                               , station_labs = TRUE
                               , lab_loc = NULL
+                              , bg_map = NULL
                               , zoom = NULL
                               , maptype = "toner-lite") {
 
@@ -161,16 +185,19 @@ res_custom_sk_map <- function(stations
   # use_size  <- unique(needed_keys$res_point_size)
 
   # Set background map zoom level automatically if not specified
-  if(is.null(zoom)) {
-    diag_size <- sqrt((xmax-xmin)^2 +(ymax-ymin)^2)
-    zoom <- 14 - ceiling(sqrt(10*diag_size))
-    print(paste("Zoom level calculated as", zoom, sep = " "))
-  }
+  # if(is.null(zoom)) {
+  #   diag_size <- sqrt((xmax-xmin)^2 +(ymax-ymin)^2)
+  #   zoom <- 14 - ceiling(sqrt(10*diag_size))
+  #   print(paste("Zoom level calculated as", zoom, sep = " "))
+  # }
   print(paste("maptype is ",maptype))
 
-  bg_map <- base_map(bbox, crs = st_crs(shp),
+  if(is.null(bg_map)) {
+    bg_map <- base_map(bbox, crs = st_crs(shp),
                      maptype = maptype,
                      zoom = zoom)
+  }
+
   m <- bg_map +
     geom_sf(data = shp, aes(), inherit.aes = FALSE,
             fill = "yellow", col = '#B3B300', alpha = 0.3) +

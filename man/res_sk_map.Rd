@@ -12,6 +12,7 @@ res_sk_map(
   shp,
   station_labs = TRUE,
   lab_loc = NULL,
+  bg_map = NULL,
   zoom = NULL,
   maptype = "toner-lite"
 )
@@ -23,7 +24,7 @@ res_sk_map(
 
 \item{sk_result}{vector of values denoting direction and significance of seasonal kendall results. Result should be \code{c('inc', 'dec', 'insig', 'insuff')} for significant positive, significant negative, no significant results, and insufficient data to calculate result.}
 
-\item{bbox}{a bounding box associated with the reserve. Must be in the format of c(X1, Y1, X2, Y2)}
+\item{bbox}{a bounding box associated with the reserve. Should be in the format of c(xmin, ymin, xmax, ymax).}
 
 \item{shp}{{sf} data frame (preferred) or SpatialPolygons object}
 
@@ -31,9 +32,11 @@ res_sk_map(
 
 \item{lab_loc}{chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.}
 
-\item{zoom}{zoom level, 1-21 for Stamen maps. Default is to autoscale based on bbox. Higher numbers give more detail.}
+\item{bg_map}{a georeferenced \code{ggmap} or \code{ggplot} object used as a background map, generally provided by a call to \code{\link{base_map}}. If \code{bg_map} is specified, \code{maptype} and \code{zoom} are ignored.}
 
-\item{maptype}{map type from Stamen Maps (\url{http://maps.stamen.com/}); one of c("terrain", "terrain-background", "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011", "toner-background", "toner-hybrid", "toner-labels", "toner-lines", "toner-lite", "watercolor").}
+\item{zoom}{Zoom level for the base map created when \code{bg_map} is not specified.  An integer value, 5 - 15, with higher numbers providing  more detail.  If not provided, a zoom level is autoscaled based on \code{bbox} parameters.}
+
+\item{maptype}{Background map type from Stamen Maps (\url{http://maps.stamen.com/}); one of c("terrain", "terrain-background", "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011", "toner-background", "toner-hybrid", "toner-labels", "toner-lines", "toner-lite", "watercolor").}
 }
 \value{
 returns a \code{ggplot} object.
@@ -89,7 +92,7 @@ stations <- sampling_stations[(sampling_stations$NERR.Site.ID == 'cbm'
          to_match <- c('wq')
 stns <- stations[grep(paste(to_match, collapse = '|'), stations)]
 shp_fl <- cbm_spatial
-bounding_cbm_1 <- c(-77.393, 39.741, -75.553, 38.277)
+bounding_cbm_1 <- c(-77.393, 38.277, -75.553, 39.741)
 bounding_cbm_2 <- c(-76.8,  38.7, -76.62,  38.85)
 trnds <- c('inc', 'insuff', 'dec', 'insig')
 

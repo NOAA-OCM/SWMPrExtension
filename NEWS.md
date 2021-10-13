@@ -1,6 +1,7 @@
 ### SWMPrExtension 2.0.1
 * Removed tmap
 * Adding ggmap for background raster map as a suggested package., but with optional vector map if ggmap not installed.
+* Adding ability to pass a map to the local map functions
 
 ### SWMPrExtension 2.0.0
 * Public release after merge of sf_transition and tmap branches. 

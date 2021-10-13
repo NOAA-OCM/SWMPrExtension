@@ -4,12 +4,32 @@
 \alias{base_map}
 \title{Create background map}
 \usage{
-base_map(bbox, bg_crs = 4326, ...)
+base_map(
+  bbox,
+  bg_crs = 4326,
+  vector_only = FALSE,
+  maptype = "toner-lite",
+  zoom = NULL,
+  ...
+)
 }
 \arguments{
 \item{bbox}{Bounding box vector.}
 
-\item{bg_crs}{EPSG code for returned map.}
+\item{bg_crs}{EPSG code or \code{st_crs} object for the returned map.}
+
+\item{vector_only}{Logical, draw only a simple vector-based map.}
+
+\item{maptype}{Background map type from Stamen Maps
+(\url{http://maps.stamen.com/}); one of c("terrain", "terrain-background",
+"terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011",
+"toner-background", "toner-hybrid", "toner-labels", "toner-lines",
+"toner-lite", "watercolor").}
+
+\item{zoom}{Zoom level for the base map created when \code{bg_map} is not
+specified.  An integer value, 5 - 15, with higher numbers providing  more
+detail.  If not provided, a zoom level is autoscaled based on \code{bbox}
+parameters.}
 
 \item{...}{Additional arguments to be passed to \code{ggmap::get_stamenmap}}
 }
@@ -17,12 +37,28 @@ base_map(bbox, bg_crs = 4326, ...)
 Returns a \code{ggplot2} object.
 }
 \description{
-Create background map
+Create a background map from a bounding box using Stamen Map tiles or a crude
+vector-based map.
 }
 \details{
-A helper function to create background map based on based on raster map tiles retrieved with \code{ggmap::get_stamenmap}.  If \code{ggmap} is unavailable, the function creates a basic map using county-level polygon files.  This map is fairly crude and should be considered a placeholder.
+A helper, or stand-alone, function to create background map based on
+  based on raster map tiles retrieved with \code{ggmap::get_stamenmap}.  If
+  \code{ggmap} is unavailable, the function creates a basic map using
+  county-level polygon files.  This map is fairly crude and should be
+  considered a placeholder.
+}
+\examples{
+
+# Simple, low-zoom  map for testing
+bound_box <- c(-77.393, 38.277, -75.553, 39.741)
+x <- base_map(bound_box, zoom = 7)
+
+\donttest{
+# Default zoom map with terrain maptype.
+y <- base_map(bound_box, maptype = 'terrain')
+}
 }
 \author{
 Dave Eslinger
 }
-\concept{miscellaneous}
+\concept{analyze}
