@@ -11,8 +11,9 @@
 #' @param station_labs logical, should stations be labeled? Defaults to \code{TRUE}
 #' @param lab_loc chr vector of 'R' and 'L', one letter for each station. if no \code{lab_loc} is specified then labels will default to the left.
 ## #' @param scale_pos a vector of x and y values for scalebar location, *e.g.*, `c( "left", "bottom")`, the default.  Enter `scale_pos = NULL` for none. See `help(tm_scale_bar` for additional options.
-#' @param zoom zoom level, 1-21 for Stamen maps. Default is to autoscale based on bbox. Higher numbers give more detail.
-#' @param maptype map type from Stamen Maps (\url{http://maps.stamen.com/}); one of c("terrain", "terrain-background", "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011", "toner-background", "toner-hybrid", "toner-labels", "toner-lines", "toner-lite", "watercolor").
+#' @param bg_map a georeferenced \code{ggmap} or \code{ggplot} object used as a background map, generally provided by a call to \code{\link{base_map}}. If \code{bg_map} is specified, \code{maptype} and \code{zoom} are ignored.
+#' @param maptype Background map type from Stamen Maps (\url{http://maps.stamen.com/}); one of c("terrain", "terrain-background", "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011", "toner-background", "toner-hybrid", "toner-labels", "toner-lines", "toner-lite", "watercolor").
+#' @param zoom Zoom level for the base map created when \code{bg_map} is not specified.  An integer value, 5 - 15, with higher numbers providing  more detail.  If not provided, a zoom level is autoscaled based on \code{bbox} parameters.
 #'
 #' @importFrom magrittr "%>%"
 #' @importFrom methods as
@@ -80,6 +81,7 @@ res_custom_sk_map <- function(stations
                               , shp
                               , station_labs = TRUE
                               , lab_loc = NULL
+                              , bg_map = NULL
                               , zoom = NULL
                               , maptype = "toner-lite") {
 
@@ -161,16 +163,19 @@ res_custom_sk_map <- function(stations
   # use_size  <- unique(needed_keys$res_point_size)
 
   # Set background map zoom level automatically if not specified
-  if(is.null(zoom)) {
-    diag_size <- sqrt((xmax-xmin)^2 +(ymax-ymin)^2)
-    zoom <- 14 - ceiling(sqrt(10*diag_size))
-    print(paste("Zoom level calculated as", zoom, sep = " "))
-  }
+  # if(is.null(zoom)) {
+  #   diag_size <- sqrt((xmax-xmin)^2 +(ymax-ymin)^2)
+  #   zoom <- 14 - ceiling(sqrt(10*diag_size))
+  #   print(paste("Zoom level calculated as", zoom, sep = " "))
+  # }
   print(paste("maptype is ",maptype))
 
-  bg_map <- base_map(bbox, crs = st_crs(shp),
+  if(is.null(bg_map)) {
+    bg_map <- base_map(bbox, crs = st_crs(shp),
                      maptype = maptype,
                      zoom = zoom)
+  }
+
   m <- bg_map +
     geom_sf(data = shp, aes(), inherit.aes = FALSE,
             fill = "yellow", col = '#B3B300', alpha = 0.3) +
