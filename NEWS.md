@@ -1,3 +1,6 @@
+### SwmprExtenstion 2.1.0.1
+* Fix overlapping label issues in?
+
 ### SWMPrExtension 2.1.0
 * Removed tmap, tmaptools, and OpenStreetMap due to issues with required package {rJava}.
 * Adding ggmap for background raster map as a suggested package., but with optional vector map if ggmap not installed

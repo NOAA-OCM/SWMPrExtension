@@ -104,6 +104,10 @@ seasonal_barplot.swmpr <- function(swmpr_in
   avg <- sym('mean')
 
   rng <- hist_rng
+  brks <- set_date_breaks(rng)
+  minor_brks <- set_date_breaks_minor(rng)
+  lab_brks <- set_date_break_labs(rng)
+
 
   # attributes
   parameters <- attr(dat, 'parameters')
@@ -175,6 +179,8 @@ seasonal_barplot.swmpr <- function(swmpr_in
     bar_seas <- ggplot(data = dat_hist, aes_(x = yr, y = res, fill = seas)) +
       geom_bar(stat = "identity", position = bar_position) +
       scale_y_continuous(expand = c(0, 0), limits = c(0, mx), breaks = seq(0 , mx, brk_pts)) +
+      scale_x_datetime(date_breaks = brks, date_labels = lab_brks,
+                       date_minor_breaks = minor_brks) +
       scale_fill_manual(values = seas_col) +
       labs(x = NULL, y = eval(y_label))
 
