@@ -176,7 +176,7 @@ seasonal_boxplot.swmpr <- function(swmpr_in
   # Calc summary stat defined by FUN by season and day
   dat_hist <- dat_hist %>%
     group_by(!! seas, !! dt) %>%
-    summarise(result = FUN(!! parm), .groups = "drop_last")
+    summarise(result = FUN(!! parm), .groups = "drop")
 
   # ensure all factor levels are accounted for, even if there is no data
   dat_hist <- tidyr::complete(dat_hist, !! seas)
