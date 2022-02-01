@@ -303,7 +303,7 @@ threshold_criteria_plot.swmpr <- function(swmpr_in
 
     df_smooth <- dat %>%
       group_by(year = lubridate::year(!! dt), month = lubridate::month(!! dt)) %>%
-      summarise(mean = mean(!! parm, na.rm = TRUE), .groups = "drop_last") %>%
+      summarise(mean = mean(!! parm, na.rm = TRUE), .groups = "drop") %>%
       mutate(datetimestamp = paste(year, '-', month, '-', '01', ' ', '0:00', sep = ''))
 
     df_smooth$datetimestamp <- as.POSIXct(df_smooth$datetimestamp)

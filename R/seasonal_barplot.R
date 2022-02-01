@@ -153,7 +153,7 @@ seasonal_barplot.swmpr <- function(swmpr_in
 
   dat_hist <- dat_hist %>%
     dplyr::group_by(!! yr, !! seas) %>%
-    dplyr::summarise(result = sum(!! parm, na.rm = TRUE), .groups = "drop_last")
+    dplyr::summarise(result = sum(!! parm, na.rm = TRUE), .groups = "drop")
 
   if(plot){
     seas_col <- cols
@@ -165,10 +165,10 @@ seasonal_barplot.swmpr <- function(swmpr_in
 
     if(season_facet) {
       yr_mx <- dat_hist %>% group_by(!! yr, !! seas) %>%
-        summarise(max_val = sum(!! res, na.rm = TRUE), .groups = "drop_last")
+        summarise(max_val = sum(!! res, na.rm = TRUE), .groups = "drop")
     } else {
       yr_mx <- dat_hist %>% group_by(!! yr) %>%
-        summarise(max_val = sum(!! res, na.rm = TRUE), .groups = "drop_last")
+        summarise(max_val = sum(!! res, na.rm = TRUE), .groups = "drop")
     }
 
     mx <- ceiling(max(yr_mx$max_val) / 10) * 10 * 1.1
