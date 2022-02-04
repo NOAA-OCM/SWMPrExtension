@@ -182,7 +182,7 @@ seasonal_barplot.swmpr <- function(swmpr_in
     brk_pts <- ifelse(mx < 50, 5, ifelse(mx < 100, 10, ifelse(mx < 1000, 100, ifelse(mx < 1000000, 200, 1000000))))
 
     # return(mx)
-    # Add data
+    # Add data to plot -----
     bar_seas <- ggplot(data = dat_hist, aes_(x = yr, y = res, fill = seas)) +
       geom_bar(stat = "identity", position = bar_position) +
       scale_y_continuous(expand = c(0, 0), limits = c(0, mx), breaks = seq(0 , mx, brk_pts)) +
@@ -193,7 +193,7 @@ seasonal_barplot.swmpr <- function(swmpr_in
       scale_fill_manual(values = seas_col) +
       labs(x = NULL, y = eval(y_label))
 
-    # Add themes
+    # Add themes ----
     bar_seas <- bar_seas +
       theme_bw() +
       guides(fill = guide_legend(override.aes = list(linetype = 'blank'), order = 1)) +
@@ -204,7 +204,7 @@ seasonal_barplot.swmpr <- function(swmpr_in
       theme(axis.title.x = element_text(margin = unit(c(8, 0, 0, 0), 'pt'))
             , axis.title.y = element_text(margin = unit(c(0, 8, 0, 0), 'pt'), angle = 90))
 
-    # Formatting text
+    # Formatting text ----
     ## conditional based on parameter
     sz <- ifelse(param == 'totpar', 12, 16)
     bar_seas <- bar_seas +
@@ -217,7 +217,7 @@ seasonal_barplot.swmpr <- function(swmpr_in
             , legend.text.align = 0.5) +
       theme(legend.spacing.x = unit(3, 'pt'))
 
-    # add plot title if specified
+    # add plot title if specified ----
     if(plot_title) {
       ttl <- title_labeler(nerr_site_id = station)
 
@@ -227,7 +227,7 @@ seasonal_barplot.swmpr <- function(swmpr_in
         theme(plot.title = element_text(hjust = 0.5))
     }
 
-    # historical range average if specified
+    # historical range average if specified ----
     if(hist_avg) {
       var_nm <- ifelse(season_facet, 'Seasonal Average', 'Average')
 
@@ -261,7 +261,7 @@ seasonal_barplot.swmpr <- function(swmpr_in
     }
 
 
-    # facet wrap if specified
+    # facet wrap if specified ----
     if(season_facet) {
 
       # return(dat_hist)
