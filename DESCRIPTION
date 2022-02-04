@@ -60,7 +60,10 @@ Authors@R: c(
 	email = "dave.eslinger@noaa.gov"),
   person(given = "Bob", family = "Rudis",
     role = c("ctb"),
-	email = "bob@rud.is")
+	email = "bob@rud.is"),
+  person(given = "Davis", family = "Vaughan",
+    role = c("ctb"),
+	email = "davis@rstudio.com")
 	)
 RoxygenNote: 7.1.2
 

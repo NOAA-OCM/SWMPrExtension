@@ -19,9 +19,7 @@
 #'
 #' @export
 #'
-#' @details Create a base map of the US with options for including AK, HI, and PR. The user can choose which states and NERRS reserves to highlight.
-#' An early {sp}-based version of this function by Julie Padilla was developed, in part, from a blog post by Bob Rudis. The current {sf}-based version,
-#' by Dave Eslinger, uses an approach from  the r-spatial tutorial by Mel Moreno and Mathieu Basille.
+#' @details Create a base map of the US with options for including AK, HI, and PR. The user can choose which states and NERRS reserves to highlight. An early {sp}-based version of this function by Julie Padilla was developed, in part, from a blog post by Bob Rudis. The current {sf}-based version, by Dave Eslinger, uses an approach from  the r-spatial tutorial by Mel Moreno and Mathieu Basille.
 #'
 #' @author Julie Padilla, Dave Eslinger
 #' Maintainer: Dave Eslinger

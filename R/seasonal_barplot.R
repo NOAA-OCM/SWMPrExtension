@@ -103,6 +103,7 @@ seasonal_barplot.swmpr <- function(swmpr_in
   yr <- sym('year')
   avg <- sym('mean')
 
+  rng <- hist_rng
 
   # attributes
   parameters <- attr(dat, 'parameters')
@@ -153,25 +154,31 @@ seasonal_barplot.swmpr <- function(swmpr_in
 
   dat_hist <- dat_hist %>%
     dplyr::group_by(!! yr, !! seas) %>%
-    dplyr::summarise(result = sum(!! parm, na.rm = TRUE), .groups = "drop")
+    # dplyr::filter(!all(is.na(!! parm))) %>%
+    # dplyr::summarise(result = sum(!! parm, na.rm = TRUE), .groups = "drop_last")
+    #dplyr::summarise(result = sum(!! parm, na.rm = TRUE), .groups = "drop_last") %>%
+    dplyr::mutate(na_flag = ifelse(all(is.na(!! parm)), NA, 1)) %>%
+    dplyr::summarise(result = na_flag*sum(!! parm, na.rm = TRUE), .groups = "drop") %>%
+    unique()
 
   if(plot){
     seas_col <- cols
-    brks <- range(as.integer(dat_hist$year))
+    x_range <- range(as.numeric(as.character(dat_hist$year)))
     tick_interval <- case_when(
-      diff(brks) > 20  ~ 4,
-      diff(brks) > 10  ~ 2,
+      diff(x_range) > 20  ~ 4,
+      diff(x_range) > 10  ~ 2,
       TRUE            ~ 1)
 
     if(season_facet) {
       yr_mx <- dat_hist %>% group_by(!! yr, !! seas) %>%
-        summarise(max_val = sum(!! res, na.rm = TRUE), .groups = "drop")
+        mutate(na_flag = ifelse(all(is.na(!! res)), NA, 1)) %>%
+        summarise(max_val = na_flag* sum(!! res, na.rm = TRUE), .groups = "drop_last")
     } else {
       yr_mx <- dat_hist %>% group_by(!! yr) %>%
         summarise(max_val = sum(!! res, na.rm = TRUE), .groups = "drop")
     }
 
-    mx <- ceiling(max(yr_mx$max_val) / 10) * 10 * 1.1
+    mx <- ceiling(max(yr_mx$max_val * 1.1, na.rm = TRUE) / 10) * 10
     brk_pts <- ifelse(mx < 50, 5, ifelse(mx < 100, 10, ifelse(mx < 1000, 100, ifelse(mx < 1000000, 200, 1000000))))
 
     # return(mx)
@@ -179,10 +186,10 @@ seasonal_barplot.swmpr <- function(swmpr_in
     bar_seas <- ggplot(data = dat_hist, aes_(x = yr, y = res, fill = seas)) +
       geom_bar(stat = "identity", position = bar_position) +
       scale_y_continuous(expand = c(0, 0), limits = c(0, mx), breaks = seq(0 , mx, brk_pts)) +
-      scale_x_discrete(breaks = seq(from = brks[1], to = brks[2],
+      scale_x_discrete(breaks = seq(from = x_range[1], to = x_range[2],
                                       by = tick_interval)) +
-      # scale_x_datetime(date_breaks = brks, date_labels = lab_brks,
-      #                  date_minor_breaks = minor_brks) +
+      # scale_x_datetime(date_breaks = x_range, date_labels = lab_x_range,
+      #                  date_minor_breaks = minor_x_range) +
       scale_fill_manual(values = seas_col) +
       labs(x = NULL, y = eval(y_label))
 
@@ -220,22 +227,6 @@ seasonal_barplot.swmpr <- function(swmpr_in
         theme(plot.title = element_text(hjust = 0.5))
     }
 
-    # facet wrap if specified
-    if(season_facet) {
-
-      # return(dat_hist)
-
-      bar_seas <-
-        bar_seas +
-        facet_wrap('season', ncol = 1)
-
-      seas_means <- dat_hist %>%
-        group_by(.data$season) %>%
-        summarise(mean = mean(.data$result, na.rm = TRUE))
-
-      dat_hist <- merge(dat_hist, seas_means)
-    }
-
     # historical range average if specified
     if(hist_avg) {
       var_nm <- ifelse(season_facet, 'Seasonal Average', 'Average')
@@ -243,6 +234,12 @@ seasonal_barplot.swmpr <- function(swmpr_in
       lab_parm <- paste(var_nm, ' (', rng[[1]], '-', rng[[2]], ')', sep = '')
 
       if(season_facet) {
+        seas_means <- dat_hist %>%
+          group_by(.data$season) %>%
+          summarise(mean = mean(.data$result, na.rm = TRUE), .groups = "drop")
+
+        dat_hist <- merge(dat_hist, seas_means)
+
         # return(dat_hist)
         bar_seas <- bar_seas +
           geom_hline(aes(yintercept = dat_hist$mean, linetype = factor(lab_parm))
@@ -263,6 +260,17 @@ seasonal_barplot.swmpr <- function(swmpr_in
 
     }
 
+
+    # facet wrap if specified
+    if(season_facet) {
+
+      # return(dat_hist)
+
+      bar_seas <-
+        bar_seas +
+        facet_wrap(~'season', ncol = 1)
+
+    }
 
 
     return(bar_seas)
