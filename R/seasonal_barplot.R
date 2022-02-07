@@ -126,7 +126,7 @@ seasonal_barplot.swmpr <- function(swmpr_in
     }
   }
 
-  #determine that variable name exists
+  #determine that variable name exists ----
   if(!(param %in% c('totprcp', 'totpar')))
     stop('Param argument must be precipitation (totprcp) or PAR (totpar)')
 
@@ -138,13 +138,13 @@ seasonal_barplot.swmpr <- function(swmpr_in
   if(attr(dat, 'qaqc_cols'))
     stop('QAQC columns present. QAQC must be performed before analysis.')
 
-  ##historic range
+  ## Clip data to historic range ----
   dat_hist <- dat %>% dplyr::filter(lubridate::year(.data$datetimestamp) >= rng[[1]]
                                     & lubridate::year(.data$datetimestamp) <= rng[[2]])
 
   dat_hist$year <- factor(lubridate::year(dat_hist$datetimestamp))
 
-  # Assign the seasons and order them
+  # Assign the seasons and order them ----
   dat_hist$season <- assign_season(dat_hist$datetimestamp, ...)
 
   # assign colors to a color ramp (may need interpolation)
@@ -161,6 +161,7 @@ seasonal_barplot.swmpr <- function(swmpr_in
     dplyr::summarise(result = na_flag*sum(!! parm, na.rm = TRUE), .groups = "drop") %>%
     unique()
 
+  # Plotting section start ----
   if(plot){
     seas_col <- cols
     x_range <- range(as.numeric(as.character(dat_hist$year)))
@@ -168,6 +169,10 @@ seasonal_barplot.swmpr <- function(swmpr_in
       diff(x_range) > 20  ~ 4,
       diff(x_range) > 10  ~ 2,
       TRUE            ~ 1)
+    # x_range <- hist_rng
+    # x_brks <- set_date_breaks(x_range)
+    # x_minor_brks <- set_date_breaks_minor(rng)
+    # x_lab_brks <- set_date_break_labs(rng)
 
     if(season_facet) {
       yr_mx <- dat_hist %>% group_by(!! yr, !! seas) %>%
@@ -188,8 +193,8 @@ seasonal_barplot.swmpr <- function(swmpr_in
       scale_y_continuous(expand = c(0, 0), limits = c(0, mx), breaks = seq(0 , mx, brk_pts)) +
       scale_x_discrete(breaks = seq(from = x_range[1], to = x_range[2],
                                       by = tick_interval)) +
-      # scale_x_datetime(date_breaks = x_range, date_labels = lab_x_range,
-      #                  date_minor_breaks = minor_x_range) +
+      # scale_x_datetime(date_breaks = x_brks, date_labels = x_lab_brks,
+      #                  date_minor_breaks = x_minor_brks) +
       scale_fill_manual(values = seas_col) +
       labs(x = NULL, y = eval(y_label))
 
@@ -243,7 +248,7 @@ seasonal_barplot.swmpr <- function(swmpr_in
         # return(dat_hist)
         bar_seas <- bar_seas +
           geom_hline(aes(yintercept = dat_hist$mean, linetype = factor(lab_parm))
-                     , color = '#767171', lwd = 1.5, show.legend = TRUE) +
+                     , color = '#767171', lwd = 1.0, show.legend = TRUE) +
           scale_linetype_manual(values = 'solid')
 
       } else {
@@ -268,7 +273,7 @@ seasonal_barplot.swmpr <- function(swmpr_in
 
       bar_seas <-
         bar_seas +
-        facet_wrap(~'season', ncol = 1)
+        facet_wrap(seas, ncol = 1)
 
     }
 

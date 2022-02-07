@@ -1,4 +1,4 @@
-### SwmprExtenstion 2.1.0.1
+### SwmprExtenstion 2.1.0.2
 * Fix overlapping label issues in seasonal_barplot.R
 * Change most `.groups = "drop_last"` commands to `.groups = drop` commands.  Those were required by `dplyr::summarize` changes referred to in version 1.1.6.  In most cases in this package, all groupings could be dropped.
 * Dropped groups before using `complete` as recommended in [SWMPrExtension issue #54](https://github.com/NOAA-OCM/SWMPrExtension/pull/54).
