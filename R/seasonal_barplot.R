@@ -158,7 +158,7 @@ seasonal_barplot.swmpr <- function(swmpr_in
     # dplyr::summarise(result = sum(!! parm, na.rm = TRUE), .groups = "drop_last")
     #dplyr::summarise(result = sum(!! parm, na.rm = TRUE), .groups = "drop_last") %>%
     dplyr::mutate(na_flag = ifelse(all(is.na(!! parm)), NA, 1)) %>%
-    dplyr::summarise(result = na_flag*sum(!! parm, na.rm = TRUE), .groups = "drop") %>%
+    dplyr::summarise(result = .data$na_flag * sum(!! parm, na.rm = TRUE), .groups = "drop") %>%
     unique()
 
   # Plotting section start ----
@@ -177,7 +177,7 @@ seasonal_barplot.swmpr <- function(swmpr_in
     if(season_facet) {
       yr_mx <- dat_hist %>% group_by(!! yr, !! seas) %>%
         mutate(na_flag = ifelse(all(is.na(!! res)), NA, 1)) %>%
-        summarise(max_val = na_flag* sum(!! res, na.rm = TRUE), .groups = "drop_last")
+        summarise(max_val = .data$na_flag* sum(!! res, na.rm = TRUE), .groups = "drop_last")
     } else {
       yr_mx <- dat_hist %>% group_by(!! yr) %>%
         summarise(max_val = sum(!! res, na.rm = TRUE), .groups = "drop")
