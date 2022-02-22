@@ -126,7 +126,7 @@ seasonal_barplot.swmpr <- function(swmpr_in
     }
   }
 
-  #determine that variable name exists
+  #determine that variable name exists ----
   if(!(param %in% c('totprcp', 'totpar')))
     stop('Param argument must be precipitation (totprcp) or PAR (totpar)')
 
@@ -138,13 +138,13 @@ seasonal_barplot.swmpr <- function(swmpr_in
   if(attr(dat, 'qaqc_cols'))
     stop('QAQC columns present. QAQC must be performed before analysis.')
 
-  ##historic range
+  ## Clip data to historic range ----
   dat_hist <- dat %>% dplyr::filter(lubridate::year(.data$datetimestamp) >= rng[[1]]
                                     & lubridate::year(.data$datetimestamp) <= rng[[2]])
 
   dat_hist$year <- factor(lubridate::year(dat_hist$datetimestamp))
 
-  # Assign the seasons and order them
+  # Assign the seasons and order them ----
   dat_hist$season <- assign_season(dat_hist$datetimestamp, ...)
 
   # assign colors to a color ramp (may need interpolation)
@@ -154,31 +154,51 @@ seasonal_barplot.swmpr <- function(swmpr_in
 
   dat_hist <- dat_hist %>%
     dplyr::group_by(!! yr, !! seas) %>%
-    dplyr::summarise(result = sum(!! parm, na.rm = TRUE), .groups = "drop_last")
+    # dplyr::filter(!all(is.na(!! parm))) %>%
+    # dplyr::summarise(result = sum(!! parm, na.rm = TRUE), .groups = "drop_last")
+    #dplyr::summarise(result = sum(!! parm, na.rm = TRUE), .groups = "drop_last") %>%
+    dplyr::mutate(na_flag = ifelse(all(is.na(!! parm)), NA, 1)) %>%
+    dplyr::summarise(result = .data$na_flag * sum(!! parm, na.rm = TRUE), .groups = "drop") %>%
+    unique()
 
+  # Plotting section start ----
   if(plot){
     seas_col <- cols
+    x_range <- range(as.numeric(as.character(dat_hist$year)))
+    tick_interval <- case_when(
+      diff(x_range) > 20  ~ 4,
+      diff(x_range) > 10  ~ 2,
+      TRUE            ~ 1)
+    # x_range <- hist_rng
+    # x_brks <- set_date_breaks(x_range)
+    # x_minor_brks <- set_date_breaks_minor(rng)
+    # x_lab_brks <- set_date_break_labs(rng)
 
     if(season_facet) {
       yr_mx <- dat_hist %>% group_by(!! yr, !! seas) %>%
-        summarise(max_val = sum(!! res, na.rm = TRUE), .groups = "drop_last")
+        mutate(na_flag = ifelse(all(is.na(!! res)), NA, 1)) %>%
+        summarise(max_val = .data$na_flag* sum(!! res, na.rm = TRUE), .groups = "drop_last")
     } else {
       yr_mx <- dat_hist %>% group_by(!! yr) %>%
-        summarise(max_val = sum(!! res, na.rm = TRUE), .groups = "drop_last")
+        summarise(max_val = sum(!! res, na.rm = TRUE), .groups = "drop")
     }
 
-    mx <- ceiling(max(yr_mx$max_val) / 10) * 10 * 1.1
+    mx <- ceiling(max(yr_mx$max_val * 1.1, na.rm = TRUE) / 10) * 10
     brk_pts <- ifelse(mx < 50, 5, ifelse(mx < 100, 10, ifelse(mx < 1000, 100, ifelse(mx < 1000000, 200, 1000000))))
 
     # return(mx)
-    # Add data
+    # Add data to plot -----
     bar_seas <- ggplot(data = dat_hist, aes_(x = yr, y = res, fill = seas)) +
       geom_bar(stat = "identity", position = bar_position) +
       scale_y_continuous(expand = c(0, 0), limits = c(0, mx), breaks = seq(0 , mx, brk_pts)) +
+      scale_x_discrete(breaks = seq(from = x_range[1], to = x_range[2],
+                                      by = tick_interval)) +
+      # scale_x_datetime(date_breaks = x_brks, date_labels = x_lab_brks,
+      #                  date_minor_breaks = x_minor_brks) +
       scale_fill_manual(values = seas_col) +
       labs(x = NULL, y = eval(y_label))
 
-    # Add themes
+    # Add themes ----
     bar_seas <- bar_seas +
       theme_bw() +
       guides(fill = guide_legend(override.aes = list(linetype = 'blank'), order = 1)) +
@@ -189,7 +209,7 @@ seasonal_barplot.swmpr <- function(swmpr_in
       theme(axis.title.x = element_text(margin = unit(c(8, 0, 0, 0), 'pt'))
             , axis.title.y = element_text(margin = unit(c(0, 8, 0, 0), 'pt'), angle = 90))
 
-    # Formatting text
+    # Formatting text ----
     ## conditional based on parameter
     sz <- ifelse(param == 'totpar', 12, 16)
     bar_seas <- bar_seas +
@@ -202,7 +222,7 @@ seasonal_barplot.swmpr <- function(swmpr_in
             , legend.text.align = 0.5) +
       theme(legend.spacing.x = unit(3, 'pt'))
 
-    # add plot title if specified
+    # add plot title if specified ----
     if(plot_title) {
       ttl <- title_labeler(nerr_site_id = station)
 
@@ -212,33 +232,23 @@ seasonal_barplot.swmpr <- function(swmpr_in
         theme(plot.title = element_text(hjust = 0.5))
     }
 
-    # facet wrap if specified
-    if(season_facet) {
-
-      # return(dat_hist)
-
-      bar_seas <-
-        bar_seas +
-        facet_wrap('season', ncol = 1)
-
-      seas_means <- dat_hist %>%
-        group_by(.data$season) %>%
-        summarise(mean = mean(.data$result, na.rm = TRUE))
-
-      dat_hist <- merge(dat_hist, seas_means)
-    }
-
-    # historical range average if specified
+    # historical range average if specified ----
     if(hist_avg) {
       var_nm <- ifelse(season_facet, 'Seasonal Average', 'Average')
 
       lab_parm <- paste(var_nm, ' (', rng[[1]], '-', rng[[2]], ')', sep = '')
 
       if(season_facet) {
+        seas_means <- dat_hist %>%
+          group_by(.data$season) %>%
+          summarise(mean = mean(.data$result, na.rm = TRUE), .groups = "drop")
+
+        dat_hist <- merge(dat_hist, seas_means)
+
         # return(dat_hist)
         bar_seas <- bar_seas +
           geom_hline(aes(yintercept = dat_hist$mean, linetype = factor(lab_parm))
-                     , color = '#767171', lwd = 1.5, show.legend = TRUE) +
+                     , color = '#767171', lwd = 1.0, show.legend = TRUE) +
           scale_linetype_manual(values = 'solid')
 
       } else {
@@ -255,6 +265,17 @@ seasonal_barplot.swmpr <- function(swmpr_in
 
     }
 
+
+    # facet wrap if specified ----
+    if(season_facet) {
+
+      # return(dat_hist)
+
+      bar_seas <-
+        bar_seas +
+        facet_wrap(seas, ncol = 1)
+
+    }
 
 
     return(bar_seas)

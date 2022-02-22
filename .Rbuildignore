@@ -13,3 +13,4 @@
 ^cran-comments\.html$
 ^\.Rhistory$
 ^CRAN-RELEASE$
+^data/job_met.rds$

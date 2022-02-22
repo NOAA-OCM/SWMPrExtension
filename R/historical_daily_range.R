@@ -154,7 +154,7 @@ historical_daily_range.swmpr <- function(swmpr_in
     dplyr::summarise(mean = mean(!! parm, na.rm = TRUE)
                      , min = min(!! parm, na.rm = TRUE)
                      , max = max(!! parm, na.rm = TRUE)
-                     , .groups = "drop_last")
+                     , .groups = "drop")
 
   dat_all$julian_day <- lubridate::yday(dat_all$date)
 
@@ -169,14 +169,14 @@ historical_daily_range.swmpr <- function(swmpr_in
     dplyr::summarise(mean = mean(!! avg, na.rm = TRUE)
                      , min = mean(!!  mini, na.rm = TRUE)
                      , max = mean(!! maxi, na.rm = TRUE)
-                     , .groups = "drop_last")
+                     , .groups = "drop")
 
   dat_hist_obs <- dat_all %>%
     dplyr::group_by(!! jd) %>%
     dplyr::summarise(mean = mean(!! avg, na.rm = TRUE)
                      , min = min(!!  mini, na.rm = TRUE)
                      , max = max(!! maxi, na.rm = TRUE)
-                     , .groups = "drop_last")
+                     , .groups = "drop")
 
   # account for missing julian days
   if(length(dat_yr[1, ] < 365)){

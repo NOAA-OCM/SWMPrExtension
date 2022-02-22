@@ -95,7 +95,7 @@ sk_seasonal.swmpr <- function(swmpr_in
   # calc seasonal values
   sk_data <- dat %>%
     group_by(!! yr, !! seas) %>%
-    summarise(result = FUN(!! parm), .groups = "drop_last")
+    summarise(result = FUN(!! parm), .groups = "drop")
 
   data_check <- sk_data %>% group_by(!! seas) %>% summarise(count = n())
 

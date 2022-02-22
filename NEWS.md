@@ -1,3 +1,8 @@
+### SwmprExtenstion 2.1.0.2
+* Fix overlapping label issues in seasonal_barplot.R
+* Change most `.groups = "drop_last"` commands to `.groups = drop` commands.  Those were required by `dplyr::summarize` changes referred to in version 1.1.6.  In most cases in this package, all groupings could be dropped.
+* Dropped groups before using `complete` as recommended in [SWMPrExtension issue #54](https://github.com/NOAA-OCM/SWMPrExtension/pull/54).
+
 ### SWMPrExtension 2.1.0
 * Removed tmap, tmaptools, and OpenStreetMap due to issues with required package {rJava}.
 * Adding ggmap for background raster map as a suggested package., but with optional vector map if ggmap not installed
