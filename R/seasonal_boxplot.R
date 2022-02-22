@@ -176,7 +176,7 @@ seasonal_boxplot.swmpr <- function(swmpr_in
   # Calc summary stat defined by FUN by season and day
   dat_hist <- dat_hist %>%
     group_by(!! seas, !! dt) %>%
-    summarise(result = FUN(!! parm), .groups = "drop_last")
+    summarise(result = FUN(!! parm), .groups = "drop")
 
   # ensure all factor levels are accounted for, even if there is no data
   dat_hist <- tidyr::complete(dat_hist, !! seas)
@@ -226,9 +226,10 @@ seasonal_boxplot.swmpr <- function(swmpr_in
 
       dat_yr <- dat_yr %>%
         dplyr::group_by(!! seas, !! dt) %>%
-        dplyr::summarise(result = FUN(!! parm), .groups = "drop_last") %>%
+        dplyr::summarise(result = FUN(!! parm), .groups = "drop") %>%
         dplyr::group_by(!! seas) %>%
-        dplyr::summarise(med = stats::median(.data$result, na.rm = TRUE))
+        dplyr::summarise(med = stats::median(.data$result, na.rm = TRUE),
+                         .groups = "drop")
 
       pt_fill <- ifelse(data_type == 'nut', paste('Monthly Sample \n(', target_yr, ')', sep = '')
                         , paste('Median Daily ', stat_lab, ' \n(', target_yr, ')', sep = ''))

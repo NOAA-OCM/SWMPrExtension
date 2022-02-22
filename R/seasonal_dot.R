@@ -155,7 +155,7 @@ seasonal_dot.swmpr <- function(swmpr_in
     summarise(min = min(!! parm, na.rm = TRUE)
               , mean = mean(!! parm, na.rm = TRUE)
               , max = max(!! parm, na.rm = TRUE)
-              , .groups = "drop_last")
+              , .groups = "drop")
 
   # ensure all factor levels are accounted for, even if there is no data
   plt_data <- tidyr::complete(plt_data, !! seas)
