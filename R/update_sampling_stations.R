@@ -30,12 +30,6 @@
 #' print(x)
 #'
 #'
-#' # Commented out example with a valid, but older, filename.
-#' # WARNING! Don't actually run this example unless you have a
-#' # more recent csv file that can be used to update the rda file.
-#' # x <- update_sampling_stations("inst/extdata","NERRS_sampling_stations.csv")
-#' # print(x)
-#'
 
 update_sampling_stations <- function(file_path = "inst/extdata",
                                      file_name = "sampling_stations.csv") {
