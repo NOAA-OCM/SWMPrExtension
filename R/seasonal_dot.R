@@ -171,7 +171,7 @@ seasonal_dot.swmpr <- function(swmpr_in
 
     labs_legend <- factor(paste0(agg_lab, c('Minimum', 'Average', 'Maximum'), sep = ''))
 
-    brks <- range(plt_data$year)
+    brks <- range(plt_data$year, na.rm = TRUE)
     tick_interval <- case_when(
       diff(brks) > 20  ~ 4,
       diff(brks) > 10  ~ 2,

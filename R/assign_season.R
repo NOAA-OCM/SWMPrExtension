@@ -88,7 +88,7 @@ assign_season <- function(data
     if(is.null(season_grps)) {stop('Season names assigned with no seasons')}
     if (length(season_names) != length(unique(season_names))) {stop('Season names are not unique. Assign unique season names.')}
     if (length(season_names) != length(season_grps)) {stop('List of seasons not equal to season names. Assign an equal number of seasons and season names')}
-    if(abb) {warning('abb = TRUE irrelevant for user-defined seasons and season names.')}
+    # if(abb) {warning('abb = TRUE irrelevant for user-defined seasons and season names.')}
   }
 
   #If season_start != NULL, check that the season_start is either a month name or a season name
