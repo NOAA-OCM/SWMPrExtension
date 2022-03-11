@@ -4,10 +4,7 @@
 \alias{update_sampling_stations}
 \title{Update reserve sampling stations}
 \usage{
-update_sampling_stations(
-  file_path = "inst/extdata",
-  file_name = "sampling_stations.csv"
-)
+update_sampling_stations(file_path, file_name = "sampling_stations.csv")
 }
 \arguments{
 \item{file_path}{path to directory with new file}

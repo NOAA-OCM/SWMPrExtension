@@ -1,5 +1,6 @@
-### SwmprExtension 2.1.1.1
-* Fix empty season failure in seasonal_dot.R
+### SwmprExtension 2.1.1.2
+* Fix empty season failure in seasonal_dot.R.
+* Change res_sk_map icons to custom png symbols.
 
 ### SwmprExtension 2.1.1
 * Fix overlapping label issues in seasonal_barplot.R

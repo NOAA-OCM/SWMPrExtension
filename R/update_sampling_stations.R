@@ -31,7 +31,7 @@
 #'
 #'
 
-update_sampling_stations <- function(file_path = "inst/extdata",
+update_sampling_stations <- function(file_path,
                                      file_name = "sampling_stations.csv") {
 
 

@@ -58,7 +58,7 @@
 #'
 #' @examples
 #' ### set plotting parameters
-#' stns <- c('custom stn 1', 'custom stn 2')
+#' stns <- c('Stn 1', 'Stn 2')
 #' x_coords <- c(-121.735281, -121.750369)
 #' y_coords <- c(36.850377, 36.806667)
 #' shp_fl <- elk_spatial
@@ -108,7 +108,7 @@ res_custom_sk_map <- function(stations
                               , maptype = "toner-lite") {
 
   # define local variables  to remove `check()` warnings
-  abbrev <- lab_long <- lab_lat <- NULL
+  abbrev <- lab_long <- lab_lat  <- Longitude <- Latitude <- NULL
 
   # check that a shape file exists
   if(class(shp) != 'SpatialPolygons') {
@@ -172,25 +172,15 @@ res_custom_sk_map <- function(stations
 
   # These are the codes for the fill color, size and shape legends.
   break_vals <- c("inc", "dec", "insig", "insuff")
-  fill_colors <-  c('#444E65', '#A3DFFF', '#247BA0', '#0a0a0a')
-  res_point_size <-   c(6, 6, 6, 9)
-  res_point_shape <-  c(24, 25, 21, 13)
+  res_png_shape <-  c(system.file("extdata", "up_arrow.png", package="SWMPrExtension"),
+                      system.file("extdata", "down_arrow.png", package="SWMPrExtension"),
+                      system.file("extdata", "dash.png", package="SWMPrExtension"),
+                      system.file("extdata", "ex_square.png", package="SWMPrExtension"))
 
-  master_key <- as.data.frame(cbind(break_vals, fill_colors, res_point_size, res_point_shape))
+  master_key <- as.data.frame(cbind(break_vals, res_png_shape))
+  loc_keys <- merge(loc, master_key, by.x = "sk_result", by.y = "break_vals")
 
-  needed_keys <- left_join(loc, master_key, by = c("sk_result" = "break_vals"))
-
-  use_shape <- unique(as.integer(needed_keys$res_point_shape))
-  use_color <- unique(needed_keys$fill_color)
-  # use_size  <- unique(needed_keys$res_point_size)
-
-  # Set background map zoom level automatically if not specified
-  # if(is.null(zoom)) {
-  #   diag_size <- sqrt((xmax-xmin)^2 +(ymax-ymin)^2)
-  #   zoom <- 14 - ceiling(sqrt(10*diag_size))
-  #   print(paste("Zoom level calculated as", zoom, sep = " "))
-  # }
-  print(paste("maptype is ",maptype))
+   print(paste("maptype is ",maptype))
 
   if(is.null(bg_map)) {
     bg_map <- base_map(bbox, crs = st_crs(shp),
@@ -202,22 +192,14 @@ res_custom_sk_map <- function(stations
     geom_sf(data = shp, aes(), inherit.aes = FALSE,
             fill = "yellow", col = '#B3B300', alpha = 0.3) +
     ggthemes::theme_map() +
-    #    geom_sf_text(data = loc_sf, aes(), inherit.aes = FALSE) +
-    geom_sf(data = loc_sf, inherit.aes = FALSE,
-            aes(color = .data$sk_result,
-                fill = .data$sk_result,
-                shape = .data$sk_result,
-                size = .data$sk_result),
-            stroke = 2,
-            show.legend = FALSE) +
-    scale_color_manual(values = fill_colors, breaks = break_vals) +
-    scale_fill_manual(values = fill_colors, breaks = break_vals) +
-    scale_size_manual(values = res_point_size, breaks = break_vals) +
-    scale_shape_manual(values = res_point_shape, breaks = break_vals)
+    geom_image(data = loc_keys,
+               aes(x = Longitude, y = Latitude,
+                   image = res_png_shape),
+               size = 0.045)
 
   if(station_labs) {
     # Define lat/long for labels, based on stations, alignment, and bbox
-    loc$lab_long <- loc$Longitude + 0.045* loc$align * (bbox[3] - bbox[1])
+    loc$lab_long <- loc$Longitude + 0.06 * loc$align * (bbox[3] - bbox[1])
     loc$lab_lat <- loc$Latitude + 0.015 * (bbox[4] - bbox[2])
 
     # convert Labels info to sf object, use lat/lon, WGS84 projection, EPSG:4326.
