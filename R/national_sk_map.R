@@ -186,7 +186,7 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   if(nrow(main_pts) > 0){
     mainland <- mainland +
     geom_image(data = main_pts,
-               aes(x = X, y = Y, image = res_png_shape),
+               aes(x = X, y = Y, by = "height", image = res_png_shape),
                size = 0.04)
   }
 
@@ -198,8 +198,9 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   if(nrow(ak_pts) > 0){
     alaska <- alaska  +
     geom_image(data = ak_pts,
-               aes(x = X, y = Y, image = res_png_shape),
-               size = 0.04/(((ak_bb[4] - ak_bb[3])/2.0)/(main_bb[4] - main_bb[3]))) #0.14)
+               aes(x = X, y = Y, image = res_png_shape), by = "height",
+               size = 1.7*0.04/(((ak_bb[4] - ak_bb[3])/2.0)/
+                                  (main_bb[4] - main_bb[3]))) #0.14)
   }
 
   hi_bb <- c(xmin = -161, xmax = -154, ymin = 18, ymax = 23)
@@ -210,8 +211,9 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   if(nrow(hi_pts) > 0){
     hawaii <- hawaii +
       geom_image(data = hi_pts,
-                 aes(x = X, y = Y, image = res_png_shape),
-                 size = 0.04/(((hi_bb[4] - hi_bb[3])*135000)/(main_bb[4] - main_bb[3])) )# 0.25)
+                 aes(x = X, y = Y, image = res_png_shape), by = "height",
+                 size = 2.1*0.04/(((hi_bb[4] - hi_bb[3])*135000)/
+                                    (main_bb[4] - main_bb[3])) )# 0.25)
   }
 
   pr_bb <- c(xmin = 12000, xmax = 350000, ymin = 160000, ymax = 320000)
@@ -222,8 +224,9 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   if(nrow(pr_pts) > 0){
     pr <- pr +
     geom_image(data = pr_pts,
-               aes(x = X, y = Y, image = res_png_shape),
-               size = 0.04/(((pr_bb[4] - pr_bb[3])*3)/(main_bb[4] - main_bb[3])))#0.3)
+               aes(x = X, y = Y, image = res_png_shape), by = "height",
+               size = 1.7*0.04/(((pr_bb[4] - pr_bb[3])*3)/
+                              (main_bb[4] - main_bb[3])))#0.3)
   }
 
   # Now combine the smaller maps, as grobs, with annotation_custom into final object "gg"
