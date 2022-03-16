@@ -178,10 +178,25 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
     return(loc_trans)
   }
 
+  # Define projections and AOI for main map and insets ---
+  #
   main_bb <- c(xmin = -2500000, xmax = 2500000,  ymin = -2300000, ymax = 730000)
-  main_pts <- loc_subsample(loc_keys, main_bb, 2163)
+  main_crs <- 2163
+
+  ak_bb <- c(xmin = -2400000, xmax = 1600000, ymin = 200000, ymax = 2500000)
+  ak_crs <- 3467
+
+  hi_bb <- c(xmin = -161, xmax = -154, ymin = 18, ymax = 23)
+  hi_crs <- 4135
+
+  pr_bb <- c(xmin = 12000, xmax = 350000, ymin = 160000, ymax = 320000)
+  pr_crs <- 4437
+
+  # Create maps ----
+  #
+  main_pts <- loc_subsample(loc_keys, main_bb, main_crs)
   mainland <- us_base +
-    coord_sf(crs = sf::st_crs(2163), xlim = main_bb[1:2],
+    coord_sf(crs = sf::st_crs(main_crs), xlim = main_bb[1:2],
              ylim = main_bb[3:4])
   if(nrow(main_pts) > 0){
     mainland <- mainland +
@@ -190,10 +205,9 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
                size = 0.04)
   }
 
-  ak_bb <- c(xmin = -2400000, xmax = 1600000, ymin = 200000, ymax = 2500000)
-  ak_pts <- loc_subsample(loc_keys, ak_bb, 3467)
+  ak_pts <- loc_subsample(loc_keys, ak_bb, ak_crs)
   alaska <- us_base +
-    coord_sf(crs = sf::st_crs(3467), xlim = ak_bb[1:2],
+    coord_sf(crs = sf::st_crs(ak_crs), xlim = ak_bb[1:2],
              ylim = ak_bb[3:4], expand = FALSE, datum = NA)
   if(nrow(ak_pts) > 0){
     alaska <- alaska  +
@@ -204,9 +218,9 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   }
 
   hi_bb <- c(xmin = -161, xmax = -154, ymin = 18, ymax = 23)
-  hi_pts <- loc_subsample(loc_keys, hi_bb, 4135)
+  hi_pts <- loc_subsample(loc_keys, hi_bb, hi_crs)
   hawaii  <- us_base +
-    coord_sf(crs = sf::st_crs(4135), xlim = hi_bb[1:2],
+    coord_sf(crs = sf::st_crs(hi_crs), xlim = hi_bb[1:2],
              ylim = hi_bb[3:4], expand = FALSE, datum = NA)
   if(nrow(hi_pts) > 0){
     hawaii <- hawaii +
@@ -216,10 +230,9 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
                                     (main_bb[4] - main_bb[3])) )# 0.25)
   }
 
-  pr_bb <- c(xmin = 12000, xmax = 350000, ymin = 160000, ymax = 320000)
-  pr_pts <- loc_subsample(loc_keys, pr_bb, 4437)
+  pr_pts <- loc_subsample(loc_keys, pr_bb, pr_crs)
   pr <- us_base +
-    coord_sf(crs = sf::st_crs(4437),xlim = pr_bb[1:2],
+    coord_sf(crs = sf::st_crs(pr_crs),xlim = pr_bb[1:2],
              ylim = pr_bb[3:4], expand = FALSE, datum = NA)
   if(nrow(pr_pts) > 0){
     pr <- pr +
