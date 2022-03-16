@@ -73,8 +73,8 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   if(length(sk_reserves) != length(sk_results))
     stop('A seasonal kendall result is required for each reserve in sk_reserve')
 
-  # # ==========================================================================
-  # Get Census geometry
+  # Get Census geometry =======================================================
+  #
   #  get_US_county_shape <- function() {
   #   shape <- "cb_2018_us_county_20m"
   #   # shape <- "cb_2018_us_state_20m"
@@ -96,9 +96,8 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
   #   dplyr::summarise(area = sum(.data$area))
   # save(us_4269, file = "data/us_4269.rda")
   #
-# # ==========================================================================
 
-  # read in saved US Census geometry {sf} object
+  # read in saved US Census geometry {sf} object ----
   if(agg_county) {
     usa <- get('us_4269')
   } else {
@@ -165,23 +164,57 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
 
 
   # Create sub-maps ----
-  # Clip master map using coord_sf() and plot sk values.  Prior to plotting
-  #  the SK values, crop them to the sub-map bounding box.
-  loc_subsample <- function(loc, box, crs) {
-    # Reproject location sf object
-    loc_trans <- sf::st_transform(loc, crs)
-    # Crop reproject locs to bbox
-    loc_trans <- sf::st_crop(loc_trans, box)
-    # Add projected X and Y coordinates
-    loc_trans <- cbind(loc_trans, sf::st_coordinates(loc_trans))
-    # Return new locs
-    return(loc_trans)
-  }
 
-  main_bb <- c(xmin = -2500000, xmax = 2500000,  ymin = -2300000, ymax = 730000)
-  main_pts <- loc_subsample(loc_keys, main_bb, 2163)
+  # Define projections and AOI for main map and insets ----
+  #
+  # US Lambert Azimuthal EA main
+  # main_bb <- c(xmin = -2500000, xmax = 2500000,  ymin = -2300000, ymax = 730000)
+  # main_crs <- 2163
+  # ak_bb <- c(xmin = -2400000, xmax = 1600000, ymin = 200000, ymax = 2500000)
+  # ak_crs <- 3467
+  # hi_bb <- c(xmin = -161, xmax = -154, ymin = 18, ymax = 23)
+  # hi_crs <- 4135
+  # pr_bb <- c(xmin = 12000, xmax = 350000, ymin = 160000, ymax = 320000)
+  # pr_crs <- 4437
+  #
+  # In UTM
+  main_bb <- c(xmin = -2160000, xmax = 3100000,  ymin = 2500000, ymax = 5800000)
+  main_crs <- 26914 # UTM 14N HARN
+  ak_bb <- c(xmin = -1800000, xmax = 2100000, ymin = 5900000, ymax = 8800000)
+  ak_crs <- 26905 # UTM 5 N
+  hi_bb <- c(xmin = 284000, xmax = 1030000, ymin = 2070000, ymax = 2510000)
+  hi_crs <- 26904 # UTM 4 N
+  # pr_bb <- c(xmin = -50000, xmax = 280000, ymin = 1970000, ymax = 2070000)
+  pr_bb <- c(xmin = -50000, xmax = 280000, ymin = 1900000, ymax = 2140000)
+  pr_crs <- 26920 # UTM 20 N
+
+  # Calculate inset scale factors and dimensions ----
+  #
+  # Calculation of the grob dimensions for annotate_custom() are based on the
+  # ratio of the main image height (in projected units) to the inset image
+  # height (also projected units).  Therefore the following specify the
+  # vertical scaling between the different maps.  Horizontal dimensions are
+  # calculated to maintain the initial aspect ratio fo the projected maps.
+
+  ak_scale <- 0.38
+  hi_scale <- 0.225
+  pr_scale <- 0.25
+
+  ydim_main <- main_bb[4] - main_bb[3]
+  xdim_main <- main_bb[2] - main_bb[1]
+
+  ydim_ak_inset <- ak_scale * ydim_main
+  xdim_ak_inset <- ydim_ak_inset * (ak_bb[2] - ak_bb[1])/(ak_bb[4] - ak_bb[3])
+  ydim_hi_inset <- hi_scale * ydim_main
+  xdim_hi_inset <- ydim_hi_inset * (hi_bb[2] - hi_bb[1])/(hi_bb[4] - hi_bb[3])
+  ydim_pr_inset <- pr_scale * ydim_main
+  xdim_pr_inset <- ydim_pr_inset * (pr_bb[2] - pr_bb[1])/(pr_bb[4] - pr_bb[3])
+
+  # Create maps ----
+  #
+  main_pts <- loc_subsample(loc_keys, main_bb, main_crs)
   mainland <- us_base +
-    coord_sf(crs = sf::st_crs(2163), xlim = main_bb[1:2],
+    coord_sf(crs = sf::st_crs(main_crs), xlim = main_bb[1:2],
              ylim = main_bb[3:4])
   if(nrow(main_pts) > 0){
     mainland <- mainland +
@@ -190,56 +223,72 @@ national_sk_map <- function(incl = c('contig', 'AK', 'HI', 'PR')
                size = 0.04)
   }
 
-  ak_bb <- c(xmin = -2400000, xmax = 1600000, ymin = 200000, ymax = 2500000)
-  ak_pts <- loc_subsample(loc_keys, ak_bb, 3467)
+  ak_pts <- loc_subsample(loc_keys, ak_bb, ak_crs)
   alaska <- us_base +
-    coord_sf(crs = sf::st_crs(3467), xlim = ak_bb[1:2],
+    coord_sf(crs = sf::st_crs(ak_crs), xlim = ak_bb[1:2],
              ylim = ak_bb[3:4], expand = FALSE, datum = NA)
   if(nrow(ak_pts) > 0){
     alaska <- alaska  +
     geom_image(data = ak_pts,
                aes(x = X, y = Y, image = res_png_shape), by = "height",
-               size = 1.7*0.04/(((ak_bb[4] - ak_bb[3])/2.0)/
-                                  (main_bb[4] - main_bb[3]))) #0.14)
-  }
+               size = 0.4 * (1- ak_scale)) #0.14)
+}
 
-  hi_bb <- c(xmin = -161, xmax = -154, ymin = 18, ymax = 23)
-  hi_pts <- loc_subsample(loc_keys, hi_bb, 4135)
+  hi_pts <- loc_subsample(loc_keys, hi_bb, hi_crs)
   hawaii  <- us_base +
-    coord_sf(crs = sf::st_crs(4135), xlim = hi_bb[1:2],
+    coord_sf(crs = sf::st_crs(hi_crs), xlim = hi_bb[1:2],
              ylim = hi_bb[3:4], expand = FALSE, datum = NA)
   if(nrow(hi_pts) > 0){
     hawaii <- hawaii +
       geom_image(data = hi_pts,
                  aes(x = X, y = Y, image = res_png_shape), by = "height",
-                 size = 2.1*0.04/(((hi_bb[4] - hi_bb[3])*135000)/
-                                    (main_bb[4] - main_bb[3])) )# 0.25)
+                 size = 0.4)#/hi_scale )# 0.25)
   }
 
-  pr_bb <- c(xmin = 12000, xmax = 350000, ymin = 160000, ymax = 320000)
-  pr_pts <- loc_subsample(loc_keys, pr_bb, 4437)
+  pr_pts <- loc_subsample(loc_keys, pr_bb, pr_crs)
   pr <- us_base +
-    coord_sf(crs = sf::st_crs(4437),xlim = pr_bb[1:2],
+    coord_sf(crs = sf::st_crs(pr_crs),xlim = pr_bb[1:2],
              ylim = pr_bb[3:4], expand = FALSE, datum = NA)
   if(nrow(pr_pts) > 0){
     pr <- pr +
     geom_image(data = pr_pts,
                aes(x = X, y = Y, image = res_png_shape), by = "height",
-               size = 1.7*0.04/(((pr_bb[4] - pr_bb[3])*3)/
-                              (main_bb[4] - main_bb[3])))#0.3)
+               size = 0.4)#/pr_scale)#0.3)
   }
 
   # Now combine the smaller maps, as grobs, with annotation_custom into final object "gg"
+  #
+  # First define local coords for grobs ----
+  # Initially start with all along bottom of main. Tweak as needed
+  #
+  ak_inset_x <- main_bb[1]
+  ak_inset_y <- main_bb[3]
+  hi_inset_x <- main_bb[1] + 0.275 * xdim_main
+  hi_inset_y <- main_bb[3]
+  pr_inset_x <- main_bb[1] + 0.575 * xdim_main
+  pr_inset_y <- main_bb[3] - 0.05 * ydim_main
+
   gg <- mainland +
     annotation_custom(grob = ggplotGrob(alaska),
-                      xmin = -2750000, xmax = -2750000 + (1600000 - (-2400000)) / 2.0,
-                      ymin = -2450000, ymax = -2450000 + (2500000 - 200000) / 2.0) +
+                      xmin = ak_inset_x, xmax = ak_inset_x + xdim_ak_inset,
+                      ymin = ak_inset_y, ymax = ak_inset_y + ydim_ak_inset) +
     annotation_custom(grob = ggplotGrob(hawaii),
-                      xmin =  -900000, xmax =  -900000 + (-154 - (-161)) * 135000,
-                      ymin = -2450000, ymax = -2450000 + (23 - 18) * 135000) +
+                      xmin = hi_inset_x, xmax = hi_inset_x + xdim_hi_inset,
+                      ymin = hi_inset_y, ymax = hi_inset_y + ydim_hi_inset) +
     annotation_custom(grob = ggplotGrob(pr),
-                      xmin =   600000, xmax =   600000 + (350000 - 12000) * 3,
-                      ymin = -2390000, ymax = -2390000 + (320000 - 160000) * 3)
+                      xmin = pr_inset_x, xmax = pr_inset_x + xdim_pr_inset,
+                      ymin = pr_inset_y, ymax = pr_inset_y + ydim_pr_inset)
+
+  # old
+  # xmin = -2750000, xmax = -2750000 + (1600000 - (-2400000)) / 2.0,
+  # ymin = -2450000, ymax = -2450000 + (2500000 - 200000) / 2.0) +
+  # annotation_custom(grob = ggplotGrob(hawaii),
+  #                   xmin =  -900000, xmax =  -900000 + (-154 - (-161)) * 135000,
+  #                   ymin = -2450000, ymax = -2450000 + (23 - 18) * 135000) +
+  # annotation_custom(grob = ggplotGrob(pr),
+  #                   xmin =   600000, xmax =   600000 + (350000 - 12000) * 3,
+  #                   ymin = -2390000, ymax = -2390000 + (320000 - 160000) * 3)
+
 
   return(gg)
 }
