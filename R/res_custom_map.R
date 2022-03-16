@@ -54,7 +54,7 @@
 #'
 #' @examples
 #' ### set plotting parameters
-#' stns <- c('custom stn 1', 'custom stn 2')
+#' stns <- c('Stn 1', 'Stn 2')
 #' x_coords <- c(-121.735281, -121.750369)
 #' y_coords <- c(36.850377, 36.806667)
 #' shp_fl <- elk_spatial
@@ -188,7 +188,7 @@ res_custom_map <- function(stations
 
   if(station_labs) {
     # Define lat/long for labels, based on stations, alignment, and bbox
-    loc$lab_long <- loc$Longitude + 0.045* loc$align * (bbox[3] - bbox[1])
+    loc$lab_long <- loc$Longitude + 0.06* loc$align * (bbox[3] - bbox[1])
     loc$lab_lat <- loc$Latitude + 0.015 * (bbox[4] - bbox[2])
 
     # convert Labels info to sf object, use lat/lon, WGS84 projection, EPSG:4326.

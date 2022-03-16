@@ -247,8 +247,9 @@ seasonal_barplot.swmpr <- function(swmpr_in
 
         # return(dat_hist)
         bar_seas <- bar_seas +
-          geom_hline(aes(yintercept = dat_hist$mean, linetype = factor(lab_parm))
-                     , color = '#767171', lwd = 1.0, show.legend = TRUE) +
+          geom_hline(data = dat_hist,
+                     aes(yintercept = mean, linetype = factor(lab_parm)),
+                     color = '#767171', lwd = 1.0, show.legend = TRUE) +
           scale_linetype_manual(values = 'solid')
 
       } else {
@@ -258,7 +259,8 @@ seasonal_barplot.swmpr <- function(swmpr_in
           summarise(avg = mean(sum, na.rm = TRUE))
 
         bar_seas <- bar_seas +
-          geom_hline(aes(yintercept = avg[[1]], linetype = factor(lab_parm))#mean(dat_hist$result), linetype = factor(lab_parm))
+          geom_hline(aes(yintercept = avg[[1]], linetype = factor(lab_parm))
+                     #mean(dat_hist$result), linetype = factor(lab_parm))
                      , color = '#767171', lwd = 1.5, show.legend = TRUE) +
           scale_linetype_manual(values = 'solid')
       }

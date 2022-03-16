@@ -191,14 +191,14 @@ res_local_map <- function(nerr_site_id
             aes(color = .data$abbrev,
                 fill = .data$abbrev),
             shape = 21,
-            size = 3.8,
+            size = 4.,
             show.legend = FALSE) +
     scale_color_manual(values = fill_colors, breaks = break_vals) +
     scale_fill_manual(values = fill_colors, breaks = break_vals)
 
   if(station_labs) {
     # Define lat/long for labels, based on stations, alignment, and bbox
-    loc$lab_long <- loc$Longitude + 0.045* loc$align * (bbox[3] - bbox[1])
+    loc$lab_long <- loc$Longitude + 0.055 * loc$align * (bbox[3] - bbox[1])
     loc$lab_lat <- loc$Latitude + 0.015 * (bbox[4] - bbox[2])
 
     # convert Labels info to sf object, use lat/lon, WGS84 projection, EPSG:4326.

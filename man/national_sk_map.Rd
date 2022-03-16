@@ -38,12 +38,12 @@ Create a base map of the US with options for including AK, HI, and PR. The user 
 To ensure the proper plotting of results, the order of the results vector for \code{sk_results} should match the order of the reserves vector for \code{sk_reserves}.
 }
 \examples{
-##National map highlighting west coast states and NERRS (including AK)
-nerr_states_west <- c('02', '06', '41', '53')
+##National map highlighting west coast and non-CONUS states and NERRS.
+nerr_states_west <- c('02', '06', '41', '53', '72', '15')
 
-nerrs_codes <- c('pdb', 'sos', 'sfb', 'elk', 'tjr', 'kac')
+nerrs_codes <- c('pdb', 'sos', 'sfb', 'elk', 'tjr', 'kac', 'job', 'hee')
 
-nerrs_sk_results <- c('inc', 'inc', 'dec', 'insig', 'insuff', 'dec')
+nerrs_sk_results <- c('inc', 'inc', 'dec', 'insig', 'insuff', 'dec', 'inc', 'dec')
 
 national_sk_map(highlight_states = nerr_states_west,
                 sk_reserve = nerrs_codes, sk_results = nerrs_sk_results)

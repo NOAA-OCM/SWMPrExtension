@@ -76,7 +76,7 @@ Creates a stylized, reserve-level base map for displaying seasonal
 }
 \examples{
 ### set plotting parameters
-stns <- c('custom stn 1', 'custom stn 2')
+stns <- c('Stn 1', 'Stn 2')
 x_coords <- c(-121.735281, -121.750369)
 y_coords <- c(36.850377, 36.806667)
 shp_fl <- elk_spatial
