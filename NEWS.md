@@ -1,6 +1,6 @@
-### SwmprExtension 2.1.1.3
+### SwmprExtension 2.2.0
 * Fix empty season failure in seasonal_dot.R.
-* Change res_sk_map icons to custom png symbols.
+* Changed all seasonal Kendal test results to plot with custom png icons instead of ggplot characters.
 * Fixed multiple seasonal means being plotted in seasonal_barplot.R
 * Change projection for national_sk_map to a UTM projection to reduce distortion in png icons.
 
