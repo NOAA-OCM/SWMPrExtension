@@ -1,3 +1,6 @@
+### SWMPrExtension 2.2.1
+* Updated SWMP station location with data from CDMO, retrieved 2022-03-18.
+
 ### SwmprExtension 2.2.0
 * Fix empty season failure in seasonal_dot.R.
 * Changed all seasonal Kendal test results to plot with custom png icons instead of ggplot characters.
