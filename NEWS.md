@@ -1,3 +1,7 @@
+### SWMPrExtension 2.2.1.1
+* Fixed bug in threshold_criteria_plot.R that displayed legend title (lab_dat).
+* Reduced text size for Y-axis for most plots from 16 to 14 to display long titles.
+
 ### SWMPrExtension 2.2.1
 * Updated SWMP station location with data from CDMO, retrieved 2022-03-18.
 

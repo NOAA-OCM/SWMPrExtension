@@ -189,7 +189,7 @@ raw_boxplot.swmpr <- function(swmpr_in
     theme(strip.background = element_blank(),
           panel.border = element_rect(color = 'black')) +
     theme(axis.title.y = element_text(margin = unit(c(0, 8, 0, 0), 'pt'), angle = 90)) +
-    theme(text = element_text(size = 16))
+    theme(text = element_text(size = 14)) # was 16
 
   # Adjust legend keys and spacing
   plt <-
