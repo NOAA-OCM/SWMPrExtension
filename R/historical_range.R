@@ -319,7 +319,7 @@ historical_range.swmpr <- function(swmpr_in
       theme(text = element_text(size = 14)) # was 16
 
     # Adjust legend keys and spacing
-    sz <- ifelse(!is.null(criteria), 8, 10)
+    sz <- ifelse(!is.null(criteria), 6, 8)
     plt <-
       plt +
       theme(legend.key.height = unit(0.1, 'cm')

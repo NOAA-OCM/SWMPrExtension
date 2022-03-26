@@ -211,7 +211,7 @@ seasonal_barplot.swmpr <- function(swmpr_in
 
     # Formatting text ----
     ## conditional based on parameter
-    sz <- ifelse(param == 'totpar', 12, 16)
+    sz <- ifelse(param == 'totpar', 11, 13)
     bar_seas <- bar_seas +
       theme(text = element_text(size = sz))
 
