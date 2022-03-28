@@ -1,14 +1,14 @@
 ### SWMPrExtension 2.2.1.1
 * Fixed bug in threshold_criteria_plot.R that displayed legend title (lab_dat).
 * Reduced text size for Y-axis for most plots from 16 to 14 to display long titles.
-* Reduced variable test size for historical_range.R and seasonal_barplot.R
+* Reduced variable text size for historical_range.R and seasonal_barplot.R
 
 ### SWMPrExtension 2.2.1
 * Updated SWMP station location with data from CDMO, retrieved 2022-03-18.
 
 ### SwmprExtension 2.2.0
 * Fix empty season failure in seasonal_dot.R.
-* Changed all seasonal Kendal test results to plot with custom png icons instead of ggplot characters.
+* Changed all seasonal Kendall test results to plot with custom png icons instead of ggplot characters.
 * Fixed multiple seasonal means being plotted in seasonal_barplot.R
 * Change projection for national_sk_map to a UTM projection to reduce distortion in png icons.
 
