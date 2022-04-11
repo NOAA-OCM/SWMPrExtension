@@ -64,7 +64,7 @@ This function uses boxplots to summarize statistics calculated on a daily basis 
 
 Using the \code{FUN} argument, the user can specify the daily summary statistic to use. Commonly used statistics are \code{min(x, na.rm = TRUE)}, \code{mean(x, na.rm = TRUE)}, and \code{max(x, na.rm = TRUE)}. After specifying \code{FUN}, the user should also specify \code{stat_lab}, which is used to construct appropriate legend labels.
 
-The user also has the option to add a threshold hold line using the \code{criteria} argument. Typically, this value is a water quality threshold, which is why \code{criteria_lab} defaults to \code{'WQ Threshold'}. Howver, the user has the option to specify any other type of threshold they wish. when doing so, the value for \code{criteria_lab} should be changed accordingly.
+The user also has the option to add a threshold hold line using the \code{criteria} argument. Typically, this value is a water quality threshold, which is why \code{criteria_lab} defaults to \code{'WQ Threshold'}. However, the user has the option to specify any other type of threshold they wish. when doing so, the value for \code{criteria_lab} should be changed accordingly.
 }
 \examples{
 \dontshow{

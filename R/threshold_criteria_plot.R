@@ -31,7 +31,7 @@
 #'
 #' @references
 #' United States Environmental Protection Agency (USEPA). 2012. "National Coastal Condition Report IV."
-#' http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.646.1973&rep=rep1&type=pdf
+#' https://www.epa.gov/national-aquatic-resource-surveys/national-coastal-condition-report-iv-2012
 #'
 #' @author Julie Padilla
 #'

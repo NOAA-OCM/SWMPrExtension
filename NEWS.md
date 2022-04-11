@@ -1,3 +1,7 @@
+### SWMPrExtension 2.2.2.0
+* Change EPA National Condition Report to landing page instead of PDF download.
+* Checked for CRAN submission
+
 ### SWMPrExtension 2.2.1.1
 * Fixed bug in threshold_criteria_plot.R that displayed legend title (lab_dat).
 * Reduced text size for Y-axis for most plots from 16 to 14 to display long titles.

@@ -15,7 +15,7 @@ load_shp_file(path, dissolve_boundaries = TRUE)
 Returns a \code{\link[sf]{sf}} object
 }
 \description{
-Load and format shapefile for use with res_local_map. If polygons are dissolved, the only attribute returned will be a count of the number of grouped polygons, otherwise, all attrributes are retained.
+Load and format shapefile for use with res_local_map. If polygons are dissolved, the only attribute returned will be a count of the number of grouped polygons, otherwise, all attributes are retained.
 }
 \details{
 This function is intended for internal use with the NERRS reserve level reporting scripts. It loads a NERRS boundary shp file and dissolves unnecessary reserve boundaries. The resulting \code{sf} object is then used with \code{\link{res_sk_map}} and \code{\link{res_local_map}}
