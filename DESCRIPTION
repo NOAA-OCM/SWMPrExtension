@@ -1,8 +1,8 @@
 Package: SWMPrExtension
 Type: Package
 Title: Functions for Analyzing and Plotting Estuary Monitoring Data
-Version: 2.2.2.0
-Maintainer: Dave Eslinger <dave.eslinger@noaa.gov>
+Version: 2.2.3
+Maintainer: Kirk Waters <kirk.waters@noaa.gov>
 Description: Tools for performing routine analysis and plotting tasks with environmental
     data from the System Wide Monitoring Program of the National Estuarine
     Research Reserve System <http://cdmo.baruch.sc.edu/>. This package builds
@@ -57,8 +57,11 @@ Authors@R: c(
     role = c("ctb"),
 	email = "kimberly.cressman@dmr.ms.gov"),
   person(given = "Dave", family = "Eslinger",
-    role = c("cre", "ctb"),
-	email = "dave.eslinger@noaa.gov"),
+    role = c("aut", "ctb"),
+	email = "dave.eslinger01@gmail.com"),
+  person(given = "Kirk", family = "Waters",
+    role = c("cre"),
+	email = "kirk.waters@noaa.gov"),
   person(given = "Bob", family = "Rudis",
     role = c("ctb"),
 	email = "bob@rud.is"),
@@ -66,5 +69,5 @@ Authors@R: c(
     role = c("ctb"),
 	email = "davis@rstudio.com")
 	)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.0
 

@@ -111,8 +111,8 @@ res_custom_sk_map <- function(stations
   abbrev <- lab_long <- lab_lat  <- Longitude <- Latitude <- NULL
 
   # check that a shape file exists
-  if(class(shp) != 'SpatialPolygons') {
-    if(class(shp) != 'sf') {
+  if(!('SpatialPolygons' %in% class(shp))) {
+    if(!('sf' %in% class(shp))) {
       stop('shapefile (shp) must be sf (preferred) or SpatialPolygons object')
     }
   } else {
