@@ -5,7 +5,7 @@
 \alias{elk_spatial}
 \title{Spatial Data from Elkhorn Slough}
 \format{
-A \code{\link[sp]{SpatialPolygons}} object
+A \code{\link[sf]{sf}} object
 }
 \source{
 \href{http://cdmo.baruch.sc.edu/get/gis.cfm}{CDMO}
