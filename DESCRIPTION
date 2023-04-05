@@ -1,11 +1,11 @@
 Package: SWMPrExtension
 Type: Package
 Title: Functions for Analyzing and Plotting Estuary Monitoring Data
-Version: 2.2.3
+Version: 2.2.4
 Maintainer: Kirk Waters <kirk.waters@noaa.gov>
 Description: Tools for performing routine analysis and plotting tasks with environmental
     data from the System Wide Monitoring Program of the National Estuarine
-    Research Reserve System <http://cdmo.baruch.sc.edu/>. This package builds
+    Research Reserve System <https://cdmo.baruch.sc.edu/>. This package builds
     on the functionality of the 'SWMPr' package <https://cran.r-project.org/package=SWMPr>,
     which is used to retrieve and organize the data. The combined set of tools
     address common challenges associated with continuous time series data
@@ -14,7 +14,7 @@ Description: Tools for performing routine analysis and plotting tasks with envir
     Beck, Marcus W. (2016) <ISSN 2073-4859><https://journal.r-project.org/archive/2016-1/beck.pdf>
     Rudis, Bob (2014) <https://rud.is/b/2014/11/16/moving-the-earth-well-alaska-hawaii-with-r/>.
     United States Environmental Protection Agency (2015) <https://cfpub.epa.gov/si/si_public_record_Report.cfm?Lab=OWOW&dirEntryId=327030>.
-    United States Environmental Protection Agency (2012) <http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.646.1973&rep=rep1&type=pdf>.
+    United States Environmental Protection Agency (2012) <https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.646.1973&rep=rep1&type=pdf>.
 BugReports: https://github.com/NOAA-OCM/SWMPrExtension/issues
 License: CC0
 Encoding: UTF-8

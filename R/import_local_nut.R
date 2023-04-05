@@ -19,7 +19,7 @@
 #'
 #' This function differs from \code{\link[SWMPr]{import_local}} in that it allows for special handling of nutrient data. Using this function, the user can separate diel sampling data from low-tide sampling data using the \code{collMthd} argument.
 #'
-#' Zip download request through CDMO: \url{http://cdmo.baruch.sc.edu/aqs/zips.cfm}
+#' Zip download request through CDMO: \url{https://cdmo.baruch.sc.edu/aqs/zips.cfm}
 #'
 #' Example dataset: \url{https://s3.amazonaws.com/swmpexdata/zip_ex.zip}
 #'

@@ -4,9 +4,9 @@
 
 <!-- Start badges -->
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/SWMPrExtension)](https://cran.r-project.org/package=SWMPrExtension)[![Downloads
+[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/SWMPrExtension)](https://cran.r-project.org/package=SWMPrExtension)[![Downloads
 from the RStudio CRAN
-mirror](http://cranlogs.r-pkg.org/badges/grand-total/SWMPrExtension)](http://cran.rstudio.com/package=SWMPrExtension)
+mirror](https://cranlogs.r-pkg.org/badges/grand-total/SWMPrExtension)](https://cran.rstudio.com/package=SWMPrExtension)
 <!-- End badges -->
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -14,9 +14,9 @@ mirror](http://cranlogs.r-pkg.org/badges/grand-total/SWMPrExtension)](http://cra
 # Overview
 
 The System Wide Monitoring Program
-([SWMP](http://nerrs.noaa.gov/RCDefault.aspx?ID=18)) was implemented by
+([SWMP](https://nerrs.noaa.gov/RCDefault.aspx?ID=18)) was implemented by
 the National Estuarine Research Reserve System
-([NERRS](http://nerrs.noaa.gov/)) in 1995 to provide continuous
+([NERRS](https://nerrs.noaa.gov/)) in 1995 to provide continuous
 monitoring data at over 140 continuous monitoring stations in 28
 estuaries across the United States. SWMPrExtension (pronounced “swamper
 extension”) is an R package that provides additional functions to
@@ -980,7 +980,7 @@ mapping. </br>
 <td>
 
 A shapefile of the reserve boundary for Chesapeake Bay-Maryland NERR.
-Available from: <code><http://cdmo.baruch.sc.edu/></code>.
+Available from: <code><https://cdmo.baruch.sc.edu/></code>.
 
 </td>
 
@@ -997,7 +997,7 @@ Available from: <code><http://cdmo.baruch.sc.edu/></code>.
 <td>
 
 A shapefile of the reserve boundary for Elkhorn Slough NERR. Available
-from: <code><http://cdmo.baruch.sc.edu/></code>.
+from: <code><https://cdmo.baruch.sc.edu/></code>.
 
 </td>
 

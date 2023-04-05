@@ -1,3 +1,6 @@
+### SWMPrExtension 2.2.4
+* Remove the dependency on the sp class and use the sf class instead.
+
 ### SWMPrExtension 2.2.3
 * Change mapping checks to accommodate multi-polygons
 * Change Maintainer role to Kirk.Waters@noaa.gov

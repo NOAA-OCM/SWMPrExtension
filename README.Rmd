@@ -9,7 +9,7 @@ output:
 <!-- [![Travis-CI Build Status](https://travis-ci.org/LimnoTech/SWMPrExtension.svg?branch=master)](https://travis-ci.org/LimnoTech/SWMPrExtension)-->
 
 <!-- Start badges -->
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/SWMPrExtension)](https://cran.r-project.org/package=SWMPrExtension)[![Downloads from the RStudio CRAN mirror](http://cranlogs.r-pkg.org/badges/grand-total/SWMPrExtension)](http://cran.rstudio.com/package=SWMPrExtension)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/SWMPrExtension)](https://cran.r-project.org/package=SWMPrExtension)[![Downloads from the RStudio CRAN mirror](https://cranlogs.r-pkg.org/badges/grand-total/SWMPrExtension)](https://cran.rstudio.com/package=SWMPrExtension)
 <!-- End badges -->
 
 
@@ -25,7 +25,7 @@ knitr::opts_chunk$set(
 
 # Overview 
 
-The System Wide Monitoring Program ([SWMP](http://nerrs.noaa.gov/RCDefault.aspx?ID=18)) was implemented by the National Estuarine Research Reserve System ([NERRS](http://nerrs.noaa.gov/)) in 1995 to provide continuous monitoring data at over 140 continuous monitoring stations in 28 estuaries across the United States.  SWMPrExtension (pronounced "swamper extension") is an R package that provides additional functions to organize and analyze SWMP data and is intended as a companion package for [SWMPr](https://github.com/fawda123/SWMPr) (pronounced "swamper"). Currently, there is no citation for SWMPrExtension.
+The System Wide Monitoring Program ([SWMP](https://nerrs.noaa.gov/RCDefault.aspx?ID=18)) was implemented by the National Estuarine Research Reserve System ([NERRS](https://nerrs.noaa.gov/)) in 1995 to provide continuous monitoring data at over 140 continuous monitoring stations in 28 estuaries across the United States.  SWMPrExtension (pronounced "swamper extension") is an R package that provides additional functions to organize and analyze SWMP data and is intended as a companion package for [SWMPr](https://github.com/fawda123/SWMPr) (pronounced "swamper"). Currently, there is no citation for SWMPrExtension.
 
 [SWMPr](https://github.com/fawda123/SWMPr) is an R package for retrieving, organizing, and analyzing estuary monitoring data from SWMP. SWMPr can be cited as follows:
 
@@ -154,8 +154,8 @@ Miscellaneous functions are generally helper functions that are called internall
 The following data sets are included within the <code>SWMPrExtension</code> package. They are used for examples and for mapping.
 </br>
 <table>
-<tr><td><code>cbm_spatial</code></td><td>A shapefile of the reserve boundary for Chesapeake Bay-Maryland NERR. Available from: <code>http://cdmo.baruch.sc.edu/</code>.</td></tr>
-<tr><td><code>elk_spatial</code></td><td>A shapefile of the reserve boundary for Elkhorn Slough NERR. Available from: <code>http://cdmo.baruch.sc.edu/</code>.</td></tr>
+<tr><td><code>cbm_spatial</code></td><td>A shapefile of the reserve boundary for Chesapeake Bay-Maryland NERR. Available from: <code>https://cdmo.baruch.sc.edu/</code>.</td></tr>
+<tr><td><code>elk_spatial</code></td><td>A shapefile of the reserve boundary for Elkhorn Slough NERR. Available from: <code>https://cdmo.baruch.sc.edu/</code>.</td></tr>
 <tr><td><code>elknmnut</code></td><td>Nutrient data (2007-2016) from North Marsh station at Elkhorn Slough NERR.</td></tr>
 <tr><td><code>elksmwq</code></td><td>Water quality data (2007-2016) from South Marsh station at Elkhorn Slough NERR.</td></tr>
 <tr><td><code>sampling_stations</code></td><td>Metadata on NERRS stations provided by the Central Data Management Office (CDMO) when data is downloaded. Additional formatting applied in order to make the dataset useful to several <code>SWMPrExtension</code> functions.</td></tr>

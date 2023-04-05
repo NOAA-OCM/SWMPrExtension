@@ -8,7 +8,7 @@
 A \code{\link[base]{data.frame}} object
 }
 \source{
-\href{http://cdmo.baruch.sc.edu/}{CDMO}
+\href{https://cdmo.baruch.sc.edu/}{CDMO}
 }
 \usage{
 data(elknmnut)
@@ -17,6 +17,6 @@ data(elknmnut)
 Monthly nutrient data from Elkhorn Slough North Marsh station
 }
 \references{
-NOAA National Estuarine Research Reserve System (NERRS). System-wide Monitoring Program. Data accessed from the NOAA NERRS Centralized Data Management Office website: http://www.nerrsdata.org/; accessed 08 October 2016
+NOAA National Estuarine Research Reserve System (NERRS). System-wide Monitoring Program. Data accessed from the NOAA NERRS Centralized Data Management Office website: https://www.nerrsdata.org/; accessed 08 October 2016
 }
 \keyword{datasets}
