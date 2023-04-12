@@ -2,7 +2,7 @@ Package: SWMPrExtension
 Type: Package
 Title: Functions for Analyzing and Plotting Estuary Monitoring Data
 Version: 2.2.4
-Maintainer: Kirk Waters <kirk.waters@noaa.gov>
+Maintainer: Matt Dornback <matt.dornback@noaa.gov>
 Description: Tools for performing routine analysis and plotting tasks with environmental
     data from the System Wide Monitoring Program of the National Estuarine
     Research Reserve System <https://cdmo.baruch.sc.edu/>. This package builds
@@ -45,7 +45,8 @@ Imports:
 	tidyr,
 	utils
 Suggests: 
-  ggmap
+    ggmap,
+    testthat (>= 3.0.0)
 Authors@R: c(
   person(given = "Julie", family = "Padilla",
     role = c("aut", "ctb"),
@@ -59,9 +60,9 @@ Authors@R: c(
   person(given = "Dave", family = "Eslinger",
     role = c("aut", "ctb"),
 	email = "dave.eslinger01@gmail.com"),
-  person(given = "Kirk", family = "Waters",
+  person(given = "Matt", family = "Dornback",
     role = c("cre"),
-	email = "kirk.waters@noaa.gov"),
+	email = "matt.dornback@noaa.gov"),
   person(given = "Bob", family = "Rudis",
     role = c("ctb"),
 	email = "bob@rud.is"),
@@ -70,3 +71,4 @@ Authors@R: c(
 	email = "davis@rstudio.com")
 	)
 RoxygenNote: 7.2.3
+Config/testthat/edition: 3
