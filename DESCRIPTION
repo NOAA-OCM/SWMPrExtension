@@ -45,7 +45,8 @@ Imports:
 	tidyr,
 	utils
 Suggests: 
-  ggmap
+    ggmap,
+    testthat (>= 3.0.0)
 Authors@R: c(
   person(given = "Julie", family = "Padilla",
     role = c("aut", "ctb"),
@@ -73,3 +74,4 @@ Authors@R: c(
 	email = "matt.dornback@noaa.gov")
 	)
 RoxygenNote: 7.2.3
+Config/testthat/edition: 3
