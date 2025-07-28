@@ -27,7 +27,7 @@ Returns a \code{\link[ggplot2]{ggplot}} object
 Create a base map for NERRS reserves in ggplot
 }
 \details{
-Create a base map of the US with options for including AK, HI, and PR. The user can choose which states and NERRS reserves to highlight. An early 'sp'-based version of this function by Julie Padilla was developed, in part, from a blog post by Bob Rudis. The current {sf}-based version, by Dave Eslinger, uses an approach from  the r-spatial tutorial by Mel Moreno and Mathieu Basille.
+Create a base map of the US with options for including AK, HI, and PR. The user can choose which states and NERRS reserves to highlight. An early 'sp'-based version of this function by Julie Padilla was developed, in part, from a blog post by Bob Rudis. The current \code{sf}-based version, by Dave Eslinger, uses an approach from  the r-spatial tutorial by Mel Moreno and Mathieu Basille.
 }
 \examples{
 ##National map highlighting states with NERRS

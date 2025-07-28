@@ -23,7 +23,7 @@
 #'
 #' Example dataset: \url{https://s3.amazonaws.com/swmpexdata/zip_ex.zip}
 #'
-#' @author Marcus Beck, Julie Padilla (additional of code{collMthd} argument)
+#' @author Marcus Beck, Julie Padilla (additional of \code{collMthd} argument)
 #' maintainer: Julie Padilla
 #'
 #' @concept retrieve

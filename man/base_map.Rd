@@ -8,7 +8,7 @@ base_map(
   bbox,
   bg_crs = 4326,
   vector_only = FALSE,
-  maptype = "toner-lite",
+  maptype = "stamen_toner_lite",
   zoom = NULL,
   ...
 )
@@ -20,18 +20,19 @@ base_map(
 
 \item{vector_only}{Logical, draw only a simple vector-based map.}
 
-\item{maptype}{Background map type from Stamen Maps
-(\url{http://maps.stamen.com/}); one of c("terrain", "terrain-background",
-"terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011",
-"toner-background", "toner-hybrid", "toner-labels", "toner-lines",
-"toner-lite", "watercolor").}
+\item{maptype}{Background map type from Stadia Maps (formerly Stamen)
+(\url{https://docs.stadiamaps.com/}); one of c("stamen_terrain",
+"stamen_toner", "stamen_toner_lite", "stamen_watercolor", "alidade_smooth",
+"alidade_smooth_dark", "outdoors", "stamen_terrain_background",
+"stamen_toner_background", "stamen_terrain_labels", "stamen_terrain_lines",
+"stamen_toner_labels", "stamen_toner_lines").}
 
 \item{zoom}{Zoom level for the base map created when \code{bg_map} is not
 specified.  An integer value, 5 - 15, with higher numbers providing  more
 detail.  If not provided, a zoom level is autoscaled based on \code{bbox}
 parameters.}
 
-\item{...}{Additional arguments to be passed to \code{ggmap::get_stamenmap}}
+\item{...}{Additional arguments to be passed to \code{ggmap::get_stadiamap}}
 }
 \value{
 Returns a \code{ggplot2} object.
@@ -42,20 +43,20 @@ vector-based map.
 }
 \details{
 A helper, or stand-alone, function to create background map based on
-  based on raster map tiles retrieved with \code{ggmap::get_stamenmap}.  If
+  based on raster map tiles retrieved with \code{ggmap::get_stadiamap}.  If
   \code{ggmap} is unavailable, the function creates a basic map using
   county-level polygon files.  This map is fairly crude and should be
   considered a placeholder.
 }
 \examples{
-
-# Simple, low-zoom  map for testing
+#Simple, low-zoom  map for testing
 bound_box <- c(-77.393, 38.277, -75.553, 39.741)
-(x <- base_map(bound_box, zoom = 7))
+(x <- base_map(bound_box, zoom = 7, maptype = 'stamen_toner_lite'))
+
 
 \donttest{
 # Default zoom map with terrain maptype.
-y <- base_map(bound_box, maptype = 'terrain')
+y <- base_map(bound_box, maptype = 'stamen_terrain')
 }
 }
 \author{

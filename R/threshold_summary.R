@@ -18,14 +18,14 @@
 #'
 #' @import ggplot2
 #'
-#' @importFrom dplyr case_when filter group_by left_join n summarise
+#' @importFrom dplyr case_when filter group_by left_join n summarize
 #' @importFrom magrittr "%>%"
 #' @importFrom lubridate  month year
 #' @importFrom scales comma
 #'
 #' @export
 #'
-#' @details This function provides a graphical or tabular summary of the results from \code{threshold_identification}. The user can summarize results on a monthly, seasonal, or annual basis by specifying \code{summary_type = c('month', 'season', 'year')}. If \code{summary_type = 'season'}, then the user should also define \code{season}, \code{season_names}, and \code{season_start}, as required by |code{\link{assign_season}}. The user can specify \code{'month'} for nutrient parameters, but this is not recommended and will produce a warning.
+#' @details This function provides a graphical or tabular summary of the results from \code{threshold_identification}. The user can summarize results on a monthly, seasonal, or annual basis by specifying \code{summary_type = c('month', 'season', 'year')}. If \code{summary_type = 'season'}, then the user should also define \code{season}, \code{season_names}, and \code{season_start}, as required by \code{\link{assign_season}}. The user can specify \code{'month'} for nutrient parameters, but this is not recommended and will produce a warning.
 #'
 #' Recommended thresholds for chlorophyll-a, dissolved inorganic nitrogen, dissolved inorganic phosphorus, and dissolved oxygen can be found in the National Coastal Condition Assessment 2010 (USEPA 2016)
 #'
@@ -42,6 +42,7 @@
 #' @seealso \code{\link{assign_season}}, \code{\link[ggplot2]{ggplot}}, \code{\link{threshold_identification}}, \code{\link[ggplot2]{scale_fill_brewer}}
 #'
 #' @examples
+#' \donttest{
 #' ## Water quality examples
 #' data(apacpwq)
 #' dat_wq <- qaqc(apacpwq, qaqc_keep = c(0, 3, 5))
@@ -51,7 +52,7 @@
 #'   threshold_summary(dat_wq, param = 'do_mgl', parameter_threshold = 2
 #'   , threshold_type = '<', time_threshold = 2, summary_type = 'month'
 #'   , plot_title = TRUE)
-#'
+#' }
 #' \donttest{
 #' y <-
 #'   threshold_summary(dat_wq, param = 'do_mgl', parameter_threshold = 2,
@@ -104,6 +105,7 @@ threshold_summary.swmpr <- function(swmpr_in
                                     , label_y_axis = TRUE
                                     , ...)
 {
+
   # define local variables  to remove `check()` warnings
   count <- NULL
 

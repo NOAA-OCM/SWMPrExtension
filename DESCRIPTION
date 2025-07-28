@@ -1,7 +1,7 @@
 Package: SWMPrExtension
 Type: Package
 Title: Functions for Analyzing and Plotting Estuary Monitoring Data
-Version: 2.2.4.2
+Version: 2.2.5.1
 Maintainer: Matt Dornback <matt.dornback@noaa.gov>
 Description: Tools for performing routine analysis and plotting tasks with environmental
     data from the System Wide Monitoring Program of the National Estuarine
@@ -14,7 +14,6 @@ Description: Tools for performing routine analysis and plotting tasks with envir
     Beck, Marcus W. (2016) <ISSN 2073-4859><https://journal.r-project.org/archive/2016-1/beck.pdf>
     Rudis, Bob (2014) <https://rud.is/b/2014/11/16/moving-the-earth-well-alaska-hawaii-with-r/>.
     United States Environmental Protection Agency (2015) <https://cfpub.epa.gov/si/si_public_record_Report.cfm?Lab=OWOW&dirEntryId=327030>.
-    United States Environmental Protection Agency (2012) <https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.646.1973&rep=rep1&type=pdf>.
 BugReports: https://github.com/NOAA-OCM/SWMPrExtension/issues
 License: CC0
 Encoding: UTF-8
@@ -43,9 +42,10 @@ Imports:
   stats,
 	tidyselect,
 	tidyr,
-	utils
+	utils,
+	curl
 Suggests: 
-    ggmap,
+    ggmap (>= 4.0.0),
     testthat (>= 3.0.0)
 Authors@R: c(
   person(given = "Julie", family = "Padilla",
@@ -73,5 +73,5 @@ Authors@R: c(
 	  role = c("aut","cre"),
 	email = "matt.dornback@noaa.gov")
 	)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 Config/testthat/edition: 3

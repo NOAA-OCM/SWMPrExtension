@@ -54,11 +54,12 @@ Returns a \code{\link[ggplot2]{ggplot}} object (if \code{plot} = \code{TRUE}) or
 Summary plots for threshold identification analysis
 }
 \details{
-This function provides a graphical or tabular summary of the results from \code{threshold_identification}. The user can summarize results on a monthly, seasonal, or annual basis by specifying \code{summary_type = c('month', 'season', 'year')}. If \code{summary_type = 'season'}, then the user should also define \code{season}, \code{season_names}, and \code{season_start}, as required by |code{\link{assign_season}}. The user can specify \code{'month'} for nutrient parameters, but this is not recommended and will produce a warning.
+This function provides a graphical or tabular summary of the results from \code{threshold_identification}. The user can summarize results on a monthly, seasonal, or annual basis by specifying \code{summary_type = c('month', 'season', 'year')}. If \code{summary_type = 'season'}, then the user should also define \code{season}, \code{season_names}, and \code{season_start}, as required by \code{\link{assign_season}}. The user can specify \code{'month'} for nutrient parameters, but this is not recommended and will produce a warning.
 
 Recommended thresholds for chlorophyll-a, dissolved inorganic nitrogen, dissolved inorganic phosphorus, and dissolved oxygen can be found in the National Coastal Condition Assessment 2010 (USEPA 2016)
 }
 \examples{
+\donttest{
 ## Water quality examples
 data(apacpwq)
 dat_wq <- qaqc(apacpwq, qaqc_keep = c(0, 3, 5))
@@ -68,7 +69,7 @@ x <-
   threshold_summary(dat_wq, param = 'do_mgl', parameter_threshold = 2
   , threshold_type = '<', time_threshold = 2, summary_type = 'month'
   , plot_title = TRUE)
-
+}
 \donttest{
 y <-
   threshold_summary(dat_wq, param = 'do_mgl', parameter_threshold = 2,

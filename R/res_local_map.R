@@ -14,13 +14,14 @@
 #' @param lab_loc chr vector of 'R' and 'L', one letter for each station. if no
 #'   \code{lab_loc} is specified then labels will default to the left.
 #' @param bg_map a georeferenced \code{ggmap} or \code{ggplot} object used as a
-#'   background map, generally provided by a call to \code{\link{base_map}}. If
+#'   background map, generally provided by a call to \code{base_map}. If
 #'   \code{bg_map} is specified, \code{maptype} and \code{zoom} are ignored.
-#' @param maptype Background map type from Stamen Maps
-#'   (\url{http://maps.stamen.com/}); one of c("terrain", "terrain-background",
-#'   "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011",
-#'   "toner-background", "toner-hybrid", "toner-labels", "toner-lines",
-#'   "toner-lite", "watercolor").
+#' @param maptype Background map type from Stadia Maps (formerly Stamen)
+#'   (\url{https://docs.stadiamaps.com/}); one of c("stamen_terrain",
+#'   "stamen_toner", "stamen_toner_lite", "stamen_watercolor", "alidade_smooth",
+#'   "alidade_smooth_dark", "outdoors", "stamen_terrain_background",
+#'   "stamen_toner_background", "stamen_terrain_labels", "stamen_terrain_lines",
+#'   "stamen_toner_labels", "stamen_toner_lines").
 #' @param zoom Zoom level for the base map created when \code{bg_map} is not
 #'   specified.  An integer value, 5 - 15, with higher numbers providing  more
 #'   detail.  If not provided, a zoom level is autoscaled based on \code{bbox}
@@ -50,7 +51,7 @@
 #'
 #' @concept analyze
 #'
-#' @return returns a {ggplot} object
+#' @return returns a \code{ggplot} object
 #'
 #' @examples
 #' ## a compact reserve
@@ -109,7 +110,7 @@ res_local_map <- function(nerr_site_id
                           #                          , scale_pos = c("lower", "bottom")
                           , bg_map = NULL
                           , zoom = NULL
-                          , maptype = "toner-lite") {
+                          , maptype = "stamen_toner_lite") {
 
   # define local variables  to remove `check()` warnings
   abbrev <- lab_long <- lab_lat <- NULL

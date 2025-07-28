@@ -6,16 +6,17 @@
 #' @param bbox Bounding box vector.
 #' @param bg_crs EPSG code or \code{st_crs} object for the returned map.
 #' @param vector_only Logical, draw only a simple vector-based map.
-#' @param maptype Background map type from Stamen Maps
-#'   (\url{http://maps.stamen.com/}); one of c("terrain", "terrain-background",
-#'   "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011",
-#'   "toner-background", "toner-hybrid", "toner-labels", "toner-lines",
-#'   "toner-lite", "watercolor").
+#' @param maptype Background map type from Stadia Maps (formerly Stamen)
+#'   (\url{https://docs.stadiamaps.com/}); one of c("stamen_terrain",
+#'   "stamen_toner", "stamen_toner_lite", "stamen_watercolor", "alidade_smooth",
+#'   "alidade_smooth_dark", "outdoors", "stamen_terrain_background",
+#'   "stamen_toner_background", "stamen_terrain_labels", "stamen_terrain_lines",
+#'   "stamen_toner_labels", "stamen_toner_lines").
 #' @param zoom Zoom level for the base map created when \code{bg_map} is not
 #'   specified.  An integer value, 5 - 15, with higher numbers providing  more
 #'   detail.  If not provided, a zoom level is autoscaled based on \code{bbox}
 #'   parameters.
-#' @param ... Additional arguments to be passed to \code{ggmap::get_stamenmap}
+#' @param ... Additional arguments to be passed to \code{ggmap::get_stadiamap}
 #'
 #' @importFrom dplyr filter select
 #' @importFrom magrittr "%>%"
@@ -23,7 +24,7 @@
 #' @export
 #'
 #' @details A helper, or stand-alone, function to create background map based on
-#'   based on raster map tiles retrieved with \code{ggmap::get_stamenmap}.  If
+#'   based on raster map tiles retrieved with \code{ggmap::get_stadiamap}.  If
 #'   \code{ggmap} is unavailable, the function creates a basic map using
 #'   county-level polygon files.  This map is fairly crude and should be
 #'   considered a placeholder.
@@ -34,25 +35,27 @@
 #'
 #' @return Returns a \code{ggplot2} object.
 #'
-#' @examples
-#'
-#' # Simple, low-zoom  map for testing
+#' @examples #Simple, low-zoom  map for testing
 #' bound_box <- c(-77.393, 38.277, -75.553, 39.741)
-#' (x <- base_map(bound_box, zoom = 7))
+#' (x <- base_map(bound_box, zoom = 7, maptype = 'stamen_toner_lite'))
+#'
 #'
 #' \donttest{
 #' # Default zoom map with terrain maptype.
-#' y <- base_map(bound_box, maptype = 'terrain')
+#' y <- base_map(bound_box, maptype = 'stamen_terrain')
 #' }
+
 
 
 base_map <- function(bbox, bg_crs = 4326,
                      vector_only = FALSE,
-                     maptype = 'toner-lite',
+                     maptype = "stamen_toner_lite",
                      zoom = NULL,
                      ... ) {
 
-  if (requireNamespace("ggmap", quietly=TRUE) & !vector_only) {
+  if (requireNamespace("ggmap", quietly=TRUE) & !vector_only & curl::has_internet()) {
+    #register stadiamaps api key
+    ggmap::register_stadiamaps("b502ad34-8b99-46a8-ba40-0277b2cc6a91", write = FALSE)
     # Set background map zoom level automatically if not specified
     if(is.null(zoom)) {
       xmin <- min(bbox[c(1,3)])
@@ -64,11 +67,11 @@ base_map <- function(bbox, bg_crs = 4326,
       print(paste("Zoom level calculated as", zoom, sep = " "))
     }
 
-    bg_map <- ggmap::get_stamenmap(bbox,
+    bg_map <- ggmap::get_stadiamap(bbox,
                                    maptype = maptype,
                                    zoom = zoom,
                                    ...,
-                                   source = "stamen",
+                                   #source = "stamen",
                                    messaging = FALSE,
                                    crop = TRUE,
                                    force = FALSE,
@@ -101,14 +104,16 @@ base_map <- function(bbox, bg_crs = 4326,
     }
     background <- bb_to_poly(bbox)
     sf::st_crs(background) <- 4326
-    if(bg_crs != 4326) {
-      bg_proj <- st_transform(background, bg_crs)
-    } else {
-      bg_proj <- background
-    }
-    load("./data/counties_4269.rda")
-    land <- sf::st_crop(st_transform(counties_4269,
-                                     sf::st_crs(bg_proj)),bg_proj)
+     if(bg_crs != 4326) {
+      bg_proj <- sf::st_transform(background, bg_crs)
+     } else {
+     bg_proj <- background
+     }
+     #counties_4269 <- data('counties_4269')
+    #load("./data/counties_4269.rda")
+
+    land <- sf::st_crop(st_transform(SWMPrExtension::counties_4269,
+                                      sf::st_crs(bg_proj)),bg_proj)
     map <- ggplot() +
       geom_sf(data = bg_proj, aes(), fill = "gray90") +
       geom_sf(data = land, aes(), fill = "gray70")
