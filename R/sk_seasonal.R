@@ -1,128 +1,161 @@
-#' Seasonal Kendall Analysis for Seasonal Data
+#' Seasonal Kendall Tau Trend Test
 #'
-#' Non-parametric test for monotonic seasonal trends
+#' @description
+#' Perform a Seasonal Kendall test for trend on SWMP data. This is a modification
+#' of the `sk_tidy` function from the `SWMPr` package.
 #'
 #' @param swmpr_in input swmpr object
 #' @param param chr string of variable to plot
-#' @param alpha num, alpha value to use to significance test. Defaults to 0.05.
-#' @param data_min num, the minimum number of observations required to perform the analysis. Defaults to 5
-#' @param envStats_summary logical, should the standard \code{EnvStats::kendallSeasonalTrendTest} be returned? Defaults to \code{FALSE}. See Details for more information.
-#' @param stat_lab chr, label for the summary statistic defined in \code{FUN}. Defaults to "Average".
-#' @param FUN function used to aggregate seasonal SWMP data.
-#' @param ... additional arguments passed to other methods. See \code{\link{assign_season}}
+#' @param date_var chr string of name of date variable. Default is `datetimestamp`.
+#' @param season_grps list of months in each season. Defaults to
+#'   `list(c(1,2,3), c(4,5,6), c(7,8,9), c(10,11,12))`
+#' @param season_names chr vector of season names. Defaults to
+#'   `c("Winter", "Spring", "Summer", "Fall")`
+#' @param min_season_data numeric minimum number of seasons with data required
+#'   for the trend test.
+#' @param min_year_data numeric minimum number of years with data required for
+#'   the trend test.
 #'
-#' @importFrom dplyr filter group_by summarise
-#' @importFrom EnvStats kendallSeasonalTrendTest
-#' @importFrom lubridate  year floor_date
-#' @importFrom magrittr "%>%"
-#' @importFrom tidyr gather
+#' @import SWMPr
 #'
 #' @export
 #'
-#' @details This function performs a seasonal kendall test on seasonally aggregated values using \code{\link[EnvStats]{kendallSeasonalTrendTest}}.
+#' @details A common issue with SWMP data is that there can be gaps in the
+#' data record. The `rkt` package, which is the basis for `SWMPr::sk_tidy`,
+#' can be sensitive to gaps in the data. `sk_seasonal` provides a wrapper for
+#' `rkt::rkt` that is more robust to these gaps.
 #'
-#' Data are aggregated on a user-specified seasonal basis using the \code{FUN} argument. For example, using default settings, \code{sk_seasonal} would perform a seasonal kendall test on average monthly values. However, if the user set \code{FUN = min(x, na.rm = TRUE)} then a seasonal kendall would be performed on monthly minimum values.
+#' The function first aggregates the data by season and year. It then checks if
+#' there are enough seasons and years with data to perform the trend test. If
+_# there are, it will perform the test and return the results. Otherwise, it
+#' will return a data frame with a message indicating that the test could not
+#' be performed.
 #'
+#' This function is a modification of `SWMPr::sk_tidy` and is intended to be
+#' used in a similar manner.
 #'
-#' If \code{EnvStats_summary = TRUE} then the detailed output summary from \code{\link[EnvStats]{kendallSeasonalTrendTest}} will be returned. If \code{EnvStats_summary = FALSE} then an abbreviated summary will be returned in a \code{data.frame}. The abbreviated summary contains the station name, the type of statistic used to summarize the data on a seasonal basis (specified by \code{stat_lab}), and the following results from \code{\link[EnvStats]{kendallSeasonalTrendTest}}: tau, slope, p-value for the chi-square test, and the p-value for the trend test.
+#' @author Kimberly Cressman, Marcus W. Beck
 #'
-#' @author Julie Padilla
+#' @return Returns a data frame of station, p-value, the Sen slope, the median
+#' seasonal value, and the number of years with data.
 #'
-#' @concept analyze
-#'
-#' @return Returns a \code{data.frame} object or a summary from \code{EnvStats::kendallSeasonalTrendTest}
-#'
-#' @seealso \code{\link{assign_season}}, \code{\link{y_labeler}}, \code{\link[EnvStats]{kendallSeasonalTrendTest}}
+#' @seealso `SWMPr::sk_tidy`
 #'
 #' @examples
-#' dat_wq <- elksmwq
-#' dat_wq <- qaqc(dat_wq, qaqc_keep = c(0, 3, 5))
+#' \dontshow{
+#' data(elksmwq)
 #'
-#' x <- sk_seasonal(dat_wq, param = 'temp')
+#' dat <- qaqc(elksmwq, qaqc_keep = c(0, 2, 3, 4, 5))
 #'
-
-sk_seasonal <- function(swmpr_in, ...) UseMethod('sk_seasonal')
-
-#' @rdname sk_seasonal
+#' #
+#' sk_seasonal(dat, param = 'do_mgl')
+#' }
+#' \donttest{
+#' data(elksmwq)
 #'
-#' @export
+#' dat <- qaqc(elksmwq, qaqc_keep = c(0, 2, 3, 4, 5))
 #'
-#' @method sk_seasonal swmpr
-#'
-#'
-sk_seasonal.swmpr <- function(swmpr_in
-                             , param = NULL
-                             , alpha = 0.05
-                             , data_min = 5
-                             , envStats_summary = FALSE
-                             , stat_lab = 'Average'
-                             , FUN = function(x) mean(x, na.rm = TRUE)
-                             , ...) {
-  dat <- swmpr_in
-  parm <- sym(param)
-  seas <- sym('season')
-  yr <- sym('year')
+#' sk_seasonal(dat, param = 'do_mgl',
+#'  season_grps = list(c(1,2,3), c(4,5,6), c(7,8,9), c(10, 11, 12)),
+#'  season_names = c('Winter', 'Spring', 'Summer', 'Fall'))
+#' }
 
-  # attributes
-  parameters <- attr(dat, 'parameters')
-  station <- attr(dat, 'station')
-
-  #TESTS
-  # determine type WQ, MET, NUT
-  # determine log scale transformation
-  if(substr(station, 6, nchar(station)) == 'nut')
-    warning('Nutrient data detected. Consider specifying seasons > 1 month.')
-
-  # determine that variable name exists
-  if(!any(param %in% parameters))
-    stop('Param argument must name input column')
-
-  # determine if QAQC has been conducted
-  if(attr(dat, 'qaqc_cols'))
-    warning('QAQC columns present. QAQC not performed before analysis.')
-
-  # Assign the seasons and order them
-  dat$season <- assign_season(dat$datetimestamp, abb = TRUE, ...)
-
-  # Assign date for determining daily stat value
-  dat$year <- lubridate::year(dat$datetimestamp)
-
-  # Filter for parameter of interest and remove missing values (in case there is a month with no data)
-  dat <- dat[, c('year', 'season', param)]
-  dat <- dat %>% dplyr::filter(!is.na(!! parm))
-
-  # --------
-  # calc seasonal values
-  sk_data <- dat %>%
-    group_by(!! yr, !! seas) %>%
-    summarise(result = FUN(!! parm), .groups = "drop")
-
-  data_check <- sk_data %>% group_by(!! seas) %>% summarise(count = n())
-
-  # return(data_check)
-
-  if(min(data_check$count < data_min)) {
-    warning(paste('Fewer than', data_min, 'data points available for at least one season. Seasonal kendall will not be performed.'))
-
-
-    # Create a dummy table with "insuff" as the pval
-    sk_tbl <- data.frame(matrix(vector(), 0, 9))
-    sk_tbl[1, ] <- c(station, stat_lab, param, rep(NA, 4), 'insuff', 'insuff')
-    names(sk_tbl) <- c('station', 'type', 'parameter', 'tau', 'slope', 'pval.chisq', 'pval.trend', 'sig.chi', 'sig.trend')
-
-  } else {
-    ### these could be put into an lapply and then combined after -----
-    # perform seasonal kendall
-    sk_result <- kendallSeasonalTrendTest(result ~ season + year, data = sk_data)
-
-    # extract results and return
-    sk_tbl <- sk_tidy(sk_result, station = station, param = param, stat = stat_lab)
+sk_seasonal <- function(swmpr_in, param,
+                        date_var = 'datetimestamp',
+                        season_grps = list(c(1,2,3), c(4,5,6),
+                                           c(7,8,9), c(10,11,12)),
+                        season_names = c("Winter", "Spring", "Summer", "Fall"),
+                        min_season_data = 3,
+                        min_year_data = 5) {
+  
+  # Helper function to prepare data
+  prepare_data <- function(swmpr_in, param, date_var, season_grps, season_names) {
+    # Add year and month columns, and assign seasons
+    swmpr_in %>%
+      dplyr::mutate(
+        year = lubridate::year(.data[[date_var]]),
+        month = lubridate::month(.data[[date_var]]),
+        season = assign_season(month, season_grps, season_names)
+      ) %>%
+      dplyr::select(station, year, season, !!rlang::sym(param))
   }
-
-  if(envStats_summary) {
-    return(sk_result)
-  } else {
-    return(sk_tbl)
+  
+  # Helper function to check data adequacy
+  check_data_adequacy <- function(data, param, min_season_data, min_year_data) {
+    data_summary <- data %>%
+      dplyr::group_by(station, year, season) %>%
+      dplyr::summarise(n = dplyr::n(), .groups = 'drop') %>%
+      dplyr::filter(n > 0)
+    
+    season_counts <- data_summary %>%
+      dplyr::group_by(station, season) %>%
+      dplyr::summarise(n_yrs = dplyr::n(), .groups = 'drop')
+    
+    year_counts <- data_summary %>%
+      dplyr::group_by(station, year) %>%
+      dplyr::summarise(n_seasons = dplyr::n(), .groups = 'drop')
+    
+    adequate_seasons <- all(season_counts$n_yrs >= min_season_data)
+    adequate_years <- nrow(year_counts) >= min_year_data
+    
+    list(adequate_seasons = adequate_seasons, adequate_years = adequate_years)
   }
-
+  
+  # Helper function to perform the seasonal Kendall test
+  perform_sk_test <- function(data, param) {
+    station_name <- unique(data$station)
+    tryCatch({
+      # Formula for the rkt function
+      formula <- stats::as.formula(paste(param, "~ year + season"))
+      rkt_result <- rkt::rkt(data, formula)
+      
+      # Extract results
+      data.frame(
+        station = station_name,
+        p_value = rkt_result$sl,
+        sen_slope = rkt_result$B,
+        stringsAsFactors = FALSE
+      )
+    }, error = function(e) {
+      data.frame(
+        station = station_name,
+        p_value = NA,
+        sen_slope = NA,
+        stringsAsFactors = FALSE
+      )
+    })
+  }
+  
+  # Main function logic
+  data <- prepare_data(swmpr_in, param, date_var, season_grps, season_names)
+  
+  # Check for sufficient data
+  data_check <- check_data_adequacy(data, param, min_season_data, min_year_data)
+  if (!data_check$adequate_seasons || !data_check$adequate_years) {
+    return(
+      data.frame(
+        station = unique(data$station),
+        p_value = NA,
+        sen_slope = NA,
+        median_seasonal_value = NA,
+        n_years = NA,
+        message = "Insufficient data for trend analysis"
+      )
+    )
+  }
+  
+  # Perform the test
+  sk_results <- perform_sk_test(data, param)
+  
+  # Calculate median seasonal value and number of years
+  summary_stats <- data %>%
+    dplyr::group_by(station) %>%
+    dplyr::summarise(
+      median_seasonal_value = stats::median(.data[[param]], na.rm = TRUE),
+      n_years = dplyr::n_distinct(year),
+      .groups = 'drop'
+    )
+  
+  # Combine results
+  dplyr::left_join(sk_results, summary_stats, by = "station")
 }
